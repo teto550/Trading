@@ -1,12 +1,12 @@
 """
 ================================================================
-   Live Stock Monitor - نسخة GitHub Actions (بدون جهاز شغال)
+   Live Stock Monitor - نسخة متعددة الأسهم مع إدارة مخاطر ذكية
 ================================================================
-السكريبت ده بيتشغّل مرة واحدة بس في كل مرة، ومحفظة وهمية (paper
-portfolio) بتتبع من غير فلوس حقيقية عشان تتعلم إزاي الاستراتيجية
-كانت هتتصرف. المحفظة بتبدأ بمبلغ افتراضي (100,000 جنيه)، وبتشتري
-وتبيع أسهم حقيقية العدد بناءً على السعر الفعلي - من غير بيع مكشوف
-(short selling)، لأن ده مش متاح عادة للمستثمر الفردي في EGX.
+بيراقب أكتر من سهم في نفس الوقت، وبيوزع رأس المال بالتساوي بينهم
+(تنويع). كل سهم عنده وقف خسارة وهدف ربح محسوبين من تقلبه هو نفسه
+(مش نسبة ثابتة). كمان عنده "درجة ثقة" بتقل بعد خسارة وترجع تزيد
+تدريجياً بعد كسب - أسلوب معروف لتقليل حجم الصفقة بعد أداء سيء،
+مش "ذكاء اصطناعي" حقيقي بيتعلم، مهم نكون واضحين في ده.
 ================================================================
 """
 
@@ -18,11 +18,15 @@ from zoneinfo import ZoneInfo
 import numpy as np
 import requests
 
-TICKER = os.environ.get("TICKER", "COMI.CA")
+TICKERS = [t.strip() for t in os.environ.get(
+    "TICKERS", "COMI.CA,GGRN.CA,EFIH.CA,EFID.CA,ABUK.CA"
+).split(",") if t.strip()]
+
 LOOKBACK_WINDOW = 20
 MEAN_REVERSION_STD = 1.5
-STOP_LOSS_PCT = 0.03
-STARTING_CASH = 100000.0  # رأس المال الافتراضي بالجنيه المصري
+STARTING_CASH_TOTAL = 100000.0
+MIN_CONFIDENCE = 0.3   # أقل نسبة من الخزنة يقدر يستخدمها بعد خسائر متتالية
+MAX_CONFIDENCE = 1.0
 STATE_FILE = "state.json"
 
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
@@ -32,11 +36,11 @@ FORCE_RUN = os.environ.get("FORCE_RUN", "false").lower() == "true"
 
 
 # ============================================================
-# مواعيد تداول EGX (الأحد - الخميس، 10:00 ص - 2:30 م بتوقيت القاهرة)
+# مواعيد تداول EGX
 # ============================================================
 def is_market_open_now():
     cairo = datetime.now(ZoneInfo("Africa/Cairo"))
-    trading_days = {6, 0, 1, 2, 3}  # Sunday, Monday, Tuesday, Wednesday, Thursday
+    trading_days = {6, 0, 1, 2, 3}
     if cairo.weekday() not in trading_days:
         return False
     market_open = cairo.replace(hour=10, minute=0, second=0, microsecond=0)
@@ -45,20 +49,35 @@ def is_market_open_now():
 
 
 # ============================================================
-# الحالة المحفوظة (state.json)
+# الحالة المحفوظة
 # ============================================================
+def default_stock_state(cash_slot):
+    return {
+        "prices": [],
+        "cash": cash_slot,
+        "shares": 0,
+        "avg_buy_price": None,
+        "confidence": MAX_CONFIDENCE,
+    }
+
+
 def load_state():
     if os.path.exists(STATE_FILE):
         with open(STATE_FILE, "r", encoding="utf-8") as f:
-            state = json.load(f)
+            raw = json.load(f)
     else:
-        state = {}
+        raw = {}
 
-    state.setdefault("prices", [])
-    state.setdefault("cash", STARTING_CASH)
-    state.setdefault("shares", 0)
-    state.setdefault("avg_buy_price", None)
-    return state
+    cash_slot = STARTING_CASH_TOTAL / len(TICKERS)
+    stocks = raw.get("stocks", {})
+
+    for ticker in TICKERS:
+        if ticker not in stocks:
+            stocks[ticker] = default_stock_state(cash_slot)
+        else:
+            stocks[ticker].setdefault("confidence", MAX_CONFIDENCE)
+
+    return {"stocks": stocks}
 
 
 def save_state(state):
@@ -69,14 +88,9 @@ def save_state(state):
 # ============================================================
 # جلب السعر
 # ============================================================
-def fetch_price_mubasher():
-    """
-    بيجيب السعر من صفحة Mubasher العامة (متأخر 15 دقيقة وقت التداول،
-    لكن بيتحدث فعلياً - عكس مشكلة Yahoo Finance الراكدة لسهم COMI).
-    مصدر غير رسمي، ممكن يتعطل لو الموقع غيّر شكل صفحته.
-    """
+def fetch_price_mubasher(ticker):
     import re
-    symbol = TICKER.replace(".CA", "")
+    symbol = ticker.replace(".CA", "")
     url = f"https://english.mubasher.info/markets/EGX/stocks/{symbol}"
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
     resp = requests.get(url, headers=headers, timeout=15)
@@ -90,9 +104,9 @@ def fetch_price_mubasher():
     return float(match.group(1))
 
 
-def fetch_price_yfinance():
+def fetch_price_yfinance(ticker):
     import yfinance as yf
-    tk = yf.Ticker(TICKER)
+    tk = yf.Ticker(ticker)
     try:
         price = tk.fast_info["last_price"]
         if price is not None and price == price:
@@ -105,12 +119,12 @@ def fetch_price_yfinance():
     return float(data.iloc[-1]["Close"])
 
 
-def fetch_price():
+def fetch_price(ticker):
     try:
-        return fetch_price_mubasher()
+        return fetch_price_mubasher(ticker)
     except Exception as e:
-        print(f"[Mubasher] فشل الجلب ({e})، هجرب yfinance كـ fallback")
-        return fetch_price_yfinance()
+        print(f"  [Mubasher] فشل الجلب ({e})، هجرب yfinance كـ fallback")
+        return fetch_price_yfinance(ticker)
 
 
 # ============================================================
@@ -136,6 +150,8 @@ def fallback_explanation(action, price, sma, zscore):
         return "الإشارة رجعت محايدة أو هابطة، فتم البيع."
     if action == "SELL_STOP_LOSS":
         return "تم البيع تلقائياً بسبب وصول الخسارة لحد وقف الخسارة."
+    if action == "SELL_TAKE_PROFIT":
+        return "تم البيع تلقائياً بعد الوصول لهدف الربح المحدد."
     return f"Z-score الحالي {zscore:+.2f} هو اللي حرّك القرار."
 
 
@@ -147,7 +163,7 @@ def explain_trade(action, price, sma, zscore, extra_context):
         genai.configure(api_key=GEMINI_API_KEY)
         model = genai.GenerativeModel("gemini-1.5-flash")
         prompt = f"""اكتب جملتين بس بالعربي البسيط (مصري) تشرح لمستثمر عادي
-ليه حصل الإجراء ده في التداول، من غير مقدمة ولا خاتمة:
+ليه حصل الإجراء ده، من غير مقدمة ولا خاتمة:
 
 الإجراء: {action}
 السعر الحالي: {price:.2f}
@@ -159,40 +175,38 @@ Z-score: {zscore:.2f}
         text = (resp.text or "").strip()
         return text if text else fallback_explanation(action, price, sma, zscore)
     except Exception as e:
-        print("[Gemini] فشل، هستخدم شرح تلقائي:", e)
+        print("  [Gemini] فشل، هستخدم شرح تلقائي:", e)
         return fallback_explanation(action, price, sma, zscore)
 
 
 # ============================================================
-# MAIN - تشغيلة واحدة
+# معالجة سهم واحد
 # ============================================================
-def main():
-    if not is_market_open_now() and not FORCE_RUN:
-        print("السوق مقفول دلوقتي (برة مواعيد EGX) - مفيش تنفيذ")
-        return
-
-    state = load_state()
-
+def process_stock(ticker, stock_state):
     try:
-        price = fetch_price()
+        price = fetch_price(ticker)
     except Exception as e:
-        print("خطأ في جلب السعر:", e)
-        return
+        print(f"  خطأ في جلب السعر: {e}")
+        return None
 
-    state["prices"].append(price)
-    state["prices"] = state["prices"][-LOOKBACK_WINDOW:]
+    stock_state["prices"].append(price)
+    stock_state["prices"] = stock_state["prices"][-LOOKBACK_WINDOW:]
 
-    portfolio_value = state["cash"] + state["shares"] * price
+    value = stock_state["cash"] + stock_state["shares"] * price
 
-    if len(state["prices"]) < LOOKBACK_WINDOW:
-        print(f"بنجمع بيانات كفاية: {len(state['prices'])}/{LOOKBACK_WINDOW}  |  "
-              f"السعر الحالي: {price:.2f}  |  قيمة المحفظة: {portfolio_value:,.2f} جنيه")
-        save_state(state)
-        return
+    if len(stock_state["prices"]) < LOOKBACK_WINDOW:
+        print(f"  بنجمع بيانات: {len(stock_state['prices'])}/{LOOKBACK_WINDOW}  |  "
+              f"السعر: {price:.2f}  |  قيمة الخزنة: {value:,.2f} جنيه")
+        return None
 
-    arr = np.array(state["prices"])
+    arr = np.array(stock_state["prices"])
     sma = arr.mean()
     std = arr.std()
+
+    # وقف خسارة وهدف ربح مبنيين على تقلب السهم نفسه (مش نسبة ثابتة)
+    volatility_ratio = (std / sma) if sma > 0 else 0.02
+    stop_loss_pct = min(max(2.5 * volatility_ratio, 0.02), 0.08)
+    take_profit_pct = stop_loss_pct * 2  # نسبة مخاطرة:عائد 1:2
 
     momentum_signal = 1 if price > sma else -1
     zscore = (price - sma) / std if std > 0 else 0
@@ -212,74 +226,126 @@ def main():
         signal = 0
 
     action = None
-    message_extra = ""
+    extra = ""
 
-    # وقف الخسارة - له الأولوية قبل أي حاجة تانية
-    if state["shares"] > 0 and state["avg_buy_price"]:
-        change_pct = (price - state["avg_buy_price"]) / state["avg_buy_price"]
-        if change_pct < -STOP_LOSS_PCT:
-            proceeds = state["shares"] * price
-            profit = proceeds - (state["shares"] * state["avg_buy_price"])
-            sold_shares = state["shares"]
-            state["cash"] += proceeds
-            state["shares"] = 0
-            state["avg_buy_price"] = None
+    # وقف خسارة / هدف ربح - لهم الأولوية
+    if stock_state["shares"] > 0 and stock_state["avg_buy_price"]:
+        change_pct = (price - stock_state["avg_buy_price"]) / stock_state["avg_buy_price"]
+
+        if change_pct < -stop_loss_pct:
             action = "SELL_STOP_LOSS"
-            message_extra = (
-                f"باع {sold_shares} سهم بسعر {price:.2f} جنيه "
-                f"(إجمالي {proceeds:,.2f} جنيه)\n"
-                f"الخسارة: {profit:,.2f} جنيه ({change_pct:+.2%})\n"
-                f"الكاش دلوقتي: {state['cash']:,.2f} جنيه"
+        elif change_pct > take_profit_pct:
+            action = "SELL_TAKE_PROFIT"
+
+        if action:
+            proceeds = stock_state["shares"] * price
+            profit = proceeds - (stock_state["shares"] * stock_state["avg_buy_price"])
+            profit_pct = profit / (stock_state["shares"] * stock_state["avg_buy_price"])
+            sold_shares = stock_state["shares"]
+            stock_state["cash"] += proceeds
+            stock_state["shares"] = 0
+            stock_state["avg_buy_price"] = None
+
+            # تحديث درجة الثقة بناءً على النتيجة
+            if profit >= 0:
+                stock_state["confidence"] = min(MAX_CONFIDENCE, stock_state["confidence"] * 1.1)
+            else:
+                stock_state["confidence"] = max(MIN_CONFIDENCE, stock_state["confidence"] * 0.85)
+
+            label = "هدف الربح" if action == "SELL_TAKE_PROFIT" else "وقف الخسارة"
+            extra = (
+                f"باع {sold_shares} سهم بسعر {price:.2f} جنيه (وصل {label})\n"
+                f"إجمالي البيع: {proceeds:,.2f} جنيه\n"
+                f"{'ربح' if profit >= 0 else 'خسارة'}: {profit:,.2f} جنيه ({profit_pct:+.2%})\n"
+                f"كاش الخزنة دلوقتي: {stock_state['cash']:,.2f} جنيه"
             )
 
-    # لو معندناش أسهم ولسه معندناش action من وقف الخسارة، واتولدت إشارة شراء
-    if action is None and state["shares"] == 0 and signal == 1:
-        shares_to_buy = int(state["cash"] // price)
+    # شراء
+    if action is None and stock_state["shares"] == 0 and signal == 1:
+        usable_cash = stock_state["cash"] * stock_state["confidence"]
+        shares_to_buy = int(usable_cash // price)
         if shares_to_buy > 0:
             cost = shares_to_buy * price
-            state["cash"] -= cost
-            state["shares"] = shares_to_buy
-            state["avg_buy_price"] = price
+            stock_state["cash"] -= cost
+            stock_state["shares"] = shares_to_buy
+            stock_state["avg_buy_price"] = price
             action = "BUY"
-            message_extra = (
+            extra = (
                 f"اشترى {shares_to_buy} سهم بسعر {price:.2f} جنيه "
                 f"(إجمالي {cost:,.2f} جنيه)\n"
-                f"باقي الكاش: {state['cash']:,.2f} جنيه"
+                f"درجة الثقة الحالية: {stock_state['confidence']:.0%}\n"
+                f"باقي كاش الخزنة: {stock_state['cash']:,.2f} جنيه"
             )
 
-    # لو عندنا أسهم والإشارة بقت محايدة أو هابطة -> بيع
-    elif action is None and state["shares"] > 0 and signal <= 0:
-        proceeds = state["shares"] * price
-        profit = proceeds - (state["shares"] * state["avg_buy_price"])
-        profit_pct = profit / (state["shares"] * state["avg_buy_price"])
-        sold_shares = state["shares"]
-        state["cash"] += proceeds
-        state["shares"] = 0
-        state["avg_buy_price"] = None
+    # بيع بإشارة عادية (مش وقف خسارة ولا هدف ربح)
+    elif action is None and stock_state["shares"] > 0 and signal <= 0:
+        proceeds = stock_state["shares"] * price
+        profit = proceeds - (stock_state["shares"] * stock_state["avg_buy_price"])
+        profit_pct = profit / (stock_state["shares"] * stock_state["avg_buy_price"])
+        sold_shares = stock_state["shares"]
+        stock_state["cash"] += proceeds
+        stock_state["shares"] = 0
+        stock_state["avg_buy_price"] = None
+
+        if profit >= 0:
+            stock_state["confidence"] = min(MAX_CONFIDENCE, stock_state["confidence"] * 1.1)
+        else:
+            stock_state["confidence"] = max(MIN_CONFIDENCE, stock_state["confidence"] * 0.85)
+
         action = "SELL_SIGNAL"
-        message_extra = (
-            f"باع {sold_shares} سهم بسعر {price:.2f} جنيه "
-            f"(إجمالي {proceeds:,.2f} جنيه)\n"
+        extra = (
+            f"باع {sold_shares} سهم بسعر {price:.2f} جنيه (إشارة اتجاه)\n"
+            f"إجمالي البيع: {proceeds:,.2f} جنيه\n"
             f"{'ربح' if profit >= 0 else 'خسارة'}: {profit:,.2f} جنيه ({profit_pct:+.2%})\n"
-            f"الكاش دلوقتي: {state['cash']:,.2f} جنيه"
+            f"كاش الخزنة دلوقتي: {stock_state['cash']:,.2f} جنيه"
         )
 
-    portfolio_value = state["cash"] + state["shares"] * price
-    total_return_pct = (portfolio_value - STARTING_CASH) / STARTING_CASH
-
-    holding_text = f"{state['shares']} سهم" if state["shares"] > 0 else "كاش بالكامل"
-    print(f"السعر: {price:.2f} | SMA: {sma:.2f} | Z: {zscore:+.2f} | "
-          f"المحفظة: {holding_text} | القيمة الكلية: {portfolio_value:,.2f} جنيه "
-          f"({total_return_pct:+.2%})")
+    value = stock_state["cash"] + stock_state["shares"] * price
+    holding = f"{stock_state['shares']} سهم" if stock_state["shares"] > 0 else "كاش بالكامل"
+    print(f"  السعر: {price:.2f} | SMA: {sma:.2f} | Z: {zscore:+.2f} | "
+          f"وقف خسارة: {stop_loss_pct:.1%} | هدف ربح: {take_profit_pct:.1%} | "
+          f"المحفظة: {holding} | القيمة: {value:,.2f} جنيه | ثقة: {stock_state['confidence']:.0%}")
 
     if action:
-        explanation = explain_trade(action, price, sma, zscore, message_extra)
-        print(f">>> إجراء: {action}\n{message_extra}\nالشرح: {explanation}")
+        explanation = explain_trade(action, price, sma, zscore, extra)
+        print(f"  >>> إجراء: {action}\n  {extra}\n  الشرح: {explanation}")
+        return {
+            "ticker": ticker, "action": action, "extra": extra,
+            "explanation": explanation, "value": value,
+        }
+    return None
+
+
+# ============================================================
+# MAIN
+# ============================================================
+def main():
+    if not is_market_open_now() and not FORCE_RUN:
+        print("السوق مقفول دلوقتي (برة مواعيد EGX) - مفيش تنفيذ")
+        return
+
+    state = load_state()
+    trade_events = []
+
+    for ticker in TICKERS:
+        print(f"\n[{ticker}]")
+        result = process_stock(ticker, state["stocks"][ticker])
+        if result:
+            trade_events.append(result)
+
+    total_value = sum(
+        s["cash"] + s["shares"] * (s["prices"][-1] if s["prices"] else 0)
+        for s in state["stocks"].values()
+    )
+    total_return_pct = (total_value - STARTING_CASH_TOTAL) / STARTING_CASH_TOTAL
+    print(f"\nإجمالي قيمة المحفظة (كل الأسهم): {total_value:,.2f} جنيه ({total_return_pct:+.2%})")
+
+    for event in trade_events:
         message = (
-            f"📈 {TICKER}\n"
-            f"{message_extra}\n\n"
-            f"{explanation}\n\n"
-            f"قيمة المحفظة: {portfolio_value:,.2f} جنيه ({total_return_pct:+.2%})"
+            f"📈 {event['ticker']}\n"
+            f"{event['extra']}\n\n"
+            f"{event['explanation']}\n\n"
+            f"إجمالي المحفظة الكلية: {total_value:,.2f} جنيه ({total_return_pct:+.2%})"
         )
         send_telegram(message)
 
