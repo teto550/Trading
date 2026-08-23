@@ -28,8 +28,8 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run monitor
-        env:
-          TICKER: "COMI.CA"
+       env:
+          TICKERS: "COMI.CA,GGRN.CA,EFIH.CA,EFID.CA,ABUK.CA"
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
