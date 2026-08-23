@@ -63,7 +63,31 @@ def save_state(state):
 # ============================================================
 # جلب السعر
 # ============================================================
-def fetch_price():
+def fetch_price_mubasher():
+    """
+    بيجيب السعر من صفحة Mubasher العامة (متأخر 15 دقيقة وقت التداول،
+    لكن بيتحدث فعلياً - عكس مشكلة Yahoo Finance الراكدة لسهم COMI).
+    مصدر غير رسمي، ممكن يتعطل لو الموقع غيّر شكل صفحته.
+    """
+    import requests
+    import re
+
+    symbol = TICKER.replace(".CA", "")
+    url = f"https://english.mubasher.info/markets/EGX/stocks/{symbol}"
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+    resp = requests.get(url, headers=headers, timeout=15)
+    resp.raise_for_status()
+
+    match = re.search(
+        r'market time\.(?:(?!\d{1,3}\.\d{1,2}).){0,300}?(\d{1,3}\.\d{1,2})',
+        resp.text, re.DOTALL,
+    )
+    if not match:
+        raise ValueError("مش قادر ألاقي السعر في صفحة Mubasher")
+    return float(match.group(1))
+
+
+def fetch_price_yfinance():
     import yfinance as yf
     tk = yf.Ticker(TICKER)
     try:
@@ -76,6 +100,14 @@ def fetch_price():
     if data.empty:
         raise ValueError("مفيش بيانات متاحة")
     return float(data.iloc[-1]["Close"])
+
+
+def fetch_price():
+    try:
+        return fetch_price_mubasher()
+    except Exception as e:
+        print(f"[Mubasher] فشل الجلب ({e})، هجرب yfinance كـ fallback")
+        return fetch_price_yfinance()
 
 
 # ============================================================
