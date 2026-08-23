@@ -1,22 +1,49 @@
 {
-  "prices": [
-    137.0,
-    137.0,
-    81.2,
-    81.2,
-    81.2,
-    81.2,
-    81.2,
-    81.2,
-    139.19,
-    139.0,
-    139.5,
-    139.41,
-    138.91
-  ],
-  "position": 0,
-  "entry_price": null,
-  "cash": 100000.0,
-  "shares": 0,
-  "avg_buy_price": null
+  "stocks": {
+    "COMI.CA": {
+      "prices": [
+        139.12
+      ],
+      "cash": 20000.0,
+      "shares": 0,
+      "avg_buy_price": null,
+      "confidence": 1.0
+    },
+    "GGRN.CA": {
+      "prices": [
+        1.41
+      ],
+      "cash": 20000.0,
+      "shares": 0,
+      "avg_buy_price": null,
+      "confidence": 1.0
+    },
+    "EFIH.CA": {
+      "prices": [
+        24.76
+      ],
+      "cash": 20000.0,
+      "shares": 0,
+      "avg_buy_price": null,
+      "confidence": 1.0
+    },
+    "EFID.CA": {
+      "prices": [
+        33.03
+      ],
+      "cash": 20000.0,
+      "shares": 0,
+      "avg_buy_price": null,
+      "confidence": 1.0
+    },
+    "ABUK.CA": {
+      "prices": [
+        76.5
+      ],
+      "cash": 20000.0,
+      "shares": 0,
+      "avg_buy_price": null,
+      "confidence": 1.0
+    }
+  }
 }
