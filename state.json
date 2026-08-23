@@ -8,8 +8,12 @@
     81.2,
     81.2,
     81.2,
-    139.19
+    139.19,
+    139.0
   ],
   "position": 0,
-  "entry_price": null
+  "entry_price": null,
+  "cash": 100000.0,
+  "shares": 0,
+  "avg_buy_price": null
 }
