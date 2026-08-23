@@ -1,5 +1,7 @@
 {
-  "prices": [],
+  "prices": [
+    137.0
+  ],
   "position": 0,
   "entry_price": null
 }
