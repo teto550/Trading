@@ -1,0 +1,44 @@
+{
+  "stocks": {
+    "COMI.CA": {
+      "prices": [
+        139.28
+      ],
+      "cash": 25000.0,
+      "shares": 0,
+      "avg_buy_price": null,
+      "peak_price": null,
+      "confidence": 1.0
+    },
+    "EFIH.CA": {
+      "prices": [
+        24.2
+      ],
+      "cash": 25000.0,
+      "shares": 0,
+      "avg_buy_price": null,
+      "peak_price": null,
+      "confidence": 1.0
+    },
+    "EFID.CA": {
+      "prices": [
+        32.52
+      ],
+      "cash": 25000.0,
+      "shares": 0,
+      "avg_buy_price": null,
+      "peak_price": null,
+      "confidence": 1.0
+    },
+    "ABUK.CA": {
+      "prices": [
+        76.71
+      ],
+      "cash": 25000.0,
+      "shares": 0,
+      "avg_buy_price": null,
+      "peak_price": null,
+      "confidence": 1.0
+    }
+  }
+}
