@@ -1,8 +1,0 @@
-# الملف ده لازم يكون في روت الريبو، جنب monitor_once_with_tradelog.py
-# و monitor_with_tradelog.yml، عشان GitHub Actions يقدر يـ install
-# المكتبات المطلوبة قبل ما يشغل السكريبت (pip install -r requirements.txt)
-
-numpy>=1.24.0
-requests>=2.31.0
-yfinance>=0.2.40          # fallback لو Mubasher فشل
-google-generativeai>=0.7.0  # اختياري - لو مش هتستخدم GEMINI_API_KEY ممكن تشيله
