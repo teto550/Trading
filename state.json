@@ -1,0 +1,28 @@
+{
+  "stocks": {
+    "COMI.CA": {
+      "prices": [
+        139.56
+      ],
+      "last_signal": "NONE"
+    },
+    "EFIH.CA": {
+      "prices": [
+        23.0
+      ],
+      "last_signal": "NONE"
+    },
+    "EFID.CA": {
+      "prices": [
+        30.0
+      ],
+      "last_signal": "NONE"
+    },
+    "ABUK.CA": {
+      "prices": [
+        82.53
+      ],
+      "last_signal": "NONE"
+    }
+  }
+}
