@@ -263,6 +263,12 @@ def process_stock(ticker, stock_state):
 # MAIN
 # ============================================================
 def main():
+    # --- DEBUG مؤقت: عشان نتأكد إن الـtzdata على السيرفر بتحسب توقيت
+    # القاهرة صح (+03:00 وقت الصيف). امسح السطرين دول بعد ما نتأكد. ---
+    debug_cairo = datetime.now(ZoneInfo("Africa/Cairo"))
+    print(f"DEBUG: الوقت المحسوب دلوقتي في القاهرة = {debug_cairo}  "
+          f"(الإزاحة عن UTC: {debug_cairo.utcoffset()})")
+
     if not is_market_open_now() and not FORCE_RUN:
         print("السوق مقفول دلوقتي (برة مواعيد EGX) - مفيش فحص")
         return
