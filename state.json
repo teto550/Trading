@@ -3,28 +3,32 @@
     "COMI.CA": {
       "prices": [
         139.56,
-        138.58
+        138.58,
+        138.18
       ],
       "last_signal": "NONE"
     },
     "EFIH.CA": {
       "prices": [
         23.0,
-        22.85
+        22.85,
+        22.89
       ],
       "last_signal": "NONE"
     },
     "EFID.CA": {
       "prices": [
         30.0,
-        29.96
+        29.96,
+        29.95
       ],
       "last_signal": "NONE"
     },
     "ABUK.CA": {
       "prices": [
         82.53,
-        90.45
+        90.45,
+        90.14
       ],
       "last_signal": "NONE"
     }
