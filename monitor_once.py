@@ -39,7 +39,8 @@ TICKERS = [t.strip() for t in os.environ.get(
 
 LOOKBACK_WINDOW = 20
 TREND_FILTER_WINDOW = 50
-HISTORY_WINDOW = TREND_FILTER_WINDOW
+# بنحتفظ بقفلات يومية (مش قراءات كل 15 دقيقة) - 60 يوم كفاية للـ SMA50
+HISTORY_WINDOW = 60
 STATE_FILE = "state.json"
 ALERT_LOG_FILE = "alert_log.csv"
 
@@ -67,11 +68,12 @@ def is_market_open_now():
 
 
 # ============================================================
-# الحالة المحفوظة - بس تاريخ الأسعار وآخر إشارة اتبعتت، من غير أي
+# الحالة المحفوظة - بس قفلات الأيام وآخر إشارة اتبعتت، من غير أي
 # محفظة أو كاش
 # ============================================================
 def default_stock_state():
-    return {"prices": [], "last_signal": "NONE"}  # NONE / BUY / SELL
+    # daily = قفلة كل يوم تداول، dates = تاريخ كل قفلة (بتوقيت القاهرة)
+    return {"dates": [], "daily": [], "last_signal": "NONE"}  # NONE / BUY / SELL
 
 
 def load_state():
@@ -86,6 +88,9 @@ def load_state():
             stocks[ticker] = default_stock_state()
         else:
             stocks[ticker].setdefault("last_signal", "NONE")
+            stocks[ticker].setdefault("dates", [])
+            stocks[ticker].setdefault("daily", [])
+            stocks[ticker].pop("prices", None)  # تنسيق قديم (قراءات كل 15 دقيقة)
     return {"stocks": stocks}
 
 
@@ -212,26 +217,68 @@ def explain_alert(signal, price, sma20, sma50):
 
 
 # ============================================================
+# القفلات اليومية
+# ============================================================
+def update_daily(stock_state, price):
+    today = datetime.now(ZoneInfo("Africa/Cairo")).strftime("%Y-%m-%d")
+    dates = stock_state.setdefault("dates", [])
+    daily = stock_state.setdefault("daily", [])
+    if dates and dates[-1] == today:
+        daily[-1] = price  # نفس اليوم: حدّث القفلة
+    else:
+        dates.append(today)
+        daily.append(price)
+    stock_state["dates"] = dates[-HISTORY_WINDOW:]
+    stock_state["daily"] = daily[-HISTORY_WINDOW:]
+
+
+def seed_history(ticker, stock_state):
+    import yfinance as yf
+    h = yf.Ticker(ticker).history(period="6mo", interval="1d")["Close"].dropna()
+    if h.empty:
+        raise ValueError("مفيش تاريخ متاح من yfinance")
+    h = h.tail(HISTORY_WINDOW)
+    stock_state["daily"] = [float(x) for x in h]
+    stock_state["dates"] = [d.strftime("%Y-%m-%d") for d in h.index]
+    print(f"  [seed] اتملّى {len(stock_state['daily'])} يوم تاريخ من yfinance")
+
+
+# ============================================================
 # معالجة سهم واحد - بس بيحسب الإشارة وبيقارنها بآخر إشارة معروفة،
 # مفيش تنفيذ ولا محفظة خالص
 # ============================================================
 def process_stock(ticker, stock_state):
-    prev_price = stock_state["prices"][-1] if stock_state["prices"] else None
+    if not stock_state.get("daily"):
+        try:
+            seed_history(ticker, stock_state)
+        except Exception as e:
+            print(f"  فشل seed: {e}")
+
+    daily = stock_state.get("daily", [])
+    prev_price = daily[-1] if daily else None
+
     try:
         price = fetch_price(ticker, prev_price=prev_price)
     except Exception as e:
         print(f"  خطأ في جلب السعر: {e}")
         return None
 
-    history = stock_state["prices"]
-    if len(history) < TREND_FILTER_WINDOW:
-        history.append(price)
-        stock_state["prices"] = history[-HISTORY_WINDOW:]
-        print(f"  بنجمع بيانات: {len(stock_state['prices'])}/{TREND_FILTER_WINDOW}  |  السعر: {price:.2f}")
+    # رفض القفزة الغريبة: متتخزنش ويتبعتلك تحذير تراجعه يدويًا
+    if prev_price and abs(price - prev_price) / prev_price > PRICE_SANITY_THRESHOLD:
+        print(f"  [رفض] قفزة غريبة {prev_price:.2f} -> {price:.2f}، اتجاهلت")
+        send_telegram(f"⚠️ {ticker}: قفزة سعر غريبة {prev_price:.2f} → {price:.2f}، "
+                      f"اتجاهلت ومتخزنتش. راجعها يدويًا.")
         return None
 
-    sma20 = np.array(history[-LOOKBACK_WINDOW:]).mean()
-    sma50 = np.array(history[-TREND_FILTER_WINDOW:]).mean()
+    update_daily(stock_state, price)
+    daily = stock_state["daily"]
+
+    if len(daily) < TREND_FILTER_WINDOW:
+        print(f"  بنجمع بيانات: {len(daily)}/{TREND_FILTER_WINDOW}  |  السعر: {price:.2f}")
+        return None
+
+    sma20 = float(np.mean(daily[-LOOKBACK_WINDOW:]))
+    sma50 = float(np.mean(daily[-TREND_FILTER_WINDOW:]))
 
     trend_up = price > sma20 and price > sma50
     trend_broken = price < sma50
@@ -247,9 +294,6 @@ def process_stock(ticker, stock_state):
     status = "ترند صاعد" if trend_up else ("ترند منكسر" if trend_broken else "محايد")
     print(f"  السعر: {price:.2f} | SMA20: {sma20:.2f} | SMA50: {sma50:.2f} | "
           f"الحالة: {status} | آخر إشارة: {stock_state['last_signal']}")
-
-    stock_state["prices"].append(price)
-    stock_state["prices"] = stock_state["prices"][-HISTORY_WINDOW:]
 
     if alert_signal:
         explanation = explain_alert(alert_signal, price, sma20, sma50)
