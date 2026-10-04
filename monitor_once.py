@@ -47,6 +47,7 @@ ALERT_LOG_FILE = "alert_log.csv"
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "")
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
 FORCE_RUN = os.environ.get("FORCE_RUN", "false").lower() == "true"
 
 # لو السعر الجديد مختلف عن آخر سعر معروف بنسبة أكبر من الحد ده،
@@ -197,9 +198,8 @@ def explain_alert(signal, price, sma20, sma50):
     if not GEMINI_API_KEY:
         return fallback_explanation(signal, price, sma20, sma50)
     try:
-        import google.generativeai as genai
-        genai.configure(api_key=GEMINI_API_KEY)
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        from google import genai
+        client = genai.Client(api_key=GEMINI_API_KEY)
         prompt = f"""اكتب جملتين بس بالعربي البسيط (مصري) تشرح لمستثمر عادي
 ليه ظهرت الإشارة دي، من غير مقدمة ولا خاتمة:
 
@@ -208,7 +208,7 @@ def explain_alert(signal, price, sma20, sma50):
 المتوسط القريب (20 يوم): {sma20:.2f}
 المتوسط الطويل (50 يوم): {sma50:.2f}
 """
-        resp = model.generate_content(prompt)
+        resp = client.models.generate_content(model=GEMINI_MODEL, contents=prompt)
         text = (resp.text or "").strip()
         return text if text else fallback_explanation(signal, price, sma20, sma50)
     except Exception as e:
@@ -241,6 +241,33 @@ def seed_history(ticker, stock_state):
     stock_state["daily"] = [float(x) for x in h]
     stock_state["dates"] = [d.strftime("%Y-%m-%d") for d in h.index]
     print(f"  [seed] اتملّى {len(stock_state['daily'])} يوم تاريخ من yfinance")
+
+
+# ============================================================
+# توقع الجلسة الجاية (تقدير إحصائي من توزيع التغيرات اليومية
+# الفعلية للسهم في آخر ~60 يوم - مش نموذج تنبؤ ولا ضمان)
+# ============================================================
+def compute_outlook(daily, price, trend_up, trend_broken):
+    arr = np.array(daily[-HISTORY_WINDOW:], dtype=float)
+    rets = np.diff(arr) / arr[:-1]
+    n = len(rets)
+    if n < 20:
+        return None
+    lo, hi = np.percentile(rets, [10, 90])  # ~80% من الأيام وقعت جوه المدى ده
+    if trend_up:
+        label = "صاعد 📈"
+    elif trend_broken:
+        label = "هابط 📉"
+    else:
+        label = "محايد ➖"
+    return {
+        "label": label,
+        "range_low": price * (1 + lo),
+        "range_high": price * (1 + hi),
+        "p_up": float((rets > 0).mean() * 100),
+        "p_down": float((rets < 0).mean() * 100),
+        "days": n,
+    }
 
 
 # ============================================================
@@ -298,9 +325,22 @@ def process_stock(ticker, stock_state):
     if alert_signal:
         explanation = explain_alert(alert_signal, price, sma20, sma50)
         append_alert_log(ticker, alert_signal, price, sma20, sma50)
+        outlook = compute_outlook(daily, price, trend_up, trend_broken)
         return {"ticker": ticker, "signal": alert_signal, "price": price,
-                "sma20": sma20, "sma50": sma50, "explanation": explanation}
+                "sma20": sma20, "sma50": sma50, "explanation": explanation,
+                "outlook": outlook}
     return None
+
+
+def format_outlook(o):
+    if not o:
+        return ""
+    return (
+        f"🔮 مؤشر الجلسة الجاية: {o['label']}\n"
+        f"المدى المتوقع (احتمال حوالي 80%): {o['range_low']:.2f} - {o['range_high']:.2f} جنيه\n"
+        f"احتمال القفلة أعلى من النهاردة: {o['p_up']:.0f}%  |  أقل: {o['p_down']:.0f}%\n"
+        f"(تقدير إحصائي من آخر {o['days']} يوم، مش ضمان)\n\n"
+    )
 
 
 # ============================================================
@@ -328,6 +368,7 @@ def main():
             f"السعر: {a['price']:.2f} جنيه\n"
             f"المتوسط 20 يوم: {a['sma20']:.2f}  |  المتوسط 50 يوم: {a['sma50']:.2f}\n\n"
             f"{a['explanation']}\n\n"
+            f"{format_outlook(a.get('outlook'))}"
             f"⚠️ ده تنبيه بس - القرار وتنفيذه في حسابك الحقيقي ليك."
         )
         send_telegram(message)
