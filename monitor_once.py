@@ -380,7 +380,7 @@ def main():
         icon = "📈" if a["signal"] == "BUY" else "📉"
         label = "بداية ترند صاعد" if a["signal"] == "BUY" else "الترند اتكسر"
         message = (
-            f"{icon} {a['ticker']} - {label}\n"
+            f"{icon} {a['ticker'].replace('.CA', '')} - {label}\n"
             f"السعر: {a['price']:.2f} جنيه\n"
             f"المتوسط 20 يوم: {a['sma20']:.2f}  |  المتوسط 50 يوم: {a['sma50']:.2f}\n\n"
             f"{a['explanation']}\n\n"
