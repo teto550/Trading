@@ -232,13 +232,28 @@ def update_daily(stock_state, price):
     stock_state["daily"] = daily[-HISTORY_WINDOW:]
 
 
+def adjust_for_corporate_actions(values):
+    """
+    EGX عنده حد يومي ±10%، فأي قفزة أكبر من 20% في يوم واحد يبقى غالبًا
+    تقسيم أو أسهم مجانية (مش حركة سعر حقيقية). بنعدّل الأسعار اللي قبل
+    القفزة بنفس النسبة عشان المتوسطات ما تتبوظش.
+    """
+    a = [float(x) for x in values]
+    for i in range(len(a) - 1, 0, -1):
+        ratio = a[i] / a[i - 1]
+        if ratio < 0.8 or ratio > 1.25:
+            print(f"  [تعديل] قفزة بنسبة {ratio:.3f} عند القفلة رقم {i} - اتعدّلت الأسعار اللي قبلها")
+            a[:i] = [x * ratio for x in a[:i]]
+    return a
+
+
 def seed_history(ticker, stock_state):
     import yfinance as yf
     h = yf.Ticker(ticker).history(period="6mo", interval="1d")["Close"].dropna()
     if h.empty:
         raise ValueError("مفيش تاريخ متاح من yfinance")
     h = h.tail(HISTORY_WINDOW)
-    stock_state["daily"] = [float(x) for x in h]
+    stock_state["daily"] = adjust_for_corporate_actions(h)
     stock_state["dates"] = [d.strftime("%Y-%m-%d") for d in h.index]
     print(f"  [seed] اتملّى {len(stock_state['daily'])} يوم تاريخ من yfinance")
 
@@ -294,7 +309,8 @@ def process_stock(ticker, stock_state):
     if prev_price and abs(price - prev_price) / prev_price > PRICE_SANITY_THRESHOLD:
         print(f"  [رفض] قفزة غريبة {prev_price:.2f} -> {price:.2f}، اتجاهلت")
         send_telegram(f"⚠️ {ticker}: قفزة سعر غريبة {prev_price:.2f} → {price:.2f}، "
-                      f"اتجاهلت ومتخزنتش. راجعها يدويًا.")
+                      f"اتجاهلت ومتخزنتش. راجعها يدويًا. لو ده تقسيم أو أسهم مجانية "
+                      f"امسح السهم ده من state.json عشان يتعمله seed من جديد.")
         return None
 
     update_daily(stock_state, price)
