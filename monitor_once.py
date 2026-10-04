@@ -47,7 +47,7 @@ ALERT_LOG_FILE = "alert_log.csv"
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "")
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.8-flash")
 FORCE_RUN = os.environ.get("FORCE_RUN", "false").lower() == "true"
 
 # لو السعر الجديد مختلف عن آخر سعر معروف بنسبة أكبر من الحد ده،
