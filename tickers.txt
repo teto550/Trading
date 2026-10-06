@@ -1,9 +1,8 @@
 # قايمة الأسهم اللي البوت بيراقبها (كود Reuters بصيغة XXXX.CA).
-# الملف بيتقري بـ regex: الق الجدول كله من موقع EGX زي ما هو (ISIN وأسماء
-# وأوزان) تحت الأسطر دي، وأي كود بالشكل ده بيتاخد والتكرار بيتشال لوحده.
-# الأسطر اللي بتبدأ بـ # بتتجاهل.
+# الملف بيتقري بـ regex: أي كود بالشكل ده بيتاخد والتكرار بيتشال لوحده،
+# فتقدر تلزق جدول EGX كامل زي ما هو. الأسطر اللي بتبدأ بـ # بتتجاهل.
 #
-# --- EGX 30 ---
+# --- EGX 30 (31 خط تداول) ---
 ABUK.CA
 ADIB.CA
 ALCN.CA
@@ -36,4 +35,74 @@ TMGH.CA
 VLMR.CA
 VLMRA.CA
 #
-# --- EGX 70 / EGX 100: الزق هنا ---
+# --- باقي EGX 100 (يشمل EGX 70) من ملفات EGX الرسمية ---
+ACTF.CA
+ATLC.CA
+AMER.CA
+ARAB.CA
+AMIA.CA
+AIDC.CA
+AIHC.CA
+ARCC.CA
+ASCM.CA
+ASPI.CA
+AIFI.CA
+BONY.CA
+COSG.CA
+POUL.CA
+CSAG.CA
+PRCL.CA
+CNFN.CA
+CIEB.CA
+DAPH.CA
+DSCW.CA
+EGCH.CA
+EGTS.CA
+PHAR.CA
+MPRC.CA
+ETRS.CA
+EHDR.CA
+ELKA.CA
+KABO.CA
+OBRI.CA
+ELSH.CA
+ELEC.CA
+NIPH.CA
+UEGC.CA
+SWDY.CA
+ENGC.CA
+EXPA.CA
+ZEOT.CA
+GDWA.CA
+GOUR.CA
+GPIM.CA
+HDBK.CA
+IEEC.CA
+ICFC.CA
+ISMQ.CA
+IDRE.CA
+ISMA.CA
+LCSW.CA
+MCRO.CA
+MASR.CA
+MPCO.CA
+MEPA.CA
+MPCI.CA
+MBSC.CA
+ATQA.CA
+MTIE.CA
+NCCW.CA
+OFH.CA
+OIH.CA
+ORWE.CA
+PRDC.CA
+SIPC.CA
+SDTI.CA
+SCEM.CA
+OCDI.CA
+SVCE.CA
+TAQA.CA
+MOED.CA
+VALU.CA
+UNIP.CA
+ZMID.CA
