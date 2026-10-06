@@ -26,15 +26,23 @@ trend_following اللي اتأكدنا منه بالباكتست وخارج ا�
 import os
 import json
 import csv
+import time
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
 import numpy as np
 import requests
 
+# مكونات EGX 30 (31 خط تداول - فالمور ليها خطين VLMR و VLMRA). القايمة بتتغير
+# مع إعادة تشكيل المؤشر، فالمصدر الأساسي هو TICKERS في monitor.yml
+EGX30_DEFAULT = ("ABUK.CA,ADIB.CA,ALCN.CA,AMOC.CA,BTFH.CA,CCAP.CA,CLHO.CA,COMI.CA,"
+                 "EAST.CA,EFID.CA,EFIH.CA,EGAL.CA,EMFD.CA,ETEL.CA,FWRY.CA,GBCO.CA,"
+                 "HELI.CA,HRHO.CA,ISPH.CA,JUFO.CA,MCQE.CA,MFPC.CA,ORAS.CA,ORHD.CA,"
+                 "PHDC.CA,RAYA.CA,RMDA.CA,SKPC.CA,TMGH.CA,VLMR.CA,VLMRA.CA")
+
 TICKERS = [t.strip() for t in os.environ.get(
     # GGRN اتشال: مش مغطى في yfinance/Yahoo Finance خالص
-    "TICKERS", "COMI.CA,EFIH.CA,EFID.CA,ABUK.CA"
+    "TICKERS", EGX30_DEFAULT
 ).split(",") if t.strip()]
 
 LOOKBACK_WINDOW = 20
@@ -74,7 +82,9 @@ def is_market_open_now():
 # ============================================================
 def default_stock_state():
     # daily = قفلة كل يوم تداول، dates = تاريخ كل قفلة (بتوقيت القاهرة)
-    return {"dates": [], "daily": [], "last_signal": "NONE"}  # NONE / BUY / SELL
+    # initialized = السهم اتعمله تهيئة صامتة (من غير تنبيه) أول ما التاريخ اكتمل
+    return {"dates": [], "daily": [], "last_signal": "NONE",  # NONE / BUY / SELL
+            "initialized": False}
 
 
 def load_state():
@@ -92,7 +102,10 @@ def load_state():
             stocks[ticker].setdefault("dates", [])
             stocks[ticker].setdefault("daily", [])
             stocks[ticker].pop("prices", None)  # تنسيق قديم (قراءات كل 15 دقيقة)
-    return {"stocks": stocks}
+            # الأسهم اللي عندها تاريخ كامل بالفعل متحسبش جديدة
+            stocks[ticker].setdefault(
+                "initialized", len(stocks[ticker]["daily"]) >= TREND_FILTER_WINDOW)
+    return {"stocks": stocks, "meta": raw.get("meta", {})}
 
 
 def save_state(state):
@@ -290,7 +303,7 @@ def compute_outlook(daily, price, trend_up, trend_broken):
 # مفيش تنفيذ ولا محفظة خالص
 # ============================================================
 def process_stock(ticker, stock_state):
-    if not stock_state.get("daily"):
+    if len(stock_state.get("daily", [])) < TREND_FILTER_WINDOW:
         try:
             seed_history(ticker, stock_state)
         except Exception as e:
@@ -326,6 +339,16 @@ def process_stock(ticker, stock_state):
     trend_up = price > sma20 and price > sma50
     trend_broken = price < sma50
 
+    status = "ترند صاعد" if trend_up else ("ترند منكسر" if trend_broken else "محايد")
+
+    # أول مرة السهم يتضاف: تهيئة صامتة بدل ما كل سهم صاعد يبعت "بداية ترند"
+    if not stock_state.get("initialized"):
+        stock_state["last_signal"] = "BUY" if trend_up else "NONE"
+        stock_state["initialized"] = True
+        print(f"  [تهيئة] السعر: {price:.2f} | SMA20: {sma20:.2f} | SMA50: {sma50:.2f} | "
+              f"الحالة: {status} - من غير تنبيه")
+        return {"ticker": ticker, "signal": "INIT", "status": status}
+
     alert_signal = None
     if trend_up and stock_state["last_signal"] != "BUY":
         alert_signal = "BUY"
@@ -334,7 +357,6 @@ def process_stock(ticker, stock_state):
         alert_signal = "SELL"
         stock_state["last_signal"] = "SELL"
 
-    status = "ترند صاعد" if trend_up else ("ترند منكسر" if trend_broken else "محايد")
     print(f"  السعر: {price:.2f} | SMA20: {sma20:.2f} | SMA50: {sma50:.2f} | "
           f"الحالة: {status} | آخر إشارة: {stock_state['last_signal']}")
 
@@ -368,13 +390,39 @@ def main():
         return
 
     state = load_state()
-    alerts = []
+    results = []
 
     for ticker in TICKERS:
         print(f"\n[{ticker}]")
         result = process_stock(ticker, state["stocks"][ticker])
         if result:
-            alerts.append(result)
+            results.append(result)
+        time.sleep(1)  # تهدئة بسيطة بين الطلبات (31 سهم)
+
+    alerts = [r for r in results if r["signal"] != "INIT"]
+    inits = [r for r in results if r["signal"] == "INIT"]
+
+    # رسالة واحدة بس للأسهم الجديدة بدل رسالة لكل سهم
+    if inits:
+        def names(status):
+            return ", ".join(r["ticker"].replace(".CA", "") for r in inits if r["status"] == status) or "-"
+        send_telegram(
+            f"✅ اتضاف {len(inits)} سهم للمراقبة (من غير تنبيهات أولية)\n"
+            f"📈 ترند صاعد دلوقتي: {names('ترند صاعد')}\n"
+            f"📉 ترند منكسر: {names('ترند منكسر')}\n"
+            f"➖ محايد: {names('محايد')}\n\n"
+            f"من هنا هتوصلك تنبيهات بس لما الإشارة تتغير."
+        )
+
+    # أسهم لسه ماجمعتش 50 يوم (مثلاً yfinance مش مغطيها) - تحذير مرة واحدة
+    meta = state.setdefault("meta", {})
+    warned = set(meta.get("short_warned", []))
+    short = [t for t in TICKERS
+             if len(state["stocks"][t]["daily"]) < TREND_FILTER_WINDOW and t not in warned]
+    if short:
+        send_telegram("⚠️ الأسهم دي مفيش ليها تاريخ كفاية من yfinance، هتتأخر لحد ما تجمع 50 يوم: "
+                      + ", ".join(t.replace(".CA", "") for t in short))
+        meta["short_warned"] = sorted(warned | set(short))
 
     for a in alerts:
         icon = "📈" if a["signal"] == "BUY" else "📉"
