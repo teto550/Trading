@@ -95,7 +95,9 @@ DAILY_FOCUS = [t.strip().upper() for t in os.environ.get(
     "DAILY_FOCUS", "COMI.CA,EFIH.CA,EFID.CA,ABUK.CA").split(",") if t.strip()]
 DAILY_REPORT_HOUR = 14      # بعد الساعة دي (القاهرة) في أيام التداول
 NEAR_SIGNAL_PCT = 2.0       # "قريب من إشارة" = أقل من 2% بعيد عن المتوسط
-TOP_N = 5
+TOP_N = int(os.environ.get("TOP_N", "5"))   # عدد الأسهم في كل قسم من التقرير
+# أقصى عدد أسهم في جدول التوقع اليومي (0 = كل الأسهم). الباقي بتاخده بكتابة الكود.
+FORECAST_TABLE_MAX = int(os.environ.get("FORECAST_TABLE_MAX", "60"))
 
 
 # ============================================================
@@ -172,7 +174,7 @@ def fetch_price_mubasher(ticker):
     resp = requests.get(url, headers=headers, timeout=15)
     resp.raise_for_status()
     match = re.search(
-        r'market time\.(?:(?!\d{1,3}\.\d{1,2}).){0,300}?(\d{1,3}\.\d{1,2})',
+        r'market time\.(?:(?!\d{1,4}\.\d{1,3}).){0,300}?(\d{1,4}\.\d{1,3})',
         resp.text, re.DOTALL,
     )
     if not match:
@@ -366,6 +368,7 @@ def compute_outlook(daily, price, trend_up, trend_broken):
         "down_low": price * (1 + dn_lo),
         "down_high": price * (1 + dn_hi),
         "days": n,
+        "flat_frac": float((rets == 0).mean()),
     }
 
 
@@ -374,10 +377,15 @@ def compute_outlook(daily, price, trend_up, trend_broken):
 # مفيش تنفيذ ولا محفظة خالص
 # ============================================================
 def process_stock(ticker, stock_state):
-    if len(stock_state.get("daily", [])) < TREND_FILTER_WINDOW:
+    today_str = datetime.now(ZoneInfo("Africa/Cairo")).strftime("%Y-%m-%d")
+    # لو yfinance معندوش تاريخ السهم ده، منعيدش المحاولة غير مرة في اليوم
+    if (len(stock_state.get("daily", [])) < TREND_FILTER_WINDOW
+            and stock_state.get("seed_failed_on") != today_str):
         try:
             seed_history(ticker, stock_state)
+            stock_state.pop("seed_failed_on", None)
         except Exception as e:
+            stock_state["seed_failed_on"] = today_str
             print(f"  فشل seed: {e}")
 
     daily = stock_state.get("daily", [])
@@ -476,8 +484,15 @@ def forecast_table(state):
     if not rows:
         return ""
     rows.sort(key=lambda r: (-r[0], -r[1]))
-    lines = ["🔮 توقع الجلسة الجاية - كل الأسهم",
-             "(مرتبة من الأعلى تأكيدًا للصعود)",
+    total = len(rows)
+    if FORECAST_TABLE_MAX and total > FORECAST_TABLE_MAX:
+        rows = rows[:FORECAST_TABLE_MAX]
+        title = (f"🔮 توقع الجلسة الجاية - أعلى {len(rows)} سهم تأكيدًا للصعود من {total}\n"
+                 f"(اكتب كود أي سهم تاني وهيجيلك توقعه)")
+    else:
+        title = ("🔮 توقع الجلسة الجاية - كل الأسهم\n"
+                 "(مرتبة من الأعلى تأكيدًا للصعود)")
+    lines = [title,
              "الاسم: اتجاه | صعود% | تأكيد% | لو صعد | لو هبط", ""]
     for tech, p_up, name, o in rows:
         arrow = "📈" if tech >= 60 else ("📉" if tech <= 40 else "➖")
@@ -577,7 +592,7 @@ def handle_telegram_commands(state):
             continue
         words = [w.upper() for w in re.findall(r"[A-Za-z]{3,6}", text)]
         if any(w in ("ALL", "LIST") for w in words) or text in ("/all", "/list", "الكل"):
-            send_telegram(overview_text(state))
+            send_long(overview_text(state))
             continue
         ticker = next((bases[w] for w in words if w in bases), None)
         if ticker:
@@ -602,76 +617,59 @@ def send_long(text, limit=3800):
 
 
 def build_daily_report(state, today):
-    up = down = flat = 0
-    movers = []          # (chg%, name, price)
-    near_buy, near_sell = [], []
-    counts = {"صاعد": 0, "منكسر": 0, "محايد": 0, "بيجمع": 0}
+    """
+    تقرير مختصر: (1) أكتر الأسهم ارتفاعًا النهاردة (2) أكتر الأسهم ترشيحًا
+    للصعود في الجلسة الجاية. مفيش حاجة تانية.
+    """
+    movers = []      # (chg%, name, price)
+    candidates = []  # (tech, p_up, name, outlook, price)
 
     for t in TICKERS:
         st = state["stocks"][t]
         daily, dates = st["daily"], st["dates"]
         name = t.replace(".CA", "")
         if len(daily) < TREND_FILTER_WINDOW:
-            counts["بيجمع"] += 1
             continue
         price = daily[-1]
-        sma20 = float(np.mean(daily[-LOOKBACK_WINDOW:]))
-        sma50 = float(np.mean(daily[-TREND_FILTER_WINDOW:]))
-        trend_up = price > sma20 and price > sma50
-        trend_broken = price < sma50
-        counts["صاعد" if trend_up else ("منكسر" if trend_broken else "محايد")] += 1
 
         fresh = bool(dates) and dates[-1] == today and len(daily) >= 2
         if fresh:
             chg = (price / daily[-2] - 1) * 100
-            movers.append((chg, name, price))
-            if chg > 0.005:
-                up += 1
-            elif chg < -0.005:
-                down += 1
-            else:
-                flat += 1
+            if chg > 0:
+                movers.append((chg, name, price))
 
-        if not trend_up:
-            gap = (max(sma20, sma50) / price - 1) * 100
-            if 0 < gap <= NEAR_SIGNAL_PCT:
-                near_buy.append((gap, name))
-        elif st.get("last_signal") == "BUY":
-            gap = (price / sma50 - 1) * 100
-            if 0 <= gap <= NEAR_SIGNAL_PCT:
-                near_sell.append((gap, name))
+        o = compute_outlook(daily, price, False, False)
+        # بنستبعد الأسهم اللي واقفة كتير (أكتر من 25% من الأيام سعرها ثابت)
+        # عشان توقعها مش موثوق
+        if o and o["tech"] >= 60 and o["flat_frac"] <= 0.25:
+            candidates.append((o["tech"], o["p_up"], name, o, price))
 
     movers.sort(reverse=True)
+    candidates.sort(key=lambda r: (-r[0], -r[1]))
+
     lines = [f"📊 تقرير نهاية اليوم - {today}", ""]
+
+    lines.append("🔺 أكتر الأسهم ارتفاعًا النهاردة:")
     if movers:
-        lines.append(f"السوق النهاردة: 🔺 {up} سهم طلع | 🔻 {down} نزل | ➖ {flat} ثابت")
-    lines.append(f"📈 ترند صاعد: {counts['صاعد']}  |  📉 منكسر: {counts['منكسر']}  |  "
-                 f"➖ محايد: {counts['محايد']}  |  ⏳ بيجمع داتا: {counts['بيجمع']}")
+        lines += [f"{n} {c:+.1f}% ({p:.2f} جنيه)" for c, n, p in movers[:TOP_N]]
+    else:
+        lines.append("مفيش أسهم طلعت النهاردة (أو مفيش بيانات محدثة).")
 
-    if movers:
-        top = [m for m in movers if m[0] > 0][:TOP_N]
-        bottom = [m for m in reversed(movers) if m[0] < 0][:TOP_N]
-        if top:
-            lines += ["", "🔺 أكبر صعود النهاردة:"]
-            lines += [f"{n} {c:+.1f}% ({p:.2f})" for c, n, p in top]
-        if bottom:
-            lines += ["", "🔻 أكبر هبوط النهاردة:"]
-            lines += [f"{n} {c:+.1f}% ({p:.2f})" for c, n, p in bottom]
+    lines += ["", "🔮 أكتر الأسهم ترشيحًا للصعود في الجلسة الجاية:"]
+    if candidates:
+        for tech, p_up, name, o, price in candidates[:TOP_N]:
+            lines += [
+                "",
+                f"📈 {name} - آخر سعر {price:.2f}",
+                f"احتمال صعود {o['p_up']:.0f}% | هبوط {o['p_down']:.0f}%",
+                f"✅ تأكيد الصعود: {o['tech']:.0f}% ({o['tech_k']} من 5 مؤشرات)",
+                f"لو صعد: {o['up_low']:.2f} - {o['up_high']:.2f} جنيه",
+                f"لو هبط: {o['down_low']:.2f} - {o['down_high']:.2f} جنيه",
+            ]
+    else:
+        lines.append("مفيش أسهم تأكيدها فوق 60% النهاردة.")
 
-    if near_buy:
-        near_buy.sort()
-        lines += ["", f"🎯 قريب من بداية ترند صاعد (أقل من {NEAR_SIGNAL_PCT:.0f}% تحت المتوسط):",
-                  ", ".join(f"{n} (-{g:.1f}%)" for g, n in near_buy[:10])]
-    if near_sell:
-        near_sell.sort()
-        lines += ["", f"⚠️ قريب من كسر الترند (أقل من {NEAR_SIGNAL_PCT:.0f}% فوق SMA50):",
-                  ", ".join(f"{n} (+{g:.1f}%)" for g, n in near_sell[:10])]
-
-    focus = [t for t in DAILY_FOCUS if t in state["stocks"]]
-    if focus:
-        lines += ["", "📌 الأسهم اللي بتتابعها:"]
-        for t in focus:
-            lines += ["", analyze_stock_text(t, state["stocks"][t])]
+    lines += ["", "(تقدير إحصائي من تاريخ كل سهم، مش توصية ولا ضمان)"]
     return "\n".join(lines)
 
 
@@ -691,9 +689,6 @@ def maybe_send_daily_report(state):
                    for t in TICKERS):
             return
     send_long(build_daily_report(state, today))
-    table = forecast_table(state)
-    if table:
-        send_long(table)
     if not FORCE_RUN:
         meta["report_date"] = today
 
@@ -718,7 +713,7 @@ def main():
         result = process_stock(ticker, state["stocks"][ticker])
         if result:
             results.append(result)
-        time.sleep(1)  # تهدئة بسيطة بين الطلبات (31 سهم)
+        time.sleep(0.3)  # تهدئة بسيطة بين الطلبات
 
     alerts = [r for r in results if r["signal"] != "INIT"]
     inits = [r for r in results if r["signal"] == "INIT"]
@@ -727,7 +722,7 @@ def main():
     if inits:
         def names(status):
             return ", ".join(r["ticker"].replace(".CA", "") for r in inits if r["status"] == status) or "-"
-        send_telegram(
+        send_long(
             f"✅ اتضاف {len(inits)} سهم للمراقبة (من غير تنبيهات أولية)\n"
             f"📈 ترند صاعد دلوقتي: {names('ترند صاعد')}\n"
             f"📉 ترند منكسر: {names('ترند منكسر')}\n"
@@ -741,7 +736,7 @@ def main():
     short = [t for t in TICKERS
              if len(state["stocks"][t]["daily"]) < TREND_FILTER_WINDOW and t not in warned]
     if short:
-        send_telegram("⚠️ الأسهم دي مفيش ليها تاريخ كفاية من yfinance، هتتأخر لحد ما تجمع 50 يوم: "
+        send_long("⚠️ الأسهم دي مفيش ليها تاريخ كفاية من yfinance، هتتأخر لحد ما تجمع 50 يوم: "
                       + ", ".join(t.replace(".CA", "") for t in short))
         meta["short_warned"] = sorted(warned | set(short))
 
