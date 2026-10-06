@@ -85,6 +85,7 @@ FORCE_RUN = os.environ.get("FORCE_RUN", "false").lower() == "true"
 # لو السعر الجديد مختلف عن آخر سعر معروف بنسبة أكبر من الحد ده،
 # هنتأكد منه عن طريق yfinance قبل ما نصدقه
 PRICE_SANITY_THRESHOLD = 0.20
+JUMP_CONFIRM_RUNS = 2  # عدد الـ runs اللي لازم السعر الجديد يثبت فيها قبل تعديل التاريخ
 
 # لو الإشارات في run واحد أكتر من العدد ده، بتتبعت في رسالة واحدة مختصرة
 ALERT_DIGEST_THRESHOLD = 5
@@ -402,17 +403,39 @@ def process_stock(ticker, stock_state):
         print(f"  [تجاهل] سعر غير صالح ({price}) - غالبًا السهم موقوف، هحاول في الـ run الجاي")
         return None
 
-    # رفض القفزة الغريبة: متتخزنش ويتبعتلك تحذير (مرة واحدة في اليوم لكل سهم)
+    # قفزة أكبر من 20% في يوم: حد EGX اليومي 10%، فغالبًا تقسيم/أسهم مجانية أو
+    # بيانات غلط. أول مرة بنتجاهلها ونحذرك، ولو السعر ثبت على نفس المستوى
+    # الجديد في run تاني بنعدّل التاريخ بنفس النسبة ونكمل تلقائي.
     if prev_price and abs(price - prev_price) / prev_price > PRICE_SANITY_THRESHOLD:
-        print(f"  [رفض] قفزة غريبة {prev_price:.2f} -> {price:.2f}، اتجاهلت")
-        today = datetime.now(ZoneInfo("Africa/Cairo")).strftime("%Y-%m-%d")
-        if stock_state.get("spike_warned_on") != today:
-            stock_state["spike_warned_on"] = today
-            send_telegram(f"⚠️ {ticker.replace('.CA', '')}: قفزة سعر غريبة "
-                          f"{prev_price:.2f} → {price:.2f}، اتجاهلت ومتخزنتش. راجعها يدويًا. "
-                          f"لو ده تقسيم أو أسهم مجانية امسح السهم ده من state.json "
-                          f"عشان يتعمله seed من جديد.")
-        return None
+        name = ticker.replace(".CA", "")
+        pend = stock_state.get("pending_jump")
+        if pend and abs(price - pend["price"]) / pend["price"] <= 0.05:
+            pend["count"] += 1
+        else:
+            pend = {"price": price, "count": 1}
+        stock_state["pending_jump"] = pend
+
+        if pend["count"] >= JUMP_CONFIRM_RUNS:
+            ratio = price / prev_price
+            stock_state["daily"] = [x * ratio for x in stock_state["daily"]]
+            stock_state.pop("pending_jump", None)
+            print(f"  [تعديل تلقائي] السعر ثبت على مستوى جديد ({prev_price:.2f} -> {price:.2f})، "
+                  f"اتعدّل التاريخ بنسبة {ratio:.3f}")
+            send_telegram(f"🔄 {name}: السعر ثبت على مستوى جديد ({prev_price:.2f} → {price:.2f}) "
+                          f"في أكتر من run، فعدّلت التاريخ بنسبة {ratio:.3f} وكملت. "
+                          f"غالبًا تقسيم أو أسهم مجانية - راجعه لو مش متوقع.")
+            prev_price = stock_state["daily"][-1]
+        else:
+            print(f"  [رفض] قفزة غريبة {prev_price:.2f} -> {price:.2f}، اتجاهلت (استنى تأكيد)")
+            today = datetime.now(ZoneInfo("Africa/Cairo")).strftime("%Y-%m-%d")
+            if stock_state.get("spike_warned_on") != today:
+                stock_state["spike_warned_on"] = today
+                send_telegram(f"⚠️ {name}: قفزة سعر غريبة {prev_price:.2f} → {price:.2f}، "
+                              f"اتجاهلت مؤقتًا. لو السعر ثبت على نفس المستوى في الـ run الجاي "
+                              f"هعدّل التاريخ تلقائيًا (تقسيم/أسهم مجانية). راجعه على Mubasher.")
+            return None
+    else:
+        stock_state.pop("pending_jump", None)
 
     update_daily(stock_state, price)
     daily = stock_state["daily"]
