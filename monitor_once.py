@@ -345,12 +345,21 @@ def process_stock(ticker, stock_state):
         print(f"  خطأ في جلب السعر: {e}")
         return None
 
-    # رفض القفزة الغريبة: متتخزنش ويتبعتلك تحذير تراجعه يدويًا
+    # سعر صفر أو سالب = بيانات غير صالحة (غالبًا سهم موقوف أو الصفحة مفيهاش سعر)
+    if price is None or price <= 0:
+        print(f"  [تجاهل] سعر غير صالح ({price}) - غالبًا السهم موقوف، هحاول في الـ run الجاي")
+        return None
+
+    # رفض القفزة الغريبة: متتخزنش ويتبعتلك تحذير (مرة واحدة في اليوم لكل سهم)
     if prev_price and abs(price - prev_price) / prev_price > PRICE_SANITY_THRESHOLD:
         print(f"  [رفض] قفزة غريبة {prev_price:.2f} -> {price:.2f}، اتجاهلت")
-        send_telegram(f"⚠️ {ticker}: قفزة سعر غريبة {prev_price:.2f} → {price:.2f}، "
-                      f"اتجاهلت ومتخزنتش. راجعها يدويًا. لو ده تقسيم أو أسهم مجانية "
-                      f"امسح السهم ده من state.json عشان يتعمله seed من جديد.")
+        today = datetime.now(ZoneInfo("Africa/Cairo")).strftime("%Y-%m-%d")
+        if stock_state.get("spike_warned_on") != today:
+            stock_state["spike_warned_on"] = today
+            send_telegram(f"⚠️ {ticker.replace('.CA', '')}: قفزة سعر غريبة "
+                          f"{prev_price:.2f} → {price:.2f}، اتجاهلت ومتخزنتش. راجعها يدويًا. "
+                          f"لو ده تقسيم أو أسهم مجانية امسح السهم ده من state.json "
+                          f"عشان يتعمله seed من جديد.")
         return None
 
     update_daily(stock_state, price)
