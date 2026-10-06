@@ -14642,7 +14642,11 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "spike_warned_on": "2026-10-07"
+      "spike_warned_on": "2026-10-07",
+      "pending_jump": {
+        "price": 498.34,
+        "count": 1
+      }
     },
     "ADCI.CA": {
       "dates": [
@@ -22521,7 +22525,11 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "spike_warned_on": "2026-10-07"
+      "spike_warned_on": "2026-10-07",
+      "pending_jump": {
+        "price": 1.149,
+        "count": 1
+      }
     },
     "GRCA.CA": {
       "dates": [
@@ -23056,7 +23064,11 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "spike_warned_on": "2026-10-07"
+      "spike_warned_on": "2026-10-07",
+      "pending_jump": {
+        "price": 0.8,
+        "count": 1
+      }
     },
     "FERC.CA": {
       "dates": [
