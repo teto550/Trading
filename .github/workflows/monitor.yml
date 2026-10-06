@@ -31,7 +31,7 @@ jobs:
         env:
           # GGRN اتشال: مش مغطى في yfinance/Yahoo Finance خالص (اتدرج
           # في سوق النيل يوليو 2024، مفيش بيانات عنه في المصدر ده)
-          TICKERS: "COMI.CA,EFIH.CA,EFID.CA,ABUK.CA"
+          TICKERS: "ABUK.CA,ADIB.CA,ALCN.CA,AMOC.CA,BTFH.CA,CCAP.CA,CLHO.CA,COMI.CA,EAST.CA,EFID.CA,EFIH.CA,EGAL.CA,EMFD.CA,ETEL.CA,FWRY.CA,GBCO.CA,HELI.CA,HRHO.CA,ISPH.CA,JUFO.CA,MCQE.CA,MFPC.CA,ORAS.CA,ORHD.CA,PHDC.CA,RAYA.CA,RMDA.CA,SKPC.CA,TMGH.CA,VLMR.CA,VLMRA.CA"
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
