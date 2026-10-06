@@ -89,6 +89,14 @@ PRICE_SANITY_THRESHOLD = 0.20
 # لو الإشارات في run واحد أكتر من العدد ده، بتتبعت في رسالة واحدة مختصرة
 ALERT_DIGEST_THRESHOLD = 5
 
+# التقرير اليومي: بيتبعت لوحده مرة في اليوم بعد الساعة 2 الضهر بتوقيت القاهرة.
+# DAILY_FOCUS = أسهم بتاخد تحليل كامل في التقرير (غيرها من env في monitor.yml)
+DAILY_FOCUS = [t.strip().upper() for t in os.environ.get(
+    "DAILY_FOCUS", "COMI.CA,EFIH.CA,EFID.CA,ABUK.CA").split(",") if t.strip()]
+DAILY_REPORT_HOUR = 14      # بعد الساعة دي (القاهرة) في أيام التداول
+NEAR_SIGNAL_PCT = 2.0       # "قريب من إشارة" = أقل من 2% بعيد عن المتوسط
+TOP_N = 5
+
 
 # ============================================================
 # مواعيد تداول EGX
@@ -306,21 +314,57 @@ def compute_outlook(daily, price, trend_up, trend_broken):
     arr = np.array(daily[-HISTORY_WINDOW:], dtype=float)
     rets = np.diff(arr) / arr[:-1]
     n = len(rets)
-    if n < 20:
+    if n < 20 or len(daily) < TREND_FILTER_WINDOW:
         return None
-    lo, hi = np.percentile(rets, [10, 90])  # ~80% من الأيام وقعت جوه المدى ده
-    if trend_up:
-        label = "صاعد 📈"
-    elif trend_broken:
-        label = "هابط 📉"
+
+    # 1) احتمال صعود/هبوط: نسبة أيام الصعود والهبوط في تاريخ السهم نفسه،
+    #    مع تهدئة ناحية 50% (K) عشان العينة صغيرة وماتديش ثقة زيادة.
+    #    الأيام الثابتة (إجازات/سهم واقف) بتتشال من الحساب.
+    K = 20
+    ups = int((rets > 0).sum())
+    downs = int((rets < 0).sum())
+    p_up = (ups + K / 2) / (ups + downs + K) * 100
+    p_down = 100 - p_up
+
+    # 2) تأكيد الصعود فنيًا: كام مؤشر من 5 بيأيد الصعود
+    sma20 = float(np.mean(daily[-LOOKBACK_WINDOW:]))
+    sma50 = float(np.mean(daily[-TREND_FILTER_WINDOW:]))
+    checks = [
+        price > sma20,
+        price > sma50,
+        sma20 > sma50,
+        price > daily[-6],
+        price > daily[-21],
+    ]
+    k = sum(checks)
+    tech = k / len(checks) * 100
+    if tech >= 60:
+        label = "صعود 📈"
+    elif tech <= 40:
+        label = "هبوط 📉"
     else:
         label = "محايد ➖"
+
+    # 3) رينج السعر لو صعد / لو هبط: من توزيع حركات الصعود (أو الهبوط)
+    #    الفعلية للسهم - من المئين 10 للمئين 90
+    up_r = rets[rets > 0]
+    dn_r = rets[rets < 0]
+    if len(up_r) < 5:
+        up_r = np.array([0.0, abs(rets).max()])
+    if len(dn_r) < 5:
+        dn_r = np.array([-abs(rets).max(), 0.0])
+    up_lo, up_hi = np.percentile(up_r, [10, 90])
+    dn_lo, dn_hi = np.percentile(dn_r, [10, 90])  # dn_lo = أكبر هبوط
     return {
         "label": label,
-        "range_low": price * (1 + lo),
-        "range_high": price * (1 + hi),
-        "p_up": float((rets > 0).mean() * 100),
-        "p_down": float((rets < 0).mean() * 100),
+        "p_up": float(p_up),
+        "p_down": float(p_down),
+        "tech": float(tech),
+        "tech_k": k,
+        "up_low": price * (1 + up_lo),
+        "up_high": price * (1 + up_hi),
+        "down_low": price * (1 + dn_lo),
+        "down_high": price * (1 + dn_hi),
         "days": n,
     }
 
@@ -410,11 +454,38 @@ def format_outlook(o):
     if not o:
         return ""
     return (
-        f"🔮 مؤشر الجلسة الجاية: {o['label']}\n"
-        f"المدى المتوقع (احتمال حوالي 80%): {o['range_low']:.2f} - {o['range_high']:.2f} جنيه\n"
-        f"احتمال القفلة أعلى من النهاردة: {o['p_up']:.0f}%  |  أقل: {o['p_down']:.0f}%\n"
+        f"🔮 توقع الجلسة الجاية: {o['label']}\n"
+        f"احتمال صعود {o['p_up']:.0f}%  |  هبوط {o['p_down']:.0f}%\n"
+        f"✅ تأكيد الصعود فنيًا: {o['tech']:.0f}% ({o['tech_k']} من 5 مؤشرات)\n"
+        f"لو صعد: السعر في حدود {o['up_low']:.2f} - {o['up_high']:.2f} جنيه\n"
+        f"لو هبط: السعر في حدود {o['down_low']:.2f} - {o['down_high']:.2f} جنيه\n"
         f"(تقدير إحصائي من آخر {o['days']} يوم، مش ضمان)\n\n"
     )
+
+
+def forecast_table(state):
+    rows = []
+    for t in TICKERS:
+        daily = state["stocks"][t]["daily"]
+        if len(daily) < TREND_FILTER_WINDOW:
+            continue
+        price = daily[-1]
+        o = compute_outlook(daily, price, False, False)
+        if o:
+            rows.append((o["tech"], o["p_up"], t.replace(".CA", ""), o))
+    if not rows:
+        return ""
+    rows.sort(key=lambda r: (-r[0], -r[1]))
+    lines = ["🔮 توقع الجلسة الجاية - كل الأسهم",
+             "(مرتبة من الأعلى تأكيدًا للصعود)",
+             "الاسم: اتجاه | صعود% | تأكيد% | لو صعد | لو هبط", ""]
+    for tech, p_up, name, o in rows:
+        arrow = "📈" if tech >= 60 else ("📉" if tech <= 40 else "➖")
+        lines.append(f"{arrow} {name}: {p_up:.0f}% | {tech:.0f}% | "
+                     f"{o['up_low']:.2f}-{o['up_high']:.2f} | "
+                     f"{o['down_low']:.2f}-{o['down_high']:.2f}")
+    lines += ["", "⚠️ تقديرات إحصائية من تاريخ كل سهم، مش توصية ولا ضمان."]
+    return "\n".join(lines)
 
 
 # ============================================================
@@ -517,6 +588,117 @@ def handle_telegram_commands(state):
 
 
 # ============================================================
+# التقرير اليومي التلقائي (من غير ما تكتب حاجة)
+# ============================================================
+def send_long(text, limit=3800):
+    chunk = ""
+    for line in text.split("\n"):
+        if len(chunk) + len(line) + 1 > limit and chunk:
+            send_telegram(chunk)
+            chunk = ""
+        chunk += line + "\n"
+    if chunk.strip():
+        send_telegram(chunk)
+
+
+def build_daily_report(state, today):
+    up = down = flat = 0
+    movers = []          # (chg%, name, price)
+    near_buy, near_sell = [], []
+    counts = {"صاعد": 0, "منكسر": 0, "محايد": 0, "بيجمع": 0}
+
+    for t in TICKERS:
+        st = state["stocks"][t]
+        daily, dates = st["daily"], st["dates"]
+        name = t.replace(".CA", "")
+        if len(daily) < TREND_FILTER_WINDOW:
+            counts["بيجمع"] += 1
+            continue
+        price = daily[-1]
+        sma20 = float(np.mean(daily[-LOOKBACK_WINDOW:]))
+        sma50 = float(np.mean(daily[-TREND_FILTER_WINDOW:]))
+        trend_up = price > sma20 and price > sma50
+        trend_broken = price < sma50
+        counts["صاعد" if trend_up else ("منكسر" if trend_broken else "محايد")] += 1
+
+        fresh = bool(dates) and dates[-1] == today and len(daily) >= 2
+        if fresh:
+            chg = (price / daily[-2] - 1) * 100
+            movers.append((chg, name, price))
+            if chg > 0.005:
+                up += 1
+            elif chg < -0.005:
+                down += 1
+            else:
+                flat += 1
+
+        if not trend_up:
+            gap = (max(sma20, sma50) / price - 1) * 100
+            if 0 < gap <= NEAR_SIGNAL_PCT:
+                near_buy.append((gap, name))
+        elif st.get("last_signal") == "BUY":
+            gap = (price / sma50 - 1) * 100
+            if 0 <= gap <= NEAR_SIGNAL_PCT:
+                near_sell.append((gap, name))
+
+    movers.sort(reverse=True)
+    lines = [f"📊 تقرير نهاية اليوم - {today}", ""]
+    if movers:
+        lines.append(f"السوق النهاردة: 🔺 {up} سهم طلع | 🔻 {down} نزل | ➖ {flat} ثابت")
+    lines.append(f"📈 ترند صاعد: {counts['صاعد']}  |  📉 منكسر: {counts['منكسر']}  |  "
+                 f"➖ محايد: {counts['محايد']}  |  ⏳ بيجمع داتا: {counts['بيجمع']}")
+
+    if movers:
+        top = [m for m in movers if m[0] > 0][:TOP_N]
+        bottom = [m for m in reversed(movers) if m[0] < 0][:TOP_N]
+        if top:
+            lines += ["", "🔺 أكبر صعود النهاردة:"]
+            lines += [f"{n} {c:+.1f}% ({p:.2f})" for c, n, p in top]
+        if bottom:
+            lines += ["", "🔻 أكبر هبوط النهاردة:"]
+            lines += [f"{n} {c:+.1f}% ({p:.2f})" for c, n, p in bottom]
+
+    if near_buy:
+        near_buy.sort()
+        lines += ["", f"🎯 قريب من بداية ترند صاعد (أقل من {NEAR_SIGNAL_PCT:.0f}% تحت المتوسط):",
+                  ", ".join(f"{n} (-{g:.1f}%)" for g, n in near_buy[:10])]
+    if near_sell:
+        near_sell.sort()
+        lines += ["", f"⚠️ قريب من كسر الترند (أقل من {NEAR_SIGNAL_PCT:.0f}% فوق SMA50):",
+                  ", ".join(f"{n} (+{g:.1f}%)" for g, n in near_sell[:10])]
+
+    focus = [t for t in DAILY_FOCUS if t in state["stocks"]]
+    if focus:
+        lines += ["", "📌 الأسهم اللي بتتابعها:"]
+        for t in focus:
+            lines += ["", analyze_stock_text(t, state["stocks"][t])]
+    return "\n".join(lines)
+
+
+def maybe_send_daily_report(state):
+    cairo = datetime.now(ZoneInfo("Africa/Cairo"))
+    today = cairo.strftime("%Y-%m-%d")
+    meta = state.setdefault("meta", {})
+    if not FORCE_RUN:
+        if cairo.weekday() not in {6, 0, 1, 2, 3}:      # أيام التداول بس
+            return
+        if cairo.hour < DAILY_REPORT_HOUR:
+            return
+        if meta.get("report_date") == today:
+            return
+        # لو مفيش ولا سهم اتحدّث النهاردة (إجازة مثلاً) متبعتش تقرير قديم
+        if not any(state["stocks"][t]["dates"] and state["stocks"][t]["dates"][-1] == today
+                   for t in TICKERS):
+            return
+    send_long(build_daily_report(state, today))
+    table = forecast_table(state)
+    if table:
+        send_long(table)
+    if not FORCE_RUN:
+        meta["report_date"] = today
+
+
+# ============================================================
 # MAIN
 # ============================================================
 def main():
@@ -525,6 +707,7 @@ def main():
 
     if not is_market_open_now() and not FORCE_RUN:
         print("السوق مقفول دلوقتي (برة مواعيد EGX) - مفيش فحص")
+        maybe_send_daily_report(state)  # لو الـ run جه بعد القفل وفيه تقرير النهاردة لسه
         save_state(state)
         return
 
@@ -593,6 +776,7 @@ def main():
     if not alerts:
         print("\nمفيش تغيير في أي إشارة النهاردة - مفيش تنبيهات.")
 
+    maybe_send_daily_report(state)
     save_state(state)
 
 
