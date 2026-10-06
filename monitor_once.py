@@ -40,10 +40,34 @@ EGX30_DEFAULT = ("ABUK.CA,ADIB.CA,ALCN.CA,AMOC.CA,BTFH.CA,CCAP.CA,CLHO.CA,COMI.C
                  "HELI.CA,HRHO.CA,ISPH.CA,JUFO.CA,MCQE.CA,MFPC.CA,ORAS.CA,ORHD.CA,"
                  "PHDC.CA,RAYA.CA,RMDA.CA,SKPC.CA,TMGH.CA,VLMR.CA,VLMRA.CA")
 
-TICKERS = [t.strip() for t in os.environ.get(
-    # GGRN اتشال: مش مغطى في yfinance/Yahoo Finance خالص
-    "TICKERS", EGX30_DEFAULT
-).split(",") if t.strip()]
+TICKERS_FILE = "tickers.txt"
+
+
+def load_tickers():
+    """
+    الأولوية: متغير TICKERS (لو متحدد) ثم ملف tickers.txt ثم قايمة EGX 30.
+    ملف tickers.txt بيتقري بـ regex: أي كود بالشكل XXXX.CA بيتاخد، فتقدر
+    تلزق فيه الجدول كله زي ما هو من موقع EGX (ISIN وأسماء وأوزان) والتكرار
+    بيتشال لوحده. أي سطر بيبدأ بـ # بيتتجاهل.
+    """
+    import re
+    raw = os.environ.get("TICKERS", "").strip()
+    if not raw and os.path.exists(TICKERS_FILE):
+        with open(TICKERS_FILE, "r", encoding="utf-8") as f:
+            raw = "\n".join(l for l in f if not l.lstrip().startswith("#"))
+    if not raw:
+        raw = EGX30_DEFAULT
+    seen, out = set(), []
+    for t in re.findall(r"[A-Za-z0-9]{2,8}\.CA", raw):
+        t = t.upper()
+        if t not in seen:
+            seen.add(t)
+            out.append(t)
+    return out
+
+
+# GGRN اتشال: مش مغطى في yfinance/Yahoo Finance خالص
+TICKERS = load_tickers()
 
 LOOKBACK_WINDOW = 20
 TREND_FILTER_WINDOW = 50
@@ -61,6 +85,9 @@ FORCE_RUN = os.environ.get("FORCE_RUN", "false").lower() == "true"
 # لو السعر الجديد مختلف عن آخر سعر معروف بنسبة أكبر من الحد ده،
 # هنتأكد منه عن طريق yfinance قبل ما نصدقه
 PRICE_SANITY_THRESHOLD = 0.20
+
+# لو الإشارات في run واحد أكتر من العدد ده، بتتبعت في رسالة واحدة مختصرة
+ALERT_DIGEST_THRESHOLD = 5
 
 
 # ============================================================
@@ -382,14 +409,116 @@ def format_outlook(o):
 
 
 # ============================================================
+# أوامر تليجرام: اكتب اسم سهم (مثلاً ABUK) والبوت يرد بتحليله.
+# بيتعالج مع كل run (مش لحظي) ومن chat_id بتاعك بس.
+# ============================================================
+def analyze_stock_text(ticker, stock_state):
+    name = ticker.replace(".CA", "")
+    daily = stock_state.get("daily", [])
+    dates = stock_state.get("dates", [])
+    if len(daily) < TREND_FILTER_WINDOW:
+        return (f"📊 {name}\nلسه بيجمع بيانات ({len(daily)}/{TREND_FILTER_WINDOW} يوم) "
+                f"- مفيش تحليل كفاية دلوقتي.")
+    price = daily[-1]
+    sma20 = float(np.mean(daily[-LOOKBACK_WINDOW:]))
+    sma50 = float(np.mean(daily[-TREND_FILTER_WINDOW:]))
+    trend_up = price > sma20 and price > sma50
+    trend_broken = price < sma50
+    status = "ترند صاعد 📈" if trend_up else ("ترند منكسر 📉" if trend_broken else "محايد ➖")
+
+    def pct(a, b):
+        return (a / b - 1) * 100
+
+    chg5 = pct(price, daily[-6]) if len(daily) > 5 else 0.0
+    chg20 = pct(price, daily[-21]) if len(daily) > 20 else 0.0
+    last = {"BUY": "شراء (الترند صاعد من وقتها)", "SELL": "بيع (الترند اتكسر)",
+            "NONE": "مفيش إشارة لسه"}.get(stock_state.get("last_signal", "NONE"), "-")
+    date = dates[-1] if dates else "-"
+    outlook = compute_outlook(daily, price, trend_up, trend_broken)
+    return (
+        f"📊 {name} - تحليل\n"
+        f"آخر سعر محفوظ: {price:.2f} جنيه ({date})\n"
+        f"الحالة: {status}\n"
+        f"المتوسط 20 يوم: {sma20:.2f} (السعر {pct(price, sma20):+.1f}%)\n"
+        f"المتوسط 50 يوم: {sma50:.2f} (السعر {pct(price, sma50):+.1f}%)\n"
+        f"التغير: 5 أيام {chg5:+.1f}%  |  20 يوم {chg20:+.1f}%\n"
+        f"آخر إشارة: {last}\n\n"
+        f"{format_outlook(outlook)}"
+        f"⚠️ تحليل فني بسيط مبني على القفلات اليومية، مش توصية."
+    )
+
+
+def overview_text(state):
+    groups = {"ترند صاعد": [], "ترند منكسر": [], "محايد": [], "بيجمع بيانات": []}
+    for t in TICKERS:
+        daily = state["stocks"][t]["daily"]
+        name = t.replace(".CA", "")
+        if len(daily) < TREND_FILTER_WINDOW:
+            groups["بيجمع بيانات"].append(name)
+            continue
+        price = daily[-1]
+        sma20 = float(np.mean(daily[-LOOKBACK_WINDOW:]))
+        sma50 = float(np.mean(daily[-TREND_FILTER_WINDOW:]))
+        if price > sma20 and price > sma50:
+            groups["ترند صاعد"].append(name)
+        elif price < sma50:
+            groups["ترند منكسر"].append(name)
+        else:
+            groups["محايد"].append(name)
+    icons = {"ترند صاعد": "📈", "ترند منكسر": "📉", "محايد": "➖", "بيجمع بيانات": "⏳"}
+    lines = [f"{icons[k]} {k} ({len(v)}): {', '.join(v)}" for k, v in groups.items() if v]
+    return "📋 حالة كل الأسهم\n" + "\n".join(lines)
+
+
+def handle_telegram_commands(state):
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+        return
+    import re
+    meta = state.setdefault("meta", {})
+    offset = meta.get("tg_offset", 0)
+    try:
+        resp = requests.get(
+            f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getUpdates",
+            params={"offset": offset, "timeout": 0}, timeout=15)
+        updates = resp.json().get("result", []) if resp.status_code == 200 else []
+    except Exception as e:
+        print("[تليجرام] فشل قراءة الرسايل:", e)
+        return
+
+    bases = {t.replace(".CA", ""): t for t in TICKERS}
+    for u in updates:
+        meta["tg_offset"] = u["update_id"] + 1
+        msg = u.get("message") or {}
+        # بنرد على صاحب البوت بس
+        if str(msg.get("chat", {}).get("id", "")) != str(TELEGRAM_CHAT_ID):
+            continue
+        text = (msg.get("text") or "").strip()
+        if not text:
+            continue
+        words = [w.upper() for w in re.findall(r"[A-Za-z]{3,6}", text)]
+        if any(w in ("ALL", "LIST") for w in words) or text in ("/all", "/list", "الكل"):
+            send_telegram(overview_text(state))
+            continue
+        ticker = next((bases[w] for w in words if w in bases), None)
+        if ticker:
+            send_telegram(analyze_stock_text(ticker, state["stocks"][ticker]))
+        else:
+            send_telegram("مش لاقي السهم ده في القايمة. اكتب كود السهم زي ABUK أو COMI، "
+                          "أو all عشان تشوف حالة كل الأسهم.\n\nالأكواد: " + ", ".join(bases))
+
+
+# ============================================================
 # MAIN
 # ============================================================
 def main():
+    state = load_state()
+    handle_telegram_commands(state)  # الرد على أسئلتك (شغال حتى والسوق مقفول)
+
     if not is_market_open_now() and not FORCE_RUN:
         print("السوق مقفول دلوقتي (برة مواعيد EGX) - مفيش فحص")
+        save_state(state)
         return
 
-    state = load_state()
     results = []
 
     for ticker in TICKERS:
@@ -424,7 +553,22 @@ def main():
                       + ", ".join(t.replace(".CA", "") for t in short))
         meta["short_warned"] = sorted(warned | set(short))
 
-    for a in alerts:
+    if len(alerts) > ALERT_DIGEST_THRESHOLD:
+        # أسهم كتير اتغيرت مرة واحدة: رسالة واحدة مختصرة بدل رسايل كتير
+        lines = []
+        for a in alerts:
+            icon = "📈" if a["signal"] == "BUY" else "📉"
+            label = "بداية ترند صاعد" if a["signal"] == "BUY" else "الترند اتكسر"
+            lines.append(f"{icon} {a['ticker'].replace('.CA', '')} - {label} | "
+                         f"{a['price']:.2f} (SMA50: {a['sma50']:.2f})")
+        send_telegram(f"🔔 {len(alerts)} إشارة جديدة\n\n" + "\n".join(lines) +
+                      "\n\nاكتب كود أي سهم (زي ABUK) عشان تاخد تحليله كامل.\n"
+                      "⚠️ ده تنبيه بس - القرار ليك.")
+        alerts_to_send = []
+    else:
+        alerts_to_send = alerts
+
+    for a in alerts_to_send:
         icon = "📈" if a["signal"] == "BUY" else "📉"
         label = "بداية ترند صاعد" if a["signal"] == "BUY" else "الترند اتكسر"
         message = (
