@@ -99,7 +99,9 @@ ALERT_DIGEST_THRESHOLD = 5
 # DAILY_FOCUS = أسهم بتاخد تحليل كامل في التقرير (غيرها من env في monitor.yml)
 DAILY_FOCUS = [t.strip().upper() for t in os.environ.get(
     "DAILY_FOCUS", "COMI.CA,EFIH.CA,EFID.CA,ABUK.CA").split(",") if t.strip()]
-DAILY_REPORT_HOUR = 14      # بعد الساعة دي (القاهرة) في أيام التداول
+DAILY_REPORT_AFTER = (14, 30)   # تقرير نهاية الجلسة: بعد الساعة دي (القاهرة) في أيام التداول
+MORNING_REPORT_FROM_HOUR = 9    # تقرير بداية الجلسة: من الساعة دي...
+MORNING_REPORT_TO_HOUR = 13     # ...لحد الساعة دي (القاهرة)، مرة واحدة في اليوم
 NEAR_SIGNAL_PCT = 2.0       # "قريب من إشارة" = أقل من 2% بعيد عن المتوسط
 TOP_N = int(os.environ.get("TOP_N", "5"))   # عدد الأسهم في كل قسم من التقرير
 # أقصى عدد أسهم في جدول التوقع اليومي (0 = كل الأسهم). الباقي بتاخده بكتابة الكود.
@@ -115,7 +117,8 @@ def is_market_open_now():
     if cairo.weekday() not in trading_days:
         return False
     market_open = cairo.replace(hour=10, minute=0, second=0, microsecond=0)
-    market_close = cairo.replace(hour=14, minute=30, second=0, microsecond=0)
+    # القفل 2:30، بنكمّل لحد 3:15 عشان run بعد القفل مباشرة يلقط سعر الإقفال النهائي
+    market_close = cairo.replace(hour=15, minute=15, second=0, microsecond=0)
     return market_open <= cairo <= market_close
 
 
@@ -632,61 +635,89 @@ def send_long(text, limit=3800):
         send_telegram(chunk)
 
 
-def build_daily_report(state, today):
-    """
-    تقرير مختصر: (1) أكتر الأسهم ارتفاعًا النهاردة (2) أكتر الأسهم ترشيحًا
-    للصعود في الجلسة الجاية. مفيش حاجة تانية.
-    """
-    movers = []      # (chg%, name, price)
-    candidates = []  # (tech, p_up, name, outlook, price)
-
+def collect_candidates(state):
+    """الأسهم المرشحة للصعود: تأكيد 60% أو أكتر، ومن غير الأسهم الواقفة."""
+    candidates = []
     for t in TICKERS:
-        st = state["stocks"][t]
-        daily, dates = st["daily"], st["dates"]
-        name = t.replace(".CA", "")
+        daily = state["stocks"][t]["daily"]
         if len(daily) < TREND_FILTER_WINDOW:
             continue
         price = daily[-1]
-
-        fresh = bool(dates) and dates[-1] == today and len(daily) >= 2
-        if fresh:
-            chg = (price / daily[-2] - 1) * 100
-            if chg > 0:
-                movers.append((chg, name, price))
-
         o = compute_outlook(daily, price, False, False)
         # بنستبعد الأسهم اللي واقفة كتير (أكتر من 25% من الأيام سعرها ثابت)
-        # عشان توقعها مش موثوق
         if o and o["tech"] >= 60 and o["flat_frac"] <= 0.25:
-            candidates.append((o["tech"], o["p_up"], name, o, price))
-
-    movers.sort(reverse=True)
+            candidates.append((o["tech"], o["p_up"], t.replace(".CA", ""), o, price))
     candidates.sort(key=lambda r: (-r[0], -r[1]))
+    return candidates
 
-    lines = [f"📊 تقرير نهاية اليوم - {today}", ""]
 
-    lines.append("🔺 أكتر الأسهم ارتفاعًا النهاردة:")
+def candidate_lines(candidates):
+    if not candidates:
+        return ["مفيش أسهم تأكيدها فوق 60% دلوقتي."]
+    lines = []
+    for tech, p_up, name, o, price in candidates[:TOP_N]:
+        lines += [
+            "",
+            f"📈 {name} - آخر سعر {price:.2f}",
+            f"احتمال صعود {o['p_up']:.0f}% | هبوط {o['p_down']:.0f}%",
+            f"✅ تأكيد الصعود: {o['tech']:.0f}% ({o['tech_k']} من 5 مؤشرات)",
+            f"لو صعد: {o['up_low']:.2f} - {o['up_high']:.2f} جنيه",
+            f"لو هبط: {o['down_low']:.2f} - {o['down_high']:.2f} جنيه",
+        ]
+    return lines
+
+
+def build_daily_report(state, today):
+    """تقرير نهاية الجلسة: ملخص النهاردة + ترشيحات الجلسة الجاية."""
+    movers = []  # (chg%, name, price)
+    for t in TICKERS:
+        st = state["stocks"][t]
+        daily, dates = st["daily"], st["dates"]
+        if len(daily) < TREND_FILTER_WINDOW:
+            continue
+        if bool(dates) and dates[-1] == today and len(daily) >= 2:
+            chg = (daily[-1] / daily[-2] - 1) * 100
+            if chg > 0:
+                movers.append((chg, t.replace(".CA", ""), daily[-1]))
+    movers.sort(reverse=True)
+
+    lines = [f"📊 تقرير نهاية اليوم - {today}", "", "🔺 أكتر الأسهم ارتفاعًا النهاردة:"]
     if movers:
         lines += [f"{n} {c:+.1f}% ({p:.2f} جنيه)" for c, n, p in movers[:TOP_N]]
     else:
         lines.append("مفيش أسهم طلعت النهاردة (أو مفيش بيانات محدثة).")
-
     lines += ["", "🔮 أكتر الأسهم ترشيحًا للصعود في الجلسة الجاية:"]
-    if candidates:
-        for tech, p_up, name, o, price in candidates[:TOP_N]:
-            lines += [
-                "",
-                f"📈 {name} - آخر سعر {price:.2f}",
-                f"احتمال صعود {o['p_up']:.0f}% | هبوط {o['p_down']:.0f}%",
-                f"✅ تأكيد الصعود: {o['tech']:.0f}% ({o['tech_k']} من 5 مؤشرات)",
-                f"لو صعد: {o['up_low']:.2f} - {o['up_high']:.2f} جنيه",
-                f"لو هبط: {o['down_low']:.2f} - {o['down_high']:.2f} جنيه",
-            ]
-    else:
-        lines.append("مفيش أسهم تأكيدها فوق 60% النهاردة.")
-
+    lines += candidate_lines(collect_candidates(state))
     lines += ["", "(تقدير إحصائي من تاريخ كل سهم، مش توصية ولا ضمان)"]
     return "\n".join(lines)
+
+
+def build_morning_report(state, today):
+    """تقرير بداية الجلسة: ترشيحات جلسة النهاردة من قفلة آخر جلسة."""
+    lines = [f"🌅 تقرير بداية الجلسة - {today}",
+             "(مبني على قفلة آخر جلسة)", "",
+             "🔮 أكتر الأسهم ترشيحًا للصعود في جلسة النهاردة:"]
+    lines += candidate_lines(collect_candidates(state))
+    lines += ["", "(تقدير إحصائي من تاريخ كل سهم، مش توصية ولا ضمان)"]
+    return "\n".join(lines)
+
+
+def maybe_send_morning_report(state):
+    """بيتبعت مرة واحدة في اليوم، قبل ما أسعار النهاردة تتحدّث (عشان البيانات
+    تبقى قفلة آخر جلسة)."""
+    cairo = datetime.now(ZoneInfo("Africa/Cairo"))
+    today = cairo.strftime("%Y-%m-%d")
+    meta = state.setdefault("meta", {})
+    if not FORCE_RUN:
+        if cairo.weekday() not in {6, 0, 1, 2, 3}:
+            return
+        if not (MORNING_REPORT_FROM_HOUR <= cairo.hour < MORNING_REPORT_TO_HOUR):
+            return
+        if meta.get("morning_date") == today:
+            return
+    send_long(build_morning_report(state, today))
+    if not FORCE_RUN:
+        meta["morning_date"] = today
 
 
 def maybe_send_daily_report(state):
@@ -696,7 +727,7 @@ def maybe_send_daily_report(state):
     if not FORCE_RUN:
         if cairo.weekday() not in {6, 0, 1, 2, 3}:      # أيام التداول بس
             return
-        if cairo.hour < DAILY_REPORT_HOUR:
+        if (cairo.hour, cairo.minute) < DAILY_REPORT_AFTER:
             return
         if meta.get("report_date") == today:
             return
@@ -759,6 +790,7 @@ def handle_jumps(state):
 def main():
     state = load_state()
     handle_telegram_commands(state)  # الرد على أسئلتك (شغال حتى والسوق مقفول)
+    maybe_send_morning_report(state)  # قبل تحديث أسعار النهاردة
 
     if not is_market_open_now() and not FORCE_RUN:
         print("السوق مقفول دلوقتي (برة مواعيد EGX) - مفيش فحص")
