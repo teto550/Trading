@@ -86,6 +86,11 @@ FORCE_RUN = os.environ.get("FORCE_RUN", "false").lower() == "true"
 # هنتأكد منه عن طريق yfinance قبل ما نصدقه
 PRICE_SANITY_THRESHOLD = 0.20
 JUMP_CONFIRM_RUNS = 2  # عدد الـ runs اللي لازم السعر الجديد يثبت فيها قبل تعديل التاريخ
+# لو قفزات كتير حصلت في نفس الـ run (أكتر من 3% من الأسهم) ده غالبًا عطل في مصدر
+# الأسعار مش تقسيمات حقيقية، فبنتجاهلها كلها ومبنعدّلش أي تاريخ
+JUMP_SYSTEMIC_FRACTION = 0.03
+LAST_SOURCE = {}  # آخر مصدر سعر لكل سهم (للتشخيص في اللوج)
+JUMP_LOG = []  # قفزات الـ run الحالي (بيتعالجوا مرة واحدة بعد ما كل الأسهم تخلص)
 
 # لو الإشارات في run واحد أكتر من العدد ده، بتتبعت في رسالة واحدة مختصرة
 ALERT_DIGEST_THRESHOLD = 5
@@ -180,6 +185,8 @@ def fetch_price_mubasher(ticker):
     )
     if not match:
         raise ValueError("مش قادر ألاقي السعر في صفحة Mubasher")
+    LAST_SOURCE[ticker] = {"src": "mubasher",
+                           "snip": " ".join(resp.text[match.start():match.end()].split())[-140:]}
     return float(match.group(1))
 
 
@@ -189,12 +196,14 @@ def fetch_price_yfinance(ticker):
     try:
         price = tk.fast_info["last_price"]
         if price is not None and price == price:
+            LAST_SOURCE[ticker] = {"src": "yfinance-fast", "snip": ""}
             return float(price)
     except Exception:
         pass
     data = tk.history(period="5d", interval="1d")
     if data.empty:
         raise ValueError("مفيش بيانات متاحة")
+    LAST_SOURCE[ticker] = {"src": "yfinance-history", "snip": ""}
     return float(data.iloc[-1]["Close"])
 
 
@@ -404,38 +413,21 @@ def process_stock(ticker, stock_state):
         return None
 
     # قفزة أكبر من 20% في يوم: حد EGX اليومي 10%، فغالبًا تقسيم/أسهم مجانية أو
-    # بيانات غلط. أول مرة بنتجاهلها ونحذرك، ولو السعر ثبت على نفس المستوى
-    # الجديد في run تاني بنعدّل التاريخ بنفس النسبة ونكمل تلقائي.
+    # بيانات غلط. هنا بس بنسجلها ونتجاهل السعر، والقرار (تأكيد/تجاهل) بيتاخد
+    # بعد ما كل الأسهم تخلص في handle_jumps.
     if prev_price and abs(price - prev_price) / prev_price > PRICE_SANITY_THRESHOLD:
-        name = ticker.replace(".CA", "")
         pend = stock_state.get("pending_jump")
         if pend and abs(price - pend["price"]) / pend["price"] <= 0.05:
             pend["count"] += 1
         else:
             pend = {"price": price, "count": 1}
         stock_state["pending_jump"] = pend
-
-        if pend["count"] >= JUMP_CONFIRM_RUNS:
-            ratio = price / prev_price
-            stock_state["daily"] = [x * ratio for x in stock_state["daily"]]
-            stock_state.pop("pending_jump", None)
-            print(f"  [تعديل تلقائي] السعر ثبت على مستوى جديد ({prev_price:.2f} -> {price:.2f})، "
-                  f"اتعدّل التاريخ بنسبة {ratio:.3f}")
-            send_telegram(f"🔄 {name}: السعر ثبت على مستوى جديد ({prev_price:.2f} → {price:.2f}) "
-                          f"في أكتر من run، فعدّلت التاريخ بنسبة {ratio:.3f} وكملت. "
-                          f"غالبًا تقسيم أو أسهم مجانية - راجعه لو مش متوقع.")
-            prev_price = stock_state["daily"][-1]
-        else:
-            print(f"  [رفض] قفزة غريبة {prev_price:.2f} -> {price:.2f}، اتجاهلت (استنى تأكيد)")
-            today = datetime.now(ZoneInfo("Africa/Cairo")).strftime("%Y-%m-%d")
-            if stock_state.get("spike_warned_on") != today:
-                stock_state["spike_warned_on"] = today
-                send_telegram(f"⚠️ {name}: قفزة سعر غريبة {prev_price:.2f} → {price:.2f}، "
-                              f"اتجاهلت مؤقتًا. لو السعر ثبت على نفس المستوى في الـ run الجاي "
-                              f"هعدّل التاريخ تلقائيًا (تقسيم/أسهم مجانية). راجعه على Mubasher.")
-            return None
-    else:
-        stock_state.pop("pending_jump", None)
+        JUMP_LOG.append({"ticker": ticker, "prev": prev_price, "price": price})
+        info = LAST_SOURCE.get(ticker, {})
+        print(f"  [قفزة] {prev_price:.2f} -> {price:.2f} (تأكيد {pend['count']}/{JUMP_CONFIRM_RUNS})، اتجاهلت مؤقتًا")
+        print(f"    المصدر: {info.get('src', '?')} | الجزء المقروء: {info.get('snip', '')}")
+        return None
+    stock_state.pop("pending_jump", None)
 
     update_daily(stock_state, price)
     daily = stock_state["daily"]
@@ -716,6 +708,46 @@ def maybe_send_daily_report(state):
         meta["report_date"] = today
 
 
+def handle_jumps(state):
+    jumps = list(JUMP_LOG)
+    if not jumps:
+        return
+    today = datetime.now(ZoneInfo("Africa/Cairo")).strftime("%Y-%m-%d")
+    limit = max(3, int(len(TICKERS) * JUMP_SYSTEMIC_FRACTION))
+    short = lambda t: t.replace(".CA", "")
+
+    # قفزات كتير مرة واحدة = غالبًا مصدر الأسعار بايظ: متعدلش أي تاريخ
+    if len(jumps) > limit:
+        for j in jumps:
+            state["stocks"][j["ticker"]].pop("pending_jump", None)
+        names = ", ".join(short(j["ticker"]) for j in jumps[:20])
+        print(f"[قفزات كتير] {len(jumps)} سهم - غالبًا مشكلة في مصدر الأسعار")
+        send_telegram(f"🚨 قفزات سعر غريبة في {len(jumps)} سهم في نفس الـ run - غالبًا مشكلة في "
+                      f"مصدر الأسعار مش في الأسهم. تجاهلتهم كلهم ومعدّلتش أي تاريخ.\n"
+                      f"الأسهم: {names}")
+        return
+
+    confirmed, waiting = [], []
+    for j in jumps:
+        st = state["stocks"][j["ticker"]]
+        pend = st.get("pending_jump")
+        if pend and pend["count"] >= JUMP_CONFIRM_RUNS:
+            ratio = j["price"] / j["prev"]
+            st["daily"] = [x * ratio for x in st["daily"]]
+            st.pop("pending_jump", None)
+            update_daily(st, j["price"])
+            confirmed.append(f"{short(j['ticker'])}: {j['prev']:.2f} → {j['price']:.2f} (نسبة {ratio:.3f})")
+        elif st.get("spike_warned_on") != today:
+            st["spike_warned_on"] = today
+            waiting.append(f"{short(j['ticker'])}: {j['prev']:.2f} → {j['price']:.2f}")
+    if confirmed:
+        send_telegram("🔄 السعر ثبت على مستوى جديد في أكتر من run، فعدّلت التاريخ وكملت "
+                      "(غالبًا تقسيم أو أسهم مجانية - راجعهم لو مش متوقعين):\n" + "\n".join(confirmed))
+    if waiting:
+        send_telegram("⚠️ قفزات سعر غريبة اتجاهلتها مؤقتًا. لو السعر ثبت على نفس المستوى في الـ run "
+                      "الجاي هعدّل التاريخ تلقائيًا. راجعهم على Mubasher:\n" + "\n".join(waiting))
+
+
 # ============================================================
 # MAIN
 # ============================================================
@@ -730,13 +762,16 @@ def main():
         return
 
     results = []
+    JUMP_LOG.clear()
 
     for ticker in TICKERS:
         print(f"\n[{ticker}]")
         result = process_stock(ticker, state["stocks"][ticker])
         if result:
             results.append(result)
-        time.sleep(0.3)  # تهدئة بسيطة بين الطلبات
+        time.sleep(0.5)  # تهدئة بسيطة بين الطلبات
+
+    handle_jumps(state)
 
     alerts = [r for r in results if r["signal"] != "INIT"]
     inits = [r for r in results if r["signal"] == "INIT"]
