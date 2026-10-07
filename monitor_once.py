@@ -422,8 +422,9 @@ def process_stock(ticker, stock_state):
         else:
             pend = {"price": price, "count": 1}
         stock_state["pending_jump"] = pend
-        JUMP_LOG.append({"ticker": ticker, "prev": prev_price, "price": price})
         info = LAST_SOURCE.get(ticker, {})
+        JUMP_LOG.append({"ticker": ticker, "prev": prev_price, "price": price,
+                         "src": info.get("src", "?"), "snip": info.get("snip", "")})
         print(f"  [قفزة] {prev_price:.2f} -> {price:.2f} (تأكيد {pend['count']}/{JUMP_CONFIRM_RUNS})، اتجاهلت مؤقتًا")
         print(f"    المصدر: {info.get('src', '?')} | الجزء المقروء: {info.get('snip', '')}")
         return None
@@ -720,11 +721,15 @@ def handle_jumps(state):
     if len(jumps) > limit:
         for j in jumps:
             state["stocks"][j["ticker"]].pop("pending_jump", None)
-        names = ", ".join(short(j["ticker"]) for j in jumps[:20])
         print(f"[قفزات كتير] {len(jumps)} سهم - غالبًا مشكلة في مصدر الأسعار")
-        send_telegram(f"🚨 قفزات سعر غريبة في {len(jumps)} سهم في نفس الـ run - غالبًا مشكلة في "
-                      f"مصدر الأسعار مش في الأسهم. تجاهلتهم كلهم ومعدّلتش أي تاريخ.\n"
-                      f"الأسهم: {names}")
+        detail = []
+        for j in jumps[:12]:
+            snip = f" | {j['snip'][-50:]}" if j.get("snip") else ""
+            detail.append(f"{short(j['ticker'])}: {j['prev']:.2f} → {j['price']:.2f} ({j['src']}{snip})")
+        send_long(f"🚨 قفزات سعر غريبة في {len(jumps)} سهم في نفس الـ run - غالبًا مشكلة في "
+                  f"مصدر الأسعار مش في الأسهم. تجاهلتهم كلهم ومعدّلتش أي تاريخ، "
+                  f"وأسعارهم هتفضل قديمة لحد ما تتحل.\n"
+                  f"المصدر والجزء المقروء من الصفحة لأول {len(detail)} سهم:\n" + "\n".join(detail))
         return
 
     confirmed, waiting = [], []
