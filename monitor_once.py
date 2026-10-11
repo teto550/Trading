@@ -75,6 +75,7 @@ TREND_FILTER_WINDOW = 50
 HISTORY_WINDOW = 60
 STATE_FILE = "state.json"
 ALERT_LOG_FILE = "alert_log.csv"
+TG_OFFSET_FILE = "tg_offset.txt"  # آخر رسالة تليجرام اتردّ عليها (بيحدّثها commands.yml)
 
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "")
@@ -605,6 +606,12 @@ def handle_telegram_commands(state):
     import re
     meta = state.setdefault("meta", {})
     offset = meta.get("tg_offset", 0)
+    if os.path.exists(TG_OFFSET_FILE):
+        try:
+            offset = max(offset, int(open(TG_OFFSET_FILE).read().strip() or 0))
+        except ValueError:
+            pass
+    start_offset = offset
     try:
         resp = requests.get(
             f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getUpdates",
@@ -616,7 +623,8 @@ def handle_telegram_commands(state):
 
     bases = {t.replace(".CA", ""): t for t in TICKERS}
     for u in updates:
-        meta["tg_offset"] = u["update_id"] + 1
+        offset = u["update_id"] + 1
+        meta["tg_offset"] = offset
         msg = u.get("message") or {}
         # بنرد على صاحب البوت بس
         if str(msg.get("chat", {}).get("id", "")) != str(TELEGRAM_CHAT_ID):
@@ -624,7 +632,7 @@ def handle_telegram_commands(state):
         text = (msg.get("text") or "").strip()
         if not text:
             continue
-        words = [w.upper() for w in re.findall(r"[A-Za-z]{3,6}", text)]
+        words = [w.upper() for w in re.findall(r"[A-Za-z0-9]{2,8}", text)]
         if any(w in ("ALL", "LIST") for w in words) or text in ("/all", "/list", "الكل"):
             send_long(overview_text(state))
             continue
@@ -634,6 +642,10 @@ def handle_telegram_commands(state):
         else:
             send_telegram("مش لاقي السهم ده في القايمة. اكتب كود السهم زي ABUK أو COMI، "
                           "أو all عشان تشوف حالة كل الأسهم.\n\nالأكواد: " + ", ".join(bases))
+
+    if offset != start_offset:
+        with open(TG_OFFSET_FILE, "w") as f:
+            f.write(str(offset))
 
 
 # ============================================================
@@ -804,7 +816,7 @@ def handle_jumps(state):
 # ============================================================
 def main():
     state = load_state()
-    handle_telegram_commands(state)  # الرد على أسئلتك (شغال حتى والسوق مقفول)
+    # الرد على أسئلتك بيتم في commands.yml (كل 5 دقايق) مش هنا، عشان الرد ميتأخرش
     maybe_send_morning_report(state)  # قبل تحديث أسعار النهاردة
 
     if not (is_market_open_now() or needs_close_catchup(state)) and not FORCE_RUN:
@@ -886,4 +898,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    if "--commands" in sys.argv:
+        handle_telegram_commands(load_state())  # من غير save_state: state.json مبيتغيرش
+    else:
+        main()
