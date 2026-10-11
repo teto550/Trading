@@ -1,0 +1,7 @@
+# متطلبات الباكتست بس (منفصلة عن requirements.txt بتاع البوت عشان الـ monitor يفضل خفيف)
+numpy>=1.24.0
+pandas>=2.0.0
+scipy>=1.10.0
+xgboost>=2.0.0
+yfinance>=0.2.40
+requests>=2.31.0
