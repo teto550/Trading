@@ -122,6 +122,21 @@ def is_market_open_now():
     return market_open <= cairo <= market_close
 
 
+def needs_close_catchup(state):
+    """GitHub بيأخّر الـ cron (أحيانًا لبعد القفل بساعات). لو الـ run جه متأخر في يوم
+    تداول وبعد القفل ولسه أسعار النهاردة ماتسجلتش، بنعمل تحديث واحد لسعر الإقفال
+    عشان التنبيهات والتقرير اليومي ميضيعوش."""
+    cairo = datetime.now(ZoneInfo("Africa/Cairo"))
+    if cairo.weekday() not in {6, 0, 1, 2, 3}:
+        return False
+    if (cairo.hour, cairo.minute) < (14, 30):
+        return False
+    today = cairo.strftime("%Y-%m-%d")
+    updated = sum(1 for t in TICKERS
+                  if state["stocks"][t]["dates"] and state["stocks"][t]["dates"][-1] == today)
+    return updated < max(1, len(TICKERS) // 2)
+
+
 # ============================================================
 # الحالة المحفوظة - بس قفلات الأيام وآخر إشارة اتبعتت، من غير أي
 # محفظة أو كاش
@@ -792,7 +807,7 @@ def main():
     handle_telegram_commands(state)  # الرد على أسئلتك (شغال حتى والسوق مقفول)
     maybe_send_morning_report(state)  # قبل تحديث أسعار النهاردة
 
-    if not is_market_open_now() and not FORCE_RUN:
+    if not (is_market_open_now() or needs_close_catchup(state)) and not FORCE_RUN:
         print("السوق مقفول دلوقتي (برة مواعيد EGX) - مفيش فحص")
         maybe_send_daily_report(state)  # لو الـ run جه بعد القفل وفيه تقرير النهاردة لسه
         save_state(state)

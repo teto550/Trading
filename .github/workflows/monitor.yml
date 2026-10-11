@@ -7,8 +7,9 @@ on:
     #  12     = قرب القفل/بعده (سعر الإقفال وتقرير نهاية الجلسة)
     #  12:30  = احتياطي لتقرير نهاية الجلسة لو الـ run اللي قبله اتأخر
     # (cron بتاع GitHub بيتأخر ومش مضمون، فالكود بيتعامل مع التأخير)
-    - cron: "0 7,8,10,11,12 * * 0-4"
-    - cron: "30 12 * * 0-4"
+    # GitHub بيأخّر الـ cron ساعات أحيانًا ومرات بيسقّط runs، فبنطلب كل 30 دقيقة
+    # (6:00-12:30 UTC) عشان على الأقل كام run ينزلوا جوه ساعات الجلسة
+    - cron: "*/30 6-12 * * 0-4"
   workflow_dispatch:
     inputs:
       force_run:
@@ -51,4 +52,6 @@ jobs:
             git add alert_log.csv
           fi
           git diff --cached --quiet || git commit -m "update state [skip ci]"
+          # لو حد عمل push في نفس الوقت (أو run يدوي) الـ push العادي بيفشل
+          git pull --rebase -X theirs origin "${GITHUB_REF_NAME:-main}" || true
           git push
