@@ -682,6 +682,7 @@ def candidate_lines(candidates):
     if not candidates:
         return ["مفيش أسهم تأكيدها فوق 60% دلوقتي."]
     lines = []
+    # أقوى TOP_N أسهم بالتفصيل الكامل
     for tech, p_up, name, o, price in candidates[:TOP_N]:
         lines += [
             "",
@@ -691,26 +692,37 @@ def candidate_lines(candidates):
             f"لو صعد: {o['up_low']:.2f} - {o['up_high']:.2f} جنيه",
             f"لو هبط: {o['down_low']:.2f} - {o['down_high']:.2f} جنيه",
         ]
+    # باقي الأسهم المرشحة (كل EGX) في سطر واحد لكل سهم
+    rest = candidates[TOP_N:]
+    if rest:
+        lines += ["", f"📋 باقي الأسهم المرشحة ({len(rest)}):",
+                  "الاسم السعر | صعود% | تأكيد% | لو صعد | لو هبط"]
+        for tech, p_up, name, o, price in rest:
+            lines.append(f"📈 {name} {price:.2f} | {o['p_up']:.0f}% | {o['tech']:.0f}% | "
+                         f"{o['up_low']:.2f}-{o['up_high']:.2f} | "
+                         f"{o['down_low']:.2f}-{o['down_high']:.2f}")
     return lines
 
 
 def build_daily_report(state, today):
     """تقرير نهاية الجلسة: ملخص النهاردة + ترشيحات الجلسة الجاية."""
     movers = []  # (chg%, name, price)
+    updated = 0  # عدد الأسهم اللي أسعارها اتحدّثت النهاردة
     for t in TICKERS:
         st = state["stocks"][t]
         daily, dates = st["daily"], st["dates"]
-        if len(daily) < TREND_FILTER_WINDOW:
-            continue
+        # كل الأسهم اللي ليها قفلتين على الأقل (مش لازم 50 يوم) عشان ولا سهم طالع يتفوّت
         if bool(dates) and dates[-1] == today and len(daily) >= 2:
+            updated += 1
             chg = (daily[-1] / daily[-2] - 1) * 100
             if chg > 0:
                 movers.append((chg, t.replace(".CA", ""), daily[-1]))
     movers.sort(reverse=True)
 
-    lines = [f"📊 تقرير نهاية اليوم - {today}", "", "🔺 أكتر الأسهم ارتفاعًا النهاردة:"]
+    lines = [f"📊 تقرير نهاية اليوم - {today}", "",
+             f"🔺 كل الأسهم اللي ارتفعت النهاردة ({len(movers)} من {updated}):"]
     if movers:
-        lines += [f"{n} {c:+.1f}% ({p:.2f} جنيه)" for c, n, p in movers[:TOP_N]]
+        lines += [f"{n} {c:+.1f}% ({p:.2f} جنيه)" for c, n, p in movers]
     else:
         lines.append("مفيش أسهم طلعت النهاردة (أو مفيش بيانات محدثة).")
     lines += ["", "🔮 أكتر الأسهم ترشيحًا للصعود في الجلسة الجاية:"]
