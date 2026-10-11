@@ -497,12 +497,10 @@ def format_outlook(o):
     if not o:
         return ""
     return (
-        f"🔮 توقع الجلسة الجاية: {o['label']}\n"
-        f"احتمال صعود {o['p_up']:.0f}%  |  هبوط {o['p_down']:.0f}%\n"
-        f"✅ تأكيد الصعود فنيًا: {o['tech']:.0f}% ({o['tech_k']} من 5 مؤشرات)\n"
-        f"لو صعد: السعر في حدود {o['up_low']:.2f} - {o['up_high']:.2f} جنيه\n"
-        f"لو هبط: السعر في حدود {o['down_low']:.2f} - {o['down_high']:.2f} جنيه\n"
-        f"(تقدير إحصائي من آخر {o['days']} يوم، مش ضمان)\n\n"
+        f"📊 حالة الترند دلوقتي: {o['label']} ({o['tech_k']} من 5 مؤشرات فنية بتأيد الصعود)\n"
+        f"حركة السهم المعتادة في يوم صعود: {o['up_low']:.2f} - {o['up_high']:.2f} جنيه\n"
+        f"حركته المعتادة في يوم هبوط: {o['down_low']:.2f} - {o['down_high']:.2f} جنيه\n"
+        f"(وصف لحركة آخر {o['days']} يوم، مش توقع للجلسة الجاية)\n\n"
     )
 
 
@@ -522,19 +520,19 @@ def forecast_table(state):
     total = len(rows)
     if FORECAST_TABLE_MAX and total > FORECAST_TABLE_MAX:
         rows = rows[:FORECAST_TABLE_MAX]
-        title = (f"🔮 توقع الجلسة الجاية - أعلى {len(rows)} سهم تأكيدًا للصعود من {total}\n"
-                 f"(اكتب كود أي سهم تاني وهيجيلك توقعه)")
+        title = (f"📊 حالة الترند - أقوى {len(rows)} سهم من {total}\n"
+                 f"(اكتب كود أي سهم تاني وهيجيلك تحليله)")
     else:
-        title = ("🔮 توقع الجلسة الجاية - كل الأسهم\n"
-                 "(مرتبة من الأعلى تأكيدًا للصعود)")
+        title = ("📊 حالة الترند - كل الأسهم\n"
+                 "(مرتبة من الأقوى فنيًا)")
     lines = [title,
-             "الاسم: اتجاه | صعود% | تأكيد% | لو صعد | لو هبط", ""]
+             "الاسم: مؤشرات | حركة صعود معتادة | حركة هبوط معتادة", ""]
     for tech, p_up, name, o in rows:
         arrow = "📈" if tech >= 60 else ("📉" if tech <= 40 else "➖")
-        lines.append(f"{arrow} {name}: {p_up:.0f}% | {tech:.0f}% | "
+        lines.append(f"{arrow} {name}: {o['tech_k']}/5 | "
                      f"{o['up_low']:.2f}-{o['up_high']:.2f} | "
                      f"{o['down_low']:.2f}-{o['down_high']:.2f}")
-    lines += ["", "⚠️ تقديرات إحصائية من تاريخ كل سهم، مش توصية ولا ضمان."]
+    lines += ["", "⚠️ وصف فني للحالة الحالية، مش توقع ولا توصية ولا ضمان."]
     return "\n".join(lines)
 
 
@@ -680,32 +678,83 @@ def collect_candidates(state):
 
 def candidate_lines(candidates):
     if not candidates:
-        return ["مفيش أسهم تأكيدها فوق 60% دلوقتي."]
+        return ["مفيش أسهم في ترند صاعد قوي دلوقتي."]
     lines = []
-    # أقوى TOP_N أسهم بالتفصيل الكامل
+    # أقوى TOP_N أسهم بالتفصيل
     for tech, p_up, name, o, price in candidates[:TOP_N]:
         lines += [
             "",
             f"📈 {name} - آخر سعر {price:.2f}",
-            f"احتمال صعود {o['p_up']:.0f}% | هبوط {o['p_down']:.0f}%",
-            f"✅ تأكيد الصعود: {o['tech']:.0f}% ({o['tech_k']} من 5 مؤشرات)",
-            f"لو صعد: {o['up_low']:.2f} - {o['up_high']:.2f} جنيه",
-            f"لو هبط: {o['down_low']:.2f} - {o['down_high']:.2f} جنيه",
+            f"✅ {o['tech_k']} من 5 مؤشرات فنية بتأيد الصعود",
+            f"حركته المعتادة في يوم صعود: {o['up_low']:.2f} - {o['up_high']:.2f} جنيه",
+            f"حركته المعتادة في يوم هبوط: {o['down_low']:.2f} - {o['down_high']:.2f} جنيه",
         ]
-    # باقي الأسهم المرشحة (كل EGX) في سطر واحد لكل سهم
+    # باقي الأسهم (كل EGX) في سطر واحد لكل سهم
     rest = candidates[TOP_N:]
     if rest:
-        lines += ["", f"📋 باقي الأسهم المرشحة ({len(rest)}):",
-                  "الاسم السعر | صعود% | تأكيد% | لو صعد | لو هبط"]
+        lines += ["", f"📋 باقي الأسهم في ترند صاعد ({len(rest)}):",
+                  "الاسم السعر | مؤشرات | حركة صعود معتادة | حركة هبوط معتادة"]
         for tech, p_up, name, o, price in rest:
-            lines.append(f"📈 {name} {price:.2f} | {o['p_up']:.0f}% | {o['tech']:.0f}% | "
+            lines.append(f"📈 {name} {price:.2f} | {o['tech_k']}/5 | "
                          f"{o['up_low']:.2f}-{o['up_high']:.2f} | "
                          f"{o['down_low']:.2f}-{o['down_high']:.2f}")
     return lines
 
 
+def pick_scorecard(state, today):
+    """نتيجة أسهم تقرير الصبح مقارنة بحركة النهاردة الفعلية والسوق كله.
+    بيتسجل في meta عشان تتجمع حصيلة تراكمية تبيّن لو الترشيحات بتفرق فعلاً."""
+    meta = state.setdefault("meta", {})
+    picks = meta.get("morning_picks") or {}
+    if picks.get("date") != today:
+        return []
+    chg = {}
+    for t in TICKERS:
+        st = state["stocks"][t]
+        d, dt = st["daily"], st["dates"]
+        if dt and dt[-1] == today and len(d) >= 2 and d[-2] > 0:
+            chg[t.replace(".CA", "")] = (d[-1] / d[-2] - 1) * 100
+    if not chg:
+        return []
+
+    def grp(names):
+        v = [chg[n] for n in names if n in chg]
+        up = sum(1 for x in v if x > 0)
+        return len(v), up, (sum(v) / len(v) if v else 0.0)
+
+    top_n, top_up, top_avg = grp(picks.get("top", []))
+    all_n, all_up, all_avg = grp(picks.get("all", []))
+    mk_n = len(chg)
+    mk_up = sum(1 for x in chg.values() if x > 0)
+    mk_avg = sum(chg.values()) / mk_n
+    if all_n == 0:
+        return []
+    rec = {"date": today, "top_n": top_n, "top_up": top_up, "top_avg": round(top_avg, 3),
+           "all_n": all_n, "all_up": all_up, "all_avg": round(all_avg, 3),
+           "mkt_n": mk_n, "mkt_up": mk_up, "mkt_avg": round(mk_avg, 3)}
+    hist = [r for r in meta.get("scorecard", []) if r.get("date") != today]
+    if not FORCE_RUN:
+        meta["scorecard"] = (hist + [rec])[-90:]
+    hist = hist + [rec]
+
+    lines = ["", "📝 نتيجة أسهم الصبح النهاردة (للحكم على الترشيحات):"]
+    if top_n:
+        lines.append(f"أقوى {top_n}: طلع {top_up} منهم | متوسط التغير {top_avg:+.2f}%")
+    lines.append(f"كل الأسهم اللي في الترند: طلع {all_up} من {all_n} ({all_up / all_n * 100:.0f}%) "
+                 f"| متوسط التغير {all_avg:+.2f}%")
+    lines.append(f"السوق كله: طلع {mk_up / mk_n * 100:.0f}% من الأسهم | متوسط التغير {mk_avg:+.2f}%")
+    if len(hist) >= 2:
+        tn = sum(r["all_n"] for r in hist)
+        tu = sum(r["all_up"] for r in hist)
+        mk_rate = sum(r["mkt_up"] for r in hist) / sum(r["mkt_n"] for r in hist) * 100
+        edge = sum(r["all_avg"] - r["mkt_avg"] for r in hist) / len(hist)
+        lines.append(f"📈 الحصيلة بعد {len(hist)} يوم: الأسهم دي طلعت {tu / tn * 100:.0f}% من المرات "
+                     f"مقابل {mk_rate:.0f}% للسوق | الفرق في المتوسط {edge:+.2f}% في اليوم")
+    return lines
+
+
 def build_daily_report(state, today):
-    """تقرير نهاية الجلسة: ملخص النهاردة + ترشيحات الجلسة الجاية."""
+    """تقرير نهاية الجلسة: كل الأسهم اللي ارتفعت + نتيجة أسهم الصبح + الأسهم في ترند صاعد."""
     movers = []  # (chg%, name, price)
     updated = 0  # عدد الأسهم اللي أسعارها اتحدّثت النهاردة
     for t in TICKERS:
@@ -725,19 +774,20 @@ def build_daily_report(state, today):
         lines += [f"{n} {c:+.1f}% ({p:.2f} جنيه)" for c, n, p in movers]
     else:
         lines.append("مفيش أسهم طلعت النهاردة (أو مفيش بيانات محدثة).")
-    lines += ["", "🔮 أكتر الأسهم ترشيحًا للصعود في الجلسة الجاية:"]
+    lines += pick_scorecard(state, today)
+    lines += ["", "📈 الأسهم اللي في ترند صاعد دلوقتي (مبني على قفلة النهاردة):"]
     lines += candidate_lines(collect_candidates(state))
-    lines += ["", "(تقدير إحصائي من تاريخ كل سهم، مش توصية ولا ضمان)"]
+    lines += ["", "(وصف فني للحالة الحالية، مش توقع ولا توصية ولا ضمان)"]
     return "\n".join(lines)
 
 
 def build_morning_report(state, today):
-    """تقرير بداية الجلسة: ترشيحات جلسة النهاردة من قفلة آخر جلسة."""
+    """تقرير بداية الجلسة: الأسهم اللي في ترند صاعد من قفلة آخر جلسة."""
     lines = [f"🌅 تقرير بداية الجلسة - {today}",
              "(مبني على قفلة آخر جلسة)", "",
-             "🔮 أكتر الأسهم ترشيحًا للصعود في جلسة النهاردة:"]
+             "📈 الأسهم اللي في ترند صاعد دلوقتي:"]
     lines += candidate_lines(collect_candidates(state))
-    lines += ["", "(تقدير إحصائي من تاريخ كل سهم، مش توصية ولا ضمان)"]
+    lines += ["", "(وصف فني للحالة الحالية، مش توقع ولا توصية ولا ضمان)"]
     return "\n".join(lines)
 
 
@@ -757,6 +807,10 @@ def maybe_send_morning_report(state):
     send_long(build_morning_report(state, today))
     if not FORCE_RUN:
         meta["morning_date"] = today
+        # بنسجل أسهم الصبح عشان تقرير نهاية اليوم يقارنها بحركة النهاردة الفعلية
+        cands = collect_candidates(state)
+        names = [c[2] for c in cands]
+        meta["morning_picks"] = {"date": today, "top": names[:TOP_N], "all": names}
 
 
 def maybe_send_daily_report(state):
