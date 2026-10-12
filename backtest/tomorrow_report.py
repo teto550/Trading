@@ -155,6 +155,60 @@ def price_range(C, col, t, window=RANGE_WINDOW):
             "ceil": last * (1 + EGX_DAILY_LIMIT), "floor": last * (1 - EGX_DAILY_LIMIT)}
 
 
+def fmt_px(x):
+    return f"{x:.3f}" if x < 1 else f"{x:.2f}"
+
+
+def levels(C, H, L, col, t):
+    """مستويات فنية للسهم من بيانات لحد اليوم t: ATR14 وRSI14 ودعم/مقاومة آخر 20 يوم، ووقف خسارة
+    وهدف مبنيين على تذبذب السهم، ونطاق أسبوع معتاد. دي مستويات للتخطيط، مش توقع إن الهدف هيتحقق."""
+    if t < 125:
+        return None
+    c, h, l = C.iloc[:, col], H.iloc[:, col], L.iloc[:, col]
+    last = float(c.iloc[t])
+    pc = c.shift(1)
+    tr = pd.concat([h - l, (h - pc).abs(), (l - pc).abs()], axis=1).max(axis=1)
+    atr = float(tr.iloc[t - 13:t + 1].mean())
+    if not np.isfinite(atr) or atr <= 0 or not np.isfinite(last) or last <= 0:
+        return None
+    d = c.diff().iloc[t - 13:t + 1]
+    gain, loss = float(d.clip(lower=0).mean()), float((-d.clip(upper=0)).mean())
+    rsi = 100.0 if loss == 0 else 100 - 100 / (1 + gain / loss)
+    support = float(l.iloc[t - 19:t + 1].min())
+    resist = float(h.iloc[t - 19:t + 1].max())
+    stop = max(last - 1.5 * atr, last * (1 - EGX_DAILY_LIMIT))
+    target, capped = last + 3 * atr, False
+    if last * 1.005 < resist < target:        # مقاومة قريبة قبل الهدف: الهدف الواقعي هو المقاومة
+        target, capped = resist, True
+    rr = (target - last) / (last - stop) if last > stop else float("nan")
+    r5 = (c / c.shift(5) - 1).iloc[t - 119:t + 1].dropna()
+    r5 = r5[r5.abs() <= bt.MAX_ABS_RET]
+    if len(r5) < 40:
+        return None
+    w_lo, w_hi = np.percentile(r5, [10, 90])
+    return {"last": last, "atr_pct": atr / last * 100, "rsi": rsi, "support": support, "resist": resist,
+            "stop": stop, "target": target, "capped": capped, "rr": rr,
+            "w_low": last * (1 + w_lo), "w_high": last * (1 + w_hi)}
+
+
+def market_status(C, t):
+    """حالة السوق كله: متوسط تغير اليوم ونسبة الأسهم الطالعة وتغير آخر 20 جلسة (وسيط الأسهم)."""
+    r1 = (C.iloc[t] / C.iloc[t - 1] - 1)
+    r1 = r1[r1.abs() <= bt.MAX_ABS_RET].dropna()
+    r20 = (C.iloc[t] / C.iloc[t - 20] - 1)
+    r20 = r20[r20.abs() <= 1.0].dropna()
+    if len(r1) < 30 or len(r20) < 30:
+        return None
+    breadth, mean1, med20 = float((r1 > 0).mean()), float(r1.mean()), float(r20.median())
+    if breadth <= 0.25 or med20 <= -0.05:
+        tag, weak = "🔴 السوق نازل بقوة", True
+    elif med20 >= 0.03 and breadth >= 0.5:
+        tag, weak = "🟢 السوق طالع", False
+    else:
+        tag, weak = "🟡 السوق متذبذب", False
+    return {"tag": tag, "weak": weak, "breadth": breadth * 100, "mean1": mean1 * 100, "med20": med20 * 100}
+
+
 def build_report(C, H, L, V, O, a, now, note=None):
     score, cols, names, f, lock, t = train_and_score(C, H, L, V, O, a.min_turnover, a.trees)
     data_date = C.index[t].date()
@@ -170,7 +224,7 @@ def build_report(C, H, L, V, O, a, now, note=None):
         pr = price_range(C, col, t)
         if pr is None:
             continue
-        rows.append({"rank": rank, "name": names[col].replace(".CA", ""), "pr": pr,
+        rows.append({"rank": rank, "name": names[col].replace(".CA", ""), "pr": pr, "lv": levels(C, H, L, col, t),
                      "r1": float(f["r1"].iloc[t, col]) * 100 if np.isfinite(f["r1"].iloc[t, col]) else float("nan")})
 
     when = "النهاردة" if target == now.date() else "بكره"
@@ -182,20 +236,40 @@ def build_report(C, H, L, V, O, a, now, note=None):
     if stale_days >= 2 and now.weekday() in TRADING_DAYS and now.hour >= 15:
         L_ += [f"⚠️ آخر بيانات عند Yahoo هي {data_date} (متأخرة {stale_days} يوم عن النهاردة). "
                f"الترتيب ده مبني على بيانات قديمة شوية.", ""]
-    L_ += [f"📈 أقوى {len(rows)} سهم ترتيبًا لجلسة {when} (من الأقوى):",
-           f"السهم | آخر قفلة | النطاق المعتاد ل{when} (80% من الأيام)", ""]
+    ms = market_status(C, t)
+    if ms:
+        L_ += [f"{ms['tag']}: النهاردة {ms['mean1']:+.1f}% | {ms['breadth']:.0f}% من الأسهم طلعت | "
+               f"آخر 20 جلسة {ms['med20']:+.1f}% (وسيط الأسهم)"]
+        if ms["weak"]:
+            L_ += ["⚠️ السوق نازل بقوة: الترشيحات دي أضعف من العادي، والدخول عكس اتجاه السوق خطره أعلى. "
+                   "الأحسن تتابع وتستنى بدل ما تدخل."]
+        L_.append("")
+    L_ += [f"📈 أقوى {len(rows)} سهم ترتيبًا لجلسة {when} + مستوياتهم الفنية:", ""]
     for r in rows:
-        p = r["pr"]
-        L_.append(f"{r['rank']}. {r['name']} | {p['last']:.2f} | "
-                  f"{p['low']:.2f} ← {p['mid']:.2f} → {p['high']:.2f}  "
-                  f"({p['lo_pct']:+.1f}% / {p['hi_pct']:+.1f}%)")
-    L_ += ["",
-           "اللي في النص = الحركة الوسيطة المعتادة للسهم، مش هدف. الحد الأقصى النهاري لأي سهم ±10% من القفلة.",
+        p, lv = r["pr"], r["lv"]
+        L_.append(f"{r['rank']}. {r['name']} | آخر قفلة {fmt_px(p['last'])}")
+        if lv:
+            L_.append(f"   RSI {lv['rsi']:.0f} | تذبذب يومي {lv['atr_pct']:.1f}% | "
+                      f"دعم {fmt_px(lv['support'])} | مقاومة {fmt_px(lv['resist'])}")
+            tag = " (عند المقاومة)" if lv["capped"] else ""
+            weak_rr = " ⚠️ضعيف" if lv["rr"] < 1.5 else ""
+            L_.append(f"   وقف خسارة {fmt_px(lv['stop'])} ({(lv['stop'] / lv['last'] - 1) * 100:+.1f}%) | "
+                      f"هدف {fmt_px(lv['target'])} ({(lv['target'] / lv['last'] - 1) * 100:+.1f}%){tag} | "
+                      f"عائد/مخاطرة {lv['rr']:.1f}{weak_rr}")
+            L_.append(f"   نطاق {when}: {fmt_px(p['low'])} - {fmt_px(p['high'])} | "
+                      f"نطاق الأسبوع: {fmt_px(lv['w_low'])} - {fmt_px(lv['w_high'])}")
+        else:
+            L_.append(f"   نطاق {when}: {fmt_px(p['low'])} - {fmt_px(p['high'])}")
+        L_.append("")
+    L_ += ["إزاي تقرأ المستويات:",
+           "• وقف الخسارة = 1.5 × التذبذب اليومي تحت القفلة. الهدف = 3 × التذبذب فوقها (أو المقاومة لو أقرب).",
+           "• عائد/مخاطرة = كام هتكسب لو وصل الهدف مقابل كام هتخسر لو ضرب الوقف. أقل من 1.5 يبقى مش مجزي.",
+           "• النطاقات وصف لحركة السهم الماضية (80% من الأيام)، والحد الأقصى النهاري ±10%.",
            "",
            "⚠️ اقرأ ده قبل ما تعتمد على التقرير:",
-           "• الترتيب ده ميزة إحصائية صغيرة جدًا في الباكتست (IC حوالي +0.05 ليوم واحد)، مش توقع إن السهم هيطلع.",
+           "• الترتيب ميزة إحصائية صغيرة جدًا في الباكتست (IC حوالي +0.05 ليوم واحد)، مش توقع إن السهم هيطلع.",
            "• بعد تكلفة الشراء والبيع (15 bps في الاتجاه) النتيجة في الباكتست كانت سالبة من 2022 لليوم الواحد.",
-           "• ممكن أي سهم من القايمة ينزل بكره، والنطاق وصف للحركة الماضية مش ضمان.",
+           "• الوقف والهدف لإدارة الخسارة مش لضمان الوصول. أي سهم ممكن ينزل بكره.",
            "• مش توصية شراء ولا بيع. القرار والمسؤولية ليك."]
     return "\n".join(L_), rows, data_date
 
