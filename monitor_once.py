@@ -211,17 +211,17 @@ def fetch_price_mubasher(ticker):
 
 def fetch_price_yfinance(ticker):
     import yfinance as yf
-    tk = yf.Ticker(ticker)
-    try:
-        price = tk.fast_info["last_price"]
-        if price is not None and price == price:
-            LAST_SOURCE[ticker] = {"src": "yfinance-fast", "snip": ""}
-            return float(price)
-    except Exception:
-        pass
-    data = tk.history(period="5d", interval="1d")
+    # Yahoo بيتأخر عن السوق المصري جلسة أو أكتر، وfast_info مفيهوش تاريخ، فكان بيرجّع
+    # سعر قديم ويتصدق (مثلاً SAIB اتسجّل بسعر 7 أكتوبر بدل سعر النهاردة وطلعت إشارة بيع غلط).
+    # دلوقتي بنقبل سعر yfinance بس لو آخر يوم في بياناته هو النهاردة، وإلا السهم بيتخطّى
+    # للـ run الجاي بدل ما نسجّل سعر قديم.
+    data = yf.Ticker(ticker).history(period="5d", interval="1d")
     if data.empty:
         raise ValueError("مفيش بيانات متاحة")
+    last_date = data.index[-1].date()
+    today = datetime.now(ZoneInfo("Africa/Cairo")).date()
+    if last_date != today:
+        raise ValueError(f"بيانات yfinance قديمة (آخر يوم {last_date}) فمش هتتستخدم")
     LAST_SOURCE[ticker] = {"src": "yfinance-history", "snip": ""}
     return float(data.iloc[-1]["Close"])
 

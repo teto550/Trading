@@ -150,9 +150,8 @@ def fmt_summary_md(state, stats, new_cohort, cost_bps):
 
 def tg_message(new_cohort, stats, n_total, cost_bps, created, stale_days=0):
     lines = [f"📒 Paper-trade (من غير فلوس) - آخر دفعة {new_cohort['date']}"]
-    if stale_days >= 3:
-        lines.append(f"⚠️ بيانات Yahoo للسوق المصري متأخرة {stale_days} يوم عن النهاردة، فالاختيارات دي "
-                     f"قديمة. الغرض منها قياس النتايج بعد 20 يوم مش إنك تشتري بيها.")
+    lines.append("ℹ️ Yahoo بيتأخر عن السوق المصري جلسة أو أكتر، فتاريخ الدفعة هو آخر جلسة عنده. "
+                 "الاختيارات دي للقياس بعد 20 يوم، مش للشراء.")
     if created:
         names = ", ".join(t.replace(".CA", "") for t in new_cohort["xgb"][:30])
         lines.append(f"دفعة جديدة: {len(new_cohort['xgb'])} سهم من {len(new_cohort['universe'])} صالح (XGBoost، احتفاظ {HOLD} يوم)")
