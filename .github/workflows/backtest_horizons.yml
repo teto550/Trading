@@ -1,0 +1,65 @@
+name: EGX Multi-Day Backtest
+on:
+  # تشغيل يدوي بس: Actions -> EGX Multi-Day Backtest -> Run workflow
+  workflow_dispatch:
+    inputs:
+      cost_bps:
+        description: "تكلفة الاتجاه الواحد بالـ bps (15 = 0.15%)"
+        required: false
+        default: "15"
+      min_turnover:
+        description: "حد السيولة: أقل متوسط تداول يومي بالجنيه"
+        required: false
+        default: "1000000"
+      horizons:
+        description: "فترات الاحتفاظ بالأيام، مفصولة بفاصلة"
+        required: false
+        default: "3,5,10,20"
+concurrency:
+  group: backtest-horizons
+  cancel-in-progress: false
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install -r backtest/requirements.txt
+      - name: Run multi-day backtest
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          mkdir -p backtest/results
+          set -o pipefail
+          python -u backtest/backtest_horizons.py --source yfinance \
+            --cost-bps "${{ github.event.inputs.cost_bps || '15' }}" \
+            --min-turnover "${{ github.event.inputs.min_turnover || '1000000' }}" \
+            --horizons "${{ github.event.inputs.horizons || '3,5,10,20' }}" \
+            2>&1 | tee backtest/results/log_horizons_latest.txt
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backtest-horizons-report
+          path: backtest/results/
+      - name: Commit results
+        if: always()
+        run: |
+          git config user.name "alert-bot"
+          git config user.email "bot@users.noreply.github.com"
+          # على النجاح بنشيل ملف الخطأ القديم
+          if [ -f backtest/results/report_horizons_latest.md ] && [ -f backtest/results/error_horizons_latest.txt ] \
+             && [ backtest/results/report_horizons_latest.md -nt backtest/results/error_horizons_latest.txt ]; then
+            git rm -q --ignore-unmatch backtest/results/error_horizons_latest.txt || true
+          fi
+          git add -A backtest/results
+          git diff --cached --quiet || git commit -m "multi-day backtest results [skip ci]"
+          git pull --rebase -X theirs origin "${GITHUB_REF_NAME:-main}" || true
+          git push
