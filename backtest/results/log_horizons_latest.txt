@@ -1,0 +1,110 @@
+[data] 25/251 سهم، اتجاب تاريخ لـ 25
+$VLMR.CA: possibly delisted; no timezone found
+$VLMRA.CA: possibly delisted; no timezone found
+$ACTF.CA: possibly delisted; no timezone found
+$AIDC.CA: possibly delisted; no timezone found
+$AIHC.CA: possibly delisted; no timezone found
+$BONY.CA: possibly delisted; no timezone found
+[data] 50/251 سهم، اتجاب تاريخ لـ 44
+$GOUR.CA: possibly delisted; no timezone found
+$GPIM.CA: possibly delisted; no timezone found
+[data] 75/251 سهم، اتجاب تاريخ لـ 67
+$TAQA.CA: possibly delisted; no timezone found
+$VALU.CA: possibly delisted; no timezone found
+[data] 100/251 سهم، اتجاب تاريخ لـ 90
+$GTHE.CA: possibly delisted; no timezone found
+$SNFI.CA: possibly delisted; no timezone found
+$IRAX.CA: possibly delisted; no timezone found
+$CRST.CA: possibly delisted; no timezone found
+[data] 125/251 سهم، اتجاب تاريخ لـ 111
+$NCGC.CA: possibly delisted; no timezone found
+$NBKE.CA: possibly delisted; no timezone found
+$QNBE.CA: possibly delisted; no timezone found
+[data] 150/251 سهم، اتجاب تاريخ لـ 133
+$PACH.CA: possibly delisted; no timezone found
+$UASG.CA: possibly delisted; no timezone found
+$EITP.CA: possibly delisted; no timezone found
+$SMPP.CA: possibly delisted; no timezone found
+[data] 175/251 سهم، اتجاب تاريخ لـ 154
+$ACRO.CA: possibly delisted; no timezone found
+$ESRS.CA: possibly delisted; no timezone found
+$WATP.CA: possibly delisted; no timezone found
+$SUCE.CA: possibly delisted; no timezone found
+$TORA.CA: possibly delisted; no timezone found
+$DCRC.CA: possibly delisted; no timezone found
+$GTWL.CA: possibly delisted; no timezone found
+$ALEX.CA: possibly delisted; no timezone found
+$TYCN.CA: possibly delisted; no timezone found
+$ARVA.CA: possibly delisted; no timezone found
+$HCFI.CA: possibly delisted; no timezone found
+$NARE.CA: possibly delisted; no timezone found
+[data] 200/251 سهم، اتجاب تاريخ لـ 167
+$UTOP.CA: possibly delisted; no timezone found
+$APPC.CA: possibly delisted; no timezone found
+$UBEE.CA: possibly delisted; no timezone found
+$NAPR.CA: possibly delisted; no timezone found
+$DIFC.CA: possibly delisted; no timezone found
+[data] 225/251 سهم، اتجاب تاريخ لـ 187
+$FCMD.CA: possibly delisted; no timezone found
+$VERT.CA: possibly delisted; no timezone found
+$ADRI.CA: possibly delisted; no timezone found
+$KRDI.CA: possibly delisted; no timezone found
+$UPMS.CA: possibly delisted; no timezone found
+$TANM.CA: possibly delisted; no timezone found
+$ACAP.CA: possibly delisted; no timezone found
+$DGTZ.CA: possibly delisted; no timezone found
+$PHGC.CA: possibly delisted; no timezone found
+$GTEX.CA: possibly delisted; no timezone found
+$GGRN.CA: possibly delisted; no timezone found
+$HBCO.CA: possibly delisted; no timezone found
+$CPME.CA: possibly delisted; no timezone found
+$TWSA.CA: possibly delisted; no timezone found
+[data] 250/251 سهم، اتجاب تاريخ لـ 198
+$KORA.CA: possibly delisted; no timezone found
+[data] خلص الجلب: 198 سهم اتجاب من 251
+[data] 197 سهم × 6506 يوم (2000-11-27 → 2026-10-07)
+
+[h=3] min_cross=31 | XGBoost walk-forward (embargo 2 يوم)
+  الموديل الحالي (تأكيد فني)           IC +0.0098 (t=+1.7) | صافي -0.1 bps/يوم | 2022+: IC -0.0108 (t=-1.5) قبل +6.0 صافي -4.0 | ❌
+  momentum 5 أيام                      IC +0.0010 (t=+0.2) | صافي -0.8 bps/يوم | 2022+: IC -0.0271 (t=-4.3) قبل +5.7 صافي -4.3 | ❌
+  momentum 20 يوم                      IC -0.0077 (t=-1.3) | صافي -2.8 bps/يوم | 2022+: IC -0.0312 (t=-4.1) قبل +3.0 صافي -7.0 | ❌
+  momentum 60 يوم                      IC -0.0111 (t=-1.9) | صافي -6.1 bps/يوم | 2022+: IC -0.0332 (t=-4.4) قبل -2.6 صافي -12.6 | ❌
+  momentum 120 يوم                     IC -0.0110 (t=-1.8) | صافي -7.4 bps/يوم | 2022+: IC -0.0320 (t=-3.9) قبل -1.2 صافي -11.2 | ❌
+  reversal 5 أيام                      IC -0.0012 (t=-0.2) | صافي -16.1 bps/يوم | 2022+: IC +0.0270 (t=+4.3) قبل -1.8 صافي -11.8 | ❌
+  تذبذب منخفض                          IC +0.0491 (t=+8.2) | صافي -8.5 bps/يوم | 2022+: IC +0.0578 (t=+7.6) قبل +1.5 صافي -8.5 | 🟡
+  عشوائي (اختبار سلامة)                IC +0.0021 (t=+0.9) | صافي -9.0 bps/يوم | 2022+: IC +0.0012 (t=+0.4) قبل +1.2 صافي -8.8 | ❌
+  XGBoost (walk-forward)               IC +0.0816 (t=+14.9) | صافي +1.9 bps/يوم | 2022+: IC +0.0601 (t=+8.9) قبل +6.6 صافي -3.4 | 🟡
+
+[h=5] min_cross=31 | XGBoost walk-forward (embargo 4 يوم)
+  الموديل الحالي (تأكيد فني)           IC +0.0129 (t=+1.9) | صافي +1.9 bps/يوم | 2022+: IC -0.0074 (t=-0.8) قبل +5.1 صافي -0.9 | ❌
+  momentum 5 أيام                      IC +0.0032 (t=+0.5) | صافي +1.1 bps/يوم | 2022+: IC -0.0224 (t=-3.1) قبل +3.8 صافي -2.2 | ❌
+  momentum 20 يوم                      IC -0.0068 (t=-1.0) | صافي +0.2 bps/يوم | 2022+: IC -0.0307 (t=-3.3) قبل +2.9 صافي -3.1 | ❌
+  momentum 60 يوم                      IC -0.0090 (t=-1.2) | صافي -2.7 bps/يوم | 2022+: IC -0.0347 (t=-3.8) قبل -2.8 صافي -8.8 | ❌
+  momentum 120 يوم                     IC -0.0095 (t=-1.2) | صافي -3.8 bps/يوم | 2022+: IC -0.0352 (t=-3.4) قبل -1.8 صافي -7.8 | ❌
+  reversal 5 أيام                      IC -0.0032 (t=-0.5) | صافي -11.3 bps/يوم | 2022+: IC +0.0225 (t=+3.1) قبل -2.3 صافي -8.3 | ❌
+  تذبذب منخفض                          IC +0.0544 (t=+7.1) | صافي -4.7 bps/يوم | 2022+: IC +0.0671 (t=+6.8) قبل +1.3 صافي -4.7 | 🟡
+  عشوائي (اختبار سلامة)                IC -0.0008 (t=-0.3) | صافي -6.5 bps/يوم | 2022+: IC -0.0038 (t=-1.2) قبل -0.8 صافي -6.8 | ❌
+  XGBoost (walk-forward)               IC +0.0797 (t=+11.8) | صافي +1.5 bps/يوم | 2022+: IC +0.0661 (t=+7.8) قبل +3.8 صافي -2.2 | 🟡
+
+[h=10] min_cross=30 | XGBoost walk-forward (embargo 9 يوم)
+  الموديل الحالي (تأكيد فني)           IC +0.0131 (t=+1.5) | صافي +2.6 bps/يوم | 2022+: IC -0.0061 (t=-0.5) قبل +3.0 صافي +0.0 | ❌
+  momentum 5 أيام                      IC +0.0097 (t=+1.4) | صافي +1.4 bps/يوم | 2022+: IC -0.0144 (t=-1.8) قبل +1.1 صافي -1.9 | ❌
+  momentum 20 يوم                      IC -0.0083 (t=-0.9) | صافي +1.0 bps/يوم | 2022+: IC -0.0338 (t=-2.9) قبل +0.5 صافي -2.5 | ❌
+  momentum 60 يوم                      IC -0.0080 (t=-0.8) | صافي -0.5 bps/يوم | 2022+: IC -0.0367 (t=-3.0) قبل -3.0 صافي -6.0 | ❌
+  momentum 120 يوم                     IC -0.0097 (t=-1.0) | صافي -1.8 bps/يوم | 2022+: IC -0.0405 (t=-2.9) قبل -2.6 صافي -5.6 | ❌
+  reversal 5 أيام                      IC -0.0096 (t=-1.4) | صافي -7.0 bps/يوم | 2022+: IC +0.0145 (t=+1.8) قبل -2.5 صافي -5.5 | ❌
+  تذبذب منخفض                          IC +0.0676 (t=+6.4) | صافي -1.5 bps/يوم | 2022+: IC +0.0891 (t=+6.3) قبل +1.4 صافي -1.6 | 🟡
+  عشوائي (اختبار سلامة)                IC -0.0012 (t=-0.5) | صافي -3.1 bps/يوم | 2022+: IC -0.0003 (t=-0.1) قبل -0.0 صافي -3.0 | ❌
+  XGBoost (walk-forward)               IC +0.0833 (t=+9.2) | صافي +1.9 bps/يوم | 2022+: IC +0.0771 (t=+6.4) قبل +2.4 صافي -0.6 | 🟡
+
+[h=20] min_cross=30 | XGBoost walk-forward (embargo 19 يوم)
+  الموديل الحالي (تأكيد فني)           IC +0.0169 (t=+1.7) | صافي +2.5 bps/يوم | 2022+: IC +0.0033 (t=+0.2) قبل +1.7 صافي +0.2 | ❌
+  momentum 5 أيام                      IC +0.0121 (t=+1.7) | صافي +1.1 bps/يوم | 2022+: IC -0.0068 (t=-0.8) قبل -0.3 صافي -1.8 | ❌
+  momentum 20 يوم                      IC -0.0096 (t=-1.0) | صافي +0.5 bps/يوم | 2022+: IC -0.0302 (t=-2.1) قبل -1.5 صافي -3.0 | ❌
+  momentum 60 يوم                      IC -0.0061 (t=-0.5) | صافي -0.1 bps/يوم | 2022+: IC -0.0375 (t=-2.2) قبل -2.9 صافي -4.4 | ❌
+  momentum 120 يوم                     IC -0.0093 (t=-0.7) | صافي -1.2 bps/يوم | 2022+: IC -0.0486 (t=-2.8) قبل -2.7 صافي -4.2 | ❌
+  reversal 5 أيام                      IC -0.0123 (t=-1.8) | صافي -4.5 bps/يوم | 2022+: IC +0.0068 (t=+0.8) قبل -2.5 صافي -4.0 | ❌
+  تذبذب منخفض                          IC +0.0811 (t=+6.0) | صافي +0.2 bps/يوم | 2022+: IC +0.1046 (t=+5.5) قبل +1.6 صافي +0.1 | 🟡
+  عشوائي (اختبار سلامة)                IC -0.0057 (t=-2.4) | صافي -1.9 bps/يوم | 2022+: IC -0.0070 (t=-2.4) قبل -0.2 صافي -1.7 | ❌
+  XGBoost (walk-forward)               IC +0.0793 (t=+6.6) | صافي +1.7 bps/يوم | 2022+: IC +0.0909 (t=+5.1) قبل +2.9 صافي +1.4 | ✅
+[done] التقرير: backtest/results/report_horizons_latest.md
