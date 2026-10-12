@@ -42,7 +42,11 @@ RES_DIR = os.path.join(HERE, "results")
 
 MAX_ABS_RET = 0.25  # حد EGX اليومي 10% - أي قفزة أكبر غالبًا تقسيم/بيانات غلط
 MIN_HISTORY = 300   # أقل عدد أيام للسهم عشان يدخل الاختبار
-MIN_CROSS = 60      # أقل عدد أسهم صالحة في اليوم عشان نقيّم اليوم ده
+MIN_CROSS = 60      # أقصى حد أدنى لعدد الأسهم الصالحة في اليوم (بيتقلل تلقائيًا لو السوق أصغر)
+
+
+class BacktestError(RuntimeError):
+    """فشل متوقع (بيانات ناقصة مثلاً): رسالته بتتبعت لتليجرام زي ما هي."""
 
 XF = ["r1", "r2", "r3", "r5", "r10", "r20", "vol20", "sg20", "sg50",
       "z1", "vr", "flat20", "rng5", "tech", "p_up"]  # features مرتبة cross-sectional
@@ -93,8 +97,10 @@ def fetch_yfinance(tickers):
         if i % 25 == 0:
             print(f"[data] {i}/{len(tickers)} سهم، اتجاب تاريخ لـ {len(frames)}")
         time.sleep(0.3)
-    if not frames:
-        raise RuntimeError("مفيش بيانات اتجابت من yfinance")
+    print(f"[data] خلص الجلب: {len(frames)} سهم اتجاب من {len(tickers)}")
+    if len(frames) < 20:
+        raise BacktestError(f"yfinance رجّع بيانات لـ {len(frames)} سهم بس من {len(tickers)} "
+                            f"(غالبًا Yahoo رفض الطلبات من GitHub). حاول تعيد التشغيل بعد شوية.")
     panel = {k: pd.DataFrame({t: f[k] for t, f in frames.items()})
              for k in ("High", "Low", "Close", "Volume")}
     pd.to_pickle(panel, cache)
@@ -241,7 +247,7 @@ def rank_corr(a, b):
     return float(np.corrcoef(ra, rb)[0, 1])
 
 
-def evaluate(name, S, NXT, E, idxs, dates, cost, rng):
+def evaluate(name, S, NXT, E, idxs, dates, cost, rng, min_cross=MIN_CROSS):
     rows = []
     prev20 = prev5 = None
     for t in idxs:
@@ -252,7 +258,7 @@ def evaluate(name, S, NXT, E, idxs, dates, cost, rng):
             m = E[t] & np.isfinite(S[t])
             sc = S[t]
         n = int(m.sum())
-        if n < MIN_CROSS:
+        if n < min_cross:
             continue
         cols = np.where(m)[0]
         s = sc[cols] + rng.normal(0, 1e-9, n)      # كسر التعادل عشوائيًا (مفيش تحيّز لترتيب الأعمدة)
@@ -370,17 +376,7 @@ def send_telegram(msg):
 # ============================================================
 # MAIN
 # ============================================================
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--source", default="yfinance",
-                    choices=["yfinance", "synthetic-null", "synthetic-planted"])
-    ap.add_argument("--cost-bps", type=float, default=15.0, help="تكلفة الاتجاه الواحد بالـ bps")
-    ap.add_argument("--min-turnover", type=float, default=1_000_000, help="حد السيولة (جنيه/يوم)")
-    ap.add_argument("--min-train", type=int, default=500)
-    ap.add_argument("--block", type=int, default=63)
-    ap.add_argument("--trees", type=int, default=150)
-    ap.add_argument("--no-telegram", action="store_true")
-    a = ap.parse_args()
+def run(a):
     cost = a.cost_bps / 1e4
     rng = np.random.default_rng(42)
 
@@ -389,6 +385,8 @@ def main():
     else:
         panel = make_synthetic(a.source == "synthetic-planted")
     C, H, L, V = clean_panel(panel)
+    if C.shape[1] < 20 or C.shape[0] < a.min_train + 100:
+        raise BacktestError(f"البيانات مش كفاية: {C.shape[1]} سهم × {C.shape[0]} يوم بعد التنضيف")
     print(f"[data] {C.shape[1]} سهم × {C.shape[0]} يوم ({C.index[0].date()} → {C.index[-1].date()})")
 
     f, mkt, nxt, liquid, flat59 = build_features(C, H, L, V, a.min_turnover)
@@ -399,7 +397,19 @@ def main():
     Xcs = np.stack([cs[k] for k in XF] +
                    [np.repeat(mkt[k].values[:, None], N, axis=1) for k in MF], axis=2).astype(np.float32)
     E = np.isfinite(Xcs).all(axis=2) & np.isfinite(NXT) & liquid.values
-    first_valid = int(np.argmax(E.sum(axis=1) >= MIN_CROSS))
+    elig = E.sum(axis=1)
+    by_year = pd.Series(elig, index=dates).groupby(dates.year).median().astype(int)
+    print("[diag] وسيط عدد الأسهم الصالحة (سيولة كفاية + features كاملة) في اليوم، سنة بسنة:")
+    print("       " + " | ".join(f"{y}:{n}" for y, n in by_year.items()))
+    if elig.max() < 20:
+        raise BacktestError(
+            f"أقصى عدد أسهم صالحة في يوم واحد = {int(elig.max())} (حد السيولة {a.min_turnover:,.0f} "
+            f"جنيه/يوم). جرّب تقلل min_turnover في تشغيل الـ workflow.")
+    # حد أدنى متكيّف مع السوق: نص عدد الأسهم الصالحة في الأيام العادية، بين 20 و60
+    min_cross = int(np.clip(0.5 * np.percentile(elig[elig > 0], 75), 20, MIN_CROSS))
+    print(f"[diag] أقل عدد أسهم لتقييم اليوم = {min_cross}")
+    ok_days = np.where(elig >= min_cross)[0]
+    first_valid = int(ok_days[0])
     # هدف XGBoost: ترتيب عائد اليوم التالي بين الأسهم (cross-sectional rank)
     Y = (pd.DataFrame(np.where(E, NXT, np.nan)).rank(axis=1, pct=True) - 0.5).values.astype(np.float32)
 
@@ -407,7 +417,7 @@ def main():
     pred, importance, t0 = run_xgb(Xcs, np.nan_to_num(Y), E, first_valid, a.min_train, a.block, a.trees)
     idxs = [t for t in range(t0, T - 1) if np.isfinite(pred[t]).any()]
     if not idxs:
-        sys.exit("مفيش تاريخ كفاية للاختبار خارج العينة (قلل --min-train أو استخدم بيانات أطول)")
+        raise BacktestError("مفيش تاريخ كفاية للاختبار خارج العينة (قلل min_train أو استخدم بيانات أطول)")
 
     strategies = rule_scores(f, flat59)
     scores = {k: (None if v is None else v.values) for k, v in strategies.items()}
@@ -415,13 +425,16 @@ def main():
 
     results, yearlies = [], {}
     for name, S in scores.items():
-        out = evaluate(name, S, NXT, E, idxs, dates, cost, rng)
+        out = evaluate(name, S, NXT, E, idxs, dates, cost, rng, min_cross)
         if out:
             results.append(out[0])
             yearlies[name] = out[1]
             r = out[0]
             print(f"  {name:42s} IC {r['ic']:+.4f} (t={r['ic_t']:+.2f}) | أعلى20% {r['ex20_bps']:+.1f} bps "
                   f"| بعد التكلفة {r['net20_bps']:+.1f} | {STATUS_ICON[r['status']]}")
+    if not results:
+        raise BacktestError(f"مفيش يوم فيه {min_cross}+ سهم صالح في فترة الاختبار "
+                            f"({dates[idxs[0]].date()} → {dates[idxs[-1]].date()}، {len(idxs)} يوم)")
 
     meta = {"run_at": datetime.now().strftime("%Y-%m-%d %H:%M"), "source": a.source,
             "tickers": N, "days_total": T, "first": str(dates[0].date()), "last": str(dates[-1].date()),
@@ -437,6 +450,33 @@ def main():
     print(f"[done] التقرير: backtest/results/report_{tag}.md")
     if a.source == "yfinance" and not a.no_telegram:
         send_telegram(tg_summary(results))
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--source", default="yfinance",
+                    choices=["yfinance", "synthetic-null", "synthetic-planted"])
+    ap.add_argument("--cost-bps", type=float, default=15.0, help="تكلفة الاتجاه الواحد بالـ bps")
+    ap.add_argument("--min-turnover", type=float, default=1_000_000, help="حد السيولة (جنيه/يوم)")
+    ap.add_argument("--min-train", type=int, default=500)
+    ap.add_argument("--block", type=int, default=63)
+    ap.add_argument("--trees", type=int, default=150)
+    ap.add_argument("--no-telegram", action="store_true")
+    a = ap.parse_args()
+    try:
+        run(a)
+    except Exception as e:  # noqa: BLE001
+        import traceback
+        tb = traceback.format_exc()
+        print(tb)
+        os.makedirs(RES_DIR, exist_ok=True)
+        with open(os.path.join(RES_DIR, "error_latest.txt"), "w", encoding="utf-8") as fh:
+            fh.write(f"{datetime.now():%Y-%m-%d %H:%M}\n{tb}")
+        if a.source == "yfinance" and not a.no_telegram:
+            kind = "فشل (متوقع)" if isinstance(e, BacktestError) else "خطأ في الكود"
+            send_telegram(f"🧪❌ الباكتست وقع - {kind}:\n{type(e).__name__}: {str(e)[:600]}\n"
+                          f"التفاصيل في backtest/results/error_latest.txt على GitHub.")
+        sys.exit(1)
 
 
 if __name__ == "__main__":

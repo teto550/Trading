@@ -32,19 +32,30 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          python backtest/backtest.py --source yfinance \
+          mkdir -p backtest/results
+          set -o pipefail
+          python -u backtest/backtest.py --source yfinance \
             --cost-bps "${{ github.event.inputs.cost_bps || '15' }}" \
-            --min-turnover "${{ github.event.inputs.min_turnover || '1000000' }}"
+            --min-turnover "${{ github.event.inputs.min_turnover || '1000000' }}" \
+            2>&1 | tee backtest/results/log_latest.txt
       - name: Upload report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: backtest-report
           path: backtest/results/
       - name: Commit results
+        if: always()
         run: |
           git config user.name "alert-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add backtest/results/report_latest.md backtest/results/results_latest.json
+          # على النجاح بنشيل ملف الخطأ القديم؛ على الفشل بيفضل error_latest.txt + اللوج
+          if [ -f backtest/results/report_latest.md ] && [ -f backtest/results/error_latest.txt ] \
+             && [ backtest/results/report_latest.md -nt backtest/results/error_latest.txt ]; then
+            git rm -q --ignore-unmatch backtest/results/error_latest.txt || true
+          fi
+          git add -A backtest/results/report_latest.md backtest/results/results_latest.json \
+                     backtest/results/error_latest.txt backtest/results/log_latest.txt 2>/dev/null || true
           git diff --cached --quiet || git commit -m "backtest results [skip ci]"
           git pull --rebase -X theirs origin "${GITHUB_REF_NAME:-main}" || true
           git push
