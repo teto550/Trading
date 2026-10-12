@@ -1,0 +1,44 @@
+name: EGX Paper Trade
+on:
+  schedule:
+    # الأحد للخميس بعد القفل بكتير (القفل 2:30 بتوقيت القاهرة = 11:30 UTC) عشان Yahoo يكون حدّث أسعار اليوم.
+    # بنتجنب دقيقة :00 و:30 عشان GitHub بيسقّط/بيأخّر الـ cron وقت الزحمة
+    - cron: "17 17 * * 0-4"
+  workflow_dispatch:
+concurrency:
+  group: paper-trade
+  cancel-in-progress: false
+jobs:
+  paper:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install -r backtest/requirements.txt
+      - name: Record today's paper-trade cohort and score matured ones
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          mkdir -p paper
+          set -o pipefail
+          python -u backtest/paper_trade.py 2>&1 | tee paper/log_latest.txt
+      - name: Commit paper-trade state
+        if: always()
+        run: |
+          git config user.name "alert-bot"
+          git config user.email "bot@users.noreply.github.com"
+          # على النجاح بنشيل ملف الخطأ القديم
+          if [ -f paper/summary.md ] && [ -f paper/error_latest.txt ] && [ paper/summary.md -nt paper/error_latest.txt ]; then
+            git rm -q --ignore-unmatch paper/error_latest.txt || true
+          fi
+          git add -A paper
+          git diff --cached --quiet || git commit -m "paper-trade update [skip ci]"
+          git pull --rebase -X theirs origin "${GITHUB_REF_NAME:-main}" || true
+          git push
