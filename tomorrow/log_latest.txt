@@ -1,0 +1,88 @@
+[data] 25/251 سهم، اتجاب تاريخ لـ 25
+$VLMR.CA: possibly delisted; no timezone found
+$VLMRA.CA: possibly delisted; no timezone found
+$ACTF.CA: possibly delisted; no timezone found
+$AIDC.CA: possibly delisted; no timezone found
+$AIHC.CA: possibly delisted; no timezone found
+$BONY.CA: possibly delisted; no timezone found
+[data] 50/251 سهم، اتجاب تاريخ لـ 44
+$GOUR.CA: possibly delisted; no timezone found
+$GPIM.CA: possibly delisted; no timezone found
+[data] 75/251 سهم، اتجاب تاريخ لـ 67
+$TAQA.CA: possibly delisted; no timezone found
+$VALU.CA: possibly delisted; no timezone found
+[data] 100/251 سهم، اتجاب تاريخ لـ 90
+$GTHE.CA: possibly delisted; no timezone found
+$SNFI.CA: possibly delisted; no timezone found
+$IRAX.CA: possibly delisted; no timezone found
+$CRST.CA: possibly delisted; no timezone found
+[data] 125/251 سهم، اتجاب تاريخ لـ 111
+$NCGC.CA: possibly delisted; no timezone found
+$NBKE.CA: possibly delisted; no timezone found
+$QNBE.CA: possibly delisted; no timezone found
+[data] 150/251 سهم، اتجاب تاريخ لـ 133
+$PACH.CA: possibly delisted; no timezone found
+$UASG.CA: possibly delisted; no timezone found
+$EITP.CA: possibly delisted; no timezone found
+$SMPP.CA: possibly delisted; no timezone found
+[data] 175/251 سهم، اتجاب تاريخ لـ 154
+$ACRO.CA: possibly delisted; no timezone found
+$ESRS.CA: possibly delisted; no timezone found
+$WATP.CA: possibly delisted; no timezone found
+$SUCE.CA: possibly delisted; no timezone found
+$TORA.CA: possibly delisted; no timezone found
+$DCRC.CA: possibly delisted; no timezone found
+$GTWL.CA: possibly delisted; no timezone found
+$ALEX.CA: possibly delisted; no timezone found
+$TYCN.CA: possibly delisted; no timezone found
+$ARVA.CA: possibly delisted; no timezone found
+$HCFI.CA: possibly delisted; no timezone found
+$NARE.CA: possibly delisted; no timezone found
+[data] 200/251 سهم، اتجاب تاريخ لـ 167
+$UTOP.CA: possibly delisted; no timezone found
+$APPC.CA: possibly delisted; no timezone found
+$UBEE.CA: possibly delisted; no timezone found
+$NAPR.CA: possibly delisted; no timezone found
+$DIFC.CA: possibly delisted; no timezone found
+[data] 225/251 سهم، اتجاب تاريخ لـ 187
+$FCMD.CA: possibly delisted; no timezone found
+$VERT.CA: possibly delisted; no timezone found
+$ADRI.CA: possibly delisted; no timezone found
+$KRDI.CA: possibly delisted; no timezone found
+$UPMS.CA: possibly delisted; no timezone found
+$TANM.CA: possibly delisted; no timezone found
+$ACAP.CA: possibly delisted; no timezone found
+$DGTZ.CA: possibly delisted; no timezone found
+$PHGC.CA: possibly delisted; no timezone found
+$GTEX.CA: possibly delisted; no timezone found
+$GGRN.CA: possibly delisted; no timezone found
+$HBCO.CA: possibly delisted; no timezone found
+$CPME.CA: possibly delisted; no timezone found
+$TWSA.CA: possibly delisted; no timezone found
+[data] 250/251 سهم، اتجاب تاريخ لـ 198
+$KORA.CA: possibly delisted; no timezone found
+[data] خلص الجلب: 198 سهم اتجاب من 251
+🔮 تقرير جلسة بكره - التلات 2026-10-13
+(مبني على بيانات قفلة 2026-10-11 - 164 سهم سيولته كافية)
+
+📈 أقوى 10 سهم ترتيبًا لجلسة بكره (من الأقوى):
+السهم | آخر قفلة | النطاق المعتاد لبكره (80% من الأيام)
+
+1. ARAB | 0.28 | 0.28 ← 0.28 → 0.30  (-2.8% / +4.3%)
+2. SCEM | 89.00 | 85.96 ← 88.82 → 94.12  (-3.4% / +5.8%)
+3. AJWA | 199.55 | 196.11 ← 199.47 → 204.67  (-1.7% / +2.6%)
+4. AMIA | 19.04 | 18.56 ← 19.09 → 20.25  (-2.5% / +6.3%)
+5. CPCI | 598.88 | 593.15 ← 598.88 → 619.18  (-1.0% / +3.4%)
+6. JUFO | 25.07 | 24.60 ← 25.04 → 25.46  (-1.9% / +1.5%)
+7. AXPH | 1488.27 | 1463.62 ← 1487.59 → 1537.23  (-1.7% / +3.3%)
+8. OLFI | 21.11 | 20.70 ← 21.09 → 21.47  (-1.9% / +1.7%)
+9. WCDF | 619.98 | 607.36 ← 621.12 → 638.00  (-2.0% / +2.9%)
+10. OIH | 1.88 | 1.85 ← 1.89 → 1.93  (-1.5% / +2.9%)
+
+اللي في النص = الحركة الوسيطة المعتادة للسهم، مش هدف. الحد الأقصى النهاري لأي سهم ±10% من القفلة.
+
+⚠️ اقرأ ده قبل ما تعتمد على التقرير:
+• الترتيب ده ميزة إحصائية صغيرة جدًا في الباكتست (IC حوالي +0.05 ليوم واحد)، مش توقع إن السهم هيطلع.
+• بعد تكلفة الشراء والبيع (15 bps في الاتجاه) النتيجة في الباكتست كانت سالبة من 2022 لليوم الواحد.
+• ممكن أي سهم من القايمة ينزل بكره، والنطاق وصف للحركة الماضية مش ضمان.
+• مش توصية شراء ولا بيع. القرار والمسؤولية ليك.
