@@ -116,13 +116,14 @@ def build_report(C, H, L, V, O, a, now):
         rows.append({"rank": rank, "name": names[col].replace(".CA", ""), "pr": pr,
                      "r1": float(f["r1"].iloc[t, col]) * 100 if np.isfinite(f["r1"].iloc[t, col]) else float("nan")})
 
-    L_ = [f"🔮 تقرير جلسة {AR_DAYS[target.weekday()]} {target}",
+    when = "النهاردة" if target == now.date() else "بكره"
+    L_ = [f"🔮 تقرير جلسة {when} - {AR_DAYS[target.weekday()]} {target}",
           f"(مبني على بيانات قفلة {data_date} - {n} سهم سيولته كافية)", ""]
     if stale_days >= 2 and now.weekday() in TRADING_DAYS and now.hour >= 15:
         L_ += [f"⚠️ آخر بيانات عند Yahoo هي {data_date} (متأخرة {stale_days} يوم عن النهاردة). "
                f"الترتيب ده مبني على بيانات قديمة شوية.", ""]
-    L_ += [f"📈 أقوى {len(rows)} سهم ترتيبًا لجلسة بكره (من الأقوى):",
-           "السهم | آخر قفلة | النطاق المعتاد لبكره (80% من الأيام)", ""]
+    L_ += [f"📈 أقوى {len(rows)} سهم ترتيبًا لجلسة {when} (من الأقوى):",
+           f"السهم | آخر قفلة | النطاق المعتاد ل{when} (80% من الأيام)", ""]
     for r in rows:
         p = r["pr"]
         L_.append(f"{r['rank']}. {r['name']} | {p['last']:.2f} | "
@@ -166,6 +167,10 @@ def main():
                 os.remove(cache)
         panel = bt.fetch_yfinance(bt.load_tickers())
         C, H, L, V, O = bt.clean_panel(panel)
+        # قبل القفل (2:45) أي صف بتاريخ النهاردة هو شمعة ناقصة، فبنشيله عشان الترتيب يتبني على آخر قفلة كاملة
+        if now.weekday() in TRADING_DAYS and (now.hour, now.minute) < (14, 45):
+            keep = C.index.date != now.date()
+            C, H, L, V, O = (x[keep] for x in (C, H, L, V, O))
         text, rows, data_date = build_report(C, H, L, V, O, a, now)
         os.makedirs(OUT_DIR, exist_ok=True)
         with open(os.path.join(OUT_DIR, "report_latest.md"), "w", encoding="utf-8") as fh:
