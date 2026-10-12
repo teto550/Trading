@@ -28,6 +28,7 @@ import os
 import sys
 import traceback
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 import numpy as np
 import pandas as pd
@@ -147,8 +148,11 @@ def fmt_summary_md(state, stats, new_cohort, cost_bps):
     return "\n".join(L)
 
 
-def tg_message(new_cohort, stats, n_total, cost_bps, created):
-    lines = [f"📒 Paper-trade (من غير فلوس) - {new_cohort['date']}"]
+def tg_message(new_cohort, stats, n_total, cost_bps, created, stale_days=0):
+    lines = [f"📒 Paper-trade (من غير فلوس) - آخر دفعة {new_cohort['date']}"]
+    if stale_days >= 3:
+        lines.append(f"⚠️ بيانات Yahoo للسوق المصري متأخرة {stale_days} يوم عن النهاردة، فالاختيارات دي "
+                     f"قديمة. الغرض منها قياس النتايج بعد 20 يوم مش إنك تشتري بيها.")
     if created:
         names = ", ".join(t.replace(".CA", "") for t in new_cohort["xgb"][:30])
         lines.append(f"دفعة جديدة: {len(new_cohort['xgb'])} سهم من {len(new_cohort['universe'])} صالح (XGBoost، احتفاظ {HOLD} يوم)")
@@ -200,13 +204,21 @@ def run(a):
             state = json.load(fh)
     panel = bt.fetch_yfinance(bt.load_tickers())
     cohort, stats, created = process(panel, state, a)
+    # الرسالة مرة في الأسبوع (الخميس) + أول دفعة + أول مرة دفعة تنضج، عشان مانزعجكش كل يوم
+    cairo = datetime.now(ZoneInfo("Africa/Cairo"))
+    n_mat = stats["n"] if stats else 0
+    send = ((created and len(state["cohorts"]) == 1) or cairo.weekday() == 3
+            or (n_mat > 0 and state.get("notified_matured", 0) == 0))
+    state["notified_matured"] = max(state.get("notified_matured", 0), n_mat)
+    stale = (cairo.date() - datetime.strptime(cohort["date"], "%Y-%m-%d").date()).days
     with open(picks_file, "w", encoding="utf-8") as fh:
         json.dump(state, fh, ensure_ascii=False)
     with open(os.path.join(PAPER_DIR, "summary.md"), "w", encoding="utf-8") as fh:
         fh.write(fmt_summary_md(state, stats, cohort, a.cost_bps))
-    print(f"[done] دفعة {cohort['date']} ({'جديدة' if created else 'موجودة'}) | ناضجة: {stats['n'] if stats else 0}")
-    if not a.no_telegram:
-        bt.send_telegram(tg_message(cohort, stats, len(state["cohorts"]), a.cost_bps, created))
+    print(f"[done] دفعة {cohort['date']} ({'جديدة' if created else 'موجودة'}) | ناضجة: {n_mat} | "
+          f"تأخر Yahoo: {stale} يوم | رسالة تليجرام: {'أيوه' if send else 'لأ'}")
+    if send and not a.no_telegram:
+        bt.send_telegram(tg_message(cohort, stats, len(state["cohorts"]), a.cost_bps, created, stale))
 
 
 def main():
