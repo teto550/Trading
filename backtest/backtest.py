@@ -41,6 +41,8 @@ DATA_DIR = os.path.join(HERE, "data")
 RES_DIR = os.path.join(HERE, "results")
 
 MAX_ABS_RET = 0.25  # حد EGX اليومي 10% - أي قفزة أكبر غالبًا تقسيم/بيانات غلط
+LOCK_THRESH = 0.09  # سهم اتحرك 9%+ في اليوم = غالبًا قفل على الحد، ومش هتلحق تشتريه بسعر معقول
+RECENT_FROM = 2022  # الفترة الأخيرة اللي بتحدد الحكم: السوق اتغير (سيولة أعلى، سنين الحد القديم راحت)
 MIN_HISTORY = 300   # أقل عدد أيام للسهم عشان يدخل الاختبار
 MIN_CROSS = 60      # أقصى حد أدنى لعدد الأسهم الصالحة في اليوم (بيتقلل تلقائيًا لو السوق أصغر)
 
@@ -88,7 +90,7 @@ def fetch_yfinance(tickers):
                     h = h.copy()
                     h.index = idx
                     h = h[~h.index.duplicated(keep="last")]
-                    frames[t] = h[["High", "Low", "Close", "Volume"]]
+                    frames[t] = h[["Open", "High", "Low", "Close", "Volume"]]
                 break
             except Exception as e:  # noqa: BLE001
                 time.sleep(2 * (attempt + 1))
@@ -102,7 +104,7 @@ def fetch_yfinance(tickers):
         raise BacktestError(f"yfinance رجّع بيانات لـ {len(frames)} سهم بس من {len(tickers)} "
                             f"(غالبًا Yahoo رفض الطلبات من GitHub). حاول تعيد التشغيل بعد شوية.")
     panel = {k: pd.DataFrame({t: f[k] for t, f in frames.items()})
-             for k in ("High", "Low", "Close", "Volume")}
+             for k in ("Open", "High", "Low", "Close", "Volume")}
     pd.to_pickle(panel, cache)
     return panel
 
@@ -123,26 +125,31 @@ def make_synthetic(planted, T=1600, N=150, seed=1):
     r = np.clip(beta * m[:, None] + e, -0.1, 0.1)
     C = 10 * np.cumprod(1 + r, axis=0)
     spread = np.abs(rng.normal(0, 0.01, (T, N)))
+    prev = np.vstack([C[:1], C[:-1]])
+    opn = prev * (1 + rng.normal(0, 0.003, (T, N)))   # افتتاح قريب من قفلة امبارح
     cols = [f"S{i:03d}.CA" for i in range(N)]
     mk = lambda a: pd.DataFrame(a, index=dates, columns=cols)  # noqa: E731
-    return {"High": mk(C * (1 + spread)), "Low": mk(C * (1 - spread)), "Close": mk(C),
-            "Volume": mk(rng.lognormal(13, 0.5, (T, N)))}
+    return {"Open": mk(opn), "High": mk(C * (1 + spread)), "Low": mk(C * (1 - spread)),
+            "Close": mk(C), "Volume": mk(rng.lognormal(13, 0.5, (T, N)))}
 
 
 def clean_panel(panel, min_cross=30):
-    C, H, L, V = (panel[k].sort_index() for k in ("Close", "High", "Low", "Volume"))
+    if "Open" not in panel:
+        raise BacktestError("بيانات Open مش موجودة في الكاش (امسح backtest/data وأعد التشغيل)")
+    C, H, L, V, O = (panel[k].sort_index() for k in ("Close", "High", "Low", "Volume", "Open"))
     C = C.where(C > 0)
+    O = O.where(O > 0)
     keep_dates = C.notna().sum(axis=1) >= min_cross  # بيشيل الإجازات وأيام ماحدش اتداول فيها
-    C, H, L, V = (x[keep_dates] for x in (C, H, L, V))
+    C, H, L, V, O = (x[keep_dates] for x in (C, H, L, V, O))
     ok = C.notna().sum() >= MIN_HISTORY
-    C, H, L, V = (x.loc[:, ok] for x in (C, H, L, V))
-    return C, H, L, V
+    C, H, L, V, O = (x.loc[:, ok] for x in (C, H, L, V, O))
+    return C, H, L, V, O
 
 
 # ============================================================
 # Features (كلها بتستخدم بيانات لحد اليوم t بس)
 # ============================================================
-def build_features(C, H, L, V, min_tov):
+def build_features(C, H, L, V, O, min_tov):
     r = C / C.shift(1) - 1
     r = r.where(r.abs() <= MAX_ABS_RET)            # قفزات التقسيم/البيانات الغلط تتشال
     lr = np.log1p(r)
@@ -171,9 +178,14 @@ def build_features(C, H, L, V, min_tov):
     flat59 = (r == 0).where(r.notna()).rolling(59, min_periods=30).mean()
     tov = (C * V).rolling(20, min_periods=15).median()
     liquid = tov >= min_tov
-    nxt = r.shift(-1)                                # عائد اليوم التالي (الهدف)
+    nxt = r.shift(-1)                                # عائد اليوم التالي قفلة→قفلة (متفائل)
+    # عائد اليوم التالي افتتاح→قفلة: اللي تقدر تاخده فعلاً لو الإشارة وصلتك قبل الافتتاح
+    oc = (C / O - 1).where(O.notna())
+    oc = oc.where(oc.abs() <= MAX_ABS_RET)
+    nxt_oc = oc.shift(-1)
+    lock = r.abs() >= LOCK_THRESH                    # السهم قفل على/قرب الحد اليومي النهاردة
     mkt = {"mkt1": r.mean(axis=1), "breadth": (r > 0).where(r.notna()).mean(axis=1)}
-    return f, mkt, nxt, liquid, flat59
+    return f, mkt, nxt, nxt_oc, lock, liquid, flat59
 
 
 def csrank(df, liquid):
@@ -188,6 +200,7 @@ def rule_scores(f, flat59):
     cur = cur.where(flat59 <= 0.25)         # نفس فلتر الأسهم الواقفة في collect_candidates
     return {
         "الموديل الحالي (تأكيد فني)": cur,
+        "momentum 1 يوم (اشتري اللي طلع امبارح)": f["r1"],
         "reversal 1 يوم (اشتري اللي نزل امبارح)": -f["r1"],
         "reversal 5 أيام": -f["r5"],
         "reversal معدّل بالتذبذب (z)": -f["z1"],
@@ -292,11 +305,29 @@ def evaluate(name, S, NXT, E, idxs, dates, cost, rng, min_cross=MIN_CROSS):
         "turn20": float(d["c20"].mean() / (2 * cost)) if cost > 0 else float("nan"),
         "pos_years": pos_years, "n_years": int(len(yearly)),
     }
-    res["worthy"] = bool(res["ic_t"] >= 3 and res["net20_bps"] > 0
-                         and pos_years == pos_years and pos_years >= 0.6)
-    # إشارة حقيقية إحصائيًا بس التكلفة (دوران يومي) بتاكل المكسب = محتاجة استراتيجية أبطأ
-    gross_only = bool(not res["worthy"] and res["ic_t"] >= 3 and res["ex20_bps"] > 0)
-    res["status"] = "worthy" if res["worthy"] else ("gross_only" if gross_only else "none")
+    # الفترة الأخيرة لوحدها: الحكم لازم يعدّي فيها كمان، مش بس على العينة كلها
+    rec = d[d.index.year >= RECENT_FROM]
+    nan = float("nan")
+    res.update({
+        "rec_days": int(len(rec)),
+        "rec_ic": float(rec["ic"].mean()) if len(rec) else nan,
+        "rec_ic_t": nw_t(rec["ic"].dropna()) if len(rec) >= 30 else nan,
+        "rec_ex20_bps": float(rec["ex20"].mean() * 1e4) if len(rec) else nan,
+        "rec_net20_bps": float(rec["net20"].mean() * 1e4) if len(rec) else nan,
+    })
+    rec_alive = bool(res["rec_days"] >= 100 and res["rec_ic_t"] == res["rec_ic_t"]
+                     and res["rec_ic_t"] >= 2 and res["rec_ex20_bps"] > 0)
+    full_sig = bool(res["ic_t"] >= 3 and res["ex20_bps"] > 0)
+    if full_sig and rec_alive and res["net20_bps"] > 0 and res["rec_net20_bps"] > 0 \
+            and pos_years == pos_years and pos_years >= 0.6:
+        res["status"] = "worthy"
+    elif full_sig and rec_alive:
+        res["status"] = "gross_only"    # لسه شغالة حديثًا بس التكلفة بتاكلها
+    elif full_sig:
+        res["status"] = "faded"         # كانت شغالة زمان واختفت في السنين الأخيرة
+    else:
+        res["status"] = "none"
+    res["worthy"] = res["status"] == "worthy"
     return res, yearly
 
 
@@ -304,59 +335,70 @@ def evaluate(name, S, NXT, E, idxs, dates, cost, rng, min_cross=MIN_CROSS):
 # التقرير
 # ============================================================
 STATUS_AR = {"worthy": "✅ تستحق تجربة حية",
-             "gross_only": "🟡 إشارة بس التكلفة بتاكلها",
+             "gross_only": "🟡 لسه شغالة حديثًا بس التكلفة بتاكلها",
+             "faded": "🟠 كانت شغالة زمان واختفت في السنين الأخيرة",
              "none": "❌ مفيش ميزة مؤكدة"}
-STATUS_ICON = {"worthy": "✅", "gross_only": "🟡", "none": "❌"}
+STATUS_ICON = {"worthy": "✅", "gross_only": "🟡", "faded": "🟠", "none": "❌"}
+SORT_KEY = lambda x: -(x["rec_net20_bps"] if x["rec_net20_bps"] == x["rec_net20_bps"] else -9e9)  # noqa: E731
 
 
-def fmt_report(results, yearlies, meta, importance):
+def year_matrix(yearlies):
+    years = sorted({y for df in yearlies.values() for y in df.index})
+    L = ["| الاستراتيجية | " + " | ".join(str(y) for y in years) + " |",
+         "|---|" + "---|" * len(years)]
+    for name, df in yearlies.items():
+        cells = [f"{df.loc[y, 'net20'] * 1e4:+.0f}" if y in df.index else "-" for y in years]
+        L.append(f"| {name} | " + " | ".join(cells) + " |")
+    return L
+
+
+def fmt_report(worlds, meta):
     L = [f"# EGX Walk-Forward Backtest - {meta['run_at']}", "",
          f"- المصدر: **{meta['source']}** | الأسهم: {meta['tickers']} | الأيام: {meta['days_total']} "
          f"({meta['first']} → {meta['last']})",
-         f"- فترة الاختبار خارج العينة: {meta['oos_first']} → {meta['oos_last']} "
-         f"({meta['oos_days']} يوم)",
          f"- تكلفة الصفقة: {meta['cost_bps']:.0f} bps في الاتجاه الواحد | حد السيولة: "
          f"{meta['min_tov']:,.0f} جنيه/يوم | XGBoost: إعادة تدريب كل {meta['block']} يوم",
-         "- كل الأرقام **بالنسبة لمتوسط السوق في نفس اليوم** (القفلة للقفلة)", "",
-         "| الاستراتيجية | IC | t(IC) | أعلى 20%: bps/يوم | بعد التكلفة | يوم مكسب | أعلى 5 بعد التكلفة | سنين موجبة | الحكم |",
-         "|---|---|---|---|---|---|---|---|---|"]
-    for r in sorted(results, key=lambda x: -(x["ic_t"] if x["ic_t"] == x["ic_t"] else -9)):
-        py = f"{r['pos_years'] * 100:.0f}% ({r['n_years']})" if r["pos_years"] == r["pos_years"] else "-"
-        L.append(f"| {r['name']} | {r['ic']:+.4f} | {r['ic_t']:+.2f} | {r['ex20_bps']:+.1f} | "
-                 f"{r['net20_bps']:+.1f} | {r['hit20'] * 100:.0f}% | {r['net5_bps']:+.1f} | {py} | "
-                 f"{STATUS_AR[r['status']]} |")
-    L += ["", "**القاعدة:** ✅ = t(IC) ≥ 3 (بدل 2، لأننا جربنا أكتر من استراتيجية) + عائد موجب بعد "
-          "التكاليف + موجب في 60% من السنين على الأقل. 🟡 = الإشارة حقيقية إحصائيًا قبل التكلفة بس "
-          "الدوران اليومي بياكل المكسب (محتاجة احتفاظ أطول أو سيولة أعلى). ❌ = مفيش ميزة مؤكدة. "
-          "IC = ارتباط ترتيب الإشارة بترتيب عائد اليوم التالي بين الأسهم؛ 0.02-0.03 يعتبر قوي."]
-    if importance is not None:
-        imp = sorted(zip(XF + MF, importance), key=lambda z: -z[1])[:8]
-        L += ["", "## أهم مدخلات XGBoost (آخر تدريب)",
-              ", ".join(f"{n} ({v:.2f})" for n, v in imp)]
-    best = max(results, key=lambda x: x["ic_t"] if x["ic_t"] == x["ic_t"] else -9)
-    L += ["", f"## تفصيل سنة بسنة: {best['name']}",
-          "| السنة | أيام | IC | أعلى 20% bps | بعد التكلفة |", "|---|---|---|---|---|"]
-    for yr, row in yearlies[best["name"]].iterrows():
-        L.append(f"| {yr} | {int(row['days'])} | {row['ic']:+.4f} | {row['ex20'] * 1e4:+.1f} | "
-                 f"{row['net20'] * 1e4:+.1f} |")
-    L += ["", "## حدود لازم تتحط في الاعتبار",
-          "1. القفلة للقفلة: مفيش spread ولا slippage، والتنفيذ الفعلي بيكون على سعر الافتتاح.",
-          "2. قايمة الأسهم هي المقيدة حاليًا فقط (survivorship bias بيحسّن النتايج شوية).",
-          "3. بيانات Yahoo للسوق المصري فيها فجوات وأسهم واقفة؛ بنشيل القفزات > 25% والأسهم قليلة السيولة.",
-          "4. نتيجة موجبة هنا = دليل مبدئي. الخطوة الجاية دايمًا تجربة حية (scorecard) قبل أي قرار فلوس."]
+         f"- الحكم بيبص على **{RECENT_FROM} وما بعدها لوحدها** كمان، مش بس على العينة كلها. "
+         "كل الأرقام بالنسبة لمتوسط السوق في نفس اليوم."]
+    for w in worlds:
+        L += ["", f"## {w['title']}", f"فترة الاختبار: {w['oos_first']} → {w['oos_last']} ({w['oos_days']} يوم)", "",
+              f"| الاستراتيجية | IC كل الفترة | t | بعد التكلفة (كل الفترة) | IC {RECENT_FROM}+ | t {RECENT_FROM}+ | "
+              f"أعلى 20% {RECENT_FROM}+ | بعد التكلفة {RECENT_FROM}+ | دوران يومي | الحكم |",
+              "|---|---|---|---|---|---|---|---|---|---|"]
+        for r in sorted(w["results"], key=SORT_KEY):
+            L.append(f"| {r['name']} | {r['ic']:+.4f} | {r['ic_t']:+.1f} | {r['net20_bps']:+.1f} | "
+                     f"{r['rec_ic']:+.4f} | {r['rec_ic_t']:+.1f} | {r['rec_ex20_bps']:+.1f} | "
+                     f"{r['rec_net20_bps']:+.1f} | {r['turn20'] * 100:.0f}% | {STATUS_AR[r['status']]} |")
+        L += ["", f"### بعد التكلفة bps/يوم، سنة بسنة ({w['title'].split(':')[0]})"] + year_matrix(w["yearlies"])
+        if w.get("importance") is not None:
+            imp = sorted(zip(XF + MF, w["importance"]), key=lambda z: -z[1])[:8]
+            L += ["", "أهم مدخلات XGBoost (آخر تدريب): " + ", ".join(f"{n} ({v:.2f})" for n, v in imp)]
+    L += ["", "## إزاي تقرأ ده",
+          "- **IC** = ارتباط ترتيب الإشارة بترتيب عائد اليوم التالي بين الأسهم؛ 0.02-0.03 يعتبر قوي في الأسواق الفعلية.",
+          "- ✅ = t ≥ 3 على كل الفترة + t ≥ 2 في الفترة الأخيرة + عائد موجب بعد التكلفة في الاتنين + موجب في 60% من السنين.",
+          "- 🟡 = الإشارة لسه حية حديثًا بس التكلفة بتاكلها. 🟠 = كانت شغالة واختفت في السنين الأخيرة. ❌ = مفيش ميزة.",
+          "", "## حدود لازم تتحط في الاعتبار",
+          "1. العالم الأول (قفلة→قفلة) متفائل: بيفترض إنك اشتريت بسعر قفلة امبارح، وده مش بيحصل في الواقع.",
+          "2. العالم التاني بيشتري عند الافتتاح ويبيع عند القفل، وبيستبعد الأسهم اللي اتحركت 9%+ امبارح. لسه من غير spread/slippage، "
+          "وبيانات Open من Yahoo للسوق المصري مش مثالية.",
+          "3. قايمة الأسهم هي المقيدة حاليًا بس (survivorship bias).",
+          "4. بين 2012 و2017 عدد الأسهم الصالحة كان قليل فسنين كتير بتغيب من الجداول.",
+          "5. نتيجة موجبة هنا = دليل مبدئي. الخطوة الجاية دايمًا تجربة حية (scorecard) قبل أي قرار فلوس."]
     return "\n".join(L)
 
 
-def tg_summary(results):
-    worthy = [r for r in results if r["status"] == "worthy"]
-    lines = ["🧪 نتيجة الباكتست (walk-forward على تاريخ EGX)"]
-    for r in sorted(results, key=lambda x: -(x["ic_t"] if x["ic_t"] == x["ic_t"] else -9)):
-        lines.append(f"{STATUS_ICON[r['status']]} {r['name']}: IC {r['ic']:+.3f} "
-                     f"(t={r['ic_t']:+.1f}) | بعد التكلفة {r['net20_bps']:+.0f} bps/يوم")
-    lines.append("")
-    lines.append("فيه إشارة تستحق تجربة حية: " + ("، ".join(r["name"] for r in worthy)
-                                                  if worthy else "لأ، ولا واحدة"))
-    lines.append("🟡 = الإشارة حقيقية بس التكلفة بتاكلها، ❌ = مفيش ميزة مؤكدة")
+def tg_summary(worlds):
+    lines = ["🧪 نتيجة الباكتست (walk-forward على تاريخ EGX)",
+             f"الحكم بيبص على {RECENT_FROM}+ لوحدها كمان", ""]
+    for w in worlds:
+        lines.append(w["title"])
+        for r in sorted(w["results"], key=SORT_KEY):
+            lines.append(f"{STATUS_ICON[r['status']]} {r['name']}: IC {r['ic']:+.3f} "
+                         f"| {RECENT_FROM}+: IC {r['rec_ic']:+.3f}، بعد التكلفة {r['rec_net20_bps']:+.0f} bps/يوم")
+        lines.append("")
+    worthy = [f"{r['name']} ({w['title'].split(':')[0]})" for w in worlds for r in w["results"] if r["worthy"]]
+    lines.append("تستحق تجربة حية: " + ("، ".join(worthy) if worthy else "لأ، ولا واحدة"))
+    lines.append("✅ تستحق | 🟡 حية بس التكلفة بتاكلها | 🟠 اختفت حديثًا | ❌ مفيش ميزة")
     lines.append("التقرير الكامل في backtest/results/ على GitHub.")
     return "\n".join(lines)
 
@@ -384,20 +426,25 @@ def run(a):
         panel = fetch_yfinance(load_tickers())
     else:
         panel = make_synthetic(a.source == "synthetic-planted")
-    C, H, L, V = clean_panel(panel)
+    C, H, L, V, O = clean_panel(panel)
     if C.shape[1] < 20 or C.shape[0] < a.min_train + 100:
         raise BacktestError(f"البيانات مش كفاية: {C.shape[1]} سهم × {C.shape[0]} يوم بعد التنضيف")
     print(f"[data] {C.shape[1]} سهم × {C.shape[0]} يوم ({C.index[0].date()} → {C.index[-1].date()})")
 
-    f, mkt, nxt, liquid, flat59 = build_features(C, H, L, V, a.min_turnover)
+    f, mkt, nxt, nxt_oc, lock, liquid, flat59 = build_features(C, H, L, V, O, a.min_turnover)
     dates = C.index
     T, N = C.shape
-    NXT = nxt.values
     cs = {k: csrank(f[k], liquid).values for k in XF}
     Xcs = np.stack([cs[k] for k in XF] +
                    [np.repeat(mkt[k].values[:, None], N, axis=1) for k in MF], axis=2).astype(np.float32)
-    E = np.isfinite(Xcs).all(axis=2) & np.isfinite(NXT) & liquid.values
-    elig = E.sum(axis=1)
+    feat_ok = np.isfinite(Xcs).all(axis=2) & liquid.values
+    # العالم أ (متفائل): قفلة→قفلة. العالم ب (واقعي): افتتاح→قفلة من غير الأسهم اللي قفلت على الحد
+    NXT_A, NXT_B = nxt.values, nxt_oc.values
+    E_A = feat_ok & np.isfinite(NXT_A)
+    E_B = feat_ok & ~lock.values & np.isfinite(NXT_B)
+    print(f"[diag] نسبة الصفوف اللي اتشالت في العالم ب (قفل على الحد/مفيش Open): "
+          f"{(1 - E_B.sum() / max(E_A.sum(), 1)) * 100:.0f}%")
+    elig = E_A.sum(axis=1)
     by_year = pd.Series(elig, index=dates).groupby(dates.year).median().astype(int)
     print("[diag] وسيط عدد الأسهم الصالحة (سيولة كفاية + features كاملة) في اليوم، سنة بسنة:")
     print("       " + " | ".join(f"{y}:{n}" for y, n in by_year.items()))
@@ -410,46 +457,57 @@ def run(a):
     print(f"[diag] أقل عدد أسهم لتقييم اليوم = {min_cross}")
     ok_days = np.where(elig >= min_cross)[0]
     first_valid = int(ok_days[0])
-    # هدف XGBoost: ترتيب عائد اليوم التالي بين الأسهم (cross-sectional rank)
-    Y = (pd.DataFrame(np.where(E, NXT, np.nan)).rank(axis=1, pct=True) - 0.5).values.astype(np.float32)
-
-    print(f"[xgb] walk-forward: تدريب أولي {a.min_train} يوم، إعادة تدريب كل {a.block} يوم")
-    pred, importance, t0 = run_xgb(Xcs, np.nan_to_num(Y), E, first_valid, a.min_train, a.block, a.trees)
-    idxs = [t for t in range(t0, T - 1) if np.isfinite(pred[t]).any()]
-    if not idxs:
-        raise BacktestError("مفيش تاريخ كفاية للاختبار خارج العينة (قلل min_train أو استخدم بيانات أطول)")
-
     strategies = rule_scores(f, flat59)
-    scores = {k: (None if v is None else v.values) for k, v in strategies.items()}
-    scores["XGBoost (walk-forward)"] = pred
+    rule = {k: (None if v is None else v.values) for k, v in strategies.items()}
 
-    results, yearlies = [], {}
-    for name, S in scores.items():
-        out = evaluate(name, S, NXT, E, idxs, dates, cost, rng, min_cross)
-        if out:
-            results.append(out[0])
-            yearlies[name] = out[1]
-            r = out[0]
-            print(f"  {name:42s} IC {r['ic']:+.4f} (t={r['ic_t']:+.2f}) | أعلى20% {r['ex20_bps']:+.1f} bps "
-                  f"| بعد التكلفة {r['net20_bps']:+.1f} | {STATUS_ICON[r['status']]}")
-    if not results:
-        raise BacktestError(f"مفيش يوم فيه {min_cross}+ سهم صالح في فترة الاختبار "
-                            f"({dates[idxs[0]].date()} → {dates[idxs[-1]].date()}، {len(idxs)} يوم)")
+    worlds = []
+    for key, title, NXT, E in (
+            ("A", "العالم أ: قفلة→قفلة (متفائل، بيفترض شراء بسعر قفلة امبارح)", NXT_A, E_A),
+            ("B", "العالم ب: تنفيذ واقعي (شراء عند افتتاح النهاردة وبيع عند القفل، من غير الأسهم اللي "
+                  "قفلت على الحد امبارح)", NXT_B, E_B)):
+        # هدف XGBoost: ترتيب عائد اليوم التالي بين الأسهم (cross-sectional rank)
+        Y = (pd.DataFrame(np.where(E, NXT, np.nan)).rank(axis=1, pct=True) - 0.5).values.astype(np.float32)
+        print(f"\n[xgb-{key}] walk-forward: تدريب أولي {a.min_train} يوم، إعادة تدريب كل {a.block} يوم")
+        pred, importance, t0 = run_xgb(Xcs, np.nan_to_num(Y), E, first_valid, a.min_train, a.block, a.trees)
+        idxs = [t for t in range(t0, T - 1) if np.isfinite(pred[t]).any()]
+        if not idxs:
+            raise BacktestError("مفيش تاريخ كفاية للاختبار خارج العينة (قلل min_train أو استخدم بيانات أطول)")
+        scores = dict(rule)
+        scores["XGBoost (walk-forward)"] = pred
+
+        results, yearlies = [], {}
+        print(f"[{key}] {title}")
+        for name, S in scores.items():
+            out = evaluate(name, S, NXT, E, idxs, dates, cost, rng, min_cross)
+            if out:
+                results.append(out[0])
+                yearlies[name] = out[1]
+                r = out[0]
+                print(f"  {name:42s} IC {r['ic']:+.4f} (t={r['ic_t']:+.1f}) | بعد التكلفة {r['net20_bps']:+.1f} "
+                      f"| {RECENT_FROM}+: IC {r['rec_ic']:+.4f} (t={r['rec_ic_t']:+.1f}) "
+                      f"بعد التكلفة {r['rec_net20_bps']:+.1f} | {STATUS_ICON[r['status']]}")
+        if not results:
+            raise BacktestError(f"مفيش يوم فيه {min_cross}+ سهم صالح في فترة الاختبار (العالم {key}، "
+                                f"{dates[idxs[0]].date()} → {dates[idxs[-1]].date()}، {len(idxs)} يوم)")
+        worlds.append({"key": key, "title": title, "results": results, "yearlies": yearlies,
+                       "importance": importance, "oos_first": str(dates[idxs[0]].date()),
+                       "oos_last": str(dates[idxs[-1]].date()), "oos_days": len(idxs)})
 
     meta = {"run_at": datetime.now().strftime("%Y-%m-%d %H:%M"), "source": a.source,
             "tickers": N, "days_total": T, "first": str(dates[0].date()), "last": str(dates[-1].date()),
-            "oos_first": str(dates[idxs[0]].date()), "oos_last": str(dates[idxs[-1]].date()),
-            "oos_days": len(idxs), "cost_bps": a.cost_bps, "min_tov": a.min_turnover, "block": a.block}
-    report = fmt_report(results, yearlies, meta, importance)
+            "cost_bps": a.cost_bps, "min_tov": a.min_turnover, "block": a.block}
+    report = fmt_report(worlds, meta)
     os.makedirs(RES_DIR, exist_ok=True)
     tag = "latest" if a.source == "yfinance" else a.source
     with open(os.path.join(RES_DIR, f"report_{tag}.md"), "w", encoding="utf-8") as fh:
         fh.write(report)
     with open(os.path.join(RES_DIR, f"results_{tag}.json"), "w", encoding="utf-8") as fh:
-        json.dump({"meta": meta, "results": results}, fh, ensure_ascii=False, indent=2)
+        json.dump({"meta": meta,
+                   "worlds": {w["key"]: {"title": w["title"], "results": w["results"]} for w in worlds}},
+                  fh, ensure_ascii=False, indent=2)
     print(f"[done] التقرير: backtest/results/report_{tag}.md")
     if a.source == "yfinance" and not a.no_telegram:
-        send_telegram(tg_summary(results))
+        send_telegram(tg_summary(worlds))
 
 
 def main():
