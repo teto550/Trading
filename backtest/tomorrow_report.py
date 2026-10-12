@@ -53,6 +53,63 @@ def next_trading_day(now):
     return d
 
 
+def extend_with_state(C, H, L, V, O, now, state_path=None, min_frac=0.7):
+    """Yahoo بيتأخر جلسة عن EGX، لكن state.json (من Mubasher) فيه قفلة النهاردة.
+    بنضيف صف لآخر يوم بس، وبنحسب تغير اليوم من state.json نفسه (مصدر واحد، فمفيش فرق
+    تعديلات توزيعات بين المصدرين) ونطبقه على آخر قفلة معدّلة من Yahoo.
+    القفلة هي المعلومة الحقيقية الوحيدة؛ المدى (H-L) والحجم تقديريين.
+    بيرجّع (C, H, L, V, O, ملاحظة أو None)."""
+    import json
+    state_path = state_path or os.path.join(ROOT, "state.json")
+    if not os.path.exists(state_path):
+        return C, H, L, V, O, None
+    with open(state_path, "r", encoding="utf-8") as fh:
+        stocks = json.load(fh).get("stocks", {})
+    last_y = C.index[-1]
+    cand = [s["dates"][-1] for s in stocks.values() if s.get("dates")]
+    if not cand:
+        return C, H, L, V, O, None
+    s_date = pd.Timestamp(max(cand))
+    if s_date <= last_y:
+        return C, H, L, V, O, None            # Yahoo مواكب أو أحدث، مفيش داعي
+    cairo_today = pd.Timestamp(now.date())
+    if s_date > cairo_today:
+        return C, H, L, V, O, None
+    if s_date == cairo_today and now.weekday() in TRADING_DAYS and (now.hour, now.minute) < (14, 45):
+        return C, H, L, V, O, None            # الجلسة شغالة: سعر state لسه مش قفلة
+    ys, ss = last_y.strftime("%Y-%m-%d"), s_date.strftime("%Y-%m-%d")
+    new_c = {}
+    for t in C.columns:
+        st = stocks.get(t)
+        if not st or ss not in st["dates"] or ys not in st["dates"]:
+            continue
+        p_new = st["daily"][st["dates"].index(ss)]
+        p_old = st["daily"][st["dates"].index(ys)]
+        y_last = C[t].iloc[-1]
+        if p_old and p_old > 0 and p_new and p_new > 0 and np.isfinite(y_last):
+            new_c[t] = float(y_last * p_new / p_old)
+    if len(new_c) < min_frac * int(C.iloc[-1].notna().sum()):
+        return C, H, L, V, O, None            # تغطية ناقصة: أأمن نفضل على Yahoo
+    row = pd.Series(new_c).reindex(C.columns)
+    prev = C.iloc[-1]
+    vol = V.iloc[-20:].median()
+    extra = {
+        "C": row,
+        "H": pd.concat([prev, row], axis=1).max(axis=1),
+        "L": pd.concat([prev, row], axis=1).min(axis=1),
+        "V": vol.where(row.notna()),
+        "O": pd.Series(np.nan, index=C.columns),   # NaN: عشان تارجت امبارح (افتتاح→قفلة) ميتلوّثش
+    }
+    out = []
+    for name, df in zip("CHLVO", (C, H, L, V, O)):
+        r = extra[name].to_frame(s_date).T
+        r.index = pd.DatetimeIndex([s_date])
+        out.append(pd.concat([df, r]))
+    note = (f"ℹ️ قفلة {ss} اتضافت من Mubasher ({len(new_c)} سهم) لأن Yahoo متأخر. "
+            f"القفلة حقيقية، لكن مدى اليوم وحجم التداول تقديريين.")
+    return (*out, note)
+
+
 def train_and_score(C, H, L, V, O, min_turnover, trees):
     """بيرجّع (scores, cols, names, f, lock, last_idx) لآخر يوم في البيانات."""
     import xgboost as xgb
@@ -98,7 +155,7 @@ def price_range(C, col, t, window=RANGE_WINDOW):
             "ceil": last * (1 + EGX_DAILY_LIMIT), "floor": last * (1 - EGX_DAILY_LIMIT)}
 
 
-def build_report(C, H, L, V, O, a, now):
+def build_report(C, H, L, V, O, a, now, note=None):
     score, cols, names, f, lock, t = train_and_score(C, H, L, V, O, a.min_turnover, a.trees)
     data_date = C.index[t].date()
     target = next_trading_day(now)
@@ -118,7 +175,10 @@ def build_report(C, H, L, V, O, a, now):
 
     when = "النهاردة" if target == now.date() else "بكره"
     L_ = [f"🔮 تقرير جلسة {when} - {AR_DAYS[target.weekday()]} {target}",
-          f"(مبني على بيانات قفلة {data_date} - {n} سهم سيولته كافية)", ""]
+          f"(مبني على بيانات قفلة {data_date} - {n} سهم سيولته كافية)"]
+    if note:
+        L_.append(note)
+    L_.append("")
     if stale_days >= 2 and now.weekday() in TRADING_DAYS and now.hour >= 15:
         L_ += [f"⚠️ آخر بيانات عند Yahoo هي {data_date} (متأخرة {stale_days} يوم عن النهاردة). "
                f"الترتيب ده مبني على بيانات قديمة شوية.", ""]
@@ -171,7 +231,8 @@ def main():
         if now.weekday() in TRADING_DAYS and (now.hour, now.minute) < (14, 45):
             keep = C.index.date != now.date()
             C, H, L, V, O = (x[keep] for x in (C, H, L, V, O))
-        text, rows, data_date = build_report(C, H, L, V, O, a, now)
+        C, H, L, V, O, note = extend_with_state(C, H, L, V, O, now)
+        text, rows, data_date = build_report(C, H, L, V, O, a, now, note)
         os.makedirs(OUT_DIR, exist_ok=True)
         with open(os.path.join(OUT_DIR, "report_latest.md"), "w", encoding="utf-8") as fh:
             fh.write(text)
