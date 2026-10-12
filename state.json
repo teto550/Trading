@@ -26342,7 +26342,7 @@
       "WATP.CA"
     ],
     "tg_offset": 629990218,
-    "report_date": "2026-10-11",
+    "report_date": "2026-10-12",
     "morning_date": "2026-10-12",
     "morning_picks": {
       "date": "2026-10-12",
@@ -26405,6 +26405,20 @@
         "POUL",
         "BIOC"
       ]
-    }
+    },
+    "scorecard": [
+      {
+        "date": "2026-10-12",
+        "top_n": 5,
+        "top_up": 0,
+        "top_avg": -3.505,
+        "all_n": 44,
+        "all_up": 5,
+        "all_avg": -2.74,
+        "mkt_n": 210,
+        "mkt_up": 24,
+        "mkt_avg": -2.191
+      }
+    ]
   }
 }
