@@ -1,0 +1,40 @@
+name: EGX Tomorrow Report
+on:
+  schedule:
+    # الأحد للخميس بعد القفل بكتير (القفل 2:30 بتوقيت القاهرة = 11:30 UTC) عشان Yahoo يكون حدّث أسعار اليوم.
+    # 16:47 UTC = 7:47 مساءً بتوقيت القاهرة تقريبًا. بنتجنب :00 و:30 عشان GitHub بيأخّر/بيسقّط الـ cron وقتها
+    - cron: "47 16 * * 0-4"
+  workflow_dispatch:
+concurrency:
+  group: tomorrow-report
+  cancel-in-progress: false
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install -r backtest/requirements.txt
+      - name: Build tomorrow's session report
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          mkdir -p tomorrow
+          set -o pipefail
+          python -u backtest/tomorrow_report.py --fresh 2>&1 | tee tomorrow/log_latest.txt
+      - name: Commit report
+        if: always()
+        run: |
+          git config user.name "alert-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add -A tomorrow
+          git diff --cached --quiet || git commit -m "tomorrow report [skip ci]"
+          git pull --rebase -X theirs origin "${GITHUB_REF_NAME:-main}" || true
+          git push
