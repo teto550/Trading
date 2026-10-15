@@ -1,11 +1,11 @@
-# EGX Paper Trade - آخر تحديث 2026-10-14 20:48
+# EGX Paper Trade - آخر تحديث 2026-10-15 20:25
 
 - احتفاظ 20 يوم تداول، شراء عند افتتاح اليوم التالي للإشارة، تكلفة 15 bps في الاتجاه
-- دفعات متسجلة: 4 | ناضجة (عدّى عليها 20 يوم): 0
+- دفعات متسجلة: 5 | ناضجة (عدّى عليها 20 يوم): 0
 - توقع الباكتست: حوالي +0.28% للصفقة بعد التكلفة (ميزة صغيرة وغير ثابتة)
 
 
-## اختيارات آخر دفعة (2026-10-13)
-XGBoost (30): MMAT, EGAL, SNFC, FWRY, OIH, CANA, OLFI, SKPC, CIEB, ATQA, JUFO, ORWE, FAIT, CPCI, GBCO, ADIB, TMGH, IFAP, AMIA, RTVC, RACC, EFIH, HRHO, ABUK, COMI, CCAP, CLHO, ELEC, SDTI, PHAR
+## اختيارات آخر دفعة (2026-10-14)
+XGBoost (30): SNFC, EGAL, OLFI, RACC, SKPC, CIEB, ORWE, CPCI, HRHO, GBCO, OIH, MMAT, JUFO, FWRY, ISPH, SUGR, SDTI, ABUK, COMI, FAIT, EFIH, IFAP, DOMT, ACAMD, EGCH, TMGH, RTVC, EMFD, AMIA, ZMID
 
-Low-vol (30): COMI, TMGH, OLFI, SNFC, FWRY, CPCI, EGAL, PHDC, DSCW, JUFO, CIEB, ISPH, EAST, AMIA, ECAP, CLHO, IFAP, ADIB, ORWE, ADCI, MTIE, EGCH, BTFH, SKPC, AJWA, FAIT, CIRA, RACC, RTVC, ACAMD
+Low-vol (30): COMI, TMGH, SNFC, FWRY, EGAL, OLFI, CPCI, PHDC, ISPH, CIEB, JUFO, EAST, AMIA, DSCW, CLHO, IFAP, ECAP, SKPC, BTFH, EGCH, ORWE, ADCI, FAIT, GBCO, RTVC, UNIT, DOMT, RACC, FERC, ABUK
