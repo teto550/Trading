@@ -1,11 +1,11 @@
-# EGX Paper Trade - آخر تحديث 2026-10-19 21:37
+# EGX Paper Trade - آخر تحديث 2026-10-20 20:43
 
 - احتفاظ 20 يوم تداول، شراء عند افتتاح اليوم التالي للإشارة، تكلفة 15 bps في الاتجاه
-- دفعات متسجلة: 7 | ناضجة (عدّى عليها 20 يوم): 0
+- دفعات متسجلة: 8 | ناضجة (عدّى عليها 20 يوم): 0
 - توقع الباكتست: حوالي +0.28% للصفقة بعد التكلفة (ميزة صغيرة وغير ثابتة)
 
 
-## اختيارات آخر دفعة (2026-10-18)
-XGBoost (27): SNFC, SKPC, BINV, FWRY, IFAP, CIEB, OLFI, ICID, ORWE, FAIT, CCAP, DOMT, TMGH, ABUK, GBCO, MMAT, HRHO, SDTI, MFPC, SUGR, ICFC, JUFO, ATQA, OIH, CPCI, ALCN, EGAL
+## اختيارات آخر دفعة (2026-10-19)
+XGBoost (30): SNFC, FWRY, ICID, CIEB, SKPC, GBCO, FAIT, CCAP, ABUK, OIH, OLFI, BINV, TMGH, ETEL, ORWE, ICFC, HRHO, IFAP, MFPC, SDTI, ADIB, CPCI, AMOC, BTFH, DOMT, RTVC, AMIA, CSAG, JUFO, SPIN
 
-Low-vol (27): COMI, SNFC, TMGH, OLFI, CPCI, FWRY, PHDC, CIEB, IFAP, CLHO, SKPC, JUFO, ECAP, ADCI, FAIT, ISPH, EGAL, FERC, BINV, ORWE, DOMT, MFPC, RTVC, BTFH, ADIB, CCAP, CICH
+Low-vol (30): COMI, TMGH, SNFC, OLFI, FWRY, CPCI, PHDC, CIEB, IFAP, CLHO, SKPC, ADCI, JUFO, ECAP, FAIT, ISPH, DOMT, FERC, BINV, ORWE, RTVC, ADIB, CCAP, CSAG, CANA, EAST, MTIE, BTFH, RMDA, SPIN
