@@ -21,6 +21,7 @@
 """
 
 import argparse
+import json
 import os
 import sys
 import traceback
@@ -36,6 +37,9 @@ sys.path.insert(0, HERE)
 import backtest as bt  # noqa: E402
 
 OUT_DIR = os.path.join(ROOT, "tomorrow")
+PICKS_LOG = os.path.join(OUT_DIR, "picks_log.json")    # ترشيحات كل جلسة (بتتسجل وقت التقرير)
+SCORE_FILE = os.path.join(OUT_DIR, "scorecard.json")   # نتيجة كل جلسة اتقيّمت فعلاً
+SESSION_CLOSE = (14, 30)      # قفل EGX 2:30 م بتوقيت القاهرة
 EGX_DAILY_LIMIT = 0.10        # حد EGX اليومي ±10%
 RANGE_WINDOW = 60             # عدد الأيام اللي بنحسب منها نطاق الحركة المعتاد
 TRADING_DAYS = {6, 0, 1, 2, 3}  # الأحد-الخميس (weekday(): الأحد=6)
@@ -44,8 +48,9 @@ AR_DAYS = {6: "الأحد", 0: "الاتنين", 1: "التلات", 2: "الأر
 
 def next_trading_day(now):
     d = now.date()
-    # لو لسه قبل الافتتاح في يوم تداول، "الجلسة الجاية" هي النهاردة
-    if now.weekday() in TRADING_DAYS and now.hour < 10:
+    # لو لسه قبل القفل في يوم تداول، "الجلسة الجاية" هي النهاردة (GitHub cron بيتأخر ساعات أحيانًا،
+    # فتقرير الصبح المتأخر لازم يفضل متسجل لجلسة النهاردة مش بكره)
+    if now.weekday() in TRADING_DAYS and (now.hour, now.minute) < SESSION_CLOSE:
         return d
     d += timedelta(days=1)
     while d.weekday() not in TRADING_DAYS:
@@ -274,6 +279,104 @@ def build_report(C, H, L, V, O, a, now, note=None):
     return "\n".join(L_), rows, data_date
 
 
+
+# ============================================================
+# سجل الترشيحات + نتيجتها الفعلية (طلعوا ولا لأ)
+# ============================================================
+def _load_json(path, default):
+    if os.path.exists(path):
+        try:
+            with open(path, "r", encoding="utf-8") as fh:
+                return json.load(fh)
+        except (OSError, ValueError):
+            pass
+    return default
+
+
+def _save_json(path, obj):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(obj, fh, ensure_ascii=False, indent=1)
+
+
+def record_picks(rows, target, data_date, now):
+    """بيسجّل أسهم التقرير لجلسة `target`. آخر تقرير لنفس الجلسة هو اللي بيتحسب،
+    إلا لو الجلسة دي اتقيّمت خلاص فمبنغيّرش حاجة."""
+    names = [r["name"] for r in rows]
+    if not names:
+        return
+    scored = {d["target"] for d in _load_json(SCORE_FILE, {"days": []})["days"]}
+    if str(target) in scored:
+        return
+    log = _load_json(PICKS_LOG, {"entries": []})
+    entry = {"target": str(target), "data_date": str(data_date), "picks": names,
+             "made": now.strftime("%Y-%m-%d %H:%M")}
+    ent = [e for e in log["entries"] if e["target"] != entry["target"]] + [entry]
+    log["entries"] = sorted(ent, key=lambda e: e["target"])[-250:]
+    _save_json(PICKS_LOG, log)
+
+
+def score_pending(C):
+    """بيقيّم كل جلسة مسجّل ليها ترشيحات وقفلتها موجودة في البيانات: التغير من قفلة الجلسة اللي
+    قبلها لقفلة الجلسة نفسها، مقارنة بحركة السوق كله. بيرجّع قايمة الأيام الجديدة."""
+    log = _load_json(PICKS_LOG, {"entries": []})
+    sc = _load_json(SCORE_FILE, {"days": []})
+    done = {d["target"] for d in sc["days"]}
+    idx = {str(d.date()): i for i, d in enumerate(C.index)}
+    cnt = C.notna().sum(axis=1)
+    new = []
+    for e in log["entries"]:
+        tgt = e["target"]
+        i = idx.get(tgt)
+        if tgt in done or i is None or i < 1:
+            continue
+        # تغطية ناقصة (Yahoo لسه محدّثش كل الأسهم): نستنى بدل ما نحكم على نص السوق
+        if cnt.iloc[i] < 0.7 * float(cnt.iloc[max(0, i - 21):i].median()):
+            continue
+        ret = (C.iloc[i] / C.iloc[i - 1] - 1)
+        ret = ret[np.isfinite(ret) & (ret.abs() <= bt.MAX_ABS_RET)]
+        picks = [{"n": n, "r": float(ret[n + ".CA"] * 100)} for n in e["picks"] if (n + ".CA") in ret.index]
+        if len(picks) < max(3, len(e["picks"]) // 2) or len(ret) < 30:
+            continue
+        rec = {"target": tgt, "data_date": e["data_date"], "n": len(picks),
+               "up": sum(1 for x in picks if x["r"] > 0), "down": sum(1 for x in picks if x["r"] < 0),
+               "avg": round(float(np.mean([x["r"] for x in picks])), 3),
+               "mkt_n": int(len(ret)), "mkt_up": int((ret > 0).sum()),
+               "mkt_avg": round(float(ret.mean() * 100), 3), "picks": picks}
+        sc["days"].append(rec)
+        new.append(rec)
+    if new:
+        sc["days"] = sorted(sc["days"], key=lambda d: d["target"])[-250:]
+        _save_json(SCORE_FILE, sc)
+    return new
+
+
+def scorecard_message(rec):
+    """رسالة تليجرام: كام سهم من ترشيحات الجلسة طلعوا فعلاً + الحصيلة التراكمية."""
+    wd = datetime.strptime(rec["target"], "%Y-%m-%d").weekday()
+    n, up = rec["n"], rec["up"]
+    L_ = [f"📝 نتيجة ترشيحات جلسة {AR_DAYS[wd]} {rec['target']}",
+          f"طلع {up} من {n} | متوسط التغير {rec['avg']:+.2f}%",
+          f"السوق كله: طلع {rec['mkt_up'] / rec['mkt_n'] * 100:.0f}% من الأسهم | متوسط التغير {rec['mkt_avg']:+.2f}%",
+          ""]
+    for x in rec["picks"]:
+        mark = "✅" if x["r"] > 0 else ("❌" if x["r"] < 0 else "➖")
+        L_.append(f"{mark} {x['n']} {x['r']:+.1f}%")
+    days = _load_json(SCORE_FILE, {"days": []})["days"]
+    if len(days) >= 2:
+        tn, tu = sum(d["n"] for d in days), sum(d["up"] for d in days)
+        mk = sum(d["mkt_up"] for d in days) / sum(d["mkt_n"] for d in days) * 100
+        edge = sum(d["avg"] - d["mkt_avg"] for d in days) / len(days)
+        L_ += ["", f"📈 الحصيلة بعد {len(days)} جلسة: الترشيحات طلعت {tu / tn * 100:.0f}% من المرات "
+                   f"مقابل {mk:.0f}% للسوق | الفرق في المتوسط {edge:+.2f}% في اليوم"]
+        if len(days) < 30:
+            L_.append(f"⚠️ العينة صغيرة ({len(days)} جلسة × {n} سهم). النسبة بتتأرجح جدًا، "
+                      f"متحكمش على الموديل قبل 30 جلسة على الأقل.")
+    else:
+        L_ += ["", "⚠️ دي أول جلسة بتتقيّم. الحصيلة التراكمية بتبدأ من الجلسة التانية."]
+    return "\n".join(L_)
+
+
 def send_long(text, limit=3800):
     chunk = ""
     for line in text.split("\n"):
@@ -292,6 +395,7 @@ def main():
     ap.add_argument("--top", type=int, default=10, help="عدد الأسهم في التقرير")
     ap.add_argument("--fresh", action="store_true", help="تجاهل كاش الأسعار وجيب بيانات جديدة")
     ap.add_argument("--no-telegram", action="store_true")
+    ap.add_argument("--no-record", action="store_true", help="متسجلش الترشيحات في picks_log.json (للتجربة)")
     a = ap.parse_args()
     now = datetime.now(ZoneInfo("Africa/Cairo"))
     try:
@@ -306,7 +410,11 @@ def main():
             keep = C.index.date != now.date()
             C, H, L, V, O = (x[keep] for x in (C, H, L, V, O))
         C, H, L, V, O, note = extend_with_state(C, H, L, V, O, now)
+        # 1) نتيجة ترشيحات الجلسات اللي خلصت (قبل ما نسجّل ترشيحات الجلسة الجاية)
+        scored = score_pending(C)
         text, rows, data_date = build_report(C, H, L, V, O, a, now, note)
+        if not a.no_record:
+            record_picks(rows, next_trading_day(now), data_date, now)
         os.makedirs(OUT_DIR, exist_ok=True)
         with open(os.path.join(OUT_DIR, "report_latest.md"), "w", encoding="utf-8") as fh:
             fh.write(text)
@@ -316,6 +424,8 @@ def main():
             os.remove(err)
         print(text)
         if not a.no_telegram:
+            for rec in scored[-3:]:
+                bt.send_telegram(scorecard_message(rec))
             send_long(text)
     except Exception as e:  # noqa: BLE001
         tb = traceback.format_exc()
