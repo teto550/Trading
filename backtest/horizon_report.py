@@ -180,12 +180,10 @@ def result_message(rec):
 # ============================================================
 # رسالة التوقع الجديد
 # ============================================================
-def picks_message(date, picks_by_h, ms, names=None):
+def picks_message(date, picks_by_h, ms, inputs=""):
     L_ = [f"🔭 توقع 5 و10 أيام - مبني على قفلة {date}"]
-    if names is not None:
-        has = [n for n in names if n in macro.MACRO_MARKET or n == "beta60"]
-        L_.append("المدخلات: " + ("الأسعار والسيولة + مؤشر EGX30 والدولار (جديدة، لسه ما اتقاسش أثرها في الباكتست)"
-                                  if has else "الأسعار والسيولة بس (Yahoo مرجّعش EGX30 والدولار النهاردة)"))
+    if inputs:
+        L_.append("المدخلات: " + inputs)
     if ms:
         L_.append(f"{ms['tag']}: آخر جلسة {ms['mean1']:+.1f}% | {ms['breadth']:.0f}% من الأسهم طلعت | "
                   f"آخر 20 جلسة {ms['med20']:+.1f}% (وسيط الأسهم)")
@@ -237,7 +235,7 @@ def main():
         if a.source == "yfinance":
             C, H, L, V, O, _note = tr.extend_with_state(C, H, L, V, O, now)
         date = str(C.index[-1].date())
-        M = None
+        M, egx_src = None, None
         if not a.no_macro:
             try:
                 if a.source == "synthetic":
@@ -246,6 +244,7 @@ def main():
                     M = macro.fetch_macro(fresh=a.fresh)
             except Exception as e:  # noqa: BLE001
                 print(f"[macro] فشل الجلب، هكمّل من غيره: {e}")
+            M, egx_src = macro.ensure_egx30(M, C, V)
         P = prepare(C, H, L, V, O, a.min_turnover, M)
         variant = "macro" if any(n in macro.MACRO_MARKET or n == "beta60" for n in P["names"]) else "base"
         picks_by_h = {h: top_picks(P, h, 150) for h in HORIZONS}
@@ -254,7 +253,13 @@ def main():
         if not a.no_record:
             scored = score_pending(C)
             record(date, picks_by_h, now, variant)
-        text = picks_message(date, picks_by_h, ms, P["names"])
+        if variant == "macro":
+            usd = "والدولار" if (M is not None and "usd" in M.columns) else "(الدولار مجاش النهاردة)"
+            egx = "EGX30" if egx_src == "yahoo" else "مؤشر تقريبي لـEGX30 (أكبر 30 سهم سيولة، لأن Yahoo رفض المؤشر الرسمي)"
+            inputs = f"الأسعار والسيولة + {egx} {usd} (جديدة، لسه ما اتقاسش أثرها في الباكتست)"
+        else:
+            inputs = "الأسعار والسيولة بس"
+        text = picks_message(date, picks_by_h, ms, inputs)
         os.makedirs(OUT_DIR, exist_ok=True)
         if not a.no_record:
             with open(os.path.join(OUT_DIR, "report_latest.md"), "w", encoding="utf-8") as fh:

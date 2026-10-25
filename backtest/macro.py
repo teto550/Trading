@@ -21,7 +21,7 @@ import pandas as pd
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(HERE, "data")
-MACRO_TICKERS = {"egx30": "^CASE30", "usd": "EGP=X"}
+MACRO_TICKERS = {"egx30": ["^CASE30", "EGX30.CA", "^EGX30"], "usd": ["EGP=X"]}
 MACRO_MARKET = ["egx_r5", "egx_r20", "egx_vs50", "usd_r5", "usd_r20"]
 
 
@@ -33,25 +33,50 @@ def fetch_macro(fresh=False):
     if not fresh and os.path.exists(cache) and time.time() - os.path.getmtime(cache) < 86400:
         return pd.read_pickle(cache)
     cols = {}
-    for key, tk in MACRO_TICKERS.items():
-        for attempt in range(3):
-            try:
-                h = yf.Ticker(tk).history(period="max", interval="1d", auto_adjust=True)
-                if len(h) > 200:
-                    idx = pd.to_datetime(h.index).tz_localize(None).normalize()
-                    s = h["Close"].copy()
-                    s.index = idx
-                    s = s[~s.index.duplicated(keep="last")]
-                    cols[key] = s.where(s > 0)
-                    break
-            except Exception:  # noqa: BLE001
-                pass
-            time.sleep(2 * (attempt + 1))
-        print(f"[macro] {key} ({tk}): {'تمام ' + str(len(cols[key])) + ' يوم' if key in cols else 'فشل'}")
+    for key, tks in MACRO_TICKERS.items():
+        for tk in tks:
+            for attempt in range(2):
+                try:
+                    h = yf.Ticker(tk).history(period="max", interval="1d", auto_adjust=True)
+                    if len(h) > 200:
+                        idx = pd.to_datetime(h.index).tz_localize(None).normalize()
+                        s = h["Close"].copy()
+                        s.index = idx
+                        s = s[~s.index.duplicated(keep="last")]
+                        cols[key] = s.where(s > 0)
+                        break
+                except Exception:  # noqa: BLE001
+                    pass
+                time.sleep(2)
+            print(f"[macro] {key} ({tk}): {'تمام ' + str(len(cols[key])) + ' يوم' if key in cols else 'فشل'}")
+            if key in cols:
+                break
     M = pd.DataFrame(cols).sort_index()
     if len(M.columns):
         pd.to_pickle(M, cache)
     return M
+
+
+def proxy_index(C, V, n=30):
+    """مؤشر تقريبي لـEGX30 لو Yahoo رفض المؤشر الحقيقي: عائد أكبر n سهم سيولة (متوسط تداول 20 يوم،
+    بوزن السيولة، والترتيب من امبارح فمفيش تسريب). مش نفس المؤشر الرسمي بس بيتحرك زيه تقريبًا."""
+    r = C / C.shift(1) - 1
+    r = r.where(r.abs() <= 0.25)
+    tov = (C * V).rolling(20, min_periods=15).median().shift(1)
+    rank = tov.rank(axis=1, ascending=False)
+    w = tov.where(rank <= n)
+    rt = (r * w).sum(axis=1, min_count=1) / w.where(r.notna()).sum(axis=1)
+    return 1000 * (1 + rt.fillna(0)).cumprod()
+
+
+def ensure_egx30(M, C, V):
+    """بيضمن وجود عمود egx30: الحقيقي من Yahoo لو اتجاب، وإلا التقريبي. بيرجّع (M, المصدر)."""
+    M = pd.DataFrame(index=C.index) if M is None else M
+    if "egx30" in M.columns:
+        return M, "yahoo"
+    M = M.reindex(M.index.union(C.index))      # الدولار بيتداول أيام غير أيام البورصة: لازم الاتنين في نفس الفهرس
+    M["egx30"] = proxy_index(C, V).reindex(M.index)
+    return M, "proxy"
 
 
 def _align(M, index):

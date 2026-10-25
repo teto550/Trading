@@ -258,9 +258,9 @@ def run(a):
     M = None
     if a.macro:
         M = macro.fetch_macro(fresh=True) if a.source == "yfinance" else macro.synthetic_macro(mkt["mkt1"])
-        if M is None or not len(M.columns):
-            raise bt.BacktestError("طلبت --macro بس Yahoo مرجّعش EGX30 ولا الدولار")
-        print(f"[macro] مدخلات الاقتصاد الكلي: {', '.join(M.columns)}")
+        M, egx_src = macro.ensure_egx30(M, C, V)
+        print(f"[macro] مدخلات الاقتصاد الكلي: {', '.join(M.columns)} | EGX30 من: "
+              f"{'Yahoo' if egx_src == 'yahoo' else 'مؤشر تقريبي من أكبر 30 سهم سيولة'}")
     Xcs, feat_names = macro.build_X(f, mkt, liquid, N, XF2, bt.MF, M, bt.csrank)
     print(f"[features] {len(feat_names)} مدخل: {', '.join(feat_names)}")
     feat_ok = np.isfinite(Xcs).all(axis=2) & liquid.values & ~lock.values
