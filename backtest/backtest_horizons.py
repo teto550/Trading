@@ -33,6 +33,7 @@ import pandas as pd
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import backtest as bt  # noqa: E402
+import macro  # noqa: E402
 
 XF2 = bt.XF + ["r60", "r120"]
 
@@ -169,7 +170,7 @@ SORT = lambda r: -(r["rec_net_d"] if r["rec_net_d"] == r["rec_net_d"] else -9e9)
 
 
 def fmt_report(horizons, meta):
-    L = [f"# EGX Multi-Day Holding Backtest - {meta['run_at']}", "",
+    L = [f"# EGX Multi-Day Holding Backtest - {meta['run_at']}" + (" (بمدخلات EGX30 والدولار)" if meta.get("macro") else ""), "",
          f"- المصدر: **{meta['source']}** | الأسهم: {meta['tickers']} | الأيام: {meta['days_total']} "
          f"({meta['first']} → {meta['last']})",
          f"- تنفيذ واقعي: شراء عند افتتاح اليوم التالي للإشارة وبيع عند قفلة اليوم h، من غير الأسهم اللي "
@@ -204,7 +205,7 @@ def fmt_report(horizons, meta):
               "| " + " | ".join(str(y) for y in yy.index) + " |", "|" + "---|" * len(yy),
               "| " + " | ".join(f"{v:+.1f}" for v in yy["net_d"]) + " |"]
         if h.get("importance") is not None:
-            imp = sorted(zip(XF2 + bt.MF, h["importance"]), key=lambda z: -z[1])[:8]
+            imp = sorted(zip(h.get("names") or XF2 + bt.MF, h["importance"]), key=lambda z: -z[1])[:8]
             L += ["", "أهم مدخلات XGBoost: " + ", ".join(f"{n} ({v:.2f})" for n, v in imp)]
     L += ["", "## حدود لازم تتحط في الاعتبار",
           "1. التكلفة رحلة كاملة لكل صفقة (متحفظة). بدون spread/slippage فعلي، وبيانات Open من Yahoo مش مثالية.",
@@ -254,9 +255,14 @@ def run(a):
     f["r120"] = np.expm1(lr.rolling(120, min_periods=120).sum())
     dates = C.index
     T, N = C.shape
-    cs = {k: bt.csrank(f[k], liquid).values for k in XF2}
-    Xcs = np.stack([cs[k] for k in XF2] +
-                   [np.repeat(mkt[k].values[:, None], N, axis=1) for k in bt.MF], axis=2).astype(np.float32)
+    M = None
+    if a.macro:
+        M = macro.fetch_macro(fresh=True) if a.source == "yfinance" else macro.synthetic_macro(mkt["mkt1"])
+        if M is None or not len(M.columns):
+            raise bt.BacktestError("طلبت --macro بس Yahoo مرجّعش EGX30 ولا الدولار")
+        print(f"[macro] مدخلات الاقتصاد الكلي: {', '.join(M.columns)}")
+    Xcs, feat_names = macro.build_X(f, mkt, liquid, N, XF2, bt.MF, M, bt.csrank)
+    print(f"[features] {len(feat_names)} مدخل: {', '.join(feat_names)}")
     feat_ok = np.isfinite(Xcs).all(axis=2) & liquid.values & ~lock.values
 
     cur = (f["tech"] + f["p_up"] / 1000.0).where(flat59 <= 0.25)
@@ -298,14 +304,17 @@ def run(a):
         if not results:
             raise bt.BacktestError(f"احتفاظ {h} يوم: مفيش يوم فيه {min_cross}+ سهم صالح في فترة الاختبار")
         out_h.append({"h": h, "results": results, "yearlies": yearlies, "importance": importance,
+                      "names": feat_names,
                       "oos_first": str(dates[idxs[0]].date()), "oos_last": str(dates[idxs[-1]].date()),
                       "oos_days": len(idxs)})
 
     meta = {"run_at": datetime.now().strftime("%Y-%m-%d %H:%M"), "source": a.source,
             "tickers": N, "days_total": T, "first": str(dates[0].date()), "last": str(dates[-1].date()),
-            "cost_bps": a.cost_bps, "min_tov": a.min_turnover, "block": a.block}
+            "cost_bps": a.cost_bps, "min_tov": a.min_turnover, "block": a.block, "macro": bool(a.macro)}
     os.makedirs(bt.RES_DIR, exist_ok=True)
     tag = "horizons_latest" if a.source == "yfinance" else f"horizons_{a.source}"
+    if a.macro:
+        tag = tag.replace("horizons", "horizons_macro", 1)
     with open(os.path.join(bt.RES_DIR, f"report_{tag}.md"), "w", encoding="utf-8") as fh:
         fh.write(fmt_report(out_h, meta))
     with open(os.path.join(bt.RES_DIR, f"results_{tag}.json"), "w", encoding="utf-8") as fh:
@@ -326,6 +335,8 @@ def main():
     ap.add_argument("--block", type=int, default=63)
     ap.add_argument("--trees", type=int, default=150)
     ap.add_argument("--horizons", default="3,5,10,20")
+    ap.add_argument("--macro", action="store_true",
+                    help="ضيف مدخلات EGX30 والدولار (التقرير بيتحفظ باسم report_horizons_macro_latest.md للمقارنة)")
     ap.add_argument("--no-telegram", action="store_true")
     a = ap.parse_args()
     try:

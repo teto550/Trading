@@ -36,6 +36,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import backtest as bt  # noqa: E402
 import backtest_horizons as bh  # noqa: E402
+import macro  # noqa: E402
 import tomorrow_report as tr  # noqa: E402
 
 OUT_DIR = os.path.join(ROOT, "horizon")
@@ -65,17 +66,14 @@ def _save(path, obj):
 # ============================================================
 # المدخلات والتدريب
 # ============================================================
-def prepare(C, H, L, V, O, min_turnover):
+def prepare(C, H, L, V, O, min_turnover, M=None):
     f, mkt, _n, _noc, lock, liquid, _flat = bt.build_features(C, H, L, V, O, min_turnover)
     lr = np.log1p(f["r1"])
     f["r60"] = np.expm1(lr.rolling(60, min_periods=60).sum())
     f["r120"] = np.expm1(lr.rolling(120, min_periods=120).sum())
-    N = C.shape[1]
-    cs = {k: bt.csrank(f[k], liquid).values for k in bh.XF2}
-    Xcs = np.stack([cs[k] for k in bh.XF2] +
-                   [np.repeat(mkt[k].values[:, None], N, axis=1) for k in bt.MF], axis=2).astype(np.float32)
+    Xcs, names = macro.build_X(f, mkt, liquid, C.shape[1], bh.XF2, bt.MF, M, bt.csrank)
     feat_ok = np.isfinite(Xcs).all(axis=2) & liquid.values & ~lock.values
-    return {"C": C, "H": H, "L": L, "O": O, "Xcs": Xcs, "feat_ok": feat_ok}
+    return {"C": C, "H": H, "L": L, "O": O, "Xcs": Xcs, "feat_ok": feat_ok, "names": names}
 
 
 def top_picks(P, h, trees):
@@ -108,7 +106,7 @@ def top_picks(P, h, trees):
 # ============================================================
 # التسجيل والتقييم
 # ============================================================
-def record(date, picks_by_h, now):
+def record(date, picks_by_h, now, variant="base"):
     log = _load(LOG_FILE, {"entries": []})
     scored = {(d["date"], d["h"]) for d in _load(SCORE_FILE, {"days": []})["days"]}
     ent = log["entries"]
@@ -116,7 +114,7 @@ def record(date, picks_by_h, now):
         if (date, h) in scored:
             continue
         ent = [e for e in ent if not (e["date"] == date and e["h"] == h)]
-        ent.append({"date": date, "h": h, "picks": [p["name"] for p in picks],
+        ent.append({"date": date, "h": h, "variant": variant, "picks": [p["name"] for p in picks],
                     "made": now.strftime("%Y-%m-%d %H:%M")})
     log["entries"] = sorted(ent, key=lambda e: (e["date"], e["h"]))[-400:]
     _save(LOG_FILE, log)
@@ -144,7 +142,8 @@ def score_pending(C):
         picks = [{"n": n, "r": float(ret[n + ".CA"] * 100)} for n in e["picks"] if (n + ".CA") in ret.index]
         if len(picks) < max(3, len(e["picks"]) // 2) or len(ret) < 30:
             continue
-        rec = {"date": e["date"], "h": e["h"], "end": str(C.index[i1].date()), "n": len(picks),
+        rec = {"date": e["date"], "h": e["h"], "variant": e.get("variant", "base"),
+               "end": str(C.index[i1].date()), "n": len(picks),
                "up": sum(1 for x in picks if x["r"] > 0),
                "avg": round(float(np.mean([x["r"] for x in picks])), 3),
                "mkt_n": int(len(ret)), "mkt_up": int((ret > 0).sum()),
@@ -166,7 +165,8 @@ def result_message(rec):
     for x in rec["picks"]:
         mark = "✅" if x["r"] > 0 else ("❌" if x["r"] < 0 else "➖")
         L_.append(f"{mark} {x['n']} {x['r']:+.1f}%")
-    days = [d for d in _load(SCORE_FILE, {"days": []})["days"] if d["h"] == h]
+    days = [d for d in _load(SCORE_FILE, {"days": []})["days"]
+            if d["h"] == h and d.get("variant", "base") == rec.get("variant", "base")]
     if len(days) >= 2:
         tn, tu = sum(d["n"] for d in days), sum(d["up"] for d in days)
         mk = sum(d["mkt_up"] for d in days) / sum(d["mkt_n"] for d in days) * 100
@@ -180,8 +180,12 @@ def result_message(rec):
 # ============================================================
 # رسالة التوقع الجديد
 # ============================================================
-def picks_message(date, picks_by_h, ms):
+def picks_message(date, picks_by_h, ms, names=None):
     L_ = [f"🔭 توقع 5 و10 أيام - مبني على قفلة {date}"]
+    if names is not None:
+        has = [n for n in names if n in macro.MACRO_MARKET or n == "beta60"]
+        L_.append("المدخلات: " + ("الأسعار والسيولة + مؤشر EGX30 والدولار (جديدة، لسه ما اتقاسش أثرها في الباكتست)"
+                                  if has else "الأسعار والسيولة بس (Yahoo مرجّعش EGX30 والدولار النهاردة)"))
     if ms:
         L_.append(f"{ms['tag']}: آخر جلسة {ms['mean1']:+.1f}% | {ms['breadth']:.0f}% من الأسهم طلعت | "
                   f"آخر 20 جلسة {ms['med20']:+.1f}% (وسيط الأسهم)")
@@ -211,6 +215,7 @@ def main():
     ap.add_argument("--min-turnover", type=float, default=1_000_000)
     ap.add_argument("--fresh", action="store_true", help="تجاهل كاش الأسعار وجيب بيانات جديدة")
     ap.add_argument("--source", choices=["yfinance", "synthetic"], default="yfinance")
+    ap.add_argument("--no-macro", action="store_true", help="من غير EGX30 والدولار (للمقارنة)")
     ap.add_argument("--no-telegram", action="store_true")
     ap.add_argument("--no-record", action="store_true", help="متسجلش في horizon/ (للتجربة)")
     a = ap.parse_args()
@@ -232,14 +237,24 @@ def main():
         if a.source == "yfinance":
             C, H, L, V, O, _note = tr.extend_with_state(C, H, L, V, O, now)
         date = str(C.index[-1].date())
-        P = prepare(C, H, L, V, O, a.min_turnover)
+        M = None
+        if not a.no_macro:
+            try:
+                if a.source == "synthetic":
+                    M = macro.synthetic_macro((C / C.shift(1) - 1).mean(axis=1))
+                else:
+                    M = macro.fetch_macro(fresh=a.fresh)
+            except Exception as e:  # noqa: BLE001
+                print(f"[macro] فشل الجلب، هكمّل من غيره: {e}")
+        P = prepare(C, H, L, V, O, a.min_turnover, M)
+        variant = "macro" if any(n in macro.MACRO_MARKET or n == "beta60" for n in P["names"]) else "base"
         picks_by_h = {h: top_picks(P, h, 150) for h in HORIZONS}
         ms = tr.market_status(C, C.shape[0] - 1)
         scored = []
         if not a.no_record:
             scored = score_pending(C)
-            record(date, picks_by_h, now)
-        text = picks_message(date, picks_by_h, ms)
+            record(date, picks_by_h, now, variant)
+        text = picks_message(date, picks_by_h, ms, P["names"])
         os.makedirs(OUT_DIR, exist_ok=True)
         if not a.no_record:
             with open(os.path.join(OUT_DIR, "report_latest.md"), "w", encoding="utf-8") as fh:

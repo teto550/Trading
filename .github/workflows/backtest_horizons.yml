@@ -15,6 +15,10 @@ on:
         description: "فترات الاحتفاظ بالأيام، مفصولة بفاصلة"
         required: false
         default: "3,5,10,20"
+      macro:
+        description: "ضيف مدخلات EGX30 والدولار (true/false) - بيحفظ تقرير منفصل للمقارنة"
+        required: false
+        default: "false"
 concurrency:
   group: backtest-horizons
   cancel-in-progress: false
@@ -42,6 +46,7 @@ jobs:
             --cost-bps "${{ github.event.inputs.cost_bps || '15' }}" \
             --min-turnover "${{ github.event.inputs.min_turnover || '1000000' }}" \
             --horizons "${{ github.event.inputs.horizons || '3,5,10,20' }}" \
+            $( [ "${{ github.event.inputs.macro }}" = "true" ] && echo "--macro" ) \
             2>&1 | tee backtest/results/log_horizons_latest.txt
       - name: Upload report
         if: always()
