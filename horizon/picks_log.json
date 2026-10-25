@@ -1,0 +1,40 @@
+{
+ "entries": [
+  {
+   "date": "2026-10-25",
+   "h": 5,
+   "variant": "macro",
+   "picks": [
+    "BINV",
+    "MFPC",
+    "SNFC",
+    "ABUK",
+    "CCAP",
+    "CPCI",
+    "FAIT",
+    "SDTI",
+    "TMGH",
+    "AMOC"
+   ],
+   "made": "2026-10-25 22:22"
+  },
+  {
+   "date": "2026-10-25",
+   "h": 10,
+   "variant": "macro",
+   "picks": [
+    "MFPC",
+    "ABUK",
+    "BINV",
+    "SNFC",
+    "CPCI",
+    "FAIT",
+    "EAST",
+    "TMGH",
+    "HRHO",
+    "EGAL"
+   ],
+   "made": "2026-10-25 22:22"
+  }
+ ]
+}
