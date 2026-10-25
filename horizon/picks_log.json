@@ -5,36 +5,36 @@
    "h": 5,
    "variant": "macro",
    "picks": [
-    "BINV",
     "MFPC",
     "SNFC",
     "ABUK",
-    "CCAP",
+    "BINV",
     "CPCI",
-    "FAIT",
-    "SDTI",
+    "CCAP",
+    "EAST",
     "TMGH",
-    "AMOC"
+    "FAIT",
+    "SDTI"
    ],
-   "made": "2026-10-25 22:22"
+   "made": "2026-10-25 22:27"
   },
   {
    "date": "2026-10-25",
    "h": 10,
    "variant": "macro",
    "picks": [
-    "MFPC",
     "ABUK",
+    "MFPC",
+    "CCAP",
     "BINV",
     "SNFC",
-    "CPCI",
-    "FAIT",
     "EAST",
-    "TMGH",
+    "FAIT",
     "HRHO",
+    "CPCI",
     "EGAL"
    ],
-   "made": "2026-10-25 22:22"
+   "made": "2026-10-25 22:27"
   }
  ]
 }
