@@ -59,6 +59,66 @@
     "OIH": "شراء"
    },
    "made": "2026-10-26 08:54"
+  },
+  {
+   "date": "2026-10-26",
+   "h": 5,
+   "variant": "macro",
+   "picks": [
+    "EAST",
+    "ALCN",
+    "ICID",
+    "SNFC",
+    "EMFD",
+    "SDTI",
+    "CPCI",
+    "ABUK",
+    "ETRS",
+    "HRHO"
+   ],
+   "labels": {
+    "EAST": "شراء",
+    "ALCN": "شراء",
+    "ICID": "شراء",
+    "SNFC": "شراء",
+    "EMFD": "شراء",
+    "SDTI": "شراء",
+    "CPCI": "شراء",
+    "ABUK": "شراء",
+    "ETRS": "شراء",
+    "HRHO": "شراء"
+   },
+   "made": "2026-10-26 22:36"
+  },
+  {
+   "date": "2026-10-26",
+   "h": 10,
+   "variant": "macro",
+   "picks": [
+    "SNFC",
+    "FAIT",
+    "ABUK",
+    "CPCI",
+    "EMFD",
+    "MMAT",
+    "SDTI",
+    "ALCN",
+    "HRHO",
+    "OIH"
+   ],
+   "labels": {
+    "SNFC": "شراء",
+    "FAIT": "شراء",
+    "ABUK": "شراء",
+    "CPCI": "شراء",
+    "EMFD": "شراء",
+    "MMAT": "شراء",
+    "SDTI": "شراء",
+    "ALCN": "شراء",
+    "HRHO": "شراء",
+    "OIH": "شراء"
+   },
+   "made": "2026-10-26 22:36"
   }
  ]
 }
