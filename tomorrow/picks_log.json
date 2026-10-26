@@ -28,6 +28,35 @@
     "EAST": "بيع"
    },
    "made": "2026-10-26 08:54"
+  },
+  {
+   "target": "2026-10-27",
+   "data_date": "2026-10-26",
+   "picks": [
+    "SDTI",
+    "CPCI",
+    "ALCN",
+    "EMFD",
+    "SNFC",
+    "EAST",
+    "ADCI",
+    "ETRS",
+    "AJWA",
+    "EFID"
+   ],
+   "labels": {
+    "SDTI": "بيع",
+    "CPCI": "بيع",
+    "ALCN": "بيع",
+    "EMFD": "بيع",
+    "SNFC": "بيع",
+    "EAST": "بيع",
+    "ADCI": "بيع",
+    "ETRS": "بيع",
+    "AJWA": "بيع",
+    "EFID": "بيع"
+   },
+   "made": "2026-10-26 16:11"
   }
  ]
 }
