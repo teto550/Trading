@@ -7,6 +7,10 @@
   "ar": null,
   "en": "The Arab Drug Company"
  },
+ "ADIB": {
+  "ar": null,
+  "en": "Abu Dhabi Islamic Bank - Egypt - S.A.E"
+ },
  "AJWA": {
   "ar": "أجواء للصناعات الغذائية",
   "en": "AJWA For Food Industries Co. Egypt"
@@ -58,6 +62,10 @@
  "MFPC": {
   "ar": "مصر لإنتاج الأسمدة",
   "en": "Misr Fertilizer Production Company"
+ },
+ "MMAT": {
+  "ar": null,
+  "en": "Marsa Marsa Alam For Tourism Development SAE"
  },
  "SDTI": {
   "ar": "شارم دريمز",

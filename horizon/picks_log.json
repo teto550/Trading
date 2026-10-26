@@ -65,37 +65,35 @@
    "h": 5,
    "variant": "macro",
    "picks": [
-    "SNFC",
     "ALCN",
-    "SDTI",
-    "CPCI",
-    "ICID",
     "EAST",
-    "AJWA",
-    "FAIT",
+    "ICID",
+    "EMFD",
+    "SNFC",
+    "SDTI",
     "ABUK",
-    "ETRS"
+    "LCSW",
+    "ETRS",
+    "CPCI"
    ],
    "labels": {
-    "SNFC": "شراء",
     "ALCN": "شراء",
-    "SDTI": "شراء",
-    "CPCI": "شراء",
-    "ICID": "شراء",
     "EAST": "شراء",
-    "AJWA": "شراء",
-    "FAIT": "شراء",
+    "ICID": "شراء",
+    "EMFD": "شراء",
+    "SNFC": "شراء",
+    "SDTI": "شراء",
     "ABUK": "شراء",
-    "ETRS": "شراء"
+    "LCSW": "شراء",
+    "ETRS": "شراء",
+    "CPCI": "شراء"
    },
    "news": {
-    "CPCI": "agree",
     "ICID": "neutral",
-    "AJWA": "neutral",
-    "FAIT": "agree",
-    "ABUK": "neutral"
+    "LCSW": "neutral",
+    "CPCI": "agree"
    },
-   "made": "2026-10-26 23:20"
+   "made": "2026-10-27 00:52"
   },
   {
    "date": "2026-10-26",
@@ -104,34 +102,33 @@
    "picks": [
     "ABUK",
     "SNFC",
-    "SDTI",
     "FAIT",
+    "SDTI",
     "CPCI",
+    "MMAT",
     "ALCN",
     "EMFD",
-    "HRHO",
-    "EAST",
-    "ETRS"
+    "ETRS",
+    "ADIB"
    ],
    "labels": {
     "ABUK": "شراء",
     "SNFC": "شراء",
-    "SDTI": "شراء",
     "FAIT": "شراء",
+    "SDTI": "شراء",
     "CPCI": "شراء",
+    "MMAT": "شراء",
     "ALCN": "شراء",
     "EMFD": "شراء",
-    "HRHO": "شراء",
-    "EAST": "شراء",
-    "ETRS": "شراء"
+    "ETRS": "شراء",
+    "ADIB": "شراء"
    },
    "news": {
-    "ABUK": "neutral",
     "FAIT": "agree",
     "CPCI": "agree",
-    "HRHO": "neutral"
+    "ADIB": "neutral"
    },
-   "made": "2026-10-26 23:20"
+   "made": "2026-10-27 00:52"
   }
  ]
 }
