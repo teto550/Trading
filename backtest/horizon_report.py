@@ -38,6 +38,7 @@ import backtest as bt  # noqa: E402
 import backtest_horizons as bh  # noqa: E402
 import direction as dr  # noqa: E402
 import macro  # noqa: E402
+import news as nw  # noqa: E402
 import tomorrow_report as tr  # noqa: E402
 
 OUT_DIR = os.path.join(ROOT, "horizon")
@@ -125,6 +126,7 @@ def record(date, picks_by_h, now, variant="base"):
         ent = [e for e in ent if not (e["date"] == date and e["h"] == h)]
         ent.append({"date": date, "h": h, "variant": variant, "picks": [p["name"] for p in picks],
                     "labels": {p["name"]: p["label"] for p in picks if p.get("label")},
+                    "news": {p["name"]: p["news_ag"] for p in picks if p.get("news_ag")},
                     "made": now.strftime("%Y-%m-%d %H:%M")})
     log["entries"] = sorted(ent, key=lambda e: (e["date"], e["h"]))[-400:]
     _save(LOG_FILE, log)
@@ -150,7 +152,8 @@ def score_pending(C):
         ret = C.iloc[i1] / C.iloc[i0] - 1
         ret = ret[np.isfinite(ret) & (ret.abs() <= MAX_HORIZON_RET)]
         labs = e.get("labels", {})
-        picks = [{"n": n, "r": float(ret[n + ".CA"] * 100), "lab": labs.get(n)}
+        nws = e.get("news", {})
+        picks = [{"n": n, "r": float(ret[n + ".CA"] * 100), "lab": labs.get(n), "nw": nws.get(n)}
                  for n in e["picks"] if (n + ".CA") in ret.index]
         if len(picks) < max(3, len(e["picks"]) // 2) or len(ret) < 30:
             continue
@@ -192,6 +195,9 @@ def result_message(rec):
         dn, dok = sum(d.get("dir_n", 0) for d in days), sum(d.get("dir_ok", 0) for d in days)
         if dn:
             L_.append(f"🎯 تصنيف شراء/بيع: صح في {dok} من {dn} ({dok / dn * 100:.0f}%) من أول ما اتضاف")
+        ns = nw.agreement_summary(days)
+        if ns:
+            L_.append(ns)
     L_ += ["", "⚠️ التوقعات المتجاورة بتتشارك أيام، فمتتحسبش كعينات مستقلة. متحكمش على الموديل قبل شهور."]
     return "\n".join(L_)
 
@@ -199,7 +205,7 @@ def result_message(rec):
 # ============================================================
 # رسالة التوقع الجديد
 # ============================================================
-def picks_message(date, picks_by_h, ms, inputs="", holds=None):
+def picks_message(date, picks_by_h, ms, inputs="", holds=None, news_map=None):
     L_ = [f"🔭 توقع 5 و10 أيام - مبني على قفلة {date}"]
     if inputs:
         L_.append("المدخلات: " + inputs)
@@ -218,6 +224,10 @@ def picks_message(date, picks_by_h, ms, inputs="", holds=None):
                 line += (f" | RSI {lv['rsi']:.0f} | تذبذب يومي {lv['atr_pct']:.1f}%"
                          f" | دعم {tr.fmt_px(lv['support'])} | مقاومة {tr.fmt_px(lv['resist'])}")
             L_.append(line)
+            if news_map:
+                L_ += nw.news_lines(news_map.get(p["name"]), p.get("label"))
+    if news_map:
+        L_ += ["", "📰 الأخبار تأكيد أو تحذير بس: مبتغيّرش الترتيب ولا شراء/بيع، ومفيش باكتست ليها لسه."]
     if holds:
         L_ += ["", f"🟢 شراء = الموديل شايف السهم هيكسب في الفترة دي | 🔴 بيع = شايفه هيخسر."]
         for h, ho in holds.items():
@@ -238,6 +248,7 @@ def main():
     ap.add_argument("--fresh", action="store_true", help="تجاهل كاش الأسعار وجيب بيانات جديدة")
     ap.add_argument("--source", choices=["yfinance", "synthetic"], default="yfinance")
     ap.add_argument("--no-macro", action="store_true", help="من غير EGX30 والدولار (للمقارنة)")
+    ap.add_argument("--no-news", action="store_true", help="من غير أخبار الأسهم")
     ap.add_argument("--no-telegram", action="store_true")
     ap.add_argument("--no-record", action="store_true", help="متسجلش في horizon/ (للتجربة)")
     a = ap.parse_args()
@@ -274,6 +285,13 @@ def main():
         res = {h: top_picks(P, h, 150) for h in HORIZONS}
         picks_by_h = {h: r[0] for h, r in res.items()}
         holds = {h: r[1] for h, r in res.items() if any(p.get("label") for p in r[0])}
+        news_map = {}
+        if not a.no_news:
+            news_map = nw.news_for([p["name"] for ps in picks_by_h.values() for p in ps])
+        for ps in picks_by_h.values():
+            for p in ps:
+                info = news_map.get(p["name"])
+                p["news_ag"] = nw.agreement(p.get("label"), info["sent"]) if info else None
         ms = tr.market_status(C, C.shape[0] - 1)
         scored = []
         if not a.no_record:
@@ -285,7 +303,7 @@ def main():
             inputs = f"الأسعار والسيولة + {egx} {usd} (جديدة، لسه ما اتقاسش أثرها في الباكتست)"
         else:
             inputs = "الأسعار والسيولة بس"
-        text = picks_message(date, picks_by_h, ms, inputs, holds)
+        text = picks_message(date, picks_by_h, ms, inputs, holds, news_map)
         os.makedirs(OUT_DIR, exist_ok=True)
         if not a.no_record:
             with open(os.path.join(OUT_DIR, "report_latest.md"), "w", encoding="utf-8") as fh:

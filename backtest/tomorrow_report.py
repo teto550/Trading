@@ -36,6 +36,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import backtest as bt  # noqa: E402
 import direction as dr  # noqa: E402
+import news as nw  # noqa: E402
 
 OUT_DIR = os.path.join(ROOT, "tomorrow")
 PICKS_LOG = os.path.join(OUT_DIR, "picks_log.json")    # ترشيحات كل جلسة (بتتسجل وقت التقرير)
@@ -242,6 +243,15 @@ def build_report(C, H, L, V, O, a, now, note=None):
                      "label": dr.label(float(dirp[i])) if dirp is not None else None,
                      "r1": float(f["r1"].iloc[t, col]) * 100 if np.isfinite(f["r1"].iloc[t, col]) else float("nan")})
 
+    # أخبار الأسهم العشرة (تأكيد/تحذير بس، مبتغيّرش الترتيب ولا التصنيف)
+    news_map = {}
+    if not getattr(a, "no_news", False) and rows:
+        news_map = nw.news_for([r["name"] for r in rows])
+    for r in rows:
+        info = news_map.get(r["name"])
+        r["news"] = info
+        r["news_ag"] = nw.agreement(r.get("label"), info["sent"]) if info else None
+
     when = "النهاردة" if target == now.date() else "بكره"
     L_ = [f"🔮 تقرير جلسة {when} - {AR_DAYS[target.weekday()]} {target}",
           f"(مبني على بيانات قفلة {data_date} - {n} سهم سيولته كافية)"]
@@ -276,7 +286,11 @@ def build_report(C, H, L, V, O, a, now, note=None):
                       f"نطاق الأسبوع: {fmt_px(lv['w_low'])} - {fmt_px(lv['w_high'])}")
         else:
             L_.append(f"   نطاق {when}: {fmt_px(p['low'])} - {fmt_px(p['high'])}")
+        L_ += nw.news_lines(r.get("news"), r.get("label"))
         L_.append("")
+    if news_map:
+        L_ += ["📰 الأخبار تأكيد أو تحذير بس: مبتغيّرش الترتيب ولا شراء/بيع، ومفيش باكتست ليها لسه. "
+               "أنا بقيس بعد كام جلسة لو التصنيف بيبقى أصح لما الأخبار بتأيده.", ""]
     if dirp is not None:
         L_ += ["🟢 شراء = الموديل شايف السهم هيقفل بكره فوق افتتاحه | 🔴 بيع = شايفه هيقفل تحته.",
                "⚠️ " + dr.holdout_line(hold), ""]
@@ -325,6 +339,7 @@ def record_picks(rows, target, data_date, now):
     log = _load_json(PICKS_LOG, {"entries": []})
     entry = {"target": str(target), "data_date": str(data_date), "picks": names,
              "labels": {r["name"]: r["label"] for r in rows if r.get("label")},
+             "news": {r["name"]: r["news_ag"] for r in rows if r.get("news_ag")},
              "made": now.strftime("%Y-%m-%d %H:%M")}
     ent = [e for e in log["entries"] if e["target"] != entry["target"]] + [entry]
     log["entries"] = sorted(ent, key=lambda e: e["target"])[-250:]
@@ -351,7 +366,8 @@ def score_pending(C):
         ret = (C.iloc[i] / C.iloc[i - 1] - 1)
         ret = ret[np.isfinite(ret) & (ret.abs() <= bt.MAX_ABS_RET)]
         labs = e.get("labels", {})
-        picks = [{"n": n, "r": float(ret[n + ".CA"] * 100), "lab": labs.get(n)}
+        nws = e.get("news", {})
+        picks = [{"n": n, "r": float(ret[n + ".CA"] * 100), "lab": labs.get(n), "nw": nws.get(n)}
                  for n in e["picks"] if (n + ".CA") in ret.index]
         if len(picks) < max(3, len(e["picks"]) // 2) or len(ret) < 30:
             continue
@@ -402,6 +418,9 @@ def scorecard_message(rec):
         dn, dok = sum(d.get("dir_n", 0) for d in days), sum(d.get("dir_ok", 0) for d in days)
         if dn:
             L_.append(f"🎯 تصنيف شراء/بيع: صح في {dok} من {dn} ({dok / dn * 100:.0f}%) من أول ما اتضاف")
+        ns = nw.agreement_summary(days)
+        if ns:
+            L_.append(ns)
         if len(days) < 30:
             L_.append(f"⚠️ العينة صغيرة ({len(days)} جلسة × {n} سهم). النسبة بتتأرجح جدًا، "
                       f"متحكمش على الموديل قبل 30 جلسة على الأقل.")
@@ -428,6 +447,7 @@ def main():
     ap.add_argument("--top", type=int, default=10, help="عدد الأسهم في التقرير")
     ap.add_argument("--fresh", action="store_true", help="تجاهل كاش الأسعار وجيب بيانات جديدة")
     ap.add_argument("--no-telegram", action="store_true")
+    ap.add_argument("--no-news", action="store_true", help="من غير أخبار الأسهم")
     ap.add_argument("--no-record", action="store_true", help="متسجلش الترشيحات في picks_log.json (للتجربة)")
     a = ap.parse_args()
     now = datetime.now(ZoneInfo("Africa/Cairo"))
