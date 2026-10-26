@@ -8,14 +8,26 @@
     "BINV",
     "ABUK",
     "CCAP",
-    "CPCI",
-    "TMGH",
     "ACAMD",
+    "CPCI",
     "RMDA",
+    "TMGH",
     "FAIT",
-    "AMOC"
+    "EAST"
    ],
-   "made": "2026-10-25 22:19"
+   "labels": {
+    "MFPC": "بيع",
+    "BINV": "بيع",
+    "ABUK": "بيع",
+    "CCAP": "بيع",
+    "ACAMD": "بيع",
+    "CPCI": "بيع",
+    "RMDA": "بيع",
+    "TMGH": "بيع",
+    "FAIT": "بيع",
+    "EAST": "بيع"
+   },
+   "made": "2026-10-26 08:54"
   }
  ]
 }
