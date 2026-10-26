@@ -288,6 +288,8 @@ def build_report(C, H, L, V, O, a, now, note=None):
             L_.append(f"   نطاق {when}: {fmt_px(p['low'])} - {fmt_px(p['high'])}")
         L_ += nw.news_lines(r.get("news"), r.get("label"))
         L_.append("")
+    if news_map and nw.status_note():
+        L_ += [nw.status_note(), ""]
     if news_map:
         L_ += ["📰 الأخبار تأكيد أو تحذير بس: مبتغيّرش الترتيب ولا شراء/بيع، ومفيش باكتست ليها لسه. "
                "أنا بقيس بعد كام جلسة لو التصنيف بيبقى أصح لما الأخبار بتأيده.", ""]

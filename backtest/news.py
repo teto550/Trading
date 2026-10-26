@@ -31,6 +31,17 @@ MAX_HEADLINES = 6
 UA = {"User-Agent": "Mozilla/5.0 (compatible; egx-news-bot)"}
 ICON = {"إيجابي": "🟢", "سلبي": "🔴", "محايد": "⚪", "مفيش": "▫️"}
 BUY, SELL = "شراء", "بيع"
+STATUS = {"gemini": "unused", "ar_names": 0}     # unused | ok | no_key | failed
+
+
+def status_note():
+    """سطر للرسالة لو تقييم الأخبار (إيجابي/سلبي) مش شغال، عشان الناس متفتكرش إن "مفيش تقييم" = "الأخبار محايدة"."""
+    g = STATUS["gemini"]
+    if g == "no_key":
+        return "📰 تقييم الأخبار (إيجابي/سلبي) واقف: مفتاح GEMINI_API_KEY مش متحدد في GitHub. بعرض العناوين بس."
+    if g == "failed":
+        return "📰 تقييم الأخبار (إيجابي/سلبي) فشل النهاردة (Gemini). بعرض العناوين بس."
+    return ""
 
 
 # ============================================================
@@ -53,7 +64,8 @@ def _save_names(d):
 def _gemini(prompt):
     key = os.environ.get("GEMINI_API_KEY", "")
     if not key:
-        return None
+        STATUS["gemini"] = "no_key"
+        raise RuntimeError("GEMINI_API_KEY مش متحدد")
     from google import genai
     client = genai.Client(api_key=key)
     resp = client.models.generate_content(model=GEMINI_MODEL, contents=prompt)
@@ -76,6 +88,24 @@ def _json_from(text):
     return None
 
 
+def _mubasher_ar(ticker):
+    """الاسم العربي من صفحة Mubasher العربي (مصدر البوت نفسه): بنقرا <title> وناخد الجزء العربي قبل القوس."""
+    try:
+        import requests
+        r = requests.get(f"https://www.mubasher.info/markets/EGX/stocks/{ticker}", headers=UA, timeout=15)
+        r.raise_for_status()
+        m = re.search(r"<title>(.*?)</title>", r.text, re.S)
+        if not m:
+            return None
+        t = re.split(r"\s*[\(\|\-–—]\s*", m.group(1).strip())[0].strip()
+        t = re.sub(r"^(سهم|أسهم|شركة)\s+", "", t)
+        if re.search(r"[\u0600-\u06FF]", t) and 2 <= len(t) <= 40:
+            return t
+    except Exception as e:  # noqa: BLE001
+        print(f"[news] اسم عربي {ticker} (Mubasher): {str(e)[:80]}")
+    return None
+
+
 def resolve_names(tickers):
     """بيرجّع {ticker: {"en":..., "ar":...}}. الاسم الإنجليزي من Yahoo، والعربي من Gemini (للبحث بس)."""
     names = _load_names()
@@ -91,8 +121,14 @@ def resolve_names(tickers):
                 print(f"[news] اسم {t}: {str(e)[:80]}")
             names[t] = {"en": en, "ar": names.get(t, {}).get("ar")}
             time.sleep(0.3)
+    for t in [t for t in tickers if not names.get(t, {}).get("ar")]:
+        ar = _mubasher_ar(t)
+        if ar:
+            names.setdefault(t, {"en": None})["ar"] = ar
+            need = need or [t]
+        time.sleep(0.3)
     need_ar = [t for t in tickers if names.get(t, {}).get("en") and not names[t].get("ar")]
-    if need_ar:
+    if need_ar and os.environ.get("GEMINI_API_KEY"):
         try:
             lst = "\n".join(f"{t}: {names[t]['en']}" for t in need_ar)
             out = _json_from(_gemini(
@@ -152,6 +188,26 @@ def _rss(query, lang, now):
     return parse_rss(r.text, now)
 
 
+def _clean_en(en):
+    return re.sub(r"\b(S\.?A\.?E\.?|Co\.?|Company|Ltd\.?|Egypt|Egyptian|For|Of|The)\b|[()&,]", " ", en or "", flags=re.I).split()
+
+
+def relevant(title, ticker, nm):
+    """العنوان لازم يذكر الشركة فعلاً (كود/اسم عربي/أول كلمتين من الاسم الإنجليزي) وإلا بنتجاهله.
+    الاسم القصير (كلمة واحدة) لازم معاه إشارة لمصر أو البورصة."""
+    tl = title.lower()
+    if re.search(rf"\b{re.escape(ticker.lower())}\b", tl):
+        return True
+    if nm.get("ar") and nm["ar"] in title:
+        return True
+    w = _clean_en(nm.get("en"))
+    if len(w) >= 2:
+        return " ".join(w[:2]).lower() in tl
+    if len(w) == 1:
+        return w[0].lower() in tl and bool(re.search(r"egypt|egx|مصر|البورصة|cairo", tl))
+    return False
+
+
 def fetch_headlines(ticker, nm, now):
     """عناوين السهم: بحث عربي بالاسم العربي + بحث إنجليزي بالاسم الإنجليزي (مدموجين بدون تكرار)."""
     qs = []
@@ -166,6 +222,8 @@ def fetch_headlines(ticker, nm, now):
     for q, lang in qs:
         try:
             for title, src, age in _rss(q, lang, now):
+                if not relevant(title, ticker, nm):
+                    continue
                 k = re.sub(r"\W+", "", title.lower())[:60]
                 if k not in seen:
                     seen.add(k)
@@ -199,6 +257,7 @@ def assess(batch, names):
         "رجّع JSON بس بالشكل: {\"الكود\": {\"s\": \"إيجابي\", \"why\": \"جملة قصيرة بالمصري\", \"i\": رقم أهم عنوان}}\n\n"
         + "\n\n".join(blocks))
     out = _json_from(_gemini(prompt))
+    STATUS["gemini"] = "ok" if out is not None else "failed"
     res = {}
     if isinstance(out, dict):
         for t in have:
@@ -218,6 +277,8 @@ def news_for(tickers, now=None):
     tickers = list(dict.fromkeys(tickers))
     try:
         names = resolve_names(tickers)
+        STATUS["ar_names"] = sum(1 for t in tickers if names.get(t, {}).get("ar"))
+        print(f"[news] أسماء: {len(tickers)} سهم | عربي: {STATUS['ar_names']}")
         batch = {t: fetch_headlines(t, names.get(t, {}), now) for t in tickers}
     except Exception as e:  # noqa: BLE001
         print(f"[news] فشل الجلب: {e}")
@@ -226,6 +287,8 @@ def news_for(tickers, now=None):
         verdict = assess(batch, names)
     except Exception as e:  # noqa: BLE001
         print(f"[news] تقييم Gemini فشل، هعرض العناوين من غير تقييم: {str(e)[:150]}")
+        if STATUS["gemini"] != "no_key":
+            STATUS["gemini"] = "failed"
         verdict = {}
     out = {}
     for t in tickers:

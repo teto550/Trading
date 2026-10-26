@@ -226,6 +226,8 @@ def picks_message(date, picks_by_h, ms, inputs="", holds=None, news_map=None):
             L_.append(line)
             if news_map:
                 L_ += nw.news_lines(news_map.get(p["name"]), p.get("label"))
+    if news_map and nw.status_note():
+        L_ += [nw.status_note(), ""]
     if news_map:
         L_ += ["", "📰 الأخبار تأكيد أو تحذير بس: مبتغيّرش الترتيب ولا شراء/بيع، ومفيش باكتست ليها لسه."]
     if holds:
