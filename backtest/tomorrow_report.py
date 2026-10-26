@@ -35,6 +35,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import backtest as bt  # noqa: E402
+import direction as dr  # noqa: E402
 
 OUT_DIR = os.path.join(ROOT, "tomorrow")
 PICKS_LOG = os.path.join(OUT_DIR, "picks_log.json")    # ترشيحات كل جلسة (بتتسجل وقت التقرير)
@@ -116,7 +117,7 @@ def extend_with_state(C, H, L, V, O, now, state_path=None, min_frac=0.7):
 
 
 def train_and_score(C, H, L, V, O, min_turnover, trees):
-    """بيرجّع (scores, cols, names, f, lock, last_idx) لآخر يوم في البيانات."""
+    """بيرجّع (scores, cols, names, f, lock, last_idx, احتمال_الصعود, دقة_التصنيف) لآخر يوم في البيانات."""
     import xgboost as xgb
 
     f, mkt, _nxt, nxt_oc, lock, liquid, _flat59 = bt.build_features(C, H, L, V, O, min_turnover)
@@ -142,7 +143,15 @@ def train_and_score(C, H, L, V, O, min_turnover, trees):
     if len(cols) < 30:
         raise bt.BacktestError(f"عدد الأسهم الصالحة في آخر يوم قليل ({len(cols)})")
     score = model.predict(Xcs[t, cols])
-    return score, cols, np.array(C.columns), f, lock, t
+    # شراء/بيع: موديل تاني بيجاوب "العائد المطلق بكره هيبقى موجب؟" + قياس دقته على آخر 250 يوم
+    ret = nxt_oc.values
+    dirp, hold = None, None
+    try:
+        dirp = dr.fit_predict(Xcs, ret, E, t, cols, trees)
+        hold = dr.holdout(Xcs, ret, E, 1, trees)
+    except Exception as e:  # noqa: BLE001
+        print(f"[direction] فشل تصنيف شراء/بيع، هكمّل من غيره: {e}")
+    return score, cols, np.array(C.columns), f, lock, t, dirp, hold
 
 
 def price_range(C, col, t, window=RANGE_WINDOW):
@@ -215,7 +224,7 @@ def market_status(C, t):
 
 
 def build_report(C, H, L, V, O, a, now, note=None):
-    score, cols, names, f, lock, t = train_and_score(C, H, L, V, O, a.min_turnover, a.trees)
+    score, cols, names, f, lock, t, dirp, hold = train_and_score(C, H, L, V, O, a.min_turnover, a.trees)
     data_date = C.index[t].date()
     target = next_trading_day(now)
     stale_days = (now.date() - data_date).days
@@ -230,6 +239,7 @@ def build_report(C, H, L, V, O, a, now, note=None):
         if pr is None:
             continue
         rows.append({"rank": rank, "name": names[col].replace(".CA", ""), "pr": pr, "lv": levels(C, H, L, col, t),
+                     "label": dr.label(float(dirp[i])) if dirp is not None else None,
                      "r1": float(f["r1"].iloc[t, col]) * 100 if np.isfinite(f["r1"].iloc[t, col]) else float("nan")})
 
     when = "النهاردة" if target == now.date() else "بكره"
@@ -252,7 +262,8 @@ def build_report(C, H, L, V, O, a, now, note=None):
     L_ += [f"📈 أقوى {len(rows)} سهم ترتيبًا لجلسة {when} + مستوياتهم الفنية:", ""]
     for r in rows:
         p, lv = r["pr"], r["lv"]
-        L_.append(f"{r['rank']}. {r['name']} | آخر قفلة {fmt_px(p['last'])}")
+        lab = f" | {'🟢' if r['label'] == dr.BUY else '🔴'} {r['label']}" if r.get("label") else ""
+        L_.append(f"{r['rank']}. {r['name']} | آخر قفلة {fmt_px(p['last'])}{lab}")
         if lv:
             L_.append(f"   RSI {lv['rsi']:.0f} | تذبذب يومي {lv['atr_pct']:.1f}% | "
                       f"دعم {fmt_px(lv['support'])} | مقاومة {fmt_px(lv['resist'])}")
@@ -266,6 +277,9 @@ def build_report(C, H, L, V, O, a, now, note=None):
         else:
             L_.append(f"   نطاق {when}: {fmt_px(p['low'])} - {fmt_px(p['high'])}")
         L_.append("")
+    if dirp is not None:
+        L_ += ["🟢 شراء = الموديل شايف السهم هيقفل بكره فوق افتتاحه | 🔴 بيع = شايفه هيقفل تحته.",
+               "⚠️ " + dr.holdout_line(hold), ""]
     L_ += ["إزاي تقرأ المستويات:",
            "• وقف الخسارة = 1.5 × التذبذب اليومي تحت القفلة. الهدف = 3 × التذبذب فوقها (أو المقاومة لو أقرب).",
            "• عائد/مخاطرة = كام هتكسب لو وصل الهدف مقابل كام هتخسر لو ضرب الوقف. أقل من 1.5 يبقى مش مجزي.",
@@ -310,6 +324,7 @@ def record_picks(rows, target, data_date, now):
         return
     log = _load_json(PICKS_LOG, {"entries": []})
     entry = {"target": str(target), "data_date": str(data_date), "picks": names,
+             "labels": {r["name"]: r["label"] for r in rows if r.get("label")},
              "made": now.strftime("%Y-%m-%d %H:%M")}
     ent = [e for e in log["entries"] if e["target"] != entry["target"]] + [entry]
     log["entries"] = sorted(ent, key=lambda e: e["target"])[-250:]
@@ -335,10 +350,15 @@ def score_pending(C):
             continue
         ret = (C.iloc[i] / C.iloc[i - 1] - 1)
         ret = ret[np.isfinite(ret) & (ret.abs() <= bt.MAX_ABS_RET)]
-        picks = [{"n": n, "r": float(ret[n + ".CA"] * 100)} for n in e["picks"] if (n + ".CA") in ret.index]
+        labs = e.get("labels", {})
+        picks = [{"n": n, "r": float(ret[n + ".CA"] * 100), "lab": labs.get(n)}
+                 for n in e["picks"] if (n + ".CA") in ret.index]
         if len(picks) < max(3, len(e["picks"]) // 2) or len(ret) < 30:
             continue
+        lp = [x for x in picks if x["lab"]]
         rec = {"target": tgt, "data_date": e["data_date"], "n": len(picks),
+               "dir_n": len(lp),
+               "dir_ok": sum(1 for x in lp if (x["r"] > 0) == (x["lab"] == dr.BUY) and x["r"] != 0),
                "up": sum(1 for x in picks if x["r"] > 0), "down": sum(1 for x in picks if x["r"] < 0),
                "avg": round(float(np.mean([x["r"] for x in picks])), 3),
                "mkt_n": int(len(ret)), "mkt_up": int((ret > 0).sum()),
@@ -351,6 +371,15 @@ def score_pending(C):
     return new
 
 
+def pick_line(x):
+    """سطر سهم في رسالة النتيجة: لو كان ليه تصنيف شراء/بيع بنقول صح ولا غلط، وإلا طلع/نزل بس."""
+    if x.get("lab"):
+        ok = x["r"] != 0 and (x["r"] > 0) == (x["lab"] == dr.BUY)
+        return f"{'✅' if ok else '❌'} {x['n']} {x['r']:+.1f}% | قلنا {x['lab']}"
+    mark = "✅" if x["r"] > 0 else ("❌" if x["r"] < 0 else "➖")
+    return f"{mark} {x['n']} {x['r']:+.1f}%"
+
+
 def scorecard_message(rec):
     """رسالة تليجرام: كام سهم من ترشيحات الجلسة طلعوا فعلاً + الحصيلة التراكمية."""
     wd = datetime.strptime(rec["target"], "%Y-%m-%d").weekday()
@@ -360,8 +389,9 @@ def scorecard_message(rec):
           f"السوق كله: طلع {rec['mkt_up'] / rec['mkt_n'] * 100:.0f}% من الأسهم | متوسط التغير {rec['mkt_avg']:+.2f}%",
           ""]
     for x in rec["picks"]:
-        mark = "✅" if x["r"] > 0 else ("❌" if x["r"] < 0 else "➖")
-        L_.append(f"{mark} {x['n']} {x['r']:+.1f}%")
+        L_.append(pick_line(x))
+    if rec.get("dir_n"):
+        L_.insert(3, f"تصنيف شراء/بيع: صح في {rec['dir_ok']} من {rec['dir_n']}")
     days = _load_json(SCORE_FILE, {"days": []})["days"]
     if len(days) >= 2:
         tn, tu = sum(d["n"] for d in days), sum(d["up"] for d in days)
@@ -369,6 +399,9 @@ def scorecard_message(rec):
         edge = sum(d["avg"] - d["mkt_avg"] for d in days) / len(days)
         L_ += ["", f"📈 الحصيلة بعد {len(days)} جلسة: الترشيحات طلعت {tu / tn * 100:.0f}% من المرات "
                    f"مقابل {mk:.0f}% للسوق | الفرق في المتوسط {edge:+.2f}% في اليوم"]
+        dn, dok = sum(d.get("dir_n", 0) for d in days), sum(d.get("dir_ok", 0) for d in days)
+        if dn:
+            L_.append(f"🎯 تصنيف شراء/بيع: صح في {dok} من {dn} ({dok / dn * 100:.0f}%) من أول ما اتضاف")
         if len(days) < 30:
             L_.append(f"⚠️ العينة صغيرة ({len(days)} جلسة × {n} سهم). النسبة بتتأرجح جدًا، "
                       f"متحكمش على الموديل قبل 30 جلسة على الأقل.")

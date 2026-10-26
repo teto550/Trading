@@ -36,6 +36,7 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import backtest as bt  # noqa: E402
 import backtest_horizons as bh  # noqa: E402
+import direction as dr  # noqa: E402
 import macro  # noqa: E402
 import tomorrow_report as tr  # noqa: E402
 
@@ -94,13 +95,21 @@ def top_picks(P, h, trees):
     if len(cols) < 40:
         raise bt.BacktestError(f"عدد الأسهم الصالحة النهاردة قليل ({len(cols)})")
     score = model.predict(P["Xcs"][t, cols])
+    # شراء/بيع: العائد المطلق للفترة هيبقى موجب؟ + دقة التصنيف ده على آخر 250 يوم
+    dirp, hold = None, None
+    try:
+        dirp = dr.fit_predict(P["Xcs"], tgt.values, E, t, cols, trees)
+        hold = dr.holdout(P["Xcs"], tgt.values, E, h, trees)
+    except Exception as e:  # noqa: BLE001
+        print(f"[direction] فشل تصنيف شراء/بيع لفترة {h}، هكمّل من غيره: {e}")
     out = []
     for rank, i in enumerate(np.argsort(-score)[:TOP], 1):
         col = int(cols[i])
         lv = tr.levels(C, P["H"], P["L"], col, t)
         out.append({"rank": rank, "name": C.columns[col].replace(".CA", ""),
-                    "last": float(C.iloc[t, col]), "lv": lv})
-    return out
+                    "last": float(C.iloc[t, col]), "lv": lv,
+                    "label": dr.label(float(dirp[i])) if dirp is not None else None})
+    return out, hold
 
 
 # ============================================================
@@ -115,6 +124,7 @@ def record(date, picks_by_h, now, variant="base"):
             continue
         ent = [e for e in ent if not (e["date"] == date and e["h"] == h)]
         ent.append({"date": date, "h": h, "variant": variant, "picks": [p["name"] for p in picks],
+                    "labels": {p["name"]: p["label"] for p in picks if p.get("label")},
                     "made": now.strftime("%Y-%m-%d %H:%M")})
     log["entries"] = sorted(ent, key=lambda e: (e["date"], e["h"]))[-400:]
     _save(LOG_FILE, log)
@@ -139,10 +149,15 @@ def score_pending(C):
             continue                                    # تغطية ناقصة، نستنى
         ret = C.iloc[i1] / C.iloc[i0] - 1
         ret = ret[np.isfinite(ret) & (ret.abs() <= MAX_HORIZON_RET)]
-        picks = [{"n": n, "r": float(ret[n + ".CA"] * 100)} for n in e["picks"] if (n + ".CA") in ret.index]
+        labs = e.get("labels", {})
+        picks = [{"n": n, "r": float(ret[n + ".CA"] * 100), "lab": labs.get(n)}
+                 for n in e["picks"] if (n + ".CA") in ret.index]
         if len(picks) < max(3, len(e["picks"]) // 2) or len(ret) < 30:
             continue
+        lp = [x for x in picks if x["lab"]]
         rec = {"date": e["date"], "h": e["h"], "variant": e.get("variant", "base"),
+               "dir_n": len(lp),
+               "dir_ok": sum(1 for x in lp if x["r"] != 0 and (x["r"] > 0) == (x["lab"] == dr.BUY)),
                "end": str(C.index[i1].date()), "n": len(picks),
                "up": sum(1 for x in picks if x["r"] > 0),
                "avg": round(float(np.mean([x["r"] for x in picks])), 3),
@@ -163,8 +178,9 @@ def result_message(rec):
           f"السوق كله: طلع {rec['mkt_up'] / rec['mkt_n'] * 100:.0f}% من الأسهم | متوسط التغير {rec['mkt_avg']:+.2f}%",
           ""]
     for x in rec["picks"]:
-        mark = "✅" if x["r"] > 0 else ("❌" if x["r"] < 0 else "➖")
-        L_.append(f"{mark} {x['n']} {x['r']:+.1f}%")
+        L_.append(tr.pick_line(x))
+    if rec.get("dir_n"):
+        L_.insert(3, f"تصنيف شراء/بيع: صح في {rec['dir_ok']} من {rec['dir_n']}")
     days = [d for d in _load(SCORE_FILE, {"days": []})["days"]
             if d["h"] == h and d.get("variant", "base") == rec.get("variant", "base")]
     if len(days) >= 2:
@@ -173,6 +189,9 @@ def result_message(rec):
         edge = sum(d["avg"] - d["mkt_avg"] for d in days) / len(days)
         L_ += ["", f"📈 الحصيلة بعد {len(days)} توقع ({h} أيام): طلعت {tu / tn * 100:.0f}% من المرات "
                    f"مقابل {mk:.0f}% للسوق | الفرق في المتوسط {edge:+.2f}% للفترة"]
+        dn, dok = sum(d.get("dir_n", 0) for d in days), sum(d.get("dir_ok", 0) for d in days)
+        if dn:
+            L_.append(f"🎯 تصنيف شراء/بيع: صح في {dok} من {dn} ({dok / dn * 100:.0f}%) من أول ما اتضاف")
     L_ += ["", "⚠️ التوقعات المتجاورة بتتشارك أيام، فمتتحسبش كعينات مستقلة. متحكمش على الموديل قبل شهور."]
     return "\n".join(L_)
 
@@ -180,7 +199,7 @@ def result_message(rec):
 # ============================================================
 # رسالة التوقع الجديد
 # ============================================================
-def picks_message(date, picks_by_h, ms, inputs=""):
+def picks_message(date, picks_by_h, ms, inputs="", holds=None):
     L_ = [f"🔭 توقع 5 و10 أيام - مبني على قفلة {date}"]
     if inputs:
         L_.append("المدخلات: " + inputs)
@@ -193,11 +212,16 @@ def picks_message(date, picks_by_h, ms, inputs=""):
         L_ += ["", f"🗓 أقوى {len(picks)} سهم لمدة {h} أيام:"]
         for p in picks:
             lv = p["lv"]
-            line = f"{p['rank']}. {p['name']} | قفلة {tr.fmt_px(p['last'])}"
+            lab = f" | {'🟢' if p['label'] == dr.BUY else '🔴'} {p['label']}" if p.get("label") else ""
+            line = f"{p['rank']}. {p['name']} | قفلة {tr.fmt_px(p['last'])}{lab}"
             if lv:
                 line += (f" | RSI {lv['rsi']:.0f} | تذبذب يومي {lv['atr_pct']:.1f}%"
                          f" | دعم {tr.fmt_px(lv['support'])} | مقاومة {tr.fmt_px(lv['resist'])}")
             L_.append(line)
+    if holds:
+        L_ += ["", f"🟢 شراء = الموديل شايف السهم هيكسب في الفترة دي | 🔴 بيع = شايفه هيخسر."]
+        for h, ho in holds.items():
+            L_.append(f"⚠️ {h} أيام: " + dr.holdout_line(ho))
     L_ += ["",
            "هبعتلك بعد 5 و10 جلسات كام سهم منهم طلع فعلاً (من قفلة النهاردة).",
            "",
@@ -247,7 +271,9 @@ def main():
             M, egx_src = macro.ensure_egx30(M, C, V)
         P = prepare(C, H, L, V, O, a.min_turnover, M)
         variant = "macro" if any(n in macro.MACRO_MARKET or n == "beta60" for n in P["names"]) else "base"
-        picks_by_h = {h: top_picks(P, h, 150) for h in HORIZONS}
+        res = {h: top_picks(P, h, 150) for h in HORIZONS}
+        picks_by_h = {h: r[0] for h, r in res.items()}
+        holds = {h: r[1] for h, r in res.items() if any(p.get("label") for p in r[0])}
         ms = tr.market_status(C, C.shape[0] - 1)
         scored = []
         if not a.no_record:
@@ -259,7 +285,7 @@ def main():
             inputs = f"الأسعار والسيولة + {egx} {usd} (جديدة، لسه ما اتقاسش أثرها في الباكتست)"
         else:
             inputs = "الأسعار والسيولة بس"
-        text = picks_message(date, picks_by_h, ms, inputs)
+        text = picks_message(date, picks_by_h, ms, inputs, holds)
         os.makedirs(OUT_DIR, exist_ok=True)
         if not a.no_record:
             with open(os.path.join(OUT_DIR, "report_latest.md"), "w", encoding="utf-8") as fh:
