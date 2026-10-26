@@ -333,8 +333,10 @@ def news_lines(info, label):
     if info["sent"] is None:
         return [f"   📰 {htxt} (من غير تقييم)"]
     ag = agreement(label, info["sent"])
-    tag = {"agree": " ✅ بتأيد التصنيف", "disagree": " ⚠️ عكس التصنيف", "neutral": ""}.get(ag, "")
-    l1 = f"   📰 {ICON[info['sent']]} {info['sent']}{' - ' + info['why'] if info['why'] else ''}{tag}"
+    verdict = {"agree": "✅ الخبر بيأكد التحليل", "disagree": "⚠️ الخبر عكس التحليل",
+               "neutral": "➖ الخبر محايد"}.get(ag, "")
+    l1 = (f"   📰 {verdict + ' | ' if verdict else ''}{ICON[info['sent']]} {info['sent']}"
+          f"{' - ' + info['why'] if info['why'] else ''}")
     return [l1] + ([f"      {htxt}"] if htxt else [])
 
 
@@ -351,3 +353,16 @@ def agreement_summary(days):
         return None
     f = lambda k, nm: f"{nm}: صح {st[k][0]} من {st[k][1]}" if st[k][1] else f"{nm}: لسه مفيش"  # noqa: E731
     return "📰 التصنيف لما الأخبار " + " | ".join([f("agree", "أيدت"), f("disagree", "عارضت"), f("neutral", "محايدة/مفيش")])
+
+
+def priority(info, label):
+    """ترتيب العرض: 0 الخبر بيأكد التحليل، 1 الخبر عكس التحليل، 2 خبر محايد/من غير تقييم، 3 مفيش أخبار."""
+    if not info or info.get("n", 0) == 0 or info.get("sent") == "مفيش":
+        return 3
+    ag = agreement(label, info.get("sent"))
+    return {"agree": 0, "disagree": 1}.get(ag, 2)
+
+
+def reorder(items, news_map, name_of, label_of):
+    """بيرتّب القايمة حسب priority وبيحافظ على ترتيب الموديل جوه كل مجموعة (sort ثابت)."""
+    return sorted(items, key=lambda x: priority(news_map.get(name_of(x)), label_of(x)))

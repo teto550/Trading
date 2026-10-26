@@ -216,10 +216,13 @@ def picks_message(date, picks_by_h, ms, inputs="", holds=None, news_map=None):
             L_.append("⚠️ السوق نازل بقوة: الترشيحات دي أضعف من العادي، والأحسن تتابع وتستنى.")
     for h, picks in picks_by_h.items():
         L_ += ["", f"🗓 أقوى {len(picks)} سهم لمدة {h} أيام:"]
-        for p in picks:
+        if news_map:
+            picks = nw.reorder(picks, news_map, lambda p: p["name"], lambda p: p.get("label"))
+        for pos, p in enumerate(picks, 1):
             lv = p["lv"]
             lab = f" | {'🟢' if p['label'] == dr.BUY else '🔴'} {p['label']}" if p.get("label") else ""
-            line = f"{p['rank']}. {p['name']} | قفلة {tr.fmt_px(p['last'])}{lab}"
+            mr = f" [ترتيب الموديل {p['rank']}]" if news_map else ""
+            line = f"{pos if news_map else p['rank']}. {p['name']} | قفلة {tr.fmt_px(p['last'])}{lab}{mr}"
             if lv:
                 line += (f" | RSI {lv['rsi']:.0f} | تذبذب يومي {lv['atr_pct']:.1f}%"
                          f" | دعم {tr.fmt_px(lv['support'])} | مقاومة {tr.fmt_px(lv['resist'])}")
@@ -229,7 +232,8 @@ def picks_message(date, picks_by_h, ms, inputs="", holds=None, news_map=None):
     if news_map and nw.status_note():
         L_ += [nw.status_note(), ""]
     if news_map:
-        L_ += ["", "📰 الأخبار تأكيد أو تحذير بس: مبتغيّرش الترتيب ولا شراء/بيع، ومفيش باكتست ليها لسه."]
+        L_ += ["", "📰 جوه كل قايمة: اللي الخبر بيأكد تحليله الأول، وبعده اللي الخبر عكسه، وبعده الباقي."]
+        L_ += ["📰 الأخبار تأكيد أو تحذير بس: مبتغيّرش الترتيب ولا شراء/بيع، ومفيش باكتست ليها لسه."]
     if holds:
         L_ += ["", f"🟢 شراء = الموديل شايف السهم هيكسب في الفترة دي | 🔴 بيع = شايفه هيخسر."]
         for h, ho in holds.items():

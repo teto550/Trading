@@ -251,6 +251,8 @@ def build_report(C, H, L, V, O, a, now, note=None):
         info = news_map.get(r["name"])
         r["news"] = info
         r["news_ag"] = nw.agreement(r.get("label"), info["sent"]) if info else None
+    if news_map:
+        rows = nw.reorder(rows, news_map, lambda r: r["name"], lambda r: r.get("label"))
 
     when = "النهاردة" if target == now.date() else "بكره"
     L_ = [f"🔮 تقرير جلسة {when} - {AR_DAYS[target.weekday()]} {target}",
@@ -269,11 +271,16 @@ def build_report(C, H, L, V, O, a, now, note=None):
             L_ += ["⚠️ السوق نازل بقوة: الترشيحات دي أضعف من العادي، والدخول عكس اتجاه السوق خطره أعلى. "
                    "الأحسن تتابع وتستنى بدل ما تدخل."]
         L_.append("")
-    L_ += [f"📈 أقوى {len(rows)} سهم ترتيبًا لجلسة {when} + مستوياتهم الفنية:", ""]
-    for r in rows:
+    L_ += [f"📈 أقوى {len(rows)} سهم ترتيبًا لجلسة {when} + مستوياتهم الفنية:"]
+    if news_map:
+        L_.append("(مرتبين: اللي الخبر بيأكد تحليله الأول، وبعده اللي الخبر عكسه، وبعده الباقي. "
+                  "رقم ترتيب الموديل الأصلي جنب كل سهم)")
+    L_.append("")
+    for pos, r in enumerate(rows, 1):
         p, lv = r["pr"], r["lv"]
         lab = f" | {'🟢' if r['label'] == dr.BUY else '🔴'} {r['label']}" if r.get("label") else ""
-        L_.append(f"{r['rank']}. {r['name']} | آخر قفلة {fmt_px(p['last'])}{lab}")
+        mr = f" [ترتيب الموديل {r['rank']}]" if news_map else ""
+        L_.append(f"{pos if news_map else r['rank']}. {r['name']} | آخر قفلة {fmt_px(p['last'])}{lab}{mr}")
         if lv:
             L_.append(f"   RSI {lv['rsi']:.0f} | تذبذب يومي {lv['atr_pct']:.1f}% | "
                       f"دعم {fmt_px(lv['support'])} | مقاومة {fmt_px(lv['resist'])}")
