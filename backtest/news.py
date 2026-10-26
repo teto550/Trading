@@ -38,9 +38,12 @@ def status_note():
     """سطر للرسالة لو تقييم الأخبار (إيجابي/سلبي) مش شغال، عشان الناس متفتكرش إن "مفيش تقييم" = "الأخبار محايدة"."""
     g = STATUS["gemini"]
     if g == "no_key":
-        return "📰 تقييم الأخبار (إيجابي/سلبي) واقف: مفتاح GEMINI_API_KEY مش متحدد في GitHub. بعرض العناوين بس."
+        return "📰 مفتاح GEMINI_API_KEY مش متحدد في GitHub، فالتقييم بالكلمات المفتاحية (علامة «بالكلمات»)."
+    if g == "no_credit":
+        return ("📰 رصيد Gemini خلصان (RESOURCE_EXHAUSTED)، فالتقييم النهاردة بالكلمات المفتاحية (أبسط وأقل دقة "
+                "من الذكاء الاصطناعي، علامة «بالكلمات» جنب كل تقييم). شحن الرصيد من AI Studio بيرجّع التقييم الذكي.")
     if g == "failed":
-        return "📰 تقييم الأخبار (إيجابي/سلبي) فشل النهاردة (Gemini). بعرض العناوين بس."
+        return "📰 تقييم Gemini فشل النهاردة، فالتقييم بالكلمات المفتاحية (علامة «بالكلمات»)."
     return ""
 
 
@@ -196,9 +199,9 @@ def relevant(title, ticker, nm):
     """العنوان لازم يذكر الشركة فعلاً (كود/اسم عربي/أول كلمتين من الاسم الإنجليزي) وإلا بنتجاهله.
     الاسم القصير (كلمة واحدة) لازم معاه إشارة لمصر أو البورصة."""
     tl = title.lower()
-    if re.search(r"مباراة|مباراه|ودية|الدوري|كرة القدم|الكأس|football|soccer|\bmatch\b|\bleague\b", tl):
+    if re.search(r"مباراة|مباراه|ودي(?:ة|ا|ًا)|الدوري|كرة القدم|الكأس|بنتيجة|يهزم|يتعادل|يفوز على|football|soccer|\bmatch\b|\bleague\b", tl):
         return False                                   # أخبار رياضة (أندية بتشارك اسم الشركة)
-    if re.search(rf"\b{re.escape(ticker.lower())}\b", tl):
+    if re.search(rf"(?<![A-Za-z]){re.escape(ticker.upper())}(?![A-Za-z])", title):   # الكود بحروف كبيرة بس (عشان "Middle East" متتحسبش EAST)
         return True
     if nm.get("ar") and nm["ar"] in title:
         return True
@@ -273,6 +276,39 @@ def assess(batch, names):
     return res
 
 
+
+# ============================================================
+# تقييم احتياطي بالكلمات المفتاحية (لو Gemini مش متاح): أبسط بكتير من الذكاء الاصطناعي
+# ============================================================
+POS = ["ارتفاع أرباح", "ارتفاع الأرباح", "نمو الأرباح", "زيادة الأرباح", "ارتفاع صافي", "يحقق أرباح", "تحقق أرباح",
+       "توزيع أرباح", "توزيعات", "أرباح نقدية", "صفقة", "عقد جديد", "تعاقد", "ترسية", "توسع", "استحواذ",
+       "يتصدر ارتفاعات", "يرتفع", "ارتفاع", "صعود", "قفزة", "نمو", "رفع التوصية", "رفع القيمة", "موافقة",
+       "profit rises", "profit jumps", "profit growth", "profit up", "dividend", "wins", "awarded", "contract",
+       "acquisition", "acquires", "expansion", "surges", "jumps", "rises", "gains", "upgrade", "beats", "record high"]
+NEG = ["خسائر", "خسارة", "تراجع الأرباح", "انخفاض الأرباح", "تراجع", "انخفاض", "هبوط", "ينخفض", "يتراجع", "يهبط",
+       "غرامة", "قضية", "حجز", "إفلاس", "تعثر", "وقف النشاط", "توقف", "خفض التوصية", "تخفيض", "عقوبات", "شطب",
+       "loss", "losses", "falls", "drops", "plunges", "slumps", "decline", "lawsuit", "fine", "penalty",
+       "downgrade", "bankruptcy", "default", "probe", "investigation", "misses", "warning"]
+
+
+def keyword_assess(batch):
+    """{ticker: (sentiment, why, idx)} بالكلمات: مجموع (إيجابي - سلبي) على كل العناوين، والعنوان الأقوى هو المعروض."""
+    res = {}
+    for t, h in batch.items():
+        if not h:
+            continue
+        tot, best, best_abs = 0, 0, -1
+        for i, (title, _src, _age) in enumerate(h):
+            tl = title.lower()
+            sc = sum(1 for k in POS if k.lower() in tl) - sum(1 for k in NEG if k.lower() in tl)
+            tot += sc
+            if abs(sc) > best_abs:
+                best, best_abs = i, abs(sc)
+        sent = "إيجابي" if tot > 0 else ("سلبي" if tot < 0 else "محايد")
+        res[t] = (sent, "", best)
+    return res
+
+
 def news_for(tickers, now=None):
     """الدالة الرئيسية: بترجّع {ticker: {"n", "sent", "why", "head": (title, src, age)}} أو {} لو فشل كل حاجة."""
     now = now or datetime.now(timezone.utc)
@@ -285,18 +321,22 @@ def news_for(tickers, now=None):
     except Exception as e:  # noqa: BLE001
         print(f"[news] فشل الجلب: {e}")
         return {}
+    used_kw = False
     try:
         verdict = assess(batch, names)
+        if not verdict and any(batch.values()):
+            raise RuntimeError("Gemini رجّع رد فاضي")
     except Exception as e:  # noqa: BLE001
-        print(f"[news] تقييم Gemini فشل، هعرض العناوين من غير تقييم: {str(e)[:150]}")
+        print(f"[news] تقييم Gemini فشل، هستخدم الكلمات المفتاحية: {str(e)[:150]}")
         if STATUS["gemini"] != "no_key":
-            STATUS["gemini"] = "failed"
-        verdict = {}
+            STATUS["gemini"] = "no_credit" if re.search(r"RESOURCE_EXHAUSTED|402|429|quota|credits", str(e), re.I) else "failed"
+        verdict = keyword_assess(batch)
+        used_kw = True
     out = {}
     for t in tickers:
         h = batch.get(t, [])
         v = verdict.get(t)
-        info = {"n": len(h), "sent": v[0] if v else None, "why": v[1] if v else "",
+        info = {"n": len(h), "sent": v[0] if v else None, "why": v[1] if v else "", "kw": used_kw,
                 "head": h[v[2]] if (v and h) else (h[0] if h else None)}
         if info["sent"] == "مفيش":
             info["head"] = None
@@ -336,7 +376,7 @@ def news_lines(info, label):
     verdict = {"agree": "✅ الخبر بيأكد التحليل", "disagree": "⚠️ الخبر عكس التحليل",
                "neutral": "➖ الخبر محايد"}.get(ag, "")
     l1 = (f"   📰 {verdict + ' | ' if verdict else ''}{ICON[info['sent']]} {info['sent']}"
-          f"{' - ' + info['why'] if info['why'] else ''}")
+          f"{' - ' + info['why'] if info['why'] else ''}{' (بالكلمات)' if info.get('kw') else ''}")
     return [l1] + ([f"      {htxt}"] if htxt else [])
 
 
