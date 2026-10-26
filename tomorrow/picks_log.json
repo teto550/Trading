@@ -35,33 +35,33 @@
    "picks": [
     "CPCI",
     "AJWA",
-    "ICID",
+    "EFID",
     "SDTI",
-    "SNFC",
-    "ALCN",
     "EMFD",
     "EAST",
-    "ETRS",
-    "ADCI"
+    "ALCN",
+    "SNFC",
+    "ADCI",
+    "ETRS"
    ],
    "labels": {
     "CPCI": "بيع",
     "AJWA": "بيع",
-    "ICID": "بيع",
+    "EFID": "بيع",
     "SDTI": "بيع",
-    "SNFC": "بيع",
-    "ALCN": "بيع",
     "EMFD": "بيع",
     "EAST": "بيع",
-    "ETRS": "بيع",
-    "ADCI": "بيع"
+    "ALCN": "بيع",
+    "SNFC": "بيع",
+    "ADCI": "بيع",
+    "ETRS": "بيع"
    },
    "news": {
     "CPCI": "disagree",
     "AJWA": "neutral",
-    "ICID": "neutral"
+    "EFID": "neutral"
    },
-   "made": "2026-10-26 23:20"
+   "made": "2026-10-27 00:14"
   }
  ]
 }
