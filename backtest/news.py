@@ -212,7 +212,7 @@ def fetch_headlines(ticker, nm, now):
     """عناوين السهم: بحث عربي بالاسم العربي + بحث إنجليزي بالاسم الإنجليزي (مدموجين بدون تكرار)."""
     qs = []
     if nm.get("ar"):
-        qs.append((f"\"{nm['ar']}\" سهم OR البورصة when:{WINDOW_DAYS}d", "ar"))
+        qs.append((f"\"{nm['ar']}\" when:{WINDOW_DAYS}d", "ar"))
     if nm.get("en"):
         en = re.sub(r"\b(S\.?A\.?E\.?|Co\.?|Company|Ltd\.?|\(Egypt\)|Egypt)\b", "", nm["en"], flags=re.I).strip(" ,.-")
         qs.append((f"\"{en}\" Egypt when:{WINDOW_DAYS}d", "en"))
