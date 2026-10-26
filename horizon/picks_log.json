@@ -6,17 +6,29 @@
    "variant": "macro",
    "picks": [
     "MFPC",
-    "SNFC",
     "ABUK",
-    "BINV",
-    "CPCI",
     "CCAP",
-    "EAST",
-    "TMGH",
+    "CPCI",
+    "SNFC",
+    "SDTI",
     "FAIT",
-    "SDTI"
+    "EAST",
+    "AMOC",
+    "BINV"
    ],
-   "made": "2026-10-25 22:27"
+   "labels": {
+    "MFPC": "بيع",
+    "ABUK": "بيع",
+    "CCAP": "بيع",
+    "CPCI": "بيع",
+    "SNFC": "بيع",
+    "SDTI": "بيع",
+    "FAIT": "بيع",
+    "EAST": "بيع",
+    "AMOC": "بيع",
+    "BINV": "بيع"
+   },
+   "made": "2026-10-26 08:54"
   },
   {
    "date": "2026-10-25",
@@ -24,17 +36,29 @@
    "variant": "macro",
    "picks": [
     "ABUK",
-    "MFPC",
-    "CCAP",
     "BINV",
+    "CCAP",
+    "MFPC",
     "SNFC",
-    "EAST",
     "FAIT",
-    "HRHO",
     "CPCI",
-    "EGAL"
+    "EAST",
+    "HRHO",
+    "OIH"
    ],
-   "made": "2026-10-25 22:27"
+   "labels": {
+    "ABUK": "شراء",
+    "BINV": "شراء",
+    "CCAP": "شراء",
+    "MFPC": "شراء",
+    "SNFC": "شراء",
+    "FAIT": "شراء",
+    "CPCI": "شراء",
+    "EAST": "شراء",
+    "HRHO": "شراء",
+    "OIH": "شراء"
+   },
+   "made": "2026-10-26 08:54"
   }
  ]
 }
