@@ -196,6 +196,8 @@ def relevant(title, ticker, nm):
     """العنوان لازم يذكر الشركة فعلاً (كود/اسم عربي/أول كلمتين من الاسم الإنجليزي) وإلا بنتجاهله.
     الاسم القصير (كلمة واحدة) لازم معاه إشارة لمصر أو البورصة."""
     tl = title.lower()
+    if re.search(r"مباراة|مباراه|ودية|الدوري|كرة القدم|الكأس|football|soccer|\bmatch\b|\bleague\b", tl):
+        return False                                   # أخبار رياضة (أندية بتشارك اسم الشركة)
     if re.search(rf"\b{re.escape(ticker.lower())}\b", tl):
         return True
     if nm.get("ar") and nm["ar"] in title:
@@ -204,7 +206,7 @@ def relevant(title, ticker, nm):
     if len(w) >= 2:
         return " ".join(w[:2]).lower() in tl
     if len(w) == 1:
-        return w[0].lower() in tl and bool(re.search(r"egypt|egx|مصر|البورصة|cairo", tl))
+        return bool(re.search(rf"\b{re.escape(w[0].lower())}\s+(company|co\b)", tl))
     return False
 
 
