@@ -3,6 +3,10 @@
   "ar": "أبو قير للأسمدة",
   "en": "Abu Qir Fertilizers & Chemical Industries Company (S.A.E)"
  },
+ "ADCI": {
+  "ar": null,
+  "en": "The Arab Drug Company"
+ },
  "AJWA": {
   "ar": "أجواء للصناعات الغذائية",
   "en": "AJWA For Food Industries Co. Egypt"
@@ -22,6 +26,10 @@
  "EAST": {
   "ar": "إيسترن كومباني",
   "en": "Eastern Company S.A.E"
+ },
+ "EFID": {
+  "ar": null,
+  "en": "Edita Food Industries Company (S.A.E)"
  },
  "EMFD": {
   "ar": "إعمار مصر للتنمية",

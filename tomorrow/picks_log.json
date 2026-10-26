@@ -33,30 +33,31 @@
    "target": "2026-10-27",
    "data_date": "2026-10-26",
    "picks": [
-    "SDTI",
     "CPCI",
+    "EAST",
+    "AJWA",
+    "EFID",
+    "SDTI",
     "ALCN",
     "EMFD",
     "SNFC",
-    "EAST",
-    "ADCI",
     "ETRS",
-    "AJWA",
-    "EFID"
+    "ADCI"
    ],
    "labels": {
-    "SDTI": "بيع",
     "CPCI": "بيع",
+    "EAST": "بيع",
+    "AJWA": "بيع",
+    "EFID": "بيع",
+    "SDTI": "بيع",
     "ALCN": "بيع",
     "EMFD": "بيع",
     "SNFC": "بيع",
-    "EAST": "بيع",
-    "ADCI": "بيع",
     "ETRS": "بيع",
-    "AJWA": "بيع",
-    "EFID": "بيع"
+    "ADCI": "بيع"
    },
-   "made": "2026-10-26 16:11"
+   "news": {},
+   "made": "2026-10-26 23:15"
   }
  ]
 }
