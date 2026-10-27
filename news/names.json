@@ -1,7 +1,15 @@
 {
+ "AALR": {
+  "ar": null,
+  "en": "General Company For Land Reclamation, Development & Reconstruction"
+ },
  "ABUK": {
   "ar": "أبو قير للأسمدة",
   "en": "Abu Qir Fertilizers & Chemical Industries Company (S.A.E)"
+ },
+ "ACGC": {
+  "ar": null,
+  "en": "Arabia Cotton Ginning Company"
  },
  "ADCI": {
   "ar": null,
@@ -11,6 +19,22 @@
   "ar": null,
   "en": "Abu Dhabi Islamic Bank - Egypt - S.A.E"
  },
+ "ADPC": {
+  "ar": null,
+  "en": "The Arab Dairy Products Co."
+ },
+ "AFDI": {
+  "ar": null,
+  "en": "Al Ahly for Development & Investment"
+ },
+ "AFMC": {
+  "ar": null,
+  "en": "Alexandria Flour Mills"
+ },
+ "AIFI": {
+  "ar": null,
+  "en": "Atlas for Investment & Food Industries SAE"
+ },
  "AJWA": {
   "ar": "أجواء للصناعات الغذائية",
   "en": "AJWA For Food Industries Co. Egypt"
@@ -19,60 +43,636 @@
   "ar": "الإسكندرية لتداول الحاويات والبضائع",
   "en": "Alexandria Container&Cargo Handling Company"
  },
+ "ALUM": {
+  "ar": null,
+  "en": "Arab Aluminum Company (S.A.E)"
+ },
+ "AMER": {
+  "ar": null,
+  "en": "Amer Group Holding Company S.A.E."
+ },
+ "AMIA": {
+  "ar": null,
+  "en": "Arab Moltaqa Investments Company"
+ },
+ "AMOC": {
+  "ar": null,
+  "en": "Alexandria Mineral Oils Company"
+ },
+ "APSW": {
+  "ar": null,
+  "en": "Unirab Polvara Spinning & Weaving Co."
+ },
+ "ARAB": {
+  "ar": null,
+  "en": "Arab Developers Holding"
+ },
+ "ARCC": {
+  "ar": null,
+  "en": "Arabian Cement Company S.A.E."
+ },
+ "ASCM": {
+  "ar": null,
+  "en": "ASEC Company for Mining ASCOM, S.A.E"
+ },
+ "ASPI": {
+  "ar": null,
+  "en": "Aspire Capital Holding for Financial Investments"
+ },
+ "ATLC": {
+  "ar": null,
+  "en": "Al Tawfeek Leasing Company"
+ },
+ "ATQA": {
+  "ar": null,
+  "en": "Misr National Steel - Ataqa"
+ },
+ "AXPH": {
+  "ar": null,
+  "en": "Alexandria Co. For Pharmaceuticals & Chemical Industries"
+ },
+ "BIOC": {
+  "ar": null,
+  "en": "GlaxoSmithKline S.A.E"
+ },
+ "BTFH": {
+  "ar": null,
+  "en": "Beltone Holding S.A.E"
+ },
+ "CAED": {
+  "ar": null,
+  "en": "Cairo Educational Services SAE"
+ },
+ "CANA": {
+  "ar": null,
+  "en": "Suez Canal Bank (S.A.E)"
+ },
+ "CCAP": {
+  "ar": null,
+  "en": "QALA For Financial Investments"
+ },
+ "CCRS": {
+  "ar": null,
+  "en": "Gulf Canadian Company for Arab Real Estate Investment"
+ },
+ "CEFM": {
+  "ar": null,
+  "en": "Middle Egypt Flour Mills"
+ },
+ "CERA": {
+  "ar": null,
+  "en": "The Arab Ceramic Co."
+ },
+ "CFGH": {
+  "ar": null,
+  "en": "Concrete Fashion Group For Commercial and Industrial investments S.A.E"
+ },
  "CIEB": {
   "ar": "كريدي أجريكول مصر",
   "en": "Credit Agricole - Egypt Bank (S.A.E.)"
+ },
+ "CIRA": {
+  "ar": null,
+  "en": "Cairo For Investment And Real Estate Developments-CIRA Education"
+ },
+ "CLHO": {
+  "ar": null,
+  "en": "Cleopatra Hospitals Group S.A.E."
+ },
+ "CNFN": {
+  "ar": null,
+  "en": "Contact Financial Holding S.A.E."
+ },
+ "COMI": {
+  "ar": null,
+  "en": "Commercial International Bank Egypt (CIB) S.A.E."
+ },
+ "COPR": {
+  "ar": null,
+  "en": "Copper for Commercial Investment & Real Estate Development"
+ },
+ "COSG": {
+  "ar": null,
+  "en": "Cairo Oil & Soap Company"
  },
  "CPCI": {
   "ar": "القاهرة للأدوية",
   "en": "Kahira Pharmaceuticals & Chemical Industries Company"
  },
+ "CSAG": {
+  "ar": null,
+  "en": "Canal Shipping Agencies Company"
+ },
+ "DAPH": {
+  "ar": null,
+  "en": "Development & Engineering Consultants"
+ },
+ "DEIN": {
+  "ar": null,
+  "en": "Delta Insurance Company"
+ },
+ "DSCW": {
+  "ar": null,
+  "en": "Dice For Ready-Made Garments (SAE)"
+ },
+ "EALR": {
+  "ar": null,
+  "en": "Arab Company For Land Reclamation"
+ },
+ "EASB": {
+  "ar": null,
+  "en": "Egyptian Arabian Company (Themar) for securities Brokerage EAC"
+ },
  "EAST": {
   "ar": "إيسترن كومباني",
   "en": "Eastern Company S.A.E"
+ },
+ "EBSC": {
+  "ar": null,
+  "en": "Osool ESB Securities Brokerage"
+ },
+ "ECAP": {
+  "ar": null,
+  "en": "Al Ezz Ceramics & Porcelain Co."
+ },
+ "EDFM": {
+  "ar": null,
+  "en": "East Delta Flour Mills"
+ },
+ "EFIC": {
+  "ar": null,
+  "en": "Egyptian Financial and Industrial SAE"
  },
  "EFID": {
   "ar": null,
   "en": "Edita Food Industries Company (S.A.E)"
  },
+ "EFIH": {
+  "ar": null,
+  "en": "e-finance for Digital and Financial Investments S.A.E."
+ },
+ "EGAL": {
+  "ar": null,
+  "en": "Egypt Aluminum"
+ },
+ "EGAS": {
+  "ar": null,
+  "en": "Egypt Gas Company SAE"
+ },
+ "EGBE": {
+  "ar": null,
+  "en": "Egyptian Gulf Bank (S.A.E)"
+ },
+ "EGCH": {
+  "ar": null,
+  "en": "Egyptian Chemical Industries"
+ },
+ "EGSA": {
+  "ar": null,
+  "en": "The Egyptian Satellite Company Nilesat"
+ },
+ "EGTS": {
+  "ar": null,
+  "en": "Egyptian Resorts Company (S.A.E)"
+ },
+ "EHDR": {
+  "ar": null,
+  "en": "Egyptians for Housing & Development Co."
+ },
+ "ELEC": {
+  "ar": null,
+  "en": "Electro Cable Egypt"
+ },
+ "ELKA": {
+  "ar": null,
+  "en": "Cairo for Housing and Development Company (S.A.E)"
+ },
+ "ELNA": {
+  "ar": null,
+  "en": "El Nasr Manufacturing Agricultural Crops S.A.E"
+ },
+ "ELSH": {
+  "ar": null,
+  "en": "Al-Shams Company for Housing and Urban Development"
+ },
  "EMFD": {
   "ar": "إعمار مصر للتنمية",
   "en": "Emaar Misr for Development Company (S.A.E.)"
+ },
+ "ENGC": {
+  "ar": null,
+  "en": "Industrial Engineering Company for Construction and Development (ICON) (S.A.E.)"
+ },
+ "EPCO": {
+  "ar": null,
+  "en": "Egypt for Poultry"
+ },
+ "EPPK": {
+  "ar": null,
+  "en": "El Ahram Co. For Printing And Packaging SAE"
+ },
+ "ETEL": {
+  "ar": null,
+  "en": "Telecom Egypt Company"
  },
  "ETRS": {
   "ar": "إيجيترانس",
   "en": "Egyptian Transport & Commercial Services Co. -EGYTRANS NOSCO"
  },
+ "EXPA": {
+  "ar": null,
+  "en": "Export Development Bank of Egypt (S.A.E.)"
+ },
  "FAIT": {
   "ar": "بنك فيصل الإسلامي المصري",
   "en": "Faisal Islamic Bank of Egypt"
+ },
+ "FWRY": {
+  "ar": null,
+  "en": "Fawry for Banking Technology and Electronic Payments S.A.E."
+ },
+ "GBCO": {
+  "ar": null,
+  "en": "GB Corp"
+ },
+ "GDWA": {
+  "ar": null,
+  "en": "Gadwa for Industrial Development"
+ },
+ "GGCC": {
+  "ar": null,
+  "en": "Giza General - Contracting and Real Estate Investment S.A.E"
+ },
+ "GIHD": {
+  "ar": null,
+  "en": "Gharbia Islamic Housing Development Company"
+ },
+ "GMCI": {
+  "ar": null,
+  "en": "GMC Group For Industrial Commercial & Financial Investments"
+ },
+ "GSSC": {
+  "ar": null,
+  "en": "General Co. For Silos & Storage"
+ },
+ "HDBK": {
+  "ar": null,
+  "en": "Housing and Development Bank- Egypt (S.A.E)"
+ },
+ "HELI": {
+  "ar": null,
+  "en": "Heliopolis Co. for Housing & Development"
  },
  "HRHO": {
   "ar": "إي إف جي هيرميس",
   "en": "EFG Holding Company S.A.E"
  },
+ "ICFC": {
+  "ar": null,
+  "en": "International Company for Fertilizers and Chemicals S.A.E"
+ },
  "ICID": {
   "ar": "العالمية للاستثمار والتنمية",
   "en": "International Co. For Investment & Development"
+ },
+ "IDRE": {
+  "ar": null,
+  "en": "Ismailia Development and Real Estate Co"
+ },
+ "IFAP": {
+  "ar": null,
+  "en": "International Company for Agricultural Crops"
+ },
+ "INFI": {
+  "ar": null,
+  "en": "Ismailia National Co. for Food Industries"
+ },
+ "ISMA": {
+  "ar": null,
+  "en": "Ismailia / Misr Poultry Company S.A.E"
+ },
+ "ISMQ": {
+  "ar": null,
+  "en": "Iron & Steel for Mines & Quarries"
+ },
+ "ISPH": {
+  "ar": null,
+  "en": "Ibnsina Pharma"
+ },
+ "JUFO": {
+  "ar": null,
+  "en": "Juhayna Food Industries S.A.E."
+ },
+ "KABO": {
+  "ar": null,
+  "en": "El-Nasr Clothing & Textiles Co. (KABO)"
+ },
+ "KWIN": {
+  "ar": null,
+  "en": "El Kahera El Watania Investment"
  },
  "LCSW": {
   "ar": null,
   "en": "Lecico Egypt (S.A.E.)"
  },
+ "MASR": {
+  "ar": null,
+  "en": "Madinet Masr For Housing and Development"
+ },
+ "MBSC": {
+  "ar": null,
+  "en": "Misr Beni Suef Cement Co. S.A.E"
+ },
+ "MCQE": {
+  "ar": null,
+  "en": "Misr Cement (Qena) Company (S.A.E)"
+ },
+ "MCRO": {
+  "ar": null,
+  "en": "Macro Group Pharmaceuticals (Macro Capital) S.A.E"
+ },
+ "MENA": {
+  "ar": null,
+  "en": "Mena for Touristic & Real Estate Investment"
+ },
+ "MEPA": {
+  "ar": null,
+  "en": "Medical Packaging Company"
+ },
  "MFPC": {
   "ar": "مصر لإنتاج الأسمدة",
   "en": "Misr Fertilizer Production Company"
+ },
+ "MFSC": {
+  "ar": null,
+  "en": "Egypt Free Shops Co."
+ },
+ "MHOT": {
+  "ar": null,
+  "en": "Misr Hotels Company"
+ },
+ "MICH": {
+  "ar": null,
+  "en": "Misr Chemical Industries Co."
+ },
+ "MILS": {
+  "ar": null,
+  "en": "North Cairo Flour Mills"
+ },
+ "MIPH": {
+  "ar": null,
+  "en": "MINAPHARM Pharmaceuticals"
  },
  "MMAT": {
   "ar": null,
   "en": "Marsa Marsa Alam For Tourism Development SAE"
  },
+ "MOED": {
+  "ar": null,
+  "en": "The Egyptian Modern Education Systems, S.A.E."
+ },
+ "MOIL": {
+  "ar": null,
+  "en": "Maridive and Oil Services S.A.E."
+ },
+ "MOIN": {
+  "ar": null,
+  "en": "Mohandes Insurance Company"
+ },
+ "MOSC": {
+  "ar": null,
+  "en": "Misr Oils & Soap"
+ },
+ "MPCI": {
+  "ar": null,
+  "en": "Memphis Pharmaceuticals & Chemical Industries"
+ },
+ "MPCO": {
+  "ar": null,
+  "en": "Mansoura Poultry co.S.A.E"
+ },
+ "MPRC": {
+  "ar": null,
+  "en": "Egyptian Media Production City"
+ },
+ "MTIE": {
+  "ar": null,
+  "en": "MM Group for Industry and International Trade S.A.E."
+ },
+ "NAHO": {
+  "ar": null,
+  "en": "Naeem Holding Company For Investments (S.A.E - Free Zone)"
+ },
+ "NCCW": {
+  "ar": null,
+  "en": "Nasr Company for Civil Works"
+ },
+ "NEDA": {
+  "ar": null,
+  "en": "Northern Upper Egypt For Development & Agricultural Production Co."
+ },
+ "NHPS": {
+  "ar": null,
+  "en": "National Company for Housing Professional Syndicates SAE"
+ },
+ "NINH": {
+  "ar": null,
+  "en": "Nozha International Hospital"
+ },
+ "NIPH": {
+  "ar": null,
+  "en": "Nile Pharmaceuticals and Chemical Industries Company"
+ },
+ "OBRI": {
+  "ar": null,
+  "en": "El-Ebour Co. for Real Estate Investment S.A.E."
+ },
+ "OCDI": {
+  "ar": null,
+  "en": "Sixth of October for Development and Investment Company \"SODIC\" (S.A.E.)"
+ },
+ "OCPH": {
+  "ar": null,
+  "en": "October Pharma S.A.E"
+ },
+ "ODIN": {
+  "ar": null,
+  "en": "ODIN Investments (S.A.E)"
+ },
+ "OFH": {
+  "ar": null,
+  "en": "O B Financial Holding S.A.E"
+ },
+ "OIH": {
+  "ar": null,
+  "en": "Orascom Investment Holding S.A.E."
+ },
+ "ORAS": {
+  "ar": null,
+  "en": "Orascom Construction PLC"
+ },
+ "ORHD": {
+  "ar": null,
+  "en": "Orascom Development Egypt S.A.E."
+ },
+ "ORWE": {
+  "ar": null,
+  "en": "Oriental Weavers Carpets Company (S.A.E)"
+ },
+ "PHAR": {
+  "ar": null,
+  "en": "Egyptian International Pharmaceutical Industries Company"
+ },
+ "PHDC": {
+  "ar": null,
+  "en": "Palm Hills Developments S.A.E."
+ },
+ "PHTV": {
+  "ar": null,
+  "en": "Pyramisa Hotels & Resorts"
+ },
+ "POUL": {
+  "ar": null,
+  "en": "Cairo Poultry Company S.A.E."
+ },
+ "PRCL": {
+  "ar": null,
+  "en": "The General Company for Ceramic and Porcelain Products"
+ },
+ "PRDC": {
+  "ar": null,
+  "en": "Pioneers Properties For Urban Development - PRE Group"
+ },
+ "PRMH": {
+  "ar": null,
+  "en": "Prime Holding S.A.E"
+ },
+ "RAKT": {
+  "ar": null,
+  "en": "Rakta Paper Manufacturing Company"
+ },
+ "RAYA": {
+  "ar": null,
+  "en": "Raya Holding Company for Financial Investments (S.A.E)"
+ },
+ "RMDA": {
+  "ar": null,
+  "en": "Tenth of Ramadan for Pharmaceutical Industries and Diagnostic Reagents (Rameda) (S.A.E)"
+ },
+ "ROTO": {
+  "ar": null,
+  "en": "Rowad Tourism Company"
+ },
+ "RREI": {
+  "ar": null,
+  "en": "Arab Real Estate Investment Co."
+ },
+ "RTVC": {
+  "ar": null,
+  "en": "Remco Tourism Villages Construction"
+ },
+ "RUBX": {
+  "ar": null,
+  "en": "Rubex International for Plastic and Acrylic Manufacturing"
+ },
+ "SAIB": {
+  "ar": null,
+  "en": "Société Arabe Internationale de Banque S.A.E"
+ },
+ "SAUD": {
+  "ar": null,
+  "en": "alBaraka Bank Egypt S.A.E."
+ },
+ "SCEM": {
+  "ar": null,
+  "en": "Sinai Cement Co. (S.A.E)"
+ },
+ "SCFM": {
+  "ar": null,
+  "en": "South Cairo and Giza Flour Mills and Bakeries Company"
+ },
+ "SCTS": {
+  "ar": null,
+  "en": "Suez Canal Company for Technology Settling (S.A.E)"
+ },
  "SDTI": {
   "ar": "شارم دريمز",
   "en": "SHARM DREAMS Co. for Touristic Investment S.A.E"
  },
+ "SEIG": {
+  "ar": null,
+  "en": "Saudi Egyptian Investment & Finance Co. S.A.E"
+ },
+ "SIPC": {
+  "ar": null,
+  "en": "Sabaa International Company for Pharmaceutical and Chemical Industry"
+ },
+ "SKPC": {
+  "ar": null,
+  "en": "Sidi Kerir Petrochemicals Co."
+ },
+ "SMFR": {
+  "ar": null,
+  "en": "Samad Misr EGYFERT.S.A.E"
+ },
  "SNFC": {
   "ar": "الشرقية الوطنية للأمن الغذائي",
   "en": "Sharkia National Company for Food Security"
+ },
+ "SPIN": {
+  "ar": null,
+  "en": "Alexandria Spinning & Weaving Co."
+ },
+ "SUGR": {
+  "ar": null,
+  "en": "Delta Sugar Company"
+ },
+ "SVCE": {
+  "ar": null,
+  "en": "South Valley Cement Company"
+ },
+ "SWDY": {
+  "ar": null,
+  "en": "El Sewedy Electric Company"
+ },
+ "TMGH": {
+  "ar": null,
+  "en": "Talaat Moustafa Group Holding"
+ },
+ "TRTO": {
+  "ar": null,
+  "en": "Trans Oceans Tours"
+ },
+ "UEFM": {
+  "ar": null,
+  "en": "Upper Egypt Mills Company J.S.C"
+ },
+ "UEGC": {
+  "ar": null,
+  "en": "El-Saeed Company for Contracting and Real Estate Investment \"SCCD\" (S.A.E.)"
+ },
+ "UNIP": {
+  "ar": null,
+  "en": "Universal For Paper and Packaging Materials"
+ },
+ "UNIT": {
+  "ar": null,
+  "en": "United Co. for Housing & Development - S.A.E."
+ },
+ "WCDF": {
+  "ar": null,
+  "en": "Middle & West Delta Flour Mills"
+ },
+ "WKOL": {
+  "ar": null,
+  "en": "Wadi Kom Ombo For Land Reclamation Co."
+ },
+ "ZEOT": {
+  "ar": null,
+  "en": "Extracted Oil & Derivatives Co."
+ },
+ "ZMID": {
+  "ar": null,
+  "en": "Zahraa El Maadi Investment and Development Company SAE"
  }
 }
