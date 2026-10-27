@@ -1,9 +1,10 @@
 name: Telegram Commands
 on:
   schedule:
-    # بيشوف رسايل تليجرام كل 5 دقايق (8 الصبح لـ 12 بالليل بتوقيت القاهرة تقريبًا)
-    # GitHub ممكن يأخّره، فالرد مش لحظي بس غالبًا في دقايق
-    - cron: "*/5 5-20 * * *"
+    # الـjob بيفضل شغال حوالي 5.5 ساعة وبيسأل تليجرام كل ~15 ثانية (فالرد في ثواني)، وكل ساعة بيتجدول واحد
+    # جديد يستنى في الطابور (concurrency) لحد ما اللي شغال يخلص، فالتغطية متصلة تقريبًا.
+    # cron بتاع GitHub بيتأخر أحيانًا، فممكن يحصل فجوة قصيرة بين job وjob.
+    - cron: "13 * * * *"
   workflow_dispatch:
 concurrency:
   group: commands
@@ -11,6 +12,7 @@ concurrency:
 jobs:
   commands:
     runs-on: ubuntu-latest
+    timeout-minutes: 350
     permissions:
       contents: write
     steps:
@@ -26,8 +28,9 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python monitor_once.py --commands
+        run: python monitor_once.py --commands --poll 20000
       - name: Save last answered message
+        if: always()
         run: |
           git config user.name "alert-bot"
           git config user.email "bot@users.noreply.github.com"

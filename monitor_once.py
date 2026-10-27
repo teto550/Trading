@@ -599,6 +599,20 @@ def overview_text(state):
     return "📋 حالة كل الأسهم\n" + "\n".join(lines)
 
 
+def refresh_forecast_files():
+    """الـjob بيفضل شغال ساعات، والتقارير اليومية بتحدّث forecast/ و news/ في الـrepo: بنسحبهم قبل كل رد
+    (من غير ما نلمس باقي الملفات). لو مش في GitHub Actions أو فشل، بنكمّل بالنسخة اللي عندنا."""
+    if not os.environ.get("GITHUB_ACTIONS"):
+        return
+    import subprocess
+    try:
+        subprocess.run(["git", "fetch", "-q", "--depth=1", "origin", os.environ.get("GITHUB_REF_NAME", "main")],
+                       check=True, timeout=60)
+        subprocess.run(["git", "checkout", "-q", "FETCH_HEAD", "--", "forecast", "news"], check=True, timeout=60)
+    except Exception as e:
+        print("[توقعات] مقدرتش أحدّث ملفات التوقعات:", e)
+
+
 def handle_telegram_commands(state):
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
         return
@@ -653,6 +667,7 @@ def handle_telegram_commands(state):
             send_telegram(analyze_stock_text(ticker, state["stocks"][ticker]))
             if fl:
                 try:
+                    refresh_forecast_files()
                     base = ticker.replace(".CA", "")
                     news_info = None
                     try:
@@ -996,6 +1011,22 @@ def main():
 if __name__ == "__main__":
     import sys
     if "--commands" in sys.argv:
-        handle_telegram_commands(load_state())  # من غير save_state: state.json مبيتغيرش
+        # --poll N: يفضل شغال N ثانية ويسأل تليجرام كل ~15 ثانية، فالرد بيجي في ثواني بدل ما يستنى cron بتاع
+        # GitHub (اللي بيتأخر ساعات). من غير --poll: مرة واحدة زي الأول.
+        poll = 0
+        if "--poll" in sys.argv:
+            try:
+                poll = int(sys.argv[sys.argv.index("--poll") + 1])
+            except (ValueError, IndexError):
+                poll = 0
+        state = load_state()               # من غير save_state: state.json مبيتغيرش
+        handle_telegram_commands(state)
+        end = time.time() + poll
+        while time.time() < end:
+            time.sleep(15)
+            try:
+                handle_telegram_commands(state)
+            except Exception as e:
+                print("[تليجرام] خطأ في الدورة:", e)
     else:
         main()
