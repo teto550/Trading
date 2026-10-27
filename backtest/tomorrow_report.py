@@ -39,6 +39,7 @@ import direction as dr  # noqa: E402
 import news as nw  # noqa: E402
 
 OUT_DIR = os.path.join(ROOT, "tomorrow")
+FORECAST_DIR = os.path.join(ROOT, "forecast")   # توقع كل الأسهم (البوت بيقرا منه لما تكتب اسم سهم)
 PICKS_LOG = os.path.join(OUT_DIR, "picks_log.json")    # ترشيحات كل جلسة (بتتسجل وقت التقرير)
 SCORE_FILE = os.path.join(OUT_DIR, "scorecard.json")   # نتيجة كل جلسة اتقيّمت فعلاً
 SESSION_CLOSE = (14, 30)      # قفل EGX 2:30 م بتوقيت القاهرة
@@ -243,6 +244,21 @@ def build_report(C, H, L, V, O, a, now, note=None):
                      "label": dr.label(float(dirp[i])) if dirp is not None else None,
                      "r1": float(f["r1"].iloc[t, col]) * 100 if np.isfinite(f["r1"].iloc[t, col]) else float("nan")})
 
+    # توقع كل الأسهم الصالحة (للبوت: اكتب اسم سهم)
+    all_stocks = {}
+    for rank, i in enumerate(order, 1):
+        col = int(cols[i])
+        pr_ = price_range(C, col, t)
+        lv_ = levels(C, H, L, col, t)
+        all_stocks[names[col].replace(".CA", "")] = {
+            "rank": rank, "last": float(C.iloc[t, col]),
+            "label": dr.label(float(dirp[i])) if dirp is not None else None,
+            "lo": round(pr_["low"], 4) if pr_ else None, "hi": round(pr_["high"], 4) if pr_ else None,
+            "lv": ({k: (round(float(v), 4) if isinstance(v, (int, float, np.floating)) and v == v else None)
+                    for k, v in lv_.items() if k in ("rsi", "atr_pct", "support", "resist", "stop", "target", "rr")}
+                   if lv_ else None)}
+    forecast = {"data_date": str(data_date), "target": str(target), "n": n, "hold": hold, "stocks": all_stocks}
+
     # أخبار الأسهم العشرة (تأكيد/تحذير بس، مبتغيّرش الترتيب ولا التصنيف)
     news_map = {}
     if not getattr(a, "no_news", False) and rows:
@@ -313,7 +329,7 @@ def build_report(C, H, L, V, O, a, now, note=None):
            "• بعد تكلفة الشراء والبيع (15 bps في الاتجاه) النتيجة في الباكتست كانت سالبة من 2022 لليوم الواحد.",
            "• الوقف والهدف لإدارة الخسارة مش لضمان الوصول. أي سهم ممكن ينزل بكره.",
            "• مش توصية شراء ولا بيع. القرار والمسؤولية ليك."]
-    return "\n".join(L_), rows, data_date
+    return "\n".join(L_), rows, data_date, forecast
 
 
 
@@ -474,9 +490,10 @@ def main():
         C, H, L, V, O, note = extend_with_state(C, H, L, V, O, now)
         # 1) نتيجة ترشيحات الجلسات اللي خلصت (قبل ما نسجّل ترشيحات الجلسة الجاية)
         scored = score_pending(C)
-        text, rows, data_date = build_report(C, H, L, V, O, a, now, note)
+        text, rows, data_date, forecast = build_report(C, H, L, V, O, a, now, note)
         if not a.no_record:
             record_picks(rows, next_trading_day(now), data_date, now)
+            _save_json(os.path.join(FORECAST_DIR, "d1.json"), forecast)
         os.makedirs(OUT_DIR, exist_ok=True)
         with open(os.path.join(OUT_DIR, "report_latest.md"), "w", encoding="utf-8") as fh:
             fh.write(text)

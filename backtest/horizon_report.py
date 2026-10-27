@@ -43,6 +43,7 @@ import tomorrow_report as tr  # noqa: E402
 
 OUT_DIR = os.path.join(ROOT, "horizon")
 LOG_FILE = os.path.join(OUT_DIR, "picks_log.json")
+FORECAST_FILE = os.path.join(ROOT, "forecast", "d5_d10.json")   # توقع كل الأسهم (البوت بيقرا منه)
 SCORE_FILE = os.path.join(OUT_DIR, "scorecard.json")
 HORIZONS = (5, 10)
 TOP = 10
@@ -104,13 +105,16 @@ def top_picks(P, h, trees):
     except Exception as e:  # noqa: BLE001
         print(f"[direction] فشل تصنيف شراء/بيع لفترة {h}، هكمّل من غيره: {e}")
     out = []
-    for rank, i in enumerate(np.argsort(-score)[:TOP], 1):
+    allr = {}
+    for rank, i in enumerate(np.argsort(-score), 1):
         col = int(cols[i])
-        lv = tr.levels(C, P["H"], P["L"], col, t)
-        out.append({"rank": rank, "name": C.columns[col].replace(".CA", ""),
-                    "last": float(C.iloc[t, col]), "lv": lv,
-                    "label": dr.label(float(dirp[i])) if dirp is not None else None})
-    return out, hold
+        label = dr.label(float(dirp[i])) if dirp is not None else None
+        nm_ = C.columns[col].replace(".CA", "")
+        allr[nm_] = {"rank": rank, "label": label, "last": float(C.iloc[t, col])}
+        if rank <= TOP:
+            out.append({"rank": rank, "name": nm_, "last": float(C.iloc[t, col]),
+                        "lv": tr.levels(C, P["H"], P["L"], col, t), "label": label})
+    return out, hold, {"n": len(cols), "hold": hold, "stocks": allr}
 
 
 # ============================================================
@@ -286,10 +290,17 @@ def main():
             except Exception as e:  # noqa: BLE001
                 print(f"[macro] فشل الجلب، هكمّل من غيره: {e}")
             M, egx_src = macro.ensure_egx30(M, C, V)
+        if a.source == "yfinance" and not a.no_record:
+            try:
+                nw.ensure_en_names([c.replace(".CA", "") for c in C.columns])
+            except Exception as e:  # noqa: BLE001
+                print(f"[names] فشل: {str(e)[:100]}")
         P = prepare(C, H, L, V, O, a.min_turnover, M)
         variant = "macro" if any(n in macro.MACRO_MARKET or n == "beta60" for n in P["names"]) else "base"
         res = {h: top_picks(P, h, 150) for h in HORIZONS}
         picks_by_h = {h: r[0] for h, r in res.items()}
+        if not a.no_record:
+            _save(FORECAST_FILE, {"data_date": date, "h": {str(h): r[2] for h, r in res.items()}})
         holds = {h: r[1] for h, r in res.items() if any(p.get("label") for p in r[0])}
         news_map = {}
         if not a.no_news:

@@ -406,3 +406,28 @@ def priority(info, label):
 def reorder(items, news_map, name_of, label_of):
     """بيرتّب القايمة حسب priority وبيحافظ على ترتيب الموديل جوه كل مجموعة (sort ثابت)."""
     return sorted(items, key=lambda x: priority(news_map.get(name_of(x)), label_of(x)))
+
+
+def ensure_en_names(tickers, limit=150):
+    """بيكمّل الأسماء الإنجليزي (من Yahoo) لأسهم القايمة اللي لسه ملهاش اسم، عشان البحث بالاسم في البوت.
+    بيشتغل على دفعات (limit في كل تشغيل) ومبيعملش Mubasher ولا Gemini."""
+    names = _load_names()
+    need = [t for t in tickers if not names.get(t, {}).get("en")][:limit]
+    if not need:
+        return names
+    import yfinance as yf
+    got = 0
+    for t in need:
+        try:
+            info = yf.Ticker(t + ".CA").info or {}
+            en = info.get("longName") or info.get("shortName")
+            if en:
+                names.setdefault(t, {"ar": None})["en"] = en
+                got += 1
+        except Exception as e:  # noqa: BLE001
+            print(f"[names] {t}: {str(e)[:60]}")
+        time.sleep(0.25)
+    if got:
+        _save_names(names)
+    print(f"[names] اتضاف {got} اسم إنجليزي من {len(need)} محاولة")
+    return names

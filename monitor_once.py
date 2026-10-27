@@ -24,6 +24,7 @@ trend_following اللي اتأكدنا منه بالباكتست وخارج ا�
 """
 
 import os
+import sys
 import json
 import csv
 import time
@@ -635,11 +636,40 @@ def handle_telegram_commands(state):
             send_long(overview_text(state))
             continue
         ticker = next((bases[w] for w in words if w in bases), None)
+        suggestions = None
+        fl = None
+        try:                                    # توقعات الجلسة الجاية و5 و10 أيام (backtest/forecast_lookup.py)
+            sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "backtest"))
+            import forecast_lookup as fl
+        except Exception as e:
+            print("[توقعات] مش قادر أحمّل forecast_lookup:", e)
+        if not ticker and fl:
+            try:
+                base, suggestions = fl.find_ticker(text, list(bases))
+                ticker = bases.get(base) if base else None
+            except Exception as e:
+                print("[توقعات] فشل البحث بالاسم:", e)
         if ticker:
             send_telegram(analyze_stock_text(ticker, state["stocks"][ticker]))
+            if fl:
+                try:
+                    base = ticker.replace(".CA", "")
+                    news_info = None
+                    try:
+                        import news as nw
+                        news_info = nw.news_for([base]).get(base)
+                    except Exception as e:
+                        print("[أخبار] فشل:", e)
+                    send_long(fl.forecast_text(base, news_info))
+                except Exception as e:
+                    print("[توقعات] فشل:", e)
+                    send_telegram("التحليل الفني فوق تمام، بس التوقعات مش متاحة دلوقتي.")
+        elif suggestions:
+            send_telegram("تقصد أنهي سهم؟ " + "، ".join(suggestions) + "\nاكتب الكود بالظبط (زي ABUK).")
         else:
-            send_telegram("مش لاقي السهم ده في القايمة. اكتب كود السهم زي ABUK أو COMI، "
-                          "أو all عشان تشوف حالة كل الأسهم.\n\nالأكواد: " + ", ".join(bases))
+            send_telegram("مش لاقي السهم ده في القايمة. اكتب كود السهم زي ABUK أو COMI، أو اسمه "
+                          "(زي \"التجاري الدولي\" أو \"Eastern\")، أو all عشان تشوف حالة كل الأسهم.\n\n"
+                          "الأكواد: " + ", ".join(bases))
 
     if offset != start_offset:
         with open(TG_OFFSET_FILE, "w") as f:
