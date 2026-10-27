@@ -129,6 +129,82 @@
     "HRHO": "neutral"
    },
    "made": "2026-10-27 09:40"
+  },
+  {
+   "date": "2026-10-27",
+   "h": 5,
+   "variant": "macro",
+   "picks": [
+    "EAST",
+    "AJWA",
+    "CANA",
+    "LCSW",
+    "CIEB",
+    "ABUK",
+    "RTVC",
+    "EGAL",
+    "ICID",
+    "ADIB"
+   ],
+   "labels": {
+    "EAST": "شراء",
+    "AJWA": "شراء",
+    "CANA": "شراء",
+    "LCSW": "شراء",
+    "CIEB": "شراء",
+    "ABUK": "شراء",
+    "RTVC": "شراء",
+    "EGAL": "شراء",
+    "ICID": "شراء",
+    "ADIB": "شراء"
+   },
+   "news": {
+    "AJWA": "neutral",
+    "CANA": "neutral",
+    "LCSW": "neutral",
+    "CIEB": "neutral",
+    "ABUK": "neutral",
+    "ICID": "neutral",
+    "ADIB": "neutral"
+   },
+   "made": "2026-10-28 00:29"
+  },
+  {
+   "date": "2026-10-27",
+   "h": 10,
+   "variant": "macro",
+   "picks": [
+    "EAST",
+    "LCSW",
+    "EGAL",
+    "SAUD",
+    "RTVC",
+    "CANA",
+    "ADIB",
+    "CICH",
+    "CIEB",
+    "WCDF"
+   ],
+   "labels": {
+    "EAST": "شراء",
+    "LCSW": "شراء",
+    "EGAL": "شراء",
+    "SAUD": "شراء",
+    "RTVC": "شراء",
+    "CANA": "شراء",
+    "ADIB": "شراء",
+    "CICH": "شراء",
+    "CIEB": "شراء",
+    "WCDF": "شراء"
+   },
+   "news": {
+    "LCSW": "neutral",
+    "CANA": "neutral",
+    "ADIB": "neutral",
+    "CIEB": "neutral",
+    "WCDF": "neutral"
+   },
+   "made": "2026-10-28 00:29"
   }
  ]
 }
