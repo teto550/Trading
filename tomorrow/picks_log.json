@@ -35,10 +35,10 @@
    "picks": [
     "CPCI",
     "AJWA",
-    "EFID",
+    "ADIB",
     "SDTI",
-    "EMFD",
     "EAST",
+    "EMFD",
     "ALCN",
     "SNFC",
     "ADCI",
@@ -47,10 +47,10 @@
    "labels": {
     "CPCI": "بيع",
     "AJWA": "بيع",
-    "EFID": "بيع",
+    "ADIB": "بيع",
     "SDTI": "بيع",
-    "EMFD": "بيع",
     "EAST": "بيع",
+    "EMFD": "بيع",
     "ALCN": "بيع",
     "SNFC": "بيع",
     "ADCI": "بيع",
@@ -59,9 +59,9 @@
    "news": {
     "CPCI": "disagree",
     "AJWA": "neutral",
-    "EFID": "neutral"
+    "ADIB": "neutral"
    },
-   "made": "2026-10-27 00:14"
+   "made": "2026-10-27 09:35"
   }
  ]
 }
