@@ -67,37 +67,36 @@
    "target": "2026-10-28",
    "data_date": "2026-10-27",
    "picks": [
-    "ADIB",
     "AJWA",
+    "ADIB",
     "CIEB",
     "LCSW",
-    "EGAS",
     "RTVC",
-    "ACAMD",
+    "EGAL",
+    "EGAS",
     "CICH",
     "SAUD",
-    "EGAL"
+    "ACAMD"
    ],
    "labels": {
-    "ADIB": "بيع",
     "AJWA": "بيع",
+    "ADIB": "بيع",
     "CIEB": "بيع",
     "LCSW": "بيع",
-    "EGAS": "بيع",
     "RTVC": "بيع",
-    "ACAMD": "بيع",
+    "EGAL": "بيع",
+    "EGAS": "بيع",
     "CICH": "بيع",
     "SAUD": "بيع",
-    "EGAL": "بيع"
+    "ACAMD": "بيع"
    },
    "news": {
-    "ADIB": "neutral",
     "AJWA": "neutral",
+    "ADIB": "neutral",
     "CIEB": "neutral",
-    "LCSW": "neutral",
-    "EGAS": "neutral"
+    "LCSW": "neutral"
    },
-   "made": "2026-10-27 15:18"
+   "made": "2026-10-28 00:00"
   }
  ]
 }
