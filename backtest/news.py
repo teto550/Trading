@@ -408,7 +408,7 @@ def reorder(items, news_map, name_of, label_of):
     return sorted(items, key=lambda x: priority(news_map.get(name_of(x)), label_of(x)))
 
 
-def ensure_en_names(tickers, limit=150):
+def ensure_en_names(tickers, limit=300):
     """بيكمّل الأسماء الإنجليزي (من Yahoo) لأسهم القايمة اللي لسه ملهاش اسم، عشان البحث بالاسم في البوت.
     بيشتغل على دفعات (limit في كل تشغيل) ومبيعملش Mubasher ولا Gemini."""
     names = _load_names()
