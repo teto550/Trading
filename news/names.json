@@ -7,6 +7,10 @@
   "ar": "أبو قير للأسمدة",
   "en": "Abu Qir Fertilizers & Chemical Industries Company (S.A.E)"
  },
+ "ACAMD": {
+  "ar": null,
+  "en": "Arab Co.,for asset management and development"
+ },
  "ACGC": {
   "ar": null,
   "en": "Arabia Cotton Ginning Company"
@@ -59,6 +63,10 @@
   "ar": null,
   "en": "Alexandria Mineral Oils Company"
  },
+ "AMPI": {
+  "ar": null,
+  "en": "Al Moasher for Programming and Information Dissemination"
+ },
  "APSW": {
   "ar": null,
   "en": "Unirab Polvara Spinning & Weaving Co."
@@ -70,6 +78,10 @@
  "ARCC": {
   "ar": null,
   "en": "Arabian Cement Company S.A.E."
+ },
+ "AREH": {
+  "ar": null,
+  "en": "Real Estate Egyptian Consortium S.A.E"
  },
  "ASCM": {
   "ar": null,
@@ -90,6 +102,18 @@
  "AXPH": {
   "ar": null,
   "en": "Alexandria Co. For Pharmaceuticals & Chemical Industries"
+ },
+ "BIDI": {
+  "ar": null,
+  "en": "El Badr Investment and Development"
+ },
+ "BIGP": {
+  "ar": null,
+  "en": "El-Barbary Investment Group"
+ },
+ "BINV": {
+  "ar": null,
+  "en": "B Investments Holding S.A.E."
  },
  "BIOC": {
   "ar": null,
@@ -126,6 +150,10 @@
  "CFGH": {
   "ar": null,
   "en": "Concrete Fashion Group For Commercial and Industrial investments S.A.E"
+ },
+ "CICH": {
+  "ar": null,
+  "en": "CI Capital Holding For Financial Investments (S.A.E)"
  },
  "CIEB": {
   "ar": "كريدي أجريكول مصر",
@@ -171,9 +199,17 @@
   "ar": null,
   "en": "Delta Insurance Company"
  },
+ "DOMT": {
+  "ar": null,
+  "en": "Arabian Food Industries Company (DOMTY) - S.A.E"
+ },
  "DSCW": {
   "ar": null,
   "en": "Dice For Ready-Made Garments (SAE)"
+ },
+ "DTPP": {
+  "ar": null,
+  "en": "Delta Co. For Printing & Packaging S.A.E"
  },
  "EALR": {
   "ar": null,
@@ -255,6 +291,10 @@
   "ar": null,
   "en": "Al-Shams Company for Housing and Urban Development"
  },
+ "ELWA": {
+  "ar": null,
+  "en": "El Wadi for International and Investment Development SAE"
+ },
  "EMFD": {
   "ar": "إعمار مصر للتنمية",
   "en": "Emaar Misr for Development Company (S.A.E.)"
@@ -262,6 +302,10 @@
  "ENGC": {
   "ar": null,
   "en": "Industrial Engineering Company for Construction and Development (ICON) (S.A.E.)"
+ },
+ "EOSB": {
+  "ar": null,
+  "en": "El Orouba Securities Brokerage"
  },
  "EPCO": {
   "ar": null,
@@ -287,6 +331,22 @@
   "ar": "بنك فيصل الإسلامي المصري",
   "en": "Faisal Islamic Bank of Egypt"
  },
+ "FERC": {
+  "ar": null,
+  "en": "Ferchem Misr for fertilizers and chemicals S.A.E"
+ },
+ "FIRE": {
+  "ar": null,
+  "en": "First Investment Co And Real Estate Development"
+ },
+ "FNAR": {
+  "ar": null,
+  "en": "Al Fanar Construction Trade Import And Export Co"
+ },
+ "FTNS": {
+  "ar": null,
+  "en": "Fitness Prime"
+ },
  "FWRY": {
   "ar": null,
   "en": "Fawry for Banking Technology and Electronic Payments S.A.E."
@@ -311,9 +371,17 @@
   "ar": null,
   "en": "GMC Group For Industrial Commercial & Financial Investments"
  },
+ "GRCA": {
+  "ar": null,
+  "en": "Grand Capital for Financial Investments"
+ },
  "GSSC": {
   "ar": null,
   "en": "General Co. For Silos & Storage"
+ },
+ "GTWL": {
+  "ar": null,
+  "en": "Golden Textiles & Clothes Wool"
  },
  "HDBK": {
   "ar": null,
@@ -326,6 +394,10 @@
  "HRHO": {
   "ar": "إي إف جي هيرميس",
   "en": "EFG Holding Company S.A.E"
+ },
+ "IBCT": {
+  "ar": null,
+  "en": "International Business Corporation For Trading and Agencies"
  },
  "ICFC": {
   "ar": null,
@@ -342,6 +414,10 @@
  "IFAP": {
   "ar": null,
   "en": "International Company for Agricultural Crops"
+ },
+ "INEG": {
+  "ar": null,
+  "en": "Integrated Engineering Group Co"
  },
  "INFI": {
   "ar": null,
@@ -375,9 +451,21 @@
   "ar": null,
   "en": "Lecico Egypt (S.A.E.)"
  },
+ "LUTS": {
+  "ar": null,
+  "en": "Lotus For Agricultural Investments And Development"
+ },
+ "MAAL": {
+  "ar": null,
+  "en": "Marseille Almasreia Alkhalegeya For Holding Investment SAE"
+ },
  "MASR": {
   "ar": null,
   "en": "Madinet Masr For Housing and Development"
+ },
+ "MBEG": {
+  "ar": null,
+  "en": "M.B Engineering"
  },
  "MBSC": {
   "ar": null,
@@ -422,6 +510,14 @@
  "MIPH": {
   "ar": null,
   "en": "MINAPHARM Pharmaceuticals"
+ },
+ "MISR": {
+  "ar": null,
+  "en": "Egypt Intercontinental for Marble and Granite sae (Egy Stone)"
+ },
+ "MKIT": {
+  "ar": null,
+  "en": "Misr Kuwait Investment and Trading Co (MEATELLO)"
  },
  "MMAT": {
   "ar": null,
@@ -507,6 +603,10 @@
   "ar": null,
   "en": "Orascom Investment Holding S.A.E."
  },
+ "OLFI": {
+  "ar": null,
+  "en": "Obour Land for Food Industries S.A.E."
+ },
  "ORAS": {
   "ar": null,
   "en": "Orascom Construction PLC"
@@ -547,6 +647,10 @@
   "ar": null,
   "en": "Prime Holding S.A.E"
  },
+ "RACC": {
+  "ar": null,
+  "en": "Raya Customer Experience"
+ },
  "RAKT": {
   "ar": null,
   "en": "Rakta Paper Manufacturing Company"
@@ -554,6 +658,10 @@
  "RAYA": {
   "ar": null,
   "en": "Raya Holding Company for Financial Investments (S.A.E)"
+ },
+ "RKAZ": {
+  "ar": null,
+  "en": "REKAZ Financial Holding"
  },
  "RMDA": {
   "ar": null,
@@ -623,6 +731,10 @@
   "ar": null,
   "en": "Alexandria Spinning & Weaving Co."
  },
+ "SPMD": {
+  "ar": null,
+  "en": "Speed Medical Co"
+ },
  "SUGR": {
   "ar": null,
   "en": "Delta Sugar Company"
@@ -634,6 +746,10 @@
  "SWDY": {
   "ar": null,
   "en": "El Sewedy Electric Company"
+ },
+ "TALM": {
+  "ar": null,
+  "en": "Taaleem Management Services Company S.A.E."
  },
  "TMGH": {
   "ar": null,
