@@ -91,7 +91,7 @@ def top_picks(P, h, trees):
     model = xgb.XGBRegressor(
         n_estimators=150, max_depth=3, learning_rate=0.05, subsample=0.7, colsample_bytree=0.7,
         min_child_weight=50, reg_lambda=10.0, tree_method="hist", n_jobs=2, random_state=0)
-    model.fit(P["Xcs"][E], Y[E].astype(np.float32))
+    model.fit(P["Xcs"][E], Y[E].astype(np.float32), sample_weight=dr.recency_w(E))
     t = C.shape[0] - 1
     cols = np.where(P["feat_ok"][t])[0]
     if len(cols) < 40:
@@ -161,7 +161,7 @@ def score_pending(C):
                  for n in e["picks"] if (n + ".CA") in ret.index]
         if len(picks) < max(3, len(e["picks"]) // 2) or len(ret) < 30:
             continue
-        lp = [x for x in picks if x["lab"]]
+        lp = [x for x in picks if x["lab"] in (dr.BUY, dr.SELL)]
         rec = {"date": e["date"], "h": e["h"], "variant": e.get("variant", "base"),
                "dir_n": len(lp),
                "dir_ok": sum(1 for x in lp if x["r"] != 0 and (x["r"] > 0) == (x["lab"] == dr.BUY)),
@@ -209,8 +209,10 @@ def result_message(rec):
 # ============================================================
 # رسالة التوقع الجديد
 # ============================================================
-def picks_message(date, picks_by_h, ms, inputs="", holds=None, news_map=None):
+def picks_message(date, picks_by_h, ms, inputs="", holds=None, news_map=None, warn=None):
     L_ = [f"🔭 توقع 5 و10 أيام - مبني على قفلة {date}"]
+    if warn:
+        L_.append(warn)
     if inputs:
         L_.append("المدخلات: " + inputs)
     if ms:
@@ -224,7 +226,7 @@ def picks_message(date, picks_by_h, ms, inputs="", holds=None, news_map=None):
             picks = nw.reorder(picks, news_map, lambda p: p["name"], lambda p: p.get("label"))
         for pos, p in enumerate(picks, 1):
             lv = p["lv"]
-            lab = f" | {'🟢' if p['label'] == dr.BUY else '🔴'} {p['label']}" if p.get("label") else ""
+            lab = f" | {dr.ICON[p['label']]} {p['label']}" if p.get("label") else ""
             mr = f" [ترتيب الموديل {p['rank']}]" if news_map else ""
             line = f"{pos if news_map else p['rank']}. {p['name']} | قفلة {tr.fmt_px(p['last'])}{lab}{mr}"
             if lv:
@@ -239,7 +241,7 @@ def picks_message(date, picks_by_h, ms, inputs="", holds=None, news_map=None):
         L_ += ["", "📰 جوه كل قايمة: اللي الخبر بيأكد تحليله الأول، وبعده اللي الخبر عكسه، وبعده الباقي."]
         L_ += ["📰 الأخبار تأكيد أو تحذير بس: مبتغيّرش الترتيب ولا شراء/بيع، ومفيش باكتست ليها لسه."]
     if holds:
-        L_ += ["", f"🟢 شراء = الموديل شايف السهم هيكسب في الفترة دي | 🔴 بيع = شايفه هيخسر."]
+        L_ += ["", f"🟢 شراء = الموديل شايف السهم هيكسب في الفترة دي | 🔴 بيع = شايفه هيخسر | ⚪ انتظر = الموديل مش واثق (التشخيص أثبت إن الوسط ≈ تخمين)."]
         for h, ho in holds.items():
             L_.append(f"⚠️ {h} أيام: " + dr.holdout_line(ho))
     L_ += ["",
@@ -309,6 +311,7 @@ def main():
             for p in ps:
                 info = news_map.get(p["name"])
                 p["news_ag"] = nw.agreement(p.get("label"), info["sent"]) if info else None
+        mw = dr.market_warning(C)
         ms = tr.market_status(C, C.shape[0] - 1)
         scored = []
         if not a.no_record:
@@ -317,10 +320,10 @@ def main():
         if variant == "macro":
             usd = "والدولار" if (M is not None and "usd" in M.columns) else "(الدولار مجاش النهاردة)"
             egx = "EGX30" if egx_src == "yahoo" else "مؤشر تقريبي لـEGX30 (أكبر 30 سهم سيولة، لأن Yahoo رفض المؤشر الرسمي)"
-            inputs = f"الأسعار والسيولة + {egx} {usd} (جديدة، لسه ما اتقاسش أثرها في الباكتست)"
+            inputs = f"الأسعار والسيولة + {egx} {usd} (اتقاس أثرها في الباكتست: فايدة بسيطة على 10 و20 يوم)"
         else:
             inputs = "الأسعار والسيولة بس"
-        text = picks_message(date, picks_by_h, ms, inputs, holds, news_map)
+        text = picks_message(date, picks_by_h, ms, inputs, holds, news_map, mw)
         os.makedirs(OUT_DIR, exist_ok=True)
         if not a.no_record:
             with open(os.path.join(OUT_DIR, "report_latest.md"), "w", encoding="utf-8") as fh:

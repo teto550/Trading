@@ -96,7 +96,7 @@ def _px(x):
 
 
 def _lab(l):
-    return {"شراء": "🟢 شراء", "بيع": "🔴 بيع"}.get(l, "❔")
+    return {"شراء": "🟢 شراء", "بيع": "🔴 بيع", "انتظر": "⚪ انتظر"}.get(l, "❔")
 
 
 def forecast_text(base, news_info=None, now=None):

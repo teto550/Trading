@@ -14,7 +14,33 @@ holdout(): بيدرّب نفس الموديل على الماضي بس، وبي�
 
 import numpy as np
 
-BUY, SELL = "شراء", "بيع"
+BUY, SELL, WAIT = "شراء", "بيع", "انتظر"
+ICON = {BUY: "🟢", SELL: "🔴", WAIT: "⚪"}
+HALF_LIFE = 365              # وزن الأحدث: صف أقدم بسنة = نص الوزن (التشخيص: صافي 10 أيام +4 → +14 bps)
+BUY_P, SELL_P = 0.55, 0.45   # بين الاتنين = انتظر (التشخيص: الثقة فعلاً بتفرّق، والوسط ≈ تخمين)
+
+
+def recency_w(E, hl=HALF_LIFE):
+    """أوزان التدريب لصفوف E (T,N): الأحدث أتقل."""
+    T, N = E.shape
+    w = 0.5 ** ((T - 1 - np.arange(T)) / float(hl))
+    return np.repeat(w[:, None], N, axis=1)[E].astype(np.float32)
+
+
+def market_warning(C, big=0.03):
+    """تحذير لو آخر جلسة السوق اتحرك حركة كبيرة (تشخيص 6500 يوم: بعد +3% بيكمل طالع 76%، بعد -3% مفيش ارتداد مضمون)."""
+    r = (C.iloc[-1] / C.iloc[-2] - 1).replace([np.inf, -np.inf], np.nan).dropna()
+    r = r[r.abs() <= 0.25]
+    if len(r) < 30:
+        return None
+    m = float(r.mean())
+    if m >= big:
+        return (f"⚠️ السوق طلع {m * 100:+.1f}% في جلسة واحدة (حركة كبيرة). تاريخيًا بعد يوم زي ده السوق كمّل طالع "
+                f"في ~76% من المرات، بس الموديل بيتأخر في الأيام دي، فالتصنيف أقل اعتمادية من العادي.")
+    if m <= -big:
+        return (f"⚠️ السوق نزل {m * 100:+.1f}% في جلسة واحدة (حركة كبيرة). مفيش ارتداد مضمون بعد يوم زي ده "
+                f"(طلع اليوم اللي بعده في 44% من المرات بس)، والموديل بيغلط أكتر في الأيام دي، فالتصنيف أقل اعتمادية من العادي.")
+    return None
 
 
 def _model(trees):
@@ -31,12 +57,12 @@ def fit_predict(Xcs, ret, E, t, cols, trees=150):
     if len(y) < 5000 or y.min() == y.max():
         return None
     m = _model(trees)
-    m.fit(Xcs[E], y)
+    m.fit(Xcs[E], y, sample_weight=recency_w(E))
     return m.predict_proba(Xcs[t, cols])[:, 1]
 
 
 def label(p):
-    return BUY if p >= 0.5 else SELL
+    return BUY if p >= BUY_P else (SELL if p <= SELL_P else WAIT)
 
 
 def holdout(Xcs, ret, E, h, trees=150, test_days=250):
@@ -56,7 +82,7 @@ def holdout(Xcs, ret, E, h, trees=150, test_days=250):
     if int(Ete.sum()) < 500:
         return None
     m = _model(trees)
-    m.fit(Xcs[Etr], ytr)
+    m.fit(Xcs[Etr], ytr, sample_weight=recency_w(Etr))
     p = m.predict_proba(Xcs[Ete])[:, 1]
     y = (ret[Ete] > 0).astype(int)
     pred = (p >= 0.5).astype(int)

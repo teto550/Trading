@@ -349,7 +349,7 @@ def news_for(tickers, now=None):
 # ============================================================
 def agreement(label, sent):
     """'agree' لو الأخبار في نفس اتجاه التصنيف، 'disagree' لو عكسه، 'neutral' غير كده، None لو مفيش تقييم."""
-    if not label or sent is None:
+    if not label or label not in (BUY, SELL) or sent is None:
         return None
     if sent in ("محايد", "مفيش"):
         return "neutral"
@@ -386,7 +386,7 @@ def agreement_summary(days):
     for d in days:
         for x in d.get("picks", []):
             nw, lab = x.get("nw"), x.get("lab")
-            if nw in st and lab and x["r"] != 0:
+            if nw in st and lab in (BUY, SELL) and x["r"] != 0:
                 st[nw][1] += 1
                 st[nw][0] += int((x["r"] > 0) == (lab == BUY))
     if not any(v[1] for v in st.values()):

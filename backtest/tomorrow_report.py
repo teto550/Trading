@@ -137,7 +137,7 @@ def train_and_score(C, H, L, V, O, min_turnover, trees):
     model = xgb.XGBRegressor(
         n_estimators=trees, max_depth=3, learning_rate=0.05, subsample=0.7, colsample_bytree=0.7,
         min_child_weight=50, reg_lambda=10.0, tree_method="hist", n_jobs=2, random_state=0)
-    model.fit(Xcs[E], Y[E].astype(np.float32))
+    model.fit(Xcs[E], Y[E].astype(np.float32), sample_weight=dr.recency_w(E))
 
     t = T - 1
     # الأسهم اللي مناسبة للتقرير: features كاملة + سيولة + مش قافلة على الحد النهاردة
@@ -279,6 +279,9 @@ def build_report(C, H, L, V, O, a, now, note=None):
     if stale_days >= 2 and now.weekday() in TRADING_DAYS and now.hour >= 15:
         L_ += [f"⚠️ آخر بيانات عند Yahoo هي {data_date} (متأخرة {stale_days} يوم عن النهاردة). "
                f"الترتيب ده مبني على بيانات قديمة شوية.", ""]
+    mw = dr.market_warning(C)
+    if mw:
+        L_ += [mw, ""]
     ms = market_status(C, t)
     if ms:
         L_ += [f"{ms['tag']}: النهاردة {ms['mean1']:+.1f}% | {ms['breadth']:.0f}% من الأسهم طلعت | "
@@ -294,7 +297,7 @@ def build_report(C, H, L, V, O, a, now, note=None):
     L_.append("")
     for pos, r in enumerate(rows, 1):
         p, lv = r["pr"], r["lv"]
-        lab = f" | {'🟢' if r['label'] == dr.BUY else '🔴'} {r['label']}" if r.get("label") else ""
+        lab = f" | {dr.ICON[r['label']]} {r['label']}" if r.get("label") else ""
         mr = f" [ترتيب الموديل {r['rank']}]" if news_map else ""
         L_.append(f"{pos if news_map else r['rank']}. {r['name']} | آخر قفلة {fmt_px(p['last'])}{lab}{mr}")
         if lv:
@@ -317,7 +320,7 @@ def build_report(C, H, L, V, O, a, now, note=None):
         L_ += ["📰 الأخبار تأكيد أو تحذير بس: مبتغيّرش الترتيب ولا شراء/بيع، ومفيش باكتست ليها لسه. "
                "أنا بقيس بعد كام جلسة لو التصنيف بيبقى أصح لما الأخبار بتأيده.", ""]
     if dirp is not None:
-        L_ += ["🟢 شراء = الموديل شايف السهم هيقفل بكره فوق افتتاحه | 🔴 بيع = شايفه هيقفل تحته.",
+        L_ += ["🟢 شراء = الموديل شايف السهم هيقفل بكره فوق افتتاحه | 🔴 بيع = شايفه هيقفل تحته | ⚪ انتظر = مش واثق.",
                "⚠️ " + dr.holdout_line(hold), ""]
     L_ += ["إزاي تقرأ المستويات:",
            "• وقف الخسارة = 1.5 × التذبذب اليومي تحت القفلة. الهدف = 3 × التذبذب فوقها (أو المقاومة لو أقرب).",
@@ -396,7 +399,7 @@ def score_pending(C):
                  for n in e["picks"] if (n + ".CA") in ret.index]
         if len(picks) < max(3, len(e["picks"]) // 2) or len(ret) < 30:
             continue
-        lp = [x for x in picks if x["lab"]]
+        lp = [x for x in picks if x["lab"] in (dr.BUY, dr.SELL)]
         rec = {"target": tgt, "data_date": e["data_date"], "n": len(picks),
                "dir_n": len(lp),
                "dir_ok": sum(1 for x in lp if (x["r"] > 0) == (x["lab"] == dr.BUY) and x["r"] != 0),
@@ -414,7 +417,7 @@ def score_pending(C):
 
 def pick_line(x):
     """سطر سهم في رسالة النتيجة: لو كان ليه تصنيف شراء/بيع بنقول صح ولا غلط، وإلا طلع/نزل بس."""
-    if x.get("lab"):
+    if x.get("lab") in (dr.BUY, dr.SELL):
         ok = x["r"] != 0 and (x["r"] > 0) == (x["lab"] == dr.BUY)
         return f"{'✅' if ok else '❌'} {x['n']} {x['r']:+.1f}% | قلنا {x['lab']}"
     mark = "✅" if x["r"] > 0 else ("❌" if x["r"] < 0 else "➖")
