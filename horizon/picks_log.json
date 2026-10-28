@@ -217,29 +217,28 @@
     "CANA",
     "SDTI",
     "LCSW",
-    "MFPC",
-    "SWDY",
     "AMOC",
-    "SUGR"
+    "EAST",
+    "MFPC",
+    "CIEB"
    ],
    "labels": {
-    "CPCI": "شراء",
-    "ABUK": "شراء",
+    "CPCI": "انتظر",
+    "ABUK": "انتظر",
     "FAIT": "شراء",
-    "CANA": "شراء",
-    "SDTI": "شراء",
-    "LCSW": "شراء",
-    "MFPC": "انتظر",
-    "SWDY": "شراء",
+    "CANA": "انتظر",
+    "SDTI": "انتظر",
+    "LCSW": "انتظر",
     "AMOC": "انتظر",
-    "SUGR": "شراء"
+    "EAST": "انتظر",
+    "MFPC": "انتظر",
+    "CIEB": "شراء"
    },
    "news": {
-    "CPCI": "agree",
-    "ABUK": "neutral",
-    "FAIT": "agree"
+    "FAIT": "agree",
+    "CIEB": "disagree"
    },
-   "made": "2026-10-28 23:28"
+   "made": "2026-10-29 00:54"
   },
   {
    "date": "2026-10-28",
@@ -248,35 +247,35 @@
    "picks": [
     "CPCI",
     "CANA",
-    "ABUK",
     "FAIT",
+    "ABUK",
+    "SDTI",
     "LCSW",
     "SWDY",
     "EAST",
-    "SDTI",
-    "CIEB",
-    "MFPC"
+    "AMOC",
+    "CIEB"
    ],
    "labels": {
     "CPCI": "شراء",
     "CANA": "شراء",
-    "ABUK": "شراء",
     "FAIT": "شراء",
+    "ABUK": "شراء",
+    "SDTI": "شراء",
     "LCSW": "شراء",
     "SWDY": "شراء",
     "EAST": "شراء",
-    "SDTI": "شراء",
-    "CIEB": "شراء",
-    "MFPC": "شراء"
+    "AMOC": "شراء",
+    "CIEB": "شراء"
    },
    "news": {
     "CPCI": "agree",
-    "ABUK": "neutral",
     "FAIT": "agree",
+    "ABUK": "neutral",
     "EAST": "neutral",
     "CIEB": "disagree"
    },
-   "made": "2026-10-28 23:28"
+   "made": "2026-10-29 00:54"
   }
  ]
 }
