@@ -1,11 +1,11 @@
-# EGX Paper Trade - آخر تحديث 2026-10-27 21:25
+# EGX Paper Trade - آخر تحديث 2026-10-28 21:45
 
 - احتفاظ 20 يوم تداول، شراء عند افتتاح اليوم التالي للإشارة، تكلفة 15 bps في الاتجاه
-- دفعات متسجلة: 13 | ناضجة (عدّى عليها 20 يوم): 0
+- دفعات متسجلة: 14 | ناضجة (عدّى عليها 20 يوم): 0
 - توقع الباكتست: حوالي +0.28% للصفقة بعد التكلفة (ميزة صغيرة وغير ثابتة)
 
 
-## اختيارات آخر دفعة (2026-10-26)
-XGBoost (29): FAIT, SNFC, CIEB, ICID, SAUD, SKPC, EGAL, CCAP, ADIB, HRHO, JUFO, FWRY, ADCI, ETRS, RTVC, ORWE, WCDF, BINV, ABUK, CICH, ACGC, AXPH, TMGH, IFAP, SPIN, ISPH, ALCN, EMFD, MENA
+## اختيارات آخر دفعة (2026-10-27)
+XGBoost (23): ICID, FAIT, CIEB, SNFC, CCAP, EGAL, FWRY, SAUD, CICH, SKPC, WCDF, ADIB, RTVC, BINV, EAST, ABUK, ALCN, ACGC, HRHO, CANA, TMGH, JUFO, IFAP
 
-Low-vol (29): SNFC, COMI, OLFI, CPCI, SDTI, CLHO, FWRY, CIEB, ECAP, BINV, ORWE, SKPC, SAUD, RTVC, PHDC, EAST, ADCI, ADIB, FAIT, CCAP, TMGH, CICH, IFAP, EGAL, RMDA, ACGC, ALCN, HRHO, AMOC
+Low-vol (23): SNFC, COMI, OLFI, SDTI, CPCI, FWRY, BINV, ORWE, FAIT, CLHO, PHDC, SKPC, ECAP, TMGH, CIEB, CCAP, CICH, IFAP, SAUD, ADIB, RTVC, HRHO, ALCN
