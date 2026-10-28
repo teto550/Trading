@@ -104,29 +104,29 @@
    "picks": [
     "EAST",
     "ABUK",
-    "CPCI",
     "CANA",
-    "MFPC",
-    "LCSW",
-    "COMI",
+    "ORWE",
+    "SCTS",
     "AMOC",
+    "FWRY",
+    "MFPC",
     "PHDC",
-    "ORWE"
+    "SKPC"
    ],
    "labels": {
     "EAST": "انتظر",
     "ABUK": "انتظر",
-    "CPCI": "انتظر",
     "CANA": "انتظر",
-    "MFPC": "انتظر",
-    "LCSW": "انتظر",
-    "COMI": "انتظر",
+    "ORWE": "انتظر",
+    "SCTS": "انتظر",
     "AMOC": "انتظر",
+    "FWRY": "انتظر",
+    "MFPC": "انتظر",
     "PHDC": "انتظر",
-    "ORWE": "انتظر"
+    "SKPC": "انتظر"
    },
    "news": {},
-   "made": "2026-10-28 23:28"
+   "made": "2026-10-29 00:22"
   }
  ]
 }
