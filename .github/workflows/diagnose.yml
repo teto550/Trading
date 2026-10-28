@@ -1,0 +1,45 @@
+name: EGX Model Diagnose
+on:
+  workflow_dispatch:
+    inputs:
+      horizon:
+        description: "فترة الاحتفاظ بالأيام"
+        required: false
+        default: "10"
+concurrency:
+  group: diagnose
+  cancel-in-progress: false
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install -r backtest/requirements.txt
+      - name: Run diagnose
+        run: |
+          mkdir -p backtest/results
+          set -o pipefail
+          python -u backtest/diagnose.py --source yfinance --horizon "${{ github.event.inputs.horizon || '10' }}" \
+            2>&1 | tee backtest/results/log_diagnose_latest.txt
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diagnose-report
+          path: backtest/results/
+      - name: Commit results
+        if: always()
+        run: |
+          git config user.name "alert-bot"
+          git config user.email "alert-bot@users.noreply.github.com"
+          git add backtest/results/ || true
+          git commit -m "diagnose report" || echo "nothing"
+          git pull --rebase -X theirs origin main || true
+          git push || true
