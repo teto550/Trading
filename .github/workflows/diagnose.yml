@@ -41,5 +41,8 @@ jobs:
           git config user.email "alert-bot@users.noreply.github.com"
           git add backtest/results/ || true
           git commit -m "diagnose report" || echo "nothing"
-          git pull --rebase -X theirs origin main || true
-          git push || true
+          for i in 1 2 3 4 5 6; do
+            git pull --rebase -X theirs origin main || true
+            git push && break
+            echo "push race, retry $i"; sleep $((RANDOM % 8 + 3))
+          done

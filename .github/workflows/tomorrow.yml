@@ -41,5 +41,8 @@ jobs:
           [ -d news ] && git add -A news || true
           [ -d forecast ] && git add -A forecast || true
           git diff --cached --quiet || git commit -m "tomorrow report [skip ci]"
-          git pull --rebase -X theirs origin "${GITHUB_REF_NAME:-main}" || true
-          git push
+          for i in 1 2 3 4 5 6; do
+            git pull --rebase -X theirs origin "${GITHUB_REF_NAME:-main}" || true
+            git push && break
+            echo "push race, retry $i"; sleep $((RANDOM % 8 + 3))
+          done
