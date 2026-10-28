@@ -103,38 +103,30 @@
    "data_date": "2026-10-28",
    "picks": [
     "EAST",
-    "FAIT",
-    "CIEB",
-    "CANA",
-    "AMOC",
-    "ABUK",
+    "PHDC",
+    "CPCI",
     "LCSW",
-    "MFPC",
-    "ENGC",
-    "CICH"
+    "CANA",
+    "SCTS",
+    "FWRY",
+    "AMOC",
+    "ORWE",
+    "SNFC"
    ],
    "labels": {
-    "EAST": "بيع",
-    "FAIT": "بيع",
-    "CIEB": "بيع",
-    "CANA": "بيع",
-    "AMOC": "بيع",
-    "ABUK": "بيع",
-    "LCSW": "بيع",
-    "MFPC": "بيع",
-    "ENGC": "بيع",
-    "CICH": "بيع"
+    "EAST": "انتظر",
+    "PHDC": "انتظر",
+    "CPCI": "انتظر",
+    "LCSW": "انتظر",
+    "CANA": "انتظر",
+    "SCTS": "انتظر",
+    "FWRY": "انتظر",
+    "AMOC": "انتظر",
+    "ORWE": "انتظر",
+    "SNFC": "انتظر"
    },
-   "news": {
-    "EAST": "agree",
-    "FAIT": "disagree",
-    "CIEB": "disagree",
-    "CANA": "neutral",
-    "AMOC": "neutral",
-    "ABUK": "neutral",
-    "LCSW": "neutral"
-   },
-   "made": "2026-10-28 16:01"
+   "news": {},
+   "made": "2026-10-28 23:22"
   }
  ]
 }
