@@ -217,7 +217,7 @@ def picks_message(date, picks_by_h, ms, inputs="", holds=None, news_map=None, wa
         L_.append("المدخلات: " + inputs)
     if ms:
         L_.append(f"{ms['tag']}: آخر جلسة {ms['mean1']:+.1f}% | {ms['breadth']:.0f}% من الأسهم طلعت | "
-                  f"آخر 20 جلسة {ms['med20']:+.1f}% (وسيط الأسهم)")
+                  f"آخر 5 جلسات {ms['med5']:+.1f}% | آخر 20 جلسة {ms['med20']:+.1f}% (وسيط الأسهم)")
         if ms["weak"]:
             L_.append("⚠️ السوق نازل بقوة: الترشيحات دي أضعف من العادي، والأحسن تتابع وتستنى.")
     for h, picks in picks_by_h.items():

@@ -213,16 +213,25 @@ def market_status(C, t):
     r1 = r1[r1.abs() <= bt.MAX_ABS_RET].dropna()
     r20 = (C.iloc[t] / C.iloc[t - 20] - 1)
     r20 = r20[r20.abs() <= 1.0].dropna()
-    if len(r1) < 30 or len(r20) < 30:
+    r5 = (C.iloc[t] / C.iloc[t - 5] - 1)
+    r5 = r5[r5.abs() <= 0.6].dropna()
+    if len(r1) < 30 or len(r20) < 30 or len(r5) < 30:
         return None
-    breadth, mean1, med20 = float((r1 > 0).mean()), float(r1.mean()), float(r20.median())
-    if breadth <= 0.25 or med20 <= -0.05:
+    breadth, mean1 = float((r1 > 0).mean()), float(r1.mean())
+    med20, med5 = float(r20.median()), float(r5.median())
+    # الحالة بتتغير مع آخر 5 جلسات واليوم، مش بس مع الشهر (عشان متبقاش ثابتة بعد أي نزول كبير)
+    if breadth <= 0.25 or (med20 <= -0.05 and med5 <= -0.02):
         tag, weak = "🔴 السوق نازل بقوة", True
+    elif med20 <= -0.05 and med5 >= 0.02:
+        tag, weak = "🟠 السوق بيحاول يرتد بعد نزول الشهر", False
+    elif med20 <= -0.05:
+        tag, weak = "🟠 السوق نازل على مدى الشهر بس آخر 5 جلسات مستقر", False
     elif med20 >= 0.03 and breadth >= 0.5:
         tag, weak = "🟢 السوق طالع", False
     else:
         tag, weak = "🟡 السوق متذبذب", False
-    return {"tag": tag, "weak": weak, "breadth": breadth * 100, "mean1": mean1 * 100, "med20": med20 * 100}
+    return {"tag": tag, "weak": weak, "breadth": breadth * 100, "mean1": mean1 * 100,
+            "med20": med20 * 100, "med5": med5 * 100}
 
 
 def build_report(C, H, L, V, O, a, now, note=None):
@@ -285,7 +294,7 @@ def build_report(C, H, L, V, O, a, now, note=None):
     ms = market_status(C, t)
     if ms:
         L_ += [f"{ms['tag']}: النهاردة {ms['mean1']:+.1f}% | {ms['breadth']:.0f}% من الأسهم طلعت | "
-               f"آخر 20 جلسة {ms['med20']:+.1f}% (وسيط الأسهم)"]
+               f"آخر 5 جلسات {ms['med5']:+.1f}% | آخر 20 جلسة {ms['med20']:+.1f}% (وسيط الأسهم)"]
         if ms["weak"]:
             L_ += ["⚠️ السوق نازل بقوة: الترشيحات دي أضعف من العادي، والدخول عكس اتجاه السوق خطره أعلى. "
                    "الأحسن تتابع وتستنى بدل ما تدخل."]
