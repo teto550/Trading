@@ -136,6 +136,29 @@ def record(date, picks_by_h, now, variant="base"):
     _save(LOG_FILE, log)
 
 
+def persistence(date, picks_by_h, variant="base"):
+    """ثبات القائمة: كام جلسة ورا بعض السهم موجود في قايمة نفس الفترة (من غير النهاردة)، والأسهم اللي خرجت من آخر قايمة.
+    بيرجّع {h: {"streak": {اسم: عدد}, "out": [أسماء], "prev": تاريخ آخر قايمة}}."""
+    log = _load(LOG_FILE, {"entries": []})
+    out = {}
+    for h, picks in picks_by_h.items():
+        prev = sorted([e for e in log["entries"] if e["h"] == h and e["date"] < date
+                       and e.get("variant", "base") == variant], key=lambda e: e["date"])
+        names = [p["name"] for p in picks]
+        streak = {}
+        for n in names:
+            k = 0
+            for e in reversed(prev):
+                if n in e["picks"]:
+                    k += 1
+                else:
+                    break
+            streak[n] = k
+        out[h] = {"streak": streak, "out": [n for n in (prev[-1]["picks"] if prev else []) if n not in names],
+                  "prev": prev[-1]["date"] if prev else None}
+    return out
+
+
 def score_pending(C):
     """كل توقع عدّى عليه h جلسات: التغير من قفلة يوم التوقع لقفلة الجلسة الـh، مقارنة بالسوق كله."""
     log = _load(LOG_FILE, {"entries": []})
@@ -233,7 +256,7 @@ def result_message(rec):
 # ============================================================
 # رسالة التوقع الجديد
 # ============================================================
-def picks_message(date, picks_by_h, ms, inputs="", holds=None, news_map=None, warn=None):
+def picks_message(date, picks_by_h, ms, inputs="", holds=None, news_map=None, warn=None, persist=None):
     L_ = [f"🔭 توقع 5 و10 و20 يوم - مبني على قفلة {date}"]
     if warn:
         L_.append(warn)
@@ -255,11 +278,21 @@ def picks_message(date, picks_by_h, ms, inputs="", holds=None, news_map=None, wa
         L_ += ["", f"🗓 أقوى {len(picks)} سهم لمدة {h} أيام:"]
         if news_map:
             picks = nw.reorder(picks, news_map, lambda p: p["name"], lambda p: p.get("label"))
+        ps = ((persist or {}).get(h) or {})
+        if ps.get("prev"):
+            stay = sum(1 for k in ps["streak"].values() if k >= 1)
+            L_.append(f"(ثبات القايمة عن {ps['prev']}: {stay} من {len(picks)} فضلوا" +
+                      (f" | خرجوا: {'، '.join(ps['out'])}" if ps["out"] else "") +
+                      "). 🔥 = كان في القايمة قبل كده، والأسهم الثابتة بتقلل عدد الصفقات والتكلفة.")
         for pos, p in enumerate(picks, 1):
             lv = p["lv"]
             lab = f" | {dr.ICON[p['label']]} {p['label']}" if p.get("label") else ""
             mr = f" [ترتيب الموديل {p['rank']}]" if news_map else ""
             oth = [oh for oh, ps in picks_by_h.items() if oh != h and any(q["name"] == p["name"] for q in ps)]
+            ps = ((persist or {}).get(h) or {})
+            if ps.get("prev"):
+                k = ps["streak"].get(p["name"], 0)
+                mr += f" 🔥 ثابت {k + 1} جلسات" if k >= 1 else " 🆕 جديد"
             mr += (" 🔁 كمان في توقع " + " و".join(f"{oh} يوم" for oh in sorted(oth, reverse=True))) if oth else ""
             line = f"{pos if news_map else p['rank']}. {p['name']} | قفلة {tr.fmt_px(p['last'])}{lab}{mr}"
             if lv:
@@ -356,7 +389,8 @@ def main():
             inputs = f"الأسعار والسيولة + {egx} {usd} (اتقاس أثرها في الباكتست: فايدة بسيطة على 10 و20 يوم)"
         else:
             inputs = "الأسعار والسيولة بس"
-        text = picks_message(date, picks_by_h, ms, inputs, holds, news_map, mw)
+        persist = persistence(date, picks_by_h, variant)
+        text = picks_message(date, picks_by_h, ms, inputs, holds, news_map, mw, persist)
         os.makedirs(OUT_DIR, exist_ok=True)
         if not a.no_record:
             with open(os.path.join(OUT_DIR, "report_latest.md"), "w", encoding="utf-8") as fh:
