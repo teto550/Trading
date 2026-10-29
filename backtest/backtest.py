@@ -403,14 +403,34 @@ def tg_summary(worlds):
     return "\n".join(lines)
 
 
+def _split_msg(msg, limit=3800):
+    """تليجرام بيرفض رسالة أطول من 4096 حرف، فبنقسمها على حدود الأسطر."""
+    parts, cur = [], ""
+    for line in msg.split("\n"):
+        while len(line) > limit:                         # سطر طويل جدًا
+            if cur:
+                parts.append(cur); cur = ""
+            parts.append(line[:limit]); line = line[limit:]
+        if len(cur) + len(line) + 1 > limit and cur:
+            parts.append(cur); cur = line
+        else:
+            cur = f"{cur}\n{line}" if cur else line
+    if cur:
+        parts.append(cur)
+    return parts or [msg]
+
+
 def send_telegram(msg):
     tok, chat = os.environ.get("TELEGRAM_BOT_TOKEN", ""), os.environ.get("TELEGRAM_CHAT_ID", "")
     if not tok or not chat:
         return
     try:
         import requests
-        requests.post(f"https://api.telegram.org/bot{tok}/sendMessage",
-                      data={"chat_id": chat, "text": msg}, timeout=15)
+        for part in _split_msg(msg):
+            r = requests.post(f"https://api.telegram.org/bot{tok}/sendMessage",
+                              data={"chat_id": chat, "text": part}, timeout=15)
+            if not r.ok:
+                print("[تليجرام] رفض:", r.status_code, r.text[:200])
     except Exception as e:  # noqa: BLE001
         print("[تليجرام] خطأ:", e)
 

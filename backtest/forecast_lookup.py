@@ -124,7 +124,7 @@ def forecast_text(base, news_info=None, now=None):
     accs = []
     if d1 and d1.get("hold"):
         accs.append(("بكره", d1["hold"]))
-    for h in ("5", "10"):
+    for h in ("5", "10", "20"):
         blk = ((d5 or {}).get("h", {}) or {}).get(h)
         sx = (blk or {}).get("stocks", {}).get(base)
         if sx:
