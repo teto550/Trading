@@ -143,7 +143,7 @@ def run(a):
     Y = np.nan_to_num(Y)
     out = [f"# EGX Diagnose - {datetime.now():%Y-%m-%d %H:%M}", "",
            f"- الأسهم: {N} | الأيام: {T} ({dates[0].date()} → {dates[-1].date()}) | احتفاظ {h} يوم | "
-           f"EGX30 من: {'Yahoo' if egx_src == 'yahoo' else 'مؤشر تقريبي'} | تكلفة {a.cost_bps:.0f} bps في الاتجاه",
+           f"EGX30 من: {'Yahoo' if egx_src == 'yahoo' else 'مؤشر تقريبي'} | تكلفة {a.cost_bps:.1f} bps في الاتجاه",
            f"- الحكم بيبص على {RECENT}+ لوحدها. أرقام الصفقة بالـbps للصفقة الكاملة (مش للسهم/يوم).", ""]
 
     # ---------- A) حركة السوق كله
@@ -269,7 +269,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--source", default="yfinance", choices=["yfinance", "synthetic-null", "synthetic-planted"])
     ap.add_argument("--horizon", type=int, default=10)
-    ap.add_argument("--cost-bps", type=float, default=15.0)
+    ap.add_argument("--cost-bps", type=float, default=17.5)
     ap.add_argument("--min-turnover", type=float, default=1_000_000)
     ap.add_argument("--min-train", type=int, default=500)
     ap.add_argument("--block", type=int, default=63)

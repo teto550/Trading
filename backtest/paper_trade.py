@@ -131,7 +131,7 @@ def summarize(rows, cost):
 
 def fmt_summary_md(state, stats, new_cohort, cost_bps):
     L = [f"# EGX Paper Trade - آخر تحديث {datetime.now():%Y-%m-%d %H:%M}", "",
-         f"- احتفاظ {HOLD} يوم تداول، شراء عند افتتاح اليوم التالي للإشارة، تكلفة {cost_bps:.0f} bps في الاتجاه",
+         f"- احتفاظ {HOLD} يوم تداول، شراء عند افتتاح اليوم التالي للإشارة، تكلفة {cost_bps:.1f} bps في الاتجاه",
          f"- دفعات متسجلة: {len(state['cohorts'])} | ناضجة (عدّى عليها {HOLD} يوم): {stats['n'] if stats else 0}",
          f"- توقع الباكتست: حوالي {EXPECTED_NET_PCT:+.2f}% للصفقة بعد التكلفة (ميزة صغيرة وغير ثابتة)", ""]
     if stats:
@@ -222,7 +222,7 @@ def run(a):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--cost-bps", type=float, default=15.0)
+    ap.add_argument("--cost-bps", type=float, default=17.5)
     ap.add_argument("--min-turnover", type=float, default=1_000_000)
     ap.add_argument("--trees", type=int, default=150)
     ap.add_argument("--no-telegram", action="store_true")
