@@ -222,7 +222,7 @@ def run(a):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--cost-bps", type=float, default=17.5)
+    ap.add_argument("--cost-bps", type=float, default=20.0)
     ap.add_argument("--min-turnover", type=float, default=1_000_000)
     ap.add_argument("--trees", type=int, default=150)
     ap.add_argument("--no-telegram", action="store_true")

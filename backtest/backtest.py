@@ -356,7 +356,7 @@ def fmt_report(worlds, meta):
     L = [f"# EGX Walk-Forward Backtest - {meta['run_at']}", "",
          f"- المصدر: **{meta['source']}** | الأسهم: {meta['tickers']} | الأيام: {meta['days_total']} "
          f"({meta['first']} → {meta['last']})",
-         f"- تكلفة الصفقة: {meta["cost_bps"]:.1f} bps في الاتجاه الواحد | حد السيولة: "
+         f"- تكلفة الصفقة: {meta['cost_bps']:.1f} bps في الاتجاه الواحد | حد السيولة: "
          f"{meta['min_tov']:,.0f} جنيه/يوم | XGBoost: إعادة تدريب كل {meta['block']} يوم",
          f"- الحكم بيبص على **{RECENT_FROM} وما بعدها لوحدها** كمان، مش بس على العينة كلها. "
          "كل الأرقام بالنسبة لمتوسط السوق في نفس اليوم."]
@@ -514,7 +514,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--source", default="yfinance",
                     choices=["yfinance", "synthetic-null", "synthetic-planted"])
-    ap.add_argument("--cost-bps", type=float, default=17.5, help="تكلفة الاتجاه الواحد بالـ bps")
+    ap.add_argument("--cost-bps", type=float, default=20.0, help="تكلفة الاتجاه الواحد بالـ bps")
     ap.add_argument("--min-turnover", type=float, default=1_000_000, help="حد السيولة (جنيه/يوم)")
     ap.add_argument("--min-train", type=int, default=500)
     ap.add_argument("--block", type=int, default=63)

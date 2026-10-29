@@ -174,7 +174,7 @@ def fmt_report(horizons, meta):
          f"- المصدر: **{meta['source']}** | الأسهم: {meta['tickers']} | الأيام: {meta['days_total']} "
          f"({meta['first']} → {meta['last']})",
          f"- تنفيذ واقعي: شراء عند افتتاح اليوم التالي للإشارة وبيع عند قفلة اليوم h، من غير الأسهم اللي "
-         f"اتحركت 9%+ يوم الإشارة | تكلفة {meta["cost_bps"]:.1f} bps في الاتجاه الواحد (رحلة كاملة لكل صفقة)",
+         f"اتحركت 9%+ يوم الإشارة | تكلفة {meta['cost_bps']:.1f} bps في الاتجاه الواحد (رحلة كاملة لكل صفقة)",
          f"- كل الأرقام **bps/يوم** بالنسبة لمتوسط السوق، والحكم بيبص على {bt.RECENT_FROM}+ لوحدها كمان",
          "", "## الملخص: صافي bps/يوم بعد التكلفة في 2022+ (أعلى 20% من الأسهم)",
          "| الاستراتيجية | " + " | ".join(f"احتفاظ {h['h']} يوم" for h in horizons) + " |",
@@ -329,7 +329,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--source", default="yfinance",
                     choices=["yfinance", "synthetic-null", "synthetic-planted"])
-    ap.add_argument("--cost-bps", type=float, default=17.5, help="تكلفة الاتجاه الواحد بالـ bps")
+    ap.add_argument("--cost-bps", type=float, default=20.0, help="تكلفة الاتجاه الواحد بالـ bps")
     ap.add_argument("--min-turnover", type=float, default=1_000_000)
     ap.add_argument("--min-train", type=int, default=500)
     ap.add_argument("--block", type=int, default=63)

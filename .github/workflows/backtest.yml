@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       cost_bps:
-        description: "تكلفة الاتجاه الواحد بالـ bps (17.5 = 0.175%، تكلفة السمسار الفعلية)"
+        description: "تكلفة الاتجاه الواحد بالـ bps (20 = 0.2%، متوسط تكلفتك الفعلية من صفقاتك)"
         required: false
         default: "15"
       min_turnover:
@@ -35,7 +35,7 @@ jobs:
           mkdir -p backtest/results
           set -o pipefail
           python -u backtest/backtest.py --source yfinance \
-            --cost-bps "${{ github.event.inputs.cost_bps || '17.5' }}" \
+            --cost-bps "${{ github.event.inputs.cost_bps || '20' }}" \
             --min-turnover "${{ github.event.inputs.min_turnover || '1000000' }}" \
             2>&1 | tee backtest/results/log_latest.txt
       - name: Upload report

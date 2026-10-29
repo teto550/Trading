@@ -269,7 +269,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--source", default="yfinance", choices=["yfinance", "synthetic-null", "synthetic-planted"])
     ap.add_argument("--horizon", type=int, default=10)
-    ap.add_argument("--cost-bps", type=float, default=17.5)
+    ap.add_argument("--cost-bps", type=float, default=20.0)
     ap.add_argument("--min-turnover", type=float, default=1_000_000)
     ap.add_argument("--min-train", type=int, default=500)
     ap.add_argument("--block", type=int, default=63)
