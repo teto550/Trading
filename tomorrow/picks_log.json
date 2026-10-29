@@ -127,6 +127,38 @@
    },
    "news": {},
    "made": "2026-10-29 10:39"
+  },
+  {
+   "target": "2026-11-01",
+   "data_date": "2026-10-29",
+   "picks": [
+    "CPCI",
+    "FAIT",
+    "SDTI",
+    "AMOC",
+    "PHDC",
+    "BINV",
+    "CANA",
+    "ETRS",
+    "ORWE",
+    "EGCH"
+   ],
+   "labels": {
+    "CPCI": "شراء",
+    "FAIT": "انتظر",
+    "SDTI": "انتظر",
+    "AMOC": "انتظر",
+    "PHDC": "شراء",
+    "BINV": "انتظر",
+    "CANA": "انتظر",
+    "ETRS": "انتظر",
+    "ORWE": "انتظر",
+    "EGCH": "شراء"
+   },
+   "news": {
+    "CPCI": "agree"
+   },
+   "made": "2026-10-29 16:09"
   }
  ]
 }
