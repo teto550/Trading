@@ -1,0 +1,42 @@
+name: EGX Model Improve Experiments
+on:
+  workflow_dispatch:
+concurrency:
+  group: improve
+  cancel-in-progress: false
+jobs:
+  improve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install -r backtest/requirements.txt
+      - name: Run improve experiments
+        run: |
+          mkdir -p backtest/results
+          set -o pipefail
+          python -u backtest/improve.py --source yfinance 2>&1 | tee backtest/results/log_improve_latest.txt
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: improve-report
+          path: backtest/results/
+      - name: Commit results
+        if: always()
+        run: |
+          git config user.name "alert-bot"
+          git config user.email "alert-bot@users.noreply.github.com"
+          git add backtest/results/ || true
+          git commit -m "improve report [skip ci]" || echo "nothing"
+          for i in 1 2 3 4 5 6; do
+            git pull --rebase -X theirs origin main || true
+            git push && break
+            echo "push race, retry $i"; sleep $((RANDOM % 8 + 3))
+          done
