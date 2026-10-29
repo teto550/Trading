@@ -212,35 +212,35 @@
    "variant": "macro",
    "picks": [
     "CPCI",
+    "SDTI",
+    "FAIT",
     "ABUK",
     "CANA",
-    "LCSW",
-    "FAIT",
+    "SNFC",
     "MFPC",
-    "SDTI",
-    "AMOC",
-    "EAST",
-    "ETRS"
+    "ETRS",
+    "HRHO",
+    "AMOC"
    ],
    "labels": {
     "CPCI": "شراء",
+    "SDTI": "شراء",
+    "FAIT": "شراء",
     "ABUK": "شراء",
     "CANA": "شراء",
-    "LCSW": "شراء",
-    "FAIT": "شراء",
+    "SNFC": "شراء",
     "MFPC": "شراء",
-    "SDTI": "شراء",
-    "AMOC": "شراء",
-    "EAST": "شراء",
-    "ETRS": "شراء"
+    "ETRS": "شراء",
+    "HRHO": "شراء",
+    "AMOC": "شراء"
    },
    "news": {
     "CPCI": "agree",
-    "ABUK": "agree",
     "FAIT": "agree",
-    "EAST": "neutral"
+    "ABUK": "agree",
+    "HRHO": "neutral"
    },
-   "made": "2026-10-29 11:05"
+   "made": "2026-10-29 11:13"
   },
   {
    "date": "2026-10-28",
@@ -248,66 +248,72 @@
    "variant": "macro",
    "picks": [
     "CPCI",
-    "LCSW",
+    "FAIT",
     "ABUK",
     "CANA",
-    "EAST",
-    "MFPC",
-    "FAIT",
+    "AMOC",
     "SDTI",
-    "SWDY",
-    "ETRS"
+    "LCSW",
+    "MFPC",
+    "EAST",
+    "SWDY"
    ],
    "labels": {
     "CPCI": "شراء",
-    "LCSW": "شراء",
+    "FAIT": "شراء",
     "ABUK": "شراء",
     "CANA": "شراء",
-    "EAST": "شراء",
-    "MFPC": "شراء",
-    "FAIT": "شراء",
+    "AMOC": "شراء",
     "SDTI": "شراء",
-    "SWDY": "شراء",
-    "ETRS": "شراء"
+    "LCSW": "شراء",
+    "MFPC": "شراء",
+    "EAST": "شراء",
+    "SWDY": "شراء"
    },
    "news": {
     "CPCI": "agree",
+    "FAIT": "agree",
     "ABUK": "agree",
-    "EAST": "neutral",
-    "FAIT": "agree"
+    "EAST": "neutral"
    },
-   "made": "2026-10-29 11:05"
+   "made": "2026-10-29 11:13"
   },
   {
    "date": "2026-10-28",
    "h": 20,
    "variant": "macro",
    "picks": [
-    "SNFC",
     "ENGC",
-    "BINV",
     "ABUK",
-    "CANA",
     "CPCI",
+    "CANA",
+    "SNFC",
     "EAST",
-    "MFPC",
     "SPIN",
-    "SKPC"
+    "HRHO",
+    "BTFH",
+    "ADPC"
    ],
    "labels": {
+    "ENGC": "بيع",
+    "ABUK": "بيع",
+    "CPCI": "بيع",
+    "CANA": "بيع",
     "SNFC": "انتظر",
-    "ENGC": "انتظر",
-    "BINV": "انتظر",
-    "ABUK": "انتظر",
-    "CANA": "انتظر",
-    "CPCI": "انتظر",
-    "EAST": "انتظر",
-    "MFPC": "انتظر",
-    "SPIN": "انتظر",
-    "SKPC": "انتظر"
+    "EAST": "بيع",
+    "SPIN": "بيع",
+    "HRHO": "بيع",
+    "BTFH": "انتظر",
+    "ADPC": "انتظر"
    },
-   "news": {},
-   "made": "2026-10-29 11:05"
+   "news": {
+    "ABUK": "disagree",
+    "CPCI": "disagree",
+    "EAST": "neutral",
+    "SPIN": "neutral",
+    "HRHO": "neutral"
+   },
+   "made": "2026-10-29 11:13"
   }
  ]
 }
