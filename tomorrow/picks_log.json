@@ -133,32 +133,30 @@
    "data_date": "2026-10-29",
    "picks": [
     "CPCI",
-    "FAIT",
-    "SDTI",
     "AMOC",
+    "CANA",
+    "SDTI",
+    "EGCH",
     "PHDC",
     "BINV",
-    "CANA",
-    "ETRS",
-    "ORWE",
-    "EGCH"
+    "SNFC",
+    "RTVC",
+    "CCAP"
    ],
    "labels": {
-    "CPCI": "شراء",
-    "FAIT": "انتظر",
+    "CPCI": "انتظر",
+    "AMOC": "شراء",
+    "CANA": "شراء",
     "SDTI": "انتظر",
-    "AMOC": "انتظر",
+    "EGCH": "شراء",
     "PHDC": "شراء",
-    "BINV": "انتظر",
-    "CANA": "انتظر",
-    "ETRS": "انتظر",
-    "ORWE": "انتظر",
-    "EGCH": "شراء"
+    "BINV": "شراء",
+    "SNFC": "انتظر",
+    "RTVC": "شراء",
+    "CCAP": "انتظر"
    },
-   "news": {
-    "CPCI": "agree"
-   },
-   "made": "2026-10-29 16:09"
+   "news": {},
+   "made": "2026-10-29 23:27"
   }
  ]
 }
