@@ -144,6 +144,7 @@ def score_pending(C):
     idx = {str(d.date()): i for i, d in enumerate(C.index)}
     cnt = C.notna().sum(axis=1)
     new = []
+    by_key = {(e["date"], e["h"], e.get("variant", "base")): set(e["picks"]) for e in log["entries"]}
     for e in log["entries"]:
         i0 = idx.get(e["date"])
         if (e["date"], e["h"]) in done or i0 is None:
@@ -157,7 +158,10 @@ def score_pending(C):
         ret = ret[np.isfinite(ret) & (ret.abs() <= MAX_HORIZON_RET)]
         labs = e.get("labels", {})
         nws = e.get("news", {})
-        picks = [{"n": n, "r": float(ret[n + ".CA"] * 100), "lab": labs.get(n), "nw": nws.get(n)}
+        var = e.get("variant", "base")
+        others = {oh: by_key.get((e["date"], oh, var)) for oh in HORIZONS if oh != e["h"]}
+        picks = [{"n": n, "r": float(ret[n + ".CA"] * 100), "lab": labs.get(n), "nw": nws.get(n),
+                  "also": [oh for oh, st in others.items() if st and n in st]}
                  for n in e["picks"] if (n + ".CA") in ret.index]
         if len(picks) < max(3, len(e["picks"]) // 2) or len(ret) < 30:
             continue
@@ -178,6 +182,25 @@ def score_pending(C):
     return new
 
 
+def overlap_lines(rec):
+    """الأسهم اللي ظهرت في فترات تانية في نفس اليوم: طلعت ولا لا، مجمّعة حسب الفترات اللي ظهرت فيها."""
+    h = rec["h"]
+    if not any(x.get("also") for x in rec["picks"]):
+        return []
+    groups = {}
+    for x in rec["picks"]:
+        groups.setdefault(tuple(sorted(x.get("also") or [], reverse=True)), []).append(x)
+    L_ = ["", "🔁 الأسهم اللي ظهرت في أكتر من فترة (من نفس يوم التوقع):"]
+    for key in sorted(groups, key=lambda k: (-len(k), k)):
+        xs = groups[key]
+        up = sum(1 for x in xs if x["r"] > 0)
+        label = (f"في {h} يوم + " + " + ".join(f"{k} يوم" for k in key)) if key else f"في {h} يوم بس"
+        names = "، ".join(f"{'✅' if x['r'] > 0 else '❌'}{x['n']} {x['r']:+.1f}%" for x in xs)
+        L_.append(f"• {label}: طلع {up} من {len(xs)} | متوسط {sum(x['r'] for x in xs) / len(xs):+.1f}%")
+        L_.append(f"   {names}")
+    return L_
+
+
 def result_message(rec):
     h, n = rec["h"], rec["n"]
     L_ = [f"📝 نتيجة توقع {h} أيام اللي اتقال يوم {rec['date']} (لحد قفلة {rec['end']})",
@@ -188,6 +211,7 @@ def result_message(rec):
         L_.append(tr.pick_line(x))
     if rec.get("dir_n"):
         L_.insert(3, f"تصنيف شراء/بيع: صح في {rec['dir_ok']} من {rec['dir_n']}")
+    L_ += overlap_lines(rec)
     days = [d for d in _load(SCORE_FILE, {"days": []})["days"]
             if d["h"] == h and d.get("variant", "base") == rec.get("variant", "base")]
     if len(days) >= 2:
@@ -220,6 +244,13 @@ def picks_message(date, picks_by_h, ms, inputs="", holds=None, news_map=None, wa
                   f"آخر 5 جلسات {ms['med5']:+.1f}% | آخر 20 جلسة {ms['med20']:+.1f}% (وسيط الأسهم)")
         if ms["weak"]:
             L_.append("⚠️ السوق نازل بقوة: الترشيحات دي أضعف من العادي، والأحسن تتابع وتستنى.")
+    hs = sorted(picks_by_h, reverse=True)
+    names_by_h = {h: {p["name"] for p in picks_by_h[h]} for h in hs}
+    multi = [n for n in set().union(*names_by_h.values()) if sum(n in names_by_h[h] for h in hs) >= 2]
+    if multi:
+        L_ += ["", "🔁 أسهم ظهرت في أكتر من فترة (ركّز عليها): " +
+               "، ".join(f"{n} ({'+'.join(str(h) for h in hs if n in names_by_h[h])})" for n in
+                         sorted(multi, key=lambda n: -sum(n in names_by_h[h] for h in hs)))]
     for h, picks in picks_by_h.items():
         L_ += ["", f"🗓 أقوى {len(picks)} سهم لمدة {h} أيام:"]
         if news_map:
@@ -228,6 +259,8 @@ def picks_message(date, picks_by_h, ms, inputs="", holds=None, news_map=None, wa
             lv = p["lv"]
             lab = f" | {dr.ICON[p['label']]} {p['label']}" if p.get("label") else ""
             mr = f" [ترتيب الموديل {p['rank']}]" if news_map else ""
+            oth = [oh for oh, ps in picks_by_h.items() if oh != h and any(q["name"] == p["name"] for q in ps)]
+            mr += (" 🔁 كمان في توقع " + " و".join(f"{oh} يوم" for oh in sorted(oth, reverse=True))) if oth else ""
             line = f"{pos if news_map else p['rank']}. {p['name']} | قفلة {tr.fmt_px(p['last'])}{lab}{mr}"
             if lv:
                 line += (f" | RSI {lv['rsi']:.0f} | تذبذب يومي {lv['atr_pct']:.1f}%"
