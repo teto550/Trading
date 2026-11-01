@@ -157,6 +157,41 @@
    },
    "news": {},
    "made": "2026-10-29 23:27"
+  },
+  {
+   "target": "2026-11-02",
+   "data_date": "2026-11-01",
+   "picks": [
+    "CPCI",
+    "AMOC",
+    "FAIT",
+    "SDTI",
+    "CANA",
+    "ADIB",
+    "AJWA",
+    "FWRY",
+    "EGAL",
+    "CLHO"
+   ],
+   "labels": {
+    "CPCI": "بيع",
+    "AMOC": "بيع",
+    "FAIT": "بيع",
+    "SDTI": "بيع",
+    "CANA": "بيع",
+    "ADIB": "بيع",
+    "AJWA": "بيع",
+    "FWRY": "بيع",
+    "EGAL": "بيع",
+    "CLHO": "بيع"
+   },
+   "news": {
+    "CPCI": "agree",
+    "AMOC": "disagree",
+    "FAIT": "disagree",
+    "SDTI": "neutral"
+   },
+   "made": "2026-11-01 15:30"
   }
  ]
 }
