@@ -164,34 +164,34 @@
    "picks": [
     "CPCI",
     "AMOC",
-    "FAIT",
     "SDTI",
+    "ETRS",
     "CANA",
     "ADIB",
+    "RTVC",
     "AJWA",
-    "FWRY",
-    "EGAL",
-    "CLHO"
+    "FAIT",
+    "EMFD"
    ],
    "labels": {
     "CPCI": "بيع",
     "AMOC": "بيع",
-    "FAIT": "بيع",
     "SDTI": "بيع",
+    "ETRS": "بيع",
     "CANA": "بيع",
     "ADIB": "بيع",
+    "RTVC": "بيع",
     "AJWA": "بيع",
-    "FWRY": "بيع",
-    "EGAL": "بيع",
-    "CLHO": "بيع"
+    "FAIT": "بيع",
+    "EMFD": "بيع"
    },
    "news": {
     "CPCI": "agree",
     "AMOC": "disagree",
-    "FAIT": "disagree",
-    "SDTI": "neutral"
+    "SDTI": "neutral",
+    "ETRS": "neutral"
    },
-   "made": "2026-11-01 15:30"
+   "made": "2026-11-01 22:52"
   }
  ]
 }
