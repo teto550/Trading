@@ -1,11 +1,11 @@
-# EGX Paper Trade - آخر تحديث 2026-11-01 21:16
+# EGX Paper Trade - آخر تحديث 2026-11-02 23:57
 
 - احتفاظ 20 يوم تداول، شراء عند افتتاح اليوم التالي للإشارة، تكلفة 20.0 bps في الاتجاه
-- دفعات متسجلة: 16 | ناضجة (عدّى عليها 20 يوم): 0
+- دفعات متسجلة: 17 | ناضجة (عدّى عليها 20 يوم): 0
 - توقع الباكتست: حوالي +0.28% للصفقة بعد التكلفة (ميزة صغيرة وغير ثابتة)
 
 
-## اختيارات آخر دفعة (2026-10-29)
-XGBoost (29): SNFC, FAIT, ICID, SKPC, EGAL, CCAP, EMFD, ADIB, BINV, CIEB, WCDF, FWRY, ORWE, ETRS, SAUD, ACGC, OIH, CANA, ALCN, COMI, GBCO, ISPH, TMGH, RTVC, RMDA, MFPC, TALM, OFH, EGCH
+## اختيارات آخر دفعة (2026-11-01)
+XGBoost (30): FAIT, EMFD, ALCN, SKPC, ETRS, EGAL, SNFC, CIEB, ADIB, SAUD, DOMT, CPCI, MICH, WCDF, SWDY, OFH, SDTI, IFAP, FWRY, CSAG, TMGH, ORWE, EGAS, LCSW, HRHO, MENA, CICH, SUGR, ICID, BINV
 
-Low-vol (29): COMI, OLFI, SDTI, CPCI, SNFC, FWRY, EMFD, BINV, ORWE, FAIT, CLHO, UEFM, PHDC, ECAP, SKPC, CIEB, TMGH, CCAP, ALCN, EAST, SAUD, IFAP, CICH, ADIB, RTVC, HRHO, ACAMD, EGAL, AMOC
+Low-vol (30): OLFI, COMI, CPCI, SDTI, SNFC, EMFD, FWRY, FAIT, CLHO, UEFM, TALM, ECAP, BINV, SAUD, ALCN, SKPC, CCAP, CIEB, TMGH, EAST, CICH, IFAP, RTVC, AMOC, PHDC, HRHO, ORWE, ADIB, ACAMD, SWDY
