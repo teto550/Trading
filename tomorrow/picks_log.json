@@ -192,6 +192,42 @@
     "ETRS": "neutral"
    },
    "made": "2026-11-01 22:52"
+  },
+  {
+   "target": "2026-11-03",
+   "data_date": "2026-11-02",
+   "picks": [
+    "CPCI",
+    "AMOC",
+    "EAST",
+    "SDTI",
+    "ETRS",
+    "LCSW",
+    "ICFC",
+    "AJWA",
+    "CANA",
+    "UNIT"
+   ],
+   "labels": {
+    "CPCI": "بيع",
+    "AMOC": "بيع",
+    "EAST": "بيع",
+    "SDTI": "بيع",
+    "ETRS": "بيع",
+    "LCSW": "بيع",
+    "ICFC": "بيع",
+    "AJWA": "بيع",
+    "CANA": "بيع",
+    "UNIT": "بيع"
+   },
+   "news": {
+    "CPCI": "agree",
+    "AMOC": "disagree",
+    "EAST": "neutral",
+    "SDTI": "neutral",
+    "ETRS": "neutral"
+   },
+   "made": "2026-11-02 18:04"
   }
  ]
 }
