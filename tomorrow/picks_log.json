@@ -199,35 +199,35 @@
    "picks": [
     "CPCI",
     "AMOC",
-    "EAST",
     "SDTI",
-    "ETRS",
+    "EAST",
+    "ABUK",
     "LCSW",
-    "ICFC",
     "AJWA",
-    "CANA",
-    "UNIT"
+    "ICFC",
+    "UNIT",
+    "CANA"
    ],
    "labels": {
     "CPCI": "بيع",
     "AMOC": "بيع",
-    "EAST": "بيع",
     "SDTI": "بيع",
-    "ETRS": "بيع",
+    "EAST": "بيع",
+    "ABUK": "بيع",
     "LCSW": "بيع",
-    "ICFC": "بيع",
     "AJWA": "بيع",
-    "CANA": "بيع",
-    "UNIT": "بيع"
+    "ICFC": "بيع",
+    "UNIT": "بيع",
+    "CANA": "بيع"
    },
    "news": {
     "CPCI": "agree",
     "AMOC": "disagree",
-    "EAST": "neutral",
     "SDTI": "neutral",
-    "ETRS": "neutral"
+    "EAST": "neutral",
+    "ABUK": "neutral"
    },
-   "made": "2026-11-02 18:04"
+   "made": "2026-11-03 01:42"
   }
  ]
 }
