@@ -520,6 +520,111 @@
     "CIEB": "disagree"
    },
    "made": "2026-11-01 23:22"
+  },
+  {
+   "date": "2026-11-02",
+   "h": 5,
+   "variant": "macro",
+   "picks": [
+    "CPCI",
+    "SNFC",
+    "EMFD",
+    "AMOC",
+    "COMI",
+    "LCSW",
+    "SDTI",
+    "SCEM",
+    "UNIT",
+    "ETRS"
+   ],
+   "labels": {
+    "CPCI": "بيع",
+    "SNFC": "بيع",
+    "EMFD": "بيع",
+    "AMOC": "بيع",
+    "COMI": "بيع",
+    "LCSW": "بيع",
+    "SDTI": "بيع",
+    "SCEM": "بيع",
+    "UNIT": "بيع",
+    "ETRS": "بيع"
+   },
+   "news": {
+    "CPCI": "agree",
+    "AMOC": "disagree",
+    "SDTI": "neutral",
+    "ETRS": "neutral"
+   },
+   "made": "2026-11-03 02:03"
+  },
+  {
+   "date": "2026-11-02",
+   "h": 10,
+   "variant": "macro",
+   "picks": [
+    "CPCI",
+    "LCSW",
+    "EMFD",
+    "SDTI",
+    "SNFC",
+    "ETRS",
+    "COMI",
+    "AMOC",
+    "UNIT",
+    "FAIT"
+   ],
+   "labels": {
+    "CPCI": "شراء",
+    "LCSW": "شراء",
+    "EMFD": "شراء",
+    "SDTI": "شراء",
+    "SNFC": "شراء",
+    "ETRS": "شراء",
+    "COMI": "شراء",
+    "AMOC": "شراء",
+    "UNIT": "شراء",
+    "FAIT": "شراء"
+   },
+   "news": {
+    "CPCI": "disagree",
+    "SDTI": "neutral",
+    "ETRS": "neutral",
+    "AMOC": "agree"
+   },
+   "made": "2026-11-03 02:03"
+  },
+  {
+   "date": "2026-11-02",
+   "h": 20,
+   "variant": "macro",
+   "picks": [
+    "SNFC",
+    "COMI",
+    "LCSW",
+    "CPCI",
+    "EMFD",
+    "UNIT",
+    "SAUD",
+    "BINV",
+    "SKPC",
+    "CANA"
+   ],
+   "labels": {
+    "SNFC": "شراء",
+    "COMI": "شراء",
+    "LCSW": "شراء",
+    "CPCI": "شراء",
+    "EMFD": "شراء",
+    "UNIT": "شراء",
+    "SAUD": "شراء",
+    "BINV": "شراء",
+    "SKPC": "شراء",
+    "CANA": "شراء"
+   },
+   "news": {
+    "CPCI": "disagree"
+   },
+   "made": "2026-11-03 02:03"
   }
  ]
 }
