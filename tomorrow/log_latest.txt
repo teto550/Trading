@@ -2969,7 +2969,27 @@ See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace 
 /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/yfinance/utils.py:518: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
 See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
   df.rename(columns={
-$GTWL.CA: possibly delisted; no timezone found
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  quotes.sort_index(inplace=True)
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/yfinance/utils.py:585: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  dividends.set_index("date", inplace=True)
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/yfinance/utils.py:587: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  dividends.sort_index(inplace=True)
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/yfinance/utils.py:604: Pandas4Warning: The inplace keyword in DataFrame.set_index is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  splits.set_index("date", inplace=True)
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/yfinance/utils.py:606: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  splits.sort_index(inplace=True)
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/yfinance/utils.py:514: Pandas4Warning: The inplace keyword in DataFrame.drop is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.drop(
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/yfinance/utils.py:518: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
+See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
+  df.rename(columns={
 /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
 See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
   quotes.sort_index(inplace=True)
@@ -3161,7 +3181,7 @@ See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace 
 See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
   df.rename(columns={
 $NARE.CA: possibly delisted; no timezone found
-[data] 200/251 سهم، اتجاب تاريخ لـ 167
+[data] 200/251 سهم، اتجاب تاريخ لـ 168
 /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
 See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
   quotes.sort_index(inplace=True)
@@ -3491,7 +3511,7 @@ See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace 
 /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/yfinance/utils.py:518: Pandas4Warning: The inplace keyword in DataFrame.rename is deprecated and will be removed in a future version (PDEP-8).
 See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
   df.rename(columns={
-[data] 225/251 سهم، اتجاب تاريخ لـ 187
+[data] 225/251 سهم، اتجاب تاريخ لـ 188
 /opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/yfinance/utils.py:568: Pandas4Warning: The inplace keyword in DataFrame.sort_index is deprecated and will be removed in a future version (PDEP-8).
 See https://pandas.pydata.org/docs/dev/whatsnew/v3.1.0.html#deprecation-inplace for more details.
   quotes.sort_index(inplace=True)
@@ -3665,90 +3685,88 @@ $GGRN.CA: possibly delisted; no timezone found
 $HBCO.CA: possibly delisted; no timezone found
 $CPME.CA: possibly delisted; no timezone found
 $TWSA.CA: possibly delisted; no timezone found
-[data] 250/251 سهم، اتجاب تاريخ لـ 198
+[data] 250/251 سهم، اتجاب تاريخ لـ 199
 $KORA.CA: possibly delisted; no timezone found
-[data] خلص الجلب: 198 سهم اتجاب من 251
-[news] اسم عربي LCSW (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
-[news] اسم عربي ICFC (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
-[news] اسم عربي AMOC (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
-[news] اسم عربي UNIT (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
-[news] اسم عربي CANA (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[data] خلص الجلب: 199 سهم اتجاب من 251
+[news] اسم عربي RTVC (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[news] اسم عربي EGCH (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[news] اسم عربي IFAP (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[news] اسم عربي GBCO (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[news] اسم عربي FWRY (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[news] اسم عربي CLHO (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[news] اسم عربي RAYA (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
 [news] أسماء عربي فشلت: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio
-[news] أسماء: 10 سهم | عربي: 5
+[news] أسماء: 10 سهم | عربي: 3
 [news] تقييم Gemini فشل، هستخدم الكلمات المفتاحية: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects
-🔮 تقرير جلسة النهاردة - التلات 2026-11-03
-(مبني على بيانات قفلة 2026-11-02 - 164 سهم سيولته كافية)
-ℹ️ قفلة 2026-11-02 اتضافت من Mubasher (185 سهم) لأن Yahoo متأخر. القفلة حقيقية، لكن مدى اليوم وحجم التداول تقديريين.
+🔮 تقرير جلسة بكره - الأربع 2026-11-04
+(مبني على بيانات قفلة 2026-11-03 - 160 سهم سيولته كافية)
+ℹ️ قفلة 2026-11-03 اتضافت من Mubasher (186 سهم) لأن Yahoo متأخر. القفلة حقيقية، لكن مدى اليوم وحجم التداول تقديريين.
 
-🔴 السوق نازل بقوة: النهاردة -2.2% | 10% من الأسهم طلعت | آخر 5 جلسات +4.6% | آخر 20 جلسة -17.5% (وسيط الأسهم)
-⚠️ السوق نازل بقوة: الترشيحات دي أضعف من العادي، والدخول عكس اتجاه السوق خطره أعلى. الأحسن تتابع وتستنى بدل ما تدخل.
+🟠 السوق نازل على مدى الشهر بس آخر 5 جلسات مستقر: النهاردة +2.4% | 80% من الأسهم طلعت | آخر 5 جلسات +0.8% | آخر 20 جلسة -15.0% (وسيط الأسهم)
 
-📈 أقوى 10 سهم ترتيبًا لجلسة النهاردة + مستوياتهم الفنية:
+📈 أقوى 10 سهم ترتيبًا لجلسة بكره + مستوياتهم الفنية:
 (مرتبين: اللي الخبر بيأكد تحليله الأول، وبعده اللي الخبر عكسه، وبعده الباقي. رقم ترتيب الموديل الأصلي جنب كل سهم)
 
-1. CPCI | آخر قفلة 590.92 | 🔴 بيع [ترتيب الموديل 2]
-   RSI 49 | تذبذب يومي 3.7% | دعم 502.25 | مقاومة 620.00
-   وقف خسارة 558.47 (-5.5%) | هدف 620.00 (+4.9%) (عند المقاومة) | عائد/مخاطرة 0.9 ⚠️ضعيف
-   نطاق النهاردة: 582.23 - 604.18 | نطاق الأسبوع: 581.32 - 649.34
-   📰 ✅ الخبر بيأكد التحليل | 🔴 سلبي (بالكلمات)
-      «الرقابة المالية تقرر شطب وتصفية اتحاد العاملين المساهمين بشركة القاهرة للأدوية - عالم الما» (عالم المال، من يوم)
+1. EAST | آخر قفلة 30.96 | ⚪ انتظر [ترتيب الموديل 4]
+   RSI 65 | تذبذب يومي 4.7% | دعم 27.01 | مقاومة 32.44
+   وقف خسارة 28.78 (-7.1%) | هدف 32.44 (+4.8%) (عند المقاومة) | عائد/مخاطرة 0.7 ⚠️ضعيف
+   نطاق بكره: 30.12 - 31.59 | نطاق الأسبوع: 29.43 - 32.21
+   📰 ⚪ محايد (بالكلمات)
+      «Eastern Company SC - Transfermarkt» (Transfermarkt، من 4 أيام)
 
-2. AMOC | آخر قفلة 13.61 | 🔴 بيع [ترتيب الموديل 5]
-   RSI 51 | تذبذب يومي 4.8% | دعم 12.55 | مقاومة 15.15
-   وقف خسارة 12.64 (-7.1%) | هدف 15.15 (+11.3%) (عند المقاومة) | عائد/مخاطرة 1.6
-   نطاق النهاردة: 13.19 - 14.31 | نطاق الأسبوع: 12.96 - 15.00
-   📰 ⚠️ الخبر عكس التحليل | 🟢 إيجابي (بالكلمات)
-      «AMOC Delivers 2.5 fold Profit Growth in 9M 2026 - Egypt Oil & Gas» (Egypt Oil & Gas، من يوم)
-
-3. SDTI | آخر قفلة 81.55 | 🔴 بيع [ترتيب الموديل 7]
-   RSI 44 | تذبذب يومي 4.7% | دعم 75.01 | مقاومة 90.85
-   وقف خسارة 75.82 (-7.0%) | هدف 90.85 (+11.4%) (عند المقاومة) | عائد/مخاطرة 1.6
-   نطاق النهاردة: 79.54 - 84.31 | نطاق الأسبوع: 79.14 - 90.11
-   📰 ➖ الخبر محايد | ⚪ محايد (بالكلمات)
+2. SDTI | آخر قفلة 86.07 | ⚪ انتظر [ترتيب الموديل 9]
+   RSI 53 | تذبذب يومي 4.6% | دعم 75.01 | مقاومة 90.85
+   وقف خسارة 80.07 (-7.0%) | هدف 90.85 (+5.6%) (عند المقاومة) | عائد/مخاطرة 0.8 ⚠️ضعيف
+   نطاق بكره: 83.95 - 89.00 | نطاق الأسبوع: 83.53 - 95.11
+   📰 ⚪ محايد (بالكلمات)
       «تم ايقاف الورقة المالية - EGS70571C012 - شارم دريمز للاستثمار السياحى لمدة 10 دقائق لتجاوز» (معلومات مباشر، من 5 أيام)
 
-4. EAST | آخر قفلة 30.80 | 🔴 بيع [ترتيب الموديل 8]
-   RSI 67 | تذبذب يومي 4.4% | دعم 27.01 | مقاومة 32.44
-   وقف خسارة 28.75 (-6.7%) | هدف 32.44 (+5.3%) (عند المقاومة) | عائد/مخاطرة 0.8 ⚠️ضعيف
-   نطاق النهاردة: 29.96 - 31.31 | نطاق الأسبوع: 29.28 - 32.04
-   📰 ➖ الخبر محايد | ⚪ محايد (بالكلمات)
-      «تراجع CIB وإيسترن كومباني.. أسهم السبعين تقاوم ضغوط عمالقة البورصة - اليوم السابع» (اليوم السابع، من 6 أيام)
-
-5. ABUK | آخر قفلة 80.09 | 🔴 بيع [ترتيب الموديل 9]
-   RSI 45 | تذبذب يومي 5.4% | دعم 80.09 | مقاومة 95.75
-   وقف خسارة 73.57 (-8.1%) | هدف 93.15 (+16.3%) | عائد/مخاطرة 2.0
-   نطاق النهاردة: 77.28 - 83.29 | نطاق الأسبوع: 75.07 - 84.63
-   📰 ➖ الخبر محايد | ⚪ محايد (بالكلمات)
-      «خبر في الجول - أبو قير للأسمدة يتمم الاتفاق بشأن ضم زياد فرج - اخبارك نت» (اخبارك نت، من يوم)
-
-6. LCSW | آخر قفلة 35.28 | 🔴 بيع [ترتيب الموديل 1]
-   RSI 59 | تذبذب يومي 5.6% | دعم 28.00 | مقاومة 36.75
-   وقف خسارة 32.31 (-8.4%) | هدف 36.75 (+4.2%) (عند المقاومة) | عائد/مخاطرة 0.5 ⚠️ضعيف
-   نطاق النهاردة: 34.34 - 36.45 | نطاق الأسبوع: 33.72 - 38.42
+3. RTVC | آخر قفلة 2.74 | 🟢 شراء [ترتيب الموديل 1]
+   RSI 19 | تذبذب يومي 5.0% | دعم 2.68 | مقاومة 3.71
+   وقف خسارة 2.53 (-7.5%) | هدف 3.15 (+15.1%) | عائد/مخاطرة 2.0
+   نطاق بكره: 2.64 - 2.81 | نطاق الأسبوع: 2.54 - 2.88
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
-7. AJWA | آخر قفلة 214.92 | 🔴 بيع [ترتيب الموديل 3]
-   RSI 53 | تذبذب يومي 6.2% | دعم 179.00 | مقاومة 229.98
-   وقف خسارة 195.06 (-9.2%) | هدف 229.98 (+7.0%) (عند المقاومة) | عائد/مخاطرة 0.8 ⚠️ضعيف
-   نطاق النهاردة: 209.83 - 221.83 | نطاق الأسبوع: 205.73 - 237.95
+4. ALCN | آخر قفلة 32.25 | ⚪ انتظر [ترتيب الموديل 2]
+   RSI 47 | تذبذب يومي 5.3% | دعم 27.11 | مقاومة 35.51
+   وقف خسارة 29.71 (-7.9%) | هدف 35.51 (+10.1%) (عند المقاومة) | عائد/مخاطرة 1.3 ⚠️ضعيف
+   نطاق بكره: 31.35 - 33.36 | نطاق الأسبوع: 31.06 - 33.76
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
-8. ICFC | آخر قفلة 22.90 | 🔴 بيع [ترتيب الموديل 4]
-   RSI 57 | تذبذب يومي 6.4% | دعم 18.00 | مقاومة 24.00
-   وقف خسارة 20.69 (-9.7%) | هدف 24.00 (+4.8%) (عند المقاومة) | عائد/مخاطرة 0.5 ⚠️ضعيف
-   نطاق النهاردة: 22.11 - 24.32 | نطاق الأسبوع: 21.58 - 25.39
+5. EGCH | آخر قفلة 9.94 | 🟢 شراء [ترتيب الموديل 3]
+   RSI 27 | تذبذب يومي 5.8% | دعم 9.68 | مقاومة 13.48
+   وقف خسارة 9.08 (-8.7%) | هدف 11.66 (+17.3%) | عائد/مخاطرة 2.0
+   نطاق بكره: 9.64 - 10.12 | نطاق الأسبوع: 9.20 - 10.66
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
-9. UNIT | آخر قفلة 17.52 | 🔴 بيع [ترتيب الموديل 6]
-   RSI 57 | تذبذب يومي 4.9% | دعم 15.06 | مقاومة 19.70
-   وقف خسارة 16.24 (-7.3%) | هدف 19.70 (+12.4%) (عند المقاومة) | عائد/مخاطرة 1.7
-   نطاق النهاردة: 17.02 - 18.10 | نطاق الأسبوع: 16.34 - 19.67
+6. IFAP | آخر قفلة 15.65 | 🟢 شراء [ترتيب الموديل 5]
+   RSI 27 | تذبذب يومي 4.7% | دعم 15.12 | مقاومة 19.75
+   وقف خسارة 14.55 (-7.0%) | هدف 17.85 (+14.1%) | عائد/مخاطرة 2.0
+   نطاق بكره: 15.26 - 15.95 | نطاق الأسبوع: 14.69 - 16.18
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
-10. CANA | آخر قفلة 45.00 | 🔴 بيع [ترتيب الموديل 10]
-   RSI 50 | تذبذب يومي 6.1% | دعم 38.10 | مقاومة 48.49
-   وقف خسارة 40.89 (-9.1%) | هدف 48.49 (+7.8%) (عند المقاومة) | عائد/مخاطرة 0.8 ⚠️ضعيف
-   نطاق النهاردة: 43.58 - 46.69 | نطاق الأسبوع: 42.87 - 49.07
+7. GBCO | آخر قفلة 21.67 | ⚪ انتظر [ترتيب الموديل 6]
+   RSI 16 | تذبذب يومي 7.1% | دعم 20.90 | مقاومة 32.97
+   وقف خسارة 19.50 (-10.0%) | هدف 26.31 (+21.4%) | عائد/مخاطرة 2.1
+   نطاق بكره: 20.73 - 22.26 | نطاق الأسبوع: 20.00 - 23.35
+   📰 مفيش أخبار عن السهم في آخر 7 أيام
+
+8. FWRY | آخر قفلة 16.10 | ⚪ انتظر [ترتيب الموديل 7]
+   RSI 28 | تذبذب يومي 4.5% | دعم 15.27 | مقاومة 19.25
+   وقف خسارة 15.01 (-6.7%) | هدف 18.27 (+13.5%) | عائد/مخاطرة 2.0
+   نطاق بكره: 15.74 - 16.36 | نطاق الأسبوع: 15.07 - 16.90
+   📰 مفيش أخبار عن السهم في آخر 7 أيام
+
+9. CLHO | آخر قفلة 13.23 | ⚪ انتظر [ترتيب الموديل 8]
+   RSI 39 | تذبذب يومي 4.7% | دعم 12.51 | مقاومة 15.75
+   وقف خسارة 12.29 (-7.1%) | هدف 15.10 (+14.2%) | عائد/مخاطرة 2.0
+   نطاق بكره: 12.86 - 13.41 | نطاق الأسبوع: 12.31 - 13.99
+   📰 مفيش أخبار عن السهم في آخر 7 أيام
+
+10. RAYA | آخر قفلة 5.23 | ⚪ انتظر [ترتيب الموديل 10]
+   RSI 34 | تذبذب يومي 5.7% | دعم 5.02 | مقاومة 6.70
+   وقف خسارة 4.78 (-8.5%) | هدف 6.12 (+17.1%) | عائد/مخاطرة 2.0
+   نطاق بكره: 5.02 - 5.35 | نطاق الأسبوع: 4.85 - 5.56
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
 📰 رصيد Gemini خلصان (RESOURCE_EXHAUSTED)، فالتقييم النهاردة بالكلمات المفتاحية (أبسط وأقل دقة من الذكاء الاصطناعي، علامة «بالكلمات» جنب كل تقييم). شحن الرصيد من AI Studio بيرجّع التقييم الذكي.
@@ -3756,7 +3774,7 @@ $KORA.CA: possibly delisted; no timezone found
 📰 الأخبار تأكيد أو تحذير بس: مبتغيّرش الترتيب ولا شراء/بيع، ومفيش باكتست ليها لسه. أنا بقيس بعد كام جلسة لو التصنيف بيبقى أصح لما الأخبار بتأيده.
 
 🟢 شراء = الموديل شايف السهم هيقفل بكره فوق افتتاحه | 🔴 بيع = شايفه هيقفل تحته | ⚪ انتظر = مش واثق.
-⚠️ دقة شراء/بيع في آخر 250 يوم (على أيام الموديل ماشافهاش): 55% صح مقابل 56% لو خمّنا دايمًا الأغلب، يعني مش أحسن من التخمين الثابت. لما قال شراء: طلع 48% من المرات | لما قال بيع: نزل 57%
+⚠️ دقة شراء/بيع في آخر 250 يوم (على أيام الموديل ماشافهاش): 55% صح مقابل 56% لو خمّنا دايمًا الأغلب، يعني مش أحسن من التخمين الثابت. لما قال شراء: طلع 47% من المرات | لما قال بيع: نزل 57%
 
 إزاي تقرأ المستويات:
 • وقف الخسارة = 1.5 × التذبذب اليومي تحت القفلة. الهدف = 3 × التذبذب فوقها (أو المقاومة لو أقرب).
