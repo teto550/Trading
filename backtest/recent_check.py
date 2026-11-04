@@ -74,6 +74,7 @@ def run(a):
 
 def main():
     ap = argparse.ArgumentParser()
+    ap.add_argument("--source", default="yfinance")
     ap.add_argument("--start", default="2026-10-25")
     ap.add_argument("--horizons", type=lambda s: [int(x) for x in s.split(",") if x], default=[1, 5])
     a = ap.parse_args()
