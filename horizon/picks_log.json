@@ -718,6 +718,111 @@
    },
    "news": {},
    "made": "2026-11-04 08:48"
+  },
+  {
+   "date": "2026-11-04",
+   "h": 5,
+   "variant": "macro",
+   "picks": [
+    "EMFD",
+    "EGAL",
+    "UNIT",
+    "SNFC",
+    "EFIH",
+    "COMI",
+    "CPCI",
+    "SCEM",
+    "RTVC",
+    "MIPH"
+   ],
+   "labels": {
+    "EMFD": "بيع",
+    "EGAL": "بيع",
+    "UNIT": "بيع",
+    "SNFC": "بيع",
+    "EFIH": "بيع",
+    "COMI": "بيع",
+    "CPCI": "بيع",
+    "SCEM": "بيع",
+    "RTVC": "بيع",
+    "MIPH": "بيع"
+   },
+   "news": {
+    "CPCI": "agree"
+   },
+   "made": "2026-11-05 00:53"
+  },
+  {
+   "date": "2026-11-04",
+   "h": 10,
+   "variant": "macro",
+   "picks": [
+    "CPCI",
+    "UNIT",
+    "EMFD",
+    "COMI",
+    "SCEM",
+    "SNFC",
+    "FAIT",
+    "SDTI",
+    "MIPH",
+    "CIEB"
+   ],
+   "labels": {
+    "CPCI": "بيع",
+    "UNIT": "بيع",
+    "EMFD": "بيع",
+    "COMI": "بيع",
+    "SCEM": "بيع",
+    "SNFC": "بيع",
+    "FAIT": "بيع",
+    "SDTI": "بيع",
+    "MIPH": "بيع",
+    "CIEB": "بيع"
+   },
+   "news": {
+    "CPCI": "agree",
+    "FAIT": "neutral",
+    "SDTI": "neutral",
+    "CIEB": "neutral"
+   },
+   "made": "2026-11-05 00:53"
+  },
+  {
+   "date": "2026-11-04",
+   "h": 20,
+   "variant": "macro",
+   "picks": [
+    "CPCI",
+    "SAUD",
+    "FAIT",
+    "DOMT",
+    "BINV",
+    "CIEB",
+    "MENA",
+    "WCDF",
+    "HRHO",
+    "CCAP"
+   ],
+   "labels": {
+    "CPCI": "بيع",
+    "SAUD": "بيع",
+    "FAIT": "بيع",
+    "DOMT": "بيع",
+    "BINV": "بيع",
+    "CIEB": "بيع",
+    "MENA": "بيع",
+    "WCDF": "بيع",
+    "HRHO": "بيع",
+    "CCAP": "بيع"
+   },
+   "news": {
+    "CPCI": "agree",
+    "FAIT": "neutral",
+    "CIEB": "neutral",
+    "HRHO": "neutral"
+   },
+   "made": "2026-11-05 00:53"
   }
  ]
 }
