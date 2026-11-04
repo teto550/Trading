@@ -207,6 +207,21 @@ def levels(C, H, L, col, t):
             "w_low": last * (1 + w_lo), "w_high": last * (1 + w_hi)}
 
 
+def live_health(days, label="الجلسة الجاية", n=6, min_n=5):
+    """قاطع أمان من الأداء الحي: لو آخر n نتايج ترشيحات قصرت عن السوق في أغلبها، بنحذّر في أول الرسالة.
+    days: قايمة سجلات التقييم (فيها avg و mkt_avg). بيرجّع نص تحذير أو None."""
+    last = [d for d in days][-n:]
+    if len(last) < min_n:
+        return None
+    edge = [d["avg"] - d["mkt_avg"] for d in last]
+    beat = sum(1 for e in edge if e > 0)
+    mean = sum(edge) / len(edge)
+    if beat <= len(edge) // 3 and mean < -0.5:
+        return (f"🚨 الأداء الحي: ترشيحات {label} قصرت عن متوسط السوق في {len(edge) - beat} من آخر {len(edge)} نتايج "
+                f"(المتوسط {mean:+.2f}% عن السوق). الفترة دي الموديل مش شغال كويس، متعتمدش عليه.")
+    return None
+
+
 def market_status(C, t):
     """حالة السوق كله: متوسط تغير اليوم ونسبة الأسهم الطالعة وتغير آخر 20 جلسة (وسيط الأسهم)."""
     r1 = (C.iloc[t] / C.iloc[t - 1] - 1)
@@ -291,6 +306,9 @@ def build_report(C, H, L, V, O, a, now, note=None):
     mw = dr.market_warning(C)
     if mw:
         L_ += [mw, ""]
+    lh = live_health(sorted(_load_json(SCORE_FILE, {"days": []})["days"], key=lambda d: d["target"]))
+    if lh:
+        L_ += [lh, ""]
     ms = market_status(C, t)
     if ms:
         L_ += [f"{ms['tag']}: النهاردة {ms['mean1']:+.1f}% | {ms['breadth']:.0f}% من الأسهم طلعت | "

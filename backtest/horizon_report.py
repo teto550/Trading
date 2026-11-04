@@ -260,6 +260,11 @@ def picks_message(date, picks_by_h, ms, inputs="", holds=None, news_map=None, wa
     L_ = [f"🔭 توقع 5 و10 و20 يوم - مبني على قفلة {date}"]
     if warn:
         L_.append(warn)
+    for hh in sorted(picks_by_h):
+        days_h = sorted([d for d in _load(SCORE_FILE, {"days": []})["days"] if d["h"] == hh], key=lambda d: d["date"])
+        lh = tr.live_health(days_h, label=f"{hh} يوم", n=6, min_n=4)
+        if lh:
+            L_.append(lh)
     if inputs:
         L_.append("المدخلات: " + inputs)
     if ms:
