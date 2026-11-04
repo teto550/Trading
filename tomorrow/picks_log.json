@@ -264,30 +264,30 @@
    "data_date": "2026-11-04",
    "picks": [
     "RTVC",
-    "CLHO",
     "FERC",
-    "SAUD",
-    "EGCH",
+    "CLHO",
     "SKPC",
-    "MTIE",
-    "IFAP",
+    "EGAL",
+    "GBCO",
+    "EGCH",
+    "GTWL",
     "OLFI",
-    "SUGR"
+    "OFH"
    ],
    "labels": {
     "RTVC": "شراء",
+    "FERC": "انتظر",
     "CLHO": "شراء",
-    "FERC": "شراء",
-    "SAUD": "شراء",
-    "EGCH": "شراء",
     "SKPC": "شراء",
-    "MTIE": "انتظر",
-    "IFAP": "شراء",
-    "OLFI": "شراء",
-    "SUGR": "شراء"
+    "EGAL": "انتظر",
+    "GBCO": "انتظر",
+    "EGCH": "شراء",
+    "GTWL": "انتظر",
+    "OLFI": "انتظر",
+    "OFH": "انتظر"
    },
    "news": {},
-   "made": "2026-11-04 16:38"
+   "made": "2026-11-05 00:15"
   }
  ]
 }
