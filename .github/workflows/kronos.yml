@@ -1,0 +1,60 @@
+name: EGX Kronos Test
+on:
+  workflow_dispatch:
+    inputs:
+      size:
+        description: "حجم Kronos: mini / small / base"
+        required: false
+        default: "small"
+      n_dates:
+        description: "عدد أيام الاختبار (كل 5 جلسات)"
+        required: false
+        default: "40"
+concurrency:
+  group: kronos
+  cancel-in-progress: false
+jobs:
+  kronos:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          pip install -r backtest/requirements.txt
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install einops huggingface_hub safetensors tqdm matplotlib
+          git clone --depth 1 https://github.com/shiyu-coder/Kronos.git "$RUNNER_TEMP/Kronos"
+      - name: Run Kronos test
+        env:
+          KRONOS_DIR: ${{ runner.temp }}/Kronos
+        run: |
+          mkdir -p backtest/results
+          set -o pipefail
+          python -u backtest/kronos_test.py --source yfinance \
+            --size "${{ github.event.inputs.size || 'small' }}" \
+            --n-dates "${{ github.event.inputs.n_dates || '40' }}" \
+            2>&1 | tee backtest/results/log_kronos_latest.txt
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kronos-report
+          path: backtest/results/
+      - name: Commit results
+        if: always()
+        run: |
+          git config user.name "alert-bot"
+          git config user.email "alert-bot@users.noreply.github.com"
+          git add backtest/results/ || true
+          git commit -m "kronos report [skip ci]" || echo "nothing"
+          for i in 1 2 3 4 5 6; do
+            git pull --rebase -X theirs origin main || true
+            git push && break
+            echo "push race, retry $i"; sleep $((RANDOM % 8 + 3))
+          done
