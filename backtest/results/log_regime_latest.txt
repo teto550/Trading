@@ -1,0 +1,121 @@
+[data] 25/251 سهم، اتجاب تاريخ لـ 25
+$VLMR.CA: possibly delisted; no timezone found
+$VLMRA.CA: possibly delisted; no timezone found
+$ACTF.CA: possibly delisted; no timezone found
+$AIDC.CA: possibly delisted; no timezone found
+$AIHC.CA: possibly delisted; no timezone found
+$BONY.CA: possibly delisted; no timezone found
+[data] 50/251 سهم، اتجاب تاريخ لـ 44
+$GOUR.CA: possibly delisted; no timezone found
+$GPIM.CA: possibly delisted; no timezone found
+[data] 75/251 سهم، اتجاب تاريخ لـ 67
+$TAQA.CA: possibly delisted; no timezone found
+$VALU.CA: possibly delisted; no timezone found
+[data] 100/251 سهم، اتجاب تاريخ لـ 90
+$GTHE.CA: possibly delisted; no timezone found
+$SNFI.CA: possibly delisted; no timezone found
+$IRAX.CA: possibly delisted; no timezone found
+$CRST.CA: possibly delisted; no timezone found
+[data] 125/251 سهم، اتجاب تاريخ لـ 111
+$NCGC.CA: possibly delisted; no timezone found
+$NBKE.CA: possibly delisted; no timezone found
+$QNBE.CA: possibly delisted; no timezone found
+[data] 150/251 سهم، اتجاب تاريخ لـ 133
+$PACH.CA: possibly delisted; no timezone found
+$UASG.CA: possibly delisted; no timezone found
+$EITP.CA: possibly delisted; no timezone found
+$SMPP.CA: possibly delisted; no timezone found
+[data] 175/251 سهم، اتجاب تاريخ لـ 154
+$ACRO.CA: possibly delisted; no timezone found
+$ESRS.CA: possibly delisted; no timezone found
+$WATP.CA: possibly delisted; no timezone found
+$SUCE.CA: possibly delisted; no timezone found
+$TORA.CA: possibly delisted; no timezone found
+$DCRC.CA: possibly delisted; no timezone found
+$ALEX.CA: possibly delisted; no timezone found
+$TYCN.CA: possibly delisted; no timezone found
+$ARVA.CA: possibly delisted; no timezone found
+$HCFI.CA: possibly delisted; no timezone found
+$NARE.CA: possibly delisted; no timezone found
+[data] 200/251 سهم، اتجاب تاريخ لـ 168
+$UTOP.CA: possibly delisted; no timezone found
+$APPC.CA: possibly delisted; no timezone found
+$UBEE.CA: possibly delisted; no timezone found
+$NAPR.CA: possibly delisted; no timezone found
+$DIFC.CA: possibly delisted; no timezone found
+[data] 225/251 سهم، اتجاب تاريخ لـ 188
+$FCMD.CA: possibly delisted; no timezone found
+$VERT.CA: possibly delisted; no timezone found
+$ADRI.CA: possibly delisted; no timezone found
+$KRDI.CA: possibly delisted; no timezone found
+$UPMS.CA: possibly delisted; no timezone found
+$TANM.CA: possibly delisted; no timezone found
+$ACAP.CA: possibly delisted; no timezone found
+$DGTZ.CA: possibly delisted; no timezone found
+$PHGC.CA: possibly delisted; no timezone found
+$GTEX.CA: possibly delisted; no timezone found
+$GGRN.CA: possibly delisted; no timezone found
+$HBCO.CA: possibly delisted; no timezone found
+$CPME.CA: possibly delisted; no timezone found
+$TWSA.CA: possibly delisted; no timezone found
+[data] 250/251 سهم، اتجاب تاريخ لـ 199
+$KORA.CA: possibly delisted; no timezone found
+[data] خلص الجلب: 199 سهم اتجاب من 251
+^CASE30: Period 'max' is invalid, must be one of: 1d, 5d
+^CASE30: Period 'max' is invalid, must be one of: 1d, 5d
+[macro] egx30 (^CASE30): فشل
+$EGX30.CA: possibly delisted; no timezone found
+$EGX30.CA: possibly delisted; no timezone found
+[macro] egx30 (EGX30.CA): فشل
+$^EGX30: possibly delisted; no timezone found
+$^EGX30: possibly delisted; no timezone found
+[macro] egx30 (^EGX30): فشل
+[macro] usd (EGP=X): تمام 6376 يوم
+[regime] h=1
+[regime] h=5
+[regime] h=10
+[regime] h=20
+# EGX Regime - 2026-11-04 06:37
+
+الأرقام bps للصفقة: متوسط (أعلى 20% - متوسط السوق)، قبل التكلفة. الأيام متداخلة، فالعدد مش عينات مستقلة.
+
+## احتفاظ 1 يوم
+
+| الحالة | أيام | S0 الموديل | HB أعلى بيتا | LB أقل بيتا | MIX موديل+بيتا | متوسط بيتا اللي الموديل بيختاره (0 = دفاعي، 1 = عالي الحساسية) |
+|---|---|---|---|---|---|---|
+| السوق نازل (20 يوم ≤ -5%) | 385 | +37 | +7 | -4 | +26 | -0.12 |
+| بعد نزول وبيرتد (20 يوم ≤ -5% و5 أيام ≥ +2%) | 63 | +36 | -16 | +13 | +14 | -0.11 |
+| نازل ومكمل (20 يوم ≤ -5% و5 أيام ≤ -2%) | 203 | +34 | +16 | -13 | +33 | -0.13 |
+| عادي | 1618 | +33 | -6 | +3 | +17 | -0.08 |
+| طالع (20 يوم ≥ +5%) | 1059 | +48 | -1 | -2 | +29 | -0.08 |
+
+## احتفاظ 5 يوم
+
+| الحالة | أيام | S0 الموديل | HB أعلى بيتا | LB أقل بيتا | MIX موديل+بيتا | متوسط بيتا اللي الموديل بيختاره (0 = دفاعي، 1 = عالي الحساسية) |
+|---|---|---|---|---|---|---|
+| السوق نازل (20 يوم ≤ -5%) | 379 | +40 | +20 | -12 | +36 | -0.10 |
+| بعد نزول وبيرتد (20 يوم ≤ -5% و5 أيام ≥ +2%) | 61 | +91 | -15 | -16 | +58 | -0.09 |
+| نازل ومكمل (20 يوم ≤ -5% و5 أيام ≤ -2%) | 201 | +19 | +48 | -20 | +33 | -0.08 |
+| عادي | 1617 | +47 | -27 | +12 | +6 | -0.13 |
+| طالع (20 يوم ≥ +5%) | 1059 | +47 | -19 | +2 | +27 | -0.12 |
+
+## احتفاظ 10 يوم
+
+| الحالة | أيام | S0 الموديل | HB أعلى بيتا | LB أقل بيتا | MIX موديل+بيتا | متوسط بيتا اللي الموديل بيختاره (0 = دفاعي، 1 = عالي الحساسية) |
+|---|---|---|---|---|---|---|
+| السوق نازل (20 يوم ≤ -5%) | 372 | +61 | +41 | -25 | +70 | -0.09 |
+| بعد نزول وبيرتد (20 يوم ≤ -5% و5 أيام ≥ +2%) | 61 | +119 | -8 | -38 | +83 | -0.09 |
+| نازل ومكمل (20 يوم ≤ -5% و5 أيام ≤ -2%) | 195 | +26 | +61 | -22 | +56 | -0.09 |
+| عادي | 1617 | +44 | -39 | +8 | -6 | -0.13 |
+| طالع (20 يوم ≥ +5%) | 1059 | +59 | -51 | +24 | +12 | -0.14 |
+
+## احتفاظ 20 يوم
+
+| الحالة | أيام | S0 الموديل | HB أعلى بيتا | LB أقل بيتا | MIX موديل+بيتا | متوسط بيتا اللي الموديل بيختاره (0 = دفاعي، 1 = عالي الحساسية) |
+|---|---|---|---|---|---|---|
+| السوق نازل (20 يوم ≤ -5%) | 363 | +97 | +91 | -40 | +106 | -0.10 |
+| بعد نزول وبيرتد (20 يوم ≤ -5% و5 أيام ≥ +2%) | 59 | +136 | +37 | -192 | +131 | -0.09 |
+| نازل ومكمل (20 يوم ≤ -5% و5 أيام ≤ -2%) | 189 | +64 | +122 | -30 | +113 | -0.10 |
+| عادي | 1617 | +51 | -52 | +20 | -2 | -0.15 |
+| طالع (20 يوم ≥ +5%) | 1059 | +81 | -116 | +61 | -24 | -0.17 |
+
