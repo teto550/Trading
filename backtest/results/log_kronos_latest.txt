@@ -1,0 +1,126 @@
+[data] 25/251 سهم، اتجاب تاريخ لـ 25
+$VLMR.CA: possibly delisted; no timezone found
+$VLMRA.CA: possibly delisted; no timezone found
+$ACTF.CA: possibly delisted; no timezone found
+$AIDC.CA: possibly delisted; no timezone found
+$AIHC.CA: possibly delisted; no timezone found
+$BONY.CA: possibly delisted; no timezone found
+[data] 50/251 سهم، اتجاب تاريخ لـ 44
+$GOUR.CA: possibly delisted; no timezone found
+$GPIM.CA: possibly delisted; no timezone found
+[data] 75/251 سهم، اتجاب تاريخ لـ 67
+$TAQA.CA: possibly delisted; no timezone found
+$VALU.CA: possibly delisted; no timezone found
+[data] 100/251 سهم، اتجاب تاريخ لـ 90
+$GTHE.CA: possibly delisted; no timezone found
+$SNFI.CA: possibly delisted; no timezone found
+$IRAX.CA: possibly delisted; no timezone found
+$CRST.CA: possibly delisted; no timezone found
+[data] 125/251 سهم، اتجاب تاريخ لـ 111
+$NCGC.CA: possibly delisted; no timezone found
+$NBKE.CA: possibly delisted; no timezone found
+$QNBE.CA: possibly delisted; no timezone found
+[data] 150/251 سهم، اتجاب تاريخ لـ 133
+$PACH.CA: possibly delisted; no timezone found
+$UASG.CA: possibly delisted; no timezone found
+$EITP.CA: possibly delisted; no timezone found
+$SMPP.CA: possibly delisted; no timezone found
+[data] 175/251 سهم، اتجاب تاريخ لـ 154
+$ACRO.CA: possibly delisted; no timezone found
+$ESRS.CA: possibly delisted; no timezone found
+$WATP.CA: possibly delisted; no timezone found
+$SUCE.CA: possibly delisted; no timezone found
+$TORA.CA: possibly delisted; no timezone found
+$DCRC.CA: possibly delisted; no timezone found
+$ALEX.CA: possibly delisted; no timezone found
+$TYCN.CA: possibly delisted; no timezone found
+$ARVA.CA: possibly delisted; no timezone found
+$HCFI.CA: possibly delisted; no timezone found
+$NARE.CA: possibly delisted; no timezone found
+[data] 200/251 سهم، اتجاب تاريخ لـ 168
+$UTOP.CA: possibly delisted; no timezone found
+$APPC.CA: possibly delisted; no timezone found
+$UBEE.CA: possibly delisted; no timezone found
+$NAPR.CA: possibly delisted; no timezone found
+$DIFC.CA: possibly delisted; no timezone found
+[data] 225/251 سهم، اتجاب تاريخ لـ 188
+$FCMD.CA: possibly delisted; no timezone found
+$VERT.CA: possibly delisted; no timezone found
+$ADRI.CA: possibly delisted; no timezone found
+$KRDI.CA: possibly delisted; no timezone found
+$UPMS.CA: possibly delisted; no timezone found
+$TANM.CA: possibly delisted; no timezone found
+$ACAP.CA: possibly delisted; no timezone found
+$DGTZ.CA: possibly delisted; no timezone found
+$PHGC.CA: possibly delisted; no timezone found
+$GTEX.CA: possibly delisted; no timezone found
+$GGRN.CA: possibly delisted; no timezone found
+$HBCO.CA: possibly delisted; no timezone found
+$CPME.CA: possibly delisted; no timezone found
+$TWSA.CA: possibly delisted; no timezone found
+[data] 250/251 سهم، اتجاب تاريخ لـ 199
+$KORA.CA: possibly delisted; no timezone found
+[data] خلص الجلب: 199 سهم اتجاب من 251
+^CASE30: Period 'max' is invalid, must be one of: 1d, 5d
+^CASE30: Period 'max' is invalid, must be one of: 1d, 5d
+[macro] egx30 (^CASE30): فشل
+$EGX30.CA: possibly delisted; no timezone found
+$EGX30.CA: possibly delisted; no timezone found
+[macro] egx30 (EGX30.CA): فشل
+$^EGX30: possibly delisted; no timezone found
+$^EGX30: possibly delisted; no timezone found
+[macro] egx30 (^EGX30): فشل
+[macro] usd (EGP=X): تمام 6376 يوم
+[kronos] XGBoost walk-forward...
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[kronos] 2025-12-24 | 136 سهم | 63s
+[kronos] 2025-12-31 | 140 سهم | 129s
+[kronos] 2026-01-11 | 140 سهم | 195s
+[kronos] 2026-01-18 | 139 سهم | 260s
+[kronos] 2026-01-25 | 139 سهم | 324s
+[kronos] 2026-02-02 | 139 سهم | 390s
+[kronos] 2026-02-09 | 144 سهم | 455s
+[kronos] 2026-02-16 | 144 سهم | 518s
+[kronos] 2026-02-23 | 145 سهم | 582s
+[kronos] 2026-03-02 | 148 سهم | 651s
+[kronos] 2026-03-09 | 143 سهم | 718s
+[kronos] 2026-03-16 | 143 سهم | 786s
+[kronos] 2026-03-26 | 140 سهم | 852s
+[kronos] 2026-04-02 | 141 سهم | 918s
+[kronos] 2026-04-09 | 144 سهم | 986s
+[kronos] 2026-04-20 | 150 سهم | 1058s
+[kronos] 2026-04-27 | 150 سهم | 1128s
+[kronos] 2026-05-04 | 150 سهم | 1199s
+[kronos] 2026-05-12 | 150 سهم | 1269s
+[kronos] 2026-05-19 | 150 سهم | 1340s
+[kronos] 2026-06-01 | 150 سهم | 1411s
+[kronos] 2026-06-08 | 150 سهم | 1483s
+[kronos] 2026-06-15 | 150 سهم | 1555s
+[kronos] 2026-06-23 | 150 سهم | 1626s
+[kronos] 2026-06-30 | 150 سهم | 1696s
+[kronos] 2026-07-08 | 150 سهم | 1769s
+[kronos] 2026-07-15 | 150 سهم | 1841s
+[kronos] 2026-07-22 | 150 سهم | 1912s
+[kronos] 2026-07-30 | 150 سهم | 1981s
+[kronos] 2026-08-06 | 150 سهم | 2052s
+[kronos] 2026-08-13 | 150 سهم | 2123s
+[kronos] 2026-08-20 | 150 سهم | 2193s
+[kronos] 2026-08-30 | 150 سهم | 2266s
+[kronos] 2026-09-06 | 150 سهم | 2339s
+[kronos] 2026-09-13 | 150 سهم | 2413s
+[kronos] 2026-09-20 | 150 سهم | 2486s
+[kronos] 2026-09-27 | 150 سهم | 2559s
+[kronos] 2026-10-04 | 150 سهم | 2634s
+[kronos] 2026-10-12 | 147 سهم | 2708s
+[kronos] 2026-10-19 | 150 سهم | 2783s
+# EGX Kronos Test - 2026-11-04 23:06
+
+- Kronos-small zero-shot (من غير تدريب على EGX) | احتفاظ 10 يوم | عينة: 40 يوم اختبار (كل 5 جلسات) | تكلفة 20.0 bps | أعلى 20% مقابل متوسط السوق
+
+| الطريقة | أيام | IC | قبل التكلفة (bps) | بعد التكلفة (bps) | أيام كسبانة |
+|---|---|---|---|---|---|
+| Kronos zero-shot | 40 | +0.040 | +30 | -10 | 45% |
+| XGBoost (موديلنا الحالي) | 40 | +0.101 | +67 | +27 | 55% |
+| متوسط ترتيب Kronos + XGBoost | 40 | +0.083 | +27 | -13 | 42% |
+
+⚠️ عينة صغيرة (الأيام متداخلة لأن الاحتفاظ 10 جلسات)، فالفروق الصغيرة ضجيج.
