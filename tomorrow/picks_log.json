@@ -258,6 +258,36 @@
    },
    "news": {},
    "made": "2026-11-04 08:48"
+  },
+  {
+   "target": "2026-11-05",
+   "data_date": "2026-11-04",
+   "picks": [
+    "RTVC",
+    "CLHO",
+    "FERC",
+    "SAUD",
+    "EGCH",
+    "SKPC",
+    "MTIE",
+    "IFAP",
+    "OLFI",
+    "SUGR"
+   ],
+   "labels": {
+    "RTVC": "شراء",
+    "CLHO": "شراء",
+    "FERC": "شراء",
+    "SAUD": "شراء",
+    "EGCH": "شراء",
+    "SKPC": "شراء",
+    "MTIE": "انتظر",
+    "IFAP": "شراء",
+    "OLFI": "شراء",
+    "SUGR": "شراء"
+   },
+   "news": {},
+   "made": "2026-11-04 16:38"
   }
  ]
 }
