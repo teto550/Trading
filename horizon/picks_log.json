@@ -635,27 +635,27 @@
     "EMFD",
     "SNFC",
     "EAST",
+    "LCSW",
     "ETRS",
     "UNIT",
-    "LCSW",
     "EFIH",
-    "SCEM",
-    "CIEB"
+    "CLHO",
+    "SCEM"
    ],
    "labels": {
     "CPCI": "انتظر",
     "EMFD": "انتظر",
     "SNFC": "انتظر",
     "EAST": "انتظر",
+    "LCSW": "انتظر",
     "ETRS": "انتظر",
     "UNIT": "انتظر",
-    "LCSW": "انتظر",
     "EFIH": "انتظر",
-    "SCEM": "انتظر",
-    "CIEB": "انتظر"
+    "CLHO": "انتظر",
+    "SCEM": "انتظر"
    },
    "news": {},
-   "made": "2026-11-04 00:30"
+   "made": "2026-11-04 08:48"
   },
   {
    "date": "2026-11-03",
@@ -666,27 +666,27 @@
     "SDTI",
     "SNFC",
     "EMFD",
-    "FAIT",
+    "UNIT",
     "EAST",
     "ETRS",
     "LCSW",
-    "UNIT",
-    "CANA"
+    "CANA",
+    "FAIT"
    ],
    "labels": {
     "CPCI": "انتظر",
     "SDTI": "انتظر",
     "SNFC": "انتظر",
     "EMFD": "انتظر",
-    "FAIT": "انتظر",
+    "UNIT": "انتظر",
     "EAST": "انتظر",
     "ETRS": "انتظر",
     "LCSW": "انتظر",
-    "UNIT": "انتظر",
-    "CANA": "انتظر"
+    "CANA": "انتظر",
+    "FAIT": "انتظر"
    },
    "news": {},
-   "made": "2026-11-04 00:30"
+   "made": "2026-11-04 08:48"
   },
   {
    "date": "2026-11-03",
@@ -695,29 +695,29 @@
    "picks": [
     "SNFC",
     "CPCI",
-    "LCSW",
     "SAUD",
-    "WCDF",
     "UNIT",
-    "ASCM",
-    "DOMT",
-    "SDTI",
-    "AREH"
+    "LCSW",
+    "WCDF",
+    "CIEB",
+    "AREH",
+    "ADIB",
+    "EGAL"
    ],
    "labels": {
-    "SNFC": "انتظر",
+    "SNFC": "شراء",
     "CPCI": "انتظر",
-    "LCSW": "انتظر",
     "SAUD": "انتظر",
-    "WCDF": "انتظر",
     "UNIT": "شراء",
-    "ASCM": "انتظر",
-    "DOMT": "انتظر",
-    "SDTI": "انتظر",
-    "AREH": "انتظر"
+    "LCSW": "انتظر",
+    "WCDF": "انتظر",
+    "CIEB": "انتظر",
+    "AREH": "شراء",
+    "ADIB": "انتظر",
+    "EGAL": "شراء"
    },
    "news": {},
-   "made": "2026-11-04 00:30"
+   "made": "2026-11-04 08:48"
   }
  ]
 }
