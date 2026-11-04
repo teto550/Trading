@@ -233,7 +233,10 @@ def result_message(rec):
     for x in rec["picks"]:
         L_.append(tr.pick_line(x))
     if rec.get("dir_n"):
-        L_.insert(3, f"تصنيف شراء/بيع: صح في {rec['dir_ok']} من {rec['dir_n']}")
+        L_.insert(3, f"تصنيف شراء/بيع: صح في {rec['dir_ok']} من {rec['dir_n']} (الباقي كان انتظر)")
+    else:
+        L_.insert(3, "تصنيف شراء/بيع: مفيش توقع اتجاه اتقال (كلهم انتظر)")
+    L_[3:3] = tr.verdict_line(rec)
     L_ += overlap_lines(rec)
     days = [d for d in _load(SCORE_FILE, {"days": []})["days"]
             if d["h"] == h and d.get("variant", "base") == rec.get("variant", "base")]

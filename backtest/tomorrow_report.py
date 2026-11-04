@@ -442,12 +442,26 @@ def score_pending(C):
     return new
 
 
+def verdict_line(rec):
+    """الحكم الصريح: الفرق عن السوق، وتحذير لو السوق كله اتحرك بقوة (فطلوع الأسهم مش دليل على الموديل)."""
+    diff = rec["avg"] - rec["mkt_avg"]
+    share = rec["mkt_up"] / rec["mkt_n"] * 100
+    out = [f"{'✅ أحسن' if diff > 0 else '❌ أقل'} من متوسط السوق بـ{diff:+.2f}% "
+           f"(الترشيحات {rec['avg']:+.2f}% والسوق {rec['mkt_avg']:+.2f}%)"]
+    if share >= 80 or share <= 20:
+        out.append(f"⚠️ السوق كله {'طلع' if share >= 80 else 'نزل'} بقوة ({share:.0f}% من الأسهم)، فطلوع/نزول الأسهم "
+                   f"ده من حركة السوق مش دليل إن الموديل صح. المقياس الحقيقي هو الفرق عن السوق.")
+    return out
+
+
 def pick_line(x):
     """سطر سهم في رسالة النتيجة: لو كان ليه تصنيف شراء/بيع بنقول صح ولا غلط، وإلا طلع/نزل بس."""
     if x.get("lab") in (dr.BUY, dr.SELL):
         ok = x["r"] != 0 and (x["r"] > 0) == (x["lab"] == dr.BUY)
         return f"{'✅' if ok else '❌'} {x['n']} {x['r']:+.1f}% | قلنا {x['lab']}"
     mark = "✅" if x["r"] > 0 else ("❌" if x["r"] < 0 else "➖")
+    if x.get("lab") == dr.WAIT:
+        return f"⚪ {x['n']} {x['r']:+.1f}% | قلنا انتظر (مفيش اتجاه متقال)"
     return f"{mark} {x['n']} {x['r']:+.1f}%"
 
 
@@ -462,7 +476,10 @@ def scorecard_message(rec):
     for x in rec["picks"]:
         L_.append(pick_line(x))
     if rec.get("dir_n"):
-        L_.insert(3, f"تصنيف شراء/بيع: صح في {rec['dir_ok']} من {rec['dir_n']}")
+        L_.insert(3, f"تصنيف شراء/بيع: صح في {rec['dir_ok']} من {rec['dir_n']} (الباقي كان انتظر)")
+    else:
+        L_.insert(3, "تصنيف شراء/بيع: مفيش توقع اتجاه اتقال (كلهم انتظر)")
+    L_[3:3] = verdict_line(rec)
     days = _load_json(SCORE_FILE, {"days": []})["days"]
     if len(days) >= 2:
         tn, tu = sum(d["n"] for d in days), sum(d["up"] for d in days)
