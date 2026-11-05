@@ -833,30 +833,30 @@
     "EMFD",
     "CANA",
     "COMI",
-    "EAST",
+    "EFIH",
     "CLHO",
     "SCEM",
-    "EFIH",
-    "ETRS",
-    "SNFC"
+    "SNFC",
+    "RTVC",
+    "ETRS"
    ],
    "labels": {
     "SDTI": "بيع",
     "EMFD": "بيع",
     "CANA": "بيع",
     "COMI": "بيع",
-    "EAST": "بيع",
+    "EFIH": "بيع",
     "CLHO": "بيع",
     "SCEM": "بيع",
-    "EFIH": "بيع",
-    "ETRS": "بيع",
-    "SNFC": "بيع"
+    "SNFC": "بيع",
+    "RTVC": "بيع",
+    "ETRS": "بيع"
    },
    "news": {
     "COMI": "neutral",
     "ETRS": "neutral"
    },
-   "made": "2026-11-06 01:27"
+   "made": "2026-11-06 01:50"
   },
   {
    "date": "2026-11-05",
@@ -864,33 +864,33 @@
    "variant": "macro",
    "picks": [
     "SDTI",
-    "COMI",
     "SCEM",
     "CANA",
     "CPCI",
     "SAUD",
-    "EMFD",
-    "BINV",
-    "PHTV",
-    "GBCO"
+    "GBCO",
+    "COMI",
+    "ALCN",
+    "SKPC",
+    "EFIH"
    ],
    "labels": {
     "SDTI": "بيع",
-    "COMI": "بيع",
     "SCEM": "بيع",
     "CANA": "بيع",
     "CPCI": "بيع",
     "SAUD": "بيع",
-    "EMFD": "بيع",
-    "BINV": "بيع",
-    "PHTV": "بيع",
-    "GBCO": "بيع"
+    "GBCO": "بيع",
+    "COMI": "بيع",
+    "ALCN": "بيع",
+    "SKPC": "بيع",
+    "EFIH": "بيع"
    },
    "news": {
-    "COMI": "neutral",
-    "CPCI": "neutral"
+    "CPCI": "neutral",
+    "COMI": "neutral"
    },
-   "made": "2026-11-06 01:27"
+   "made": "2026-11-06 01:50"
   },
   {
    "date": "2026-11-05",
@@ -898,36 +898,92 @@
    "variant": "macro",
    "picks": [
     "SDTI",
-    "ADIB",
-    "ALCN",
     "CANA",
-    "EMFD",
-    "BINV",
-    "ICID",
-    "ETRS",
-    "FAIT",
-    "AJWA"
+    "ALCN",
+    "ACGC",
+    "EGAL",
+    "SCEM",
+    "DOMT",
+    "SNFC",
+    "SKPC",
+    "BINV"
    ],
    "labels": {
     "SDTI": "بيع",
-    "ADIB": "بيع",
-    "ALCN": "بيع",
     "CANA": "بيع",
-    "EMFD": "بيع",
-    "BINV": "بيع",
-    "ICID": "بيع",
-    "ETRS": "بيع",
-    "FAIT": "بيع",
-    "AJWA": "بيع"
+    "ALCN": "بيع",
+    "ACGC": "بيع",
+    "EGAL": "بيع",
+    "SCEM": "بيع",
+    "DOMT": "بيع",
+    "SNFC": "بيع",
+    "SKPC": "بيع",
+    "BINV": "بيع"
    },
-   "news": {
-    "ADIB": "neutral",
-    "ICID": "neutral",
-    "ETRS": "neutral",
-    "FAIT": "neutral",
-    "AJWA": "neutral"
+   "news": {},
+   "made": "2026-11-06 01:50"
+  },
+  {
+   "date": "2026-11-05",
+   "h": 40,
+   "variant": "macro",
+   "picks": [
+    "ISMA",
+    "PRCL",
+    "OBRI",
+    "ATLC",
+    "DAPH",
+    "SAUD",
+    "MIPH",
+    "CERA",
+    "SKPC",
+    "ALCN"
+   ],
+   "labels": {
+    "ISMA": "شراء",
+    "PRCL": "شراء",
+    "OBRI": "شراء",
+    "ATLC": "شراء",
+    "DAPH": "شراء",
+    "SAUD": "شراء",
+    "MIPH": "شراء",
+    "CERA": "شراء",
+    "SKPC": "شراء",
+    "ALCN": "شراء"
    },
-   "made": "2026-11-06 01:27"
+   "news": {},
+   "made": "2026-11-06 01:50"
+  },
+  {
+   "date": "2026-11-05",
+   "h": 60,
+   "variant": "macro",
+   "picks": [
+    "ISMA",
+    "GGCC",
+    "GRCA",
+    "PRCL",
+    "NIPH",
+    "ECAP",
+    "MENA",
+    "PHAR",
+    "RREI",
+    "AFMC"
+   ],
+   "labels": {
+    "ISMA": "شراء",
+    "GGCC": "شراء",
+    "GRCA": "شراء",
+    "PRCL": "شراء",
+    "NIPH": "شراء",
+    "ECAP": "شراء",
+    "MENA": "شراء",
+    "PHAR": "شراء",
+    "RREI": "شراء",
+    "AFMC": "شراء"
+   },
+   "news": {},
+   "made": "2026-11-06 01:50"
   }
  ]
 }
