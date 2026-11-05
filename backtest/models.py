@@ -2,7 +2,7 @@
 import numpy as np
 
 # اللي أثبتته التجربة (2022+، تكلفة 20 bps): 20 يوم → LightGBM لوحده، 10 أيام → متوسط ترتيب 3 موديلات، 5 أيام → XGBoost
-SPEC = {5: ("xgb",), 10: ("xgb", "lgbm", "cat"), 20: ("lgbm",)}
+SPEC = {5: ("xgb",), 10: ("xgb", "lgbm", "cat"), 20: ("lgbm",), 40: ("lgbm",), 60: ("lgbm",)}
 
 
 def make(kind, trees=150, seed=0):

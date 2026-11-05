@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ================================================================
-   EGX - توقع 5 و10 و20 يوم (رسالة مستقلة عن تقرير جلسة بكره)
+   EGX - توقع 5 و10 و20 و40 و60 يوم (رسالة مستقلة عن تقرير جلسة بكره)
 ================================================================
 كل يوم تداول بعد القفل:
   1) بيدرّب XGBoost (نفس موديل الباكتست متعدد الأيام) مرتين: هدف 5 أيام وهدف 10 أيام،
@@ -37,6 +37,7 @@ sys.path.insert(0, HERE)
 import backtest as bt  # noqa: E402
 import backtest_horizons as bh  # noqa: E402
 import direction as dr
+import alpha  # noqa: E402
 import models  # noqa: E402
 import macro  # noqa: E402
 import news as nw  # noqa: E402
@@ -46,7 +47,7 @@ OUT_DIR = os.path.join(ROOT, "horizon")
 LOG_FILE = os.path.join(OUT_DIR, "picks_log.json")
 FORECAST_FILE = os.path.join(ROOT, "forecast", "d5_d10.json")   # توقع كل الأسهم (البوت بيقرا منه)
 SCORE_FILE = os.path.join(OUT_DIR, "scorecard.json")
-HORIZONS = (5, 10, 20)   # 20 يوم هو الوحيد اللي طلع موجب بعد التكلفة الحقيقية (+1.3 bps/يوم) في الباكتست
+HORIZONS = (5, 10, 20, 40, 60)   # 20 يوم هو الوحيد اللي طلع موجب بعد التكلفة الحقيقية (+1.3 bps/يوم) في الباكتست
 TOP = 10
 MAX_HORIZON_RET = 1.0      # أي تغير أكبر من 100% في الفترة غالبًا تقسيم/بيانات غلط
 
@@ -77,6 +78,17 @@ def prepare(C, H, L, V, O, min_turnover, M=None):
     f["r120"] = np.expm1(lr.rolling(120, min_periods=120).sum())
     Xcs, names = macro.build_X(f, mkt, liquid, C.shape[1], bh.XF2, bt.MF, M, bt.csrank)
     feat_ok = np.isfinite(Xcs).all(axis=2) & liquid.values & ~lock.values
+    try:    # مدخلات Alpha158 الإضافية: في الاختبار رفعت صافي 20 يوم من +13 لـ+43 bps (أعلى 10%)
+        XA, an = alpha.build_alpha(C, H, L, V, O, liquid, bt.csrank)
+        X2 = np.concatenate([Xcs, XA], axis=2)
+        ok2 = np.isfinite(X2).all(axis=2) & liquid.values & ~lock.values
+        if ok2[-1].sum() >= 0.8 * feat_ok[-1].sum():
+            Xcs, feat_ok, names = X2, ok2, names + an
+            print(f"[مدخلات] + {len(an)} Alpha158 = {Xcs.shape[2]} | أسهم صالحة النهاردة {int(feat_ok[-1].sum())}")
+        else:
+            print(f"[مدخلات] Alpha158 اتلغت: أسهم صالحة النهاردة {int(ok2[-1].sum())} بس مقابل {int(feat_ok[-1].sum())}")
+    except Exception as e:  # noqa: BLE001
+        print(f"[مدخلات] Alpha158 فشلت، هكمّل بالأساسي: {str(e)[:150]}")
     return {"C": C, "H": H, "L": L, "O": O, "Xcs": Xcs, "feat_ok": feat_ok, "names": names}
 
 
@@ -257,7 +269,7 @@ def result_message(rec):
 # رسالة التوقع الجديد
 # ============================================================
 def picks_message(date, picks_by_h, ms, inputs="", holds=None, news_map=None, warn=None, persist=None):
-    L_ = [f"🔭 توقع 5 و10 و20 يوم - مبني على قفلة {date}"]
+    L_ = [f"🔭 توقع 5 و10 و20 و40 و60 يوم - مبني على قفلة {date}"]
     if warn:
         L_.append(warn)
     for hh in sorted(picks_by_h):
@@ -316,11 +328,11 @@ def picks_message(date, picks_by_h, ms, inputs="", holds=None, news_map=None, wa
         for h, ho in holds.items():
             L_.append(f"⚠️ {h} أيام: " + dr.holdout_line(ho))
     L_ += ["",
-           "هبعتلك بعد 5 و10 و20 جلسة كام سهم منهم طلع فعلاً (من قفلة النهاردة).",
+           "هبعتلك بعد 5 و10 و20 و40 و60 جلسة كام سهم منهم طلع فعلاً (من قفلة النهاردة).",
            "",
            "⚠️ اقرأ ده قبل ما تعتمد على الرسالة:",
            "• الترتيب نسبي بين الأسهم، مش نسبة احتمال ولا توقع إن السهم هيطلع.",
-           "• الباكتست (2022+) بعد تكلفتك الفعلية (20 bps في الاتجاه): 5 أيام حوالي -1.9 bps/يوم و10 أيام -0.6، و20 يوم +1.3 (حوالي +26 bps للصفقة). فتوقع 20 يوم هو الأقوى، وده بيتوافق إن التكلفة بتتوزع على فترة أطول.",
+           "• الباكتست (2022+) بتكلفتك الفعلية (20 bps في الاتجاه) ومدخلات Alpha158: 5 أيام وقصيرة تقريبًا صفر بعد التكلفة، 20 يوم حوالي +29 لـ+43 bps للصفقة، 40 يوم +72 لـ+88، 60 يوم +142 لـ+213. الفترات الأطول أقوى لأن التكلفة بتتوزع، لكن عدد الفترات المستقلة فيها قليل فالأرقام أقل ثباتًا مما تبان.",
            "• مش توصية شراء ولا بيع. القرار والمسؤولية ليك."]
     return "\n".join(L_)
 
@@ -418,7 +430,7 @@ def main():
             fh.write(f"{datetime.now():%Y-%m-%d %H:%M}\n{tb}")
         if not a.no_telegram:
             kind = "فشل (متوقع)" if isinstance(e, bt.BacktestError) else "خطأ في الكود"
-            bt.send_telegram(f"🔭❌ توقع 5 و10 و20 يوم وقع - {kind}:\n{type(e).__name__}: {str(e)[:500]}")
+            bt.send_telegram(f"🔭❌ توقع 5 و10 و20 و40 و60 يوم وقع - {kind}:\n{type(e).__name__}: {str(e)[:500]}")
         sys.exit(1)
 
 
