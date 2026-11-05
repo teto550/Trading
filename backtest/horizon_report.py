@@ -36,7 +36,8 @@ ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import backtest as bt  # noqa: E402
 import backtest_horizons as bh  # noqa: E402
-import direction as dr  # noqa: E402
+import direction as dr
+import models  # noqa: E402
 import macro  # noqa: E402
 import news as nw  # noqa: E402
 import tomorrow_report as tr  # noqa: E402
@@ -81,22 +82,18 @@ def prepare(C, H, L, V, O, min_turnover, M=None):
 
 def top_picks(P, h, trees):
     """أقوى TOP أسهم لفترة h يوم، مدرّب على الصفوف اللي نتيجتها خلصت بس (مفيش تسريب من المستقبل)."""
-    import xgboost as xgb
     C, O = P["C"], P["O"]
     tgt = bh.build_target(C, O, h)
     E = P["feat_ok"] & np.isfinite(tgt.values)
     if int(E.sum()) < 5000:
         raise bt.BacktestError(f"بيانات التدريب قليلة لفترة {h} أيام ({int(E.sum())} صف)")
     Y = (pd.DataFrame(np.where(E, tgt.values, np.nan)).rank(axis=1, pct=True) - 0.5).values
-    model = xgb.XGBRegressor(
-        n_estimators=150, max_depth=3, learning_rate=0.05, subsample=0.7, colsample_bytree=0.7,
-        min_child_weight=50, reg_lambda=10.0, tree_method="hist", n_jobs=2, random_state=0)
-    model.fit(P["Xcs"][E], Y[E].astype(np.float32), sample_weight=dr.recency_w(E))
     t = C.shape[0] - 1
     cols = np.where(P["feat_ok"][t])[0]
     if len(cols) < 40:
         raise bt.BacktestError(f"عدد الأسهم الصالحة النهاردة قليل ({len(cols)})")
-    score = model.predict(P["Xcs"][t, cols])
+    score, used = models.fit_score(h, P["Xcs"][E], Y[E].astype(np.float32), dr.recency_w(E), P["Xcs"][t, cols])
+    print(f"[موديل {h} يوم] {'+'.join(used)}")
     # شراء/بيع: العائد المطلق للفترة هيبقى موجب؟ + دقة التصنيف ده على آخر 250 يوم
     dirp, hold = None, None
     try:

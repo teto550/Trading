@@ -35,7 +35,7 @@ def make(kind, trees, seed=0):
                                  random_state=seed, verbose=-1)
     import catboost as cb
     return cb.CatBoostRegressor(iterations=trees, depth=4, learning_rate=0.06, l2_leaf_reg=10, thread_count=2,
-                                random_seed=seed, verbose=0)
+                                random_seed=seed, verbose=0, allow_writing_files=False)
 
 
 def walk(kind, Xcs, Y, E, first_valid, a, embargo):
