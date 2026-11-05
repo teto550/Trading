@@ -294,30 +294,30 @@
    "data_date": "2026-11-05",
    "picks": [
     "FAIT",
-    "SUGR",
-    "CPCI",
-    "SAUD",
+    "SEIG",
+    "WCDF",
     "GBCO",
-    "BINV",
-    "SNFC",
-    "RTVC",
-    "BTFH",
-    "CERA"
+    "EGCH",
+    "SKPC",
+    "SPIN",
+    "ORHD",
+    "LCSW",
+    "MASR"
    ],
    "labels": {
     "FAIT": "انتظر",
-    "SUGR": "انتظر",
-    "CPCI": "انتظر",
-    "SAUD": "انتظر",
-    "GBCO": "انتظر",
-    "BINV": "انتظر",
-    "SNFC": "انتظر",
-    "RTVC": "شراء",
-    "BTFH": "شراء",
-    "CERA": "شراء"
+    "SEIG": "انتظر",
+    "WCDF": "شراء",
+    "GBCO": "شراء",
+    "EGCH": "شراء",
+    "SKPC": "انتظر",
+    "SPIN": "انتظر",
+    "ORHD": "شراء",
+    "LCSW": "انتظر",
+    "MASR": "شراء"
    },
    "news": {},
-   "made": "2026-11-05 16:43"
+   "made": "2026-11-06 00:24"
   }
  ]
 }
