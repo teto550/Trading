@@ -1,0 +1,111 @@
+[data] 25/251 سهم، اتجاب تاريخ لـ 25
+$VLMR.CA: possibly delisted; no timezone found
+$VLMRA.CA: possibly delisted; no timezone found
+$ACTF.CA: possibly delisted; no timezone found
+$AIDC.CA: possibly delisted; no timezone found
+$AIHC.CA: possibly delisted; no timezone found
+$BONY.CA: possibly delisted; no timezone found
+[data] 50/251 سهم، اتجاب تاريخ لـ 44
+$GOUR.CA: possibly delisted; no timezone found
+$GPIM.CA: possibly delisted; no timezone found
+[data] 75/251 سهم، اتجاب تاريخ لـ 67
+$TAQA.CA: possibly delisted; no timezone found
+$VALU.CA: possibly delisted; no timezone found
+[data] 100/251 سهم، اتجاب تاريخ لـ 90
+$GTHE.CA: possibly delisted; no timezone found
+$SNFI.CA: possibly delisted; no timezone found
+$IRAX.CA: possibly delisted; no timezone found
+$CRST.CA: possibly delisted; no timezone found
+[data] 125/251 سهم، اتجاب تاريخ لـ 111
+$NCGC.CA: possibly delisted; no timezone found
+$NBKE.CA: possibly delisted; no timezone found
+$QNBE.CA: possibly delisted; no timezone found
+[data] 150/251 سهم، اتجاب تاريخ لـ 133
+$PACH.CA: possibly delisted; no timezone found
+$UASG.CA: possibly delisted; no timezone found
+$EITP.CA: possibly delisted; no timezone found
+$SMPP.CA: possibly delisted; no timezone found
+[data] 175/251 سهم، اتجاب تاريخ لـ 154
+$ACRO.CA: possibly delisted; no timezone found
+$ESRS.CA: possibly delisted; no timezone found
+$WATP.CA: possibly delisted; no timezone found
+$SUCE.CA: possibly delisted; no timezone found
+$TORA.CA: possibly delisted; no timezone found
+$DCRC.CA: possibly delisted; no timezone found
+$ALEX.CA: possibly delisted; no timezone found
+$TYCN.CA: possibly delisted; no timezone found
+$ARVA.CA: possibly delisted; no timezone found
+$HCFI.CA: possibly delisted; no timezone found
+$NARE.CA: possibly delisted; no timezone found
+[data] 200/251 سهم، اتجاب تاريخ لـ 168
+$UTOP.CA: possibly delisted; no timezone found
+$APPC.CA: possibly delisted; no timezone found
+$UBEE.CA: possibly delisted; no timezone found
+$NAPR.CA: possibly delisted; no timezone found
+$DIFC.CA: possibly delisted; no timezone found
+[data] 225/251 سهم، اتجاب تاريخ لـ 188
+$FCMD.CA: possibly delisted; no timezone found
+$VERT.CA: possibly delisted; no timezone found
+$ADRI.CA: possibly delisted; no timezone found
+$KRDI.CA: possibly delisted; no timezone found
+$UPMS.CA: possibly delisted; no timezone found
+$TANM.CA: possibly delisted; no timezone found
+$ACAP.CA: possibly delisted; no timezone found
+$DGTZ.CA: possibly delisted; no timezone found
+$PHGC.CA: possibly delisted; no timezone found
+$GTEX.CA: possibly delisted; no timezone found
+$GGRN.CA: possibly delisted; no timezone found
+$HBCO.CA: possibly delisted; no timezone found
+$CPME.CA: possibly delisted; no timezone found
+$TWSA.CA: possibly delisted; no timezone found
+[data] 250/251 سهم، اتجاب تاريخ لـ 199
+$KORA.CA: possibly delisted; no timezone found
+[data] خلص الجلب: 199 سهم اتجاب من 251
+^CASE30: Period 'max' is invalid, must be one of: 1d, 5d
+^CASE30: Period 'max' is invalid, must be one of: 1d, 5d
+[macro] egx30 (^CASE30): فشل
+$EGX30.CA: possibly delisted; no timezone found
+$EGX30.CA: possibly delisted; no timezone found
+[macro] egx30 (EGX30.CA): فشل
+$^EGX30: possibly delisted; no timezone found
+$^EGX30: possibly delisted; no timezone found
+[macro] egx30 (^EGX30): فشل
+[macro] usd (EGP=X): تمام 6377 يوم
+[improve2] مدخلات أساسية 25
+[improve2] + 50 مدخل Alpha158 = 75
+[improve2] A
+[improve2] B
+[improve2] C (bagging)
+/home/runner/work/Trading/Trading/backtest/improve2.py:91: RuntimeWarning: Mean of empty slice
+  pC = np.nanmean(np.stack(ps), axis=0)
+[improve2] D h=10
+[improve2] D h=40
+[improve2] D h=60
+# EGX Improve2 - 2026-11-05 23:38
+
+- LightGBM بوزن الأحدث | تكلفة 20.0 bps | 2022+ | bps للصفقة بعد التكلفة
+
+## احتفاظ 20 يوم
+
+| الإعداد | أيام | قبل التكلفة | بعد التكلفة | t | أيام كسبانة |
+|---|---|---|---|---|---|
+| A الأساسي - أعلى 10% | 1150 | +53 | +13 | +4.3 | 49% |
+| A الأساسي - أعلى 20% | 1150 | +56 | +16 | +6.4 | 49% |
+| B + Alpha158 (50 مدخل) - أعلى 10% | 1150 | +83 | +43 | +6.6 | 51% |
+| B + Alpha158 (50 مدخل) - أعلى 20% | 1150 | +69 | +29 | +7.8 | 53% |
+| C bagging 5 seeds - أعلى 10% | 1150 | +62 | +22 | +4.8 | 49% |
+| C bagging 5 seeds - أعلى 20% | 1150 | +57 | +17 | +6.3 | 50% |
+
+## فترات احتفاظ أطول (الأساسي، LightGBM)
+
+| الإعداد | أيام | قبل التكلفة | بعد التكلفة | t | أيام كسبانة |
+|---|---|---|---|---|---|
+| 10 يوم - أعلى 10% | 1160 | +52 | +12 | +6.0 | 48% |
+| 10 يوم - أعلى 20% | 1160 | +48 | +8 | +7.8 | 49% |
+| 20 يوم - أعلى 10% | 1150 | +53 | +13 | +4.3 | 49% |
+| 20 يوم - أعلى 20% | 1150 | +56 | +16 | +6.4 | 49% |
+| 40 يوم - أعلى 10% | 1130 | +128 | +88 | +6.2 | 52% |
+| 40 يوم - أعلى 20% | 1130 | +112 | +72 | +8.3 | 55% |
+| 60 يوم - أعلى 10% | 1110 | +253 | +213 | +9.6 | 57% |
+| 60 يوم - أعلى 20% | 1110 | +182 | +142 | +9.8 | 58% |
+
