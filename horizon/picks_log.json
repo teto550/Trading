@@ -830,30 +830,33 @@
    "variant": "macro",
    "picks": [
     "SDTI",
+    "EMFD",
     "CANA",
-    "GBCO",
-    "RTVC",
+    "COMI",
+    "EAST",
     "CLHO",
     "SCEM",
-    "LCSW",
-    "EMFD",
-    "SKPC",
-    "SAUD"
+    "EFIH",
+    "ETRS",
+    "SNFC"
    ],
    "labels": {
     "SDTI": "بيع",
+    "EMFD": "بيع",
     "CANA": "بيع",
-    "GBCO": "بيع",
-    "RTVC": "بيع",
+    "COMI": "بيع",
+    "EAST": "بيع",
     "CLHO": "بيع",
     "SCEM": "بيع",
-    "LCSW": "بيع",
-    "EMFD": "بيع",
-    "SKPC": "بيع",
-    "SAUD": "بيع"
+    "EFIH": "بيع",
+    "ETRS": "بيع",
+    "SNFC": "بيع"
    },
-   "news": {},
-   "made": "2026-11-06 00:51"
+   "news": {
+    "COMI": "neutral",
+    "ETRS": "neutral"
+   },
+   "made": "2026-11-06 01:27"
   },
   {
    "date": "2026-11-05",
@@ -861,33 +864,33 @@
    "variant": "macro",
    "picks": [
     "SDTI",
-    "CANA",
-    "SCEM",
-    "EMFD",
-    "GBCO",
     "COMI",
-    "CIEB",
-    "EFIH",
-    "SNFC",
-    "SAUD"
+    "SCEM",
+    "CANA",
+    "CPCI",
+    "SAUD",
+    "EMFD",
+    "BINV",
+    "PHTV",
+    "GBCO"
    ],
    "labels": {
     "SDTI": "بيع",
-    "CANA": "بيع",
-    "SCEM": "بيع",
-    "EMFD": "بيع",
-    "GBCO": "بيع",
     "COMI": "بيع",
-    "CIEB": "بيع",
-    "EFIH": "بيع",
-    "SNFC": "بيع",
-    "SAUD": "بيع"
+    "SCEM": "بيع",
+    "CANA": "بيع",
+    "CPCI": "بيع",
+    "SAUD": "بيع",
+    "EMFD": "بيع",
+    "BINV": "بيع",
+    "PHTV": "بيع",
+    "GBCO": "بيع"
    },
    "news": {
     "COMI": "neutral",
-    "CIEB": "neutral"
+    "CPCI": "neutral"
    },
-   "made": "2026-11-06 00:51"
+   "made": "2026-11-06 01:27"
   },
   {
    "date": "2026-11-05",
@@ -895,33 +898,36 @@
    "variant": "macro",
    "picks": [
     "SDTI",
-    "PHTV",
-    "CANA",
-    "SAUD",
-    "DOMT",
     "ADIB",
-    "SKPC",
-    "AJWA",
-    "SNFC",
-    "EFIH"
+    "ALCN",
+    "CANA",
+    "EMFD",
+    "BINV",
+    "ICID",
+    "ETRS",
+    "FAIT",
+    "AJWA"
    ],
    "labels": {
     "SDTI": "بيع",
-    "PHTV": "بيع",
-    "CANA": "بيع",
-    "SAUD": "بيع",
-    "DOMT": "بيع",
     "ADIB": "بيع",
-    "SKPC": "بيع",
-    "AJWA": "بيع",
-    "SNFC": "بيع",
-    "EFIH": "بيع"
+    "ALCN": "بيع",
+    "CANA": "بيع",
+    "EMFD": "بيع",
+    "BINV": "بيع",
+    "ICID": "بيع",
+    "ETRS": "بيع",
+    "FAIT": "بيع",
+    "AJWA": "بيع"
    },
    "news": {
     "ADIB": "neutral",
+    "ICID": "neutral",
+    "ETRS": "neutral",
+    "FAIT": "neutral",
     "AJWA": "neutral"
    },
-   "made": "2026-11-06 00:51"
+   "made": "2026-11-06 01:27"
   }
  ]
 }
