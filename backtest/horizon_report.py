@@ -403,7 +403,7 @@ def main():
         if variant == "macro":
             usd = "والدولار" if (M is not None and "usd" in M.columns) else "(الدولار مجاش النهاردة)"
             egx = "EGX30" if egx_src == "yahoo" else "مؤشر تقريبي لـEGX30 (أكبر 30 سهم سيولة، لأن Yahoo رفض المؤشر الرسمي)"
-            inputs = f"الأسعار والسيولة + {egx} {usd} (اتقاس أثرها في الباكتست: فايدة بسيطة على 10 و20 يوم)"
+            inputs = f"الأسعار والسيولة + {egx} {usd} + 50 مدخل إضافي على طريقة Alpha158 (رفعوا نتيجة 20 يوم في الباكتست)"
         else:
             inputs = "الأسعار والسيولة بس"
         persist = persistence(date, picks_by_h, variant)
