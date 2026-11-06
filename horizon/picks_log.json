@@ -829,161 +829,165 @@
    "h": 5,
    "variant": "macro",
    "picks": [
-    "SDTI",
-    "EMFD",
-    "CANA",
-    "COMI",
-    "EFIH",
-    "CLHO",
     "SCEM",
-    "SNFC",
-    "RTVC",
-    "ETRS"
+    "UNIT",
+    "CANA",
+    "ETRS",
+    "CIEB",
+    "EFIH",
+    "EAST",
+    "SDTI",
+    "COMI",
+    "ADPC"
    ],
    "labels": {
-    "SDTI": "بيع",
-    "EMFD": "بيع",
-    "CANA": "بيع",
-    "COMI": "بيع",
-    "EFIH": "بيع",
-    "CLHO": "بيع",
-    "SCEM": "بيع",
-    "SNFC": "بيع",
-    "RTVC": "بيع",
-    "ETRS": "بيع"
+    "SCEM": "انتظر",
+    "UNIT": "انتظر",
+    "CANA": "انتظر",
+    "ETRS": "انتظر",
+    "CIEB": "انتظر",
+    "EFIH": "انتظر",
+    "EAST": "انتظر",
+    "SDTI": "انتظر",
+    "COMI": "انتظر",
+    "ADPC": "انتظر"
    },
-   "news": {
-    "COMI": "neutral",
-    "ETRS": "neutral"
-   },
-   "made": "2026-11-06 01:50"
+   "news": {},
+   "made": "2026-11-06 18:38"
   },
   {
    "date": "2026-11-05",
    "h": 10,
    "variant": "macro",
    "picks": [
-    "SDTI",
     "SCEM",
+    "EFIH",
+    "CIEB",
+    "UNIT",
     "CANA",
-    "CPCI",
-    "SAUD",
-    "GBCO",
+    "DOMT",
+    "EAST",
+    "ETRS",
     "COMI",
-    "ALCN",
-    "SKPC",
-    "EFIH"
+    "CPCI"
    ],
    "labels": {
-    "SDTI": "بيع",
-    "SCEM": "بيع",
+    "SCEM": "انتظر",
+    "EFIH": "انتظر",
+    "CIEB": "انتظر",
+    "UNIT": "انتظر",
     "CANA": "بيع",
-    "CPCI": "بيع",
-    "SAUD": "بيع",
-    "GBCO": "بيع",
+    "DOMT": "بيع",
+    "EAST": "بيع",
+    "ETRS": "انتظر",
     "COMI": "بيع",
-    "ALCN": "بيع",
-    "SKPC": "بيع",
-    "EFIH": "بيع"
+    "CPCI": "انتظر"
    },
    "news": {
-    "CPCI": "neutral",
     "COMI": "neutral"
    },
-   "made": "2026-11-06 01:50"
+   "made": "2026-11-06 18:38"
   },
   {
    "date": "2026-11-05",
    "h": 20,
    "variant": "macro",
    "picks": [
-    "SDTI",
-    "CANA",
-    "ALCN",
-    "ACGC",
-    "EGAL",
     "SCEM",
+    "UNIT",
     "DOMT",
-    "SNFC",
-    "SKPC",
-    "BINV"
+    "EFIH",
+    "RACC",
+    "CIEB",
+    "HRHO",
+    "ETRS",
+    "RREI",
+    "ADPC"
    ],
    "labels": {
-    "SDTI": "بيع",
-    "CANA": "بيع",
-    "ALCN": "بيع",
-    "ACGC": "بيع",
-    "EGAL": "بيع",
     "SCEM": "بيع",
+    "UNIT": "انتظر",
     "DOMT": "بيع",
-    "SNFC": "بيع",
-    "SKPC": "بيع",
-    "BINV": "بيع"
+    "EFIH": "انتظر",
+    "RACC": "بيع",
+    "CIEB": "بيع",
+    "HRHO": "بيع",
+    "ETRS": "بيع",
+    "RREI": "بيع",
+    "ADPC": "انتظر"
    },
-   "news": {},
-   "made": "2026-11-06 01:50"
+   "news": {
+    "CIEB": "neutral",
+    "HRHO": "neutral",
+    "ETRS": "neutral"
+   },
+   "made": "2026-11-06 18:38"
   },
   {
    "date": "2026-11-05",
    "h": 40,
    "variant": "macro",
    "picks": [
-    "ISMA",
+    "SCEM",
     "PRCL",
-    "OBRI",
+    "MILS",
+    "EBSC",
     "ATLC",
-    "DAPH",
-    "SAUD",
-    "MIPH",
-    "CERA",
-    "SKPC",
-    "ALCN"
+    "AMIA",
+    "ETRS",
+    "DOMT",
+    "NCCW",
+    "OBRI"
    ],
    "labels": {
-    "ISMA": "شراء",
+    "SCEM": "شراء",
     "PRCL": "شراء",
-    "OBRI": "شراء",
+    "MILS": "شراء",
+    "EBSC": "شراء",
     "ATLC": "شراء",
-    "DAPH": "شراء",
-    "SAUD": "شراء",
-    "MIPH": "شراء",
-    "CERA": "شراء",
-    "SKPC": "شراء",
-    "ALCN": "شراء"
+    "AMIA": "شراء",
+    "ETRS": "شراء",
+    "DOMT": "شراء",
+    "NCCW": "شراء",
+    "OBRI": "شراء"
    },
-   "news": {},
-   "made": "2026-11-06 01:50"
+   "news": {
+    "ETRS": "neutral"
+   },
+   "made": "2026-11-06 18:38"
   },
   {
    "date": "2026-11-05",
    "h": 60,
    "variant": "macro",
    "picks": [
-    "ISMA",
-    "GGCC",
-    "GRCA",
-    "PRCL",
-    "NIPH",
-    "ECAP",
-    "MENA",
-    "PHAR",
     "RREI",
-    "AFMC"
+    "UNIT",
+    "ETRS",
+    "SCEM",
+    "SPIN",
+    "DOMT",
+    "RACC",
+    "PRCL",
+    "EBSC",
+    "ASPI"
    ],
    "labels": {
-    "ISMA": "شراء",
-    "GGCC": "شراء",
-    "GRCA": "شراء",
-    "PRCL": "شراء",
-    "NIPH": "شراء",
-    "ECAP": "شراء",
-    "MENA": "شراء",
-    "PHAR": "شراء",
     "RREI": "شراء",
-    "AFMC": "شراء"
+    "UNIT": "شراء",
+    "ETRS": "شراء",
+    "SCEM": "شراء",
+    "SPIN": "شراء",
+    "DOMT": "شراء",
+    "RACC": "شراء",
+    "PRCL": "شراء",
+    "EBSC": "شراء",
+    "ASPI": "شراء"
    },
-   "news": {},
-   "made": "2026-11-06 01:50"
+   "news": {
+    "ETRS": "neutral"
+   },
+   "made": "2026-11-06 18:38"
   }
  ]
 }
