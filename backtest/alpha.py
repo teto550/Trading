@@ -11,8 +11,13 @@ def _aroon(df, w, kind):
 
 def build_alpha(C, H, L, V, O, liquid, csrank):
     """بيرجّع (مصفوفة (T,N,K) مترتبة, أسماء)."""
-    C, H, L, O = (x.where(x > 0) for x in (C, H, L, O))
+    # آخر الأيام (قفلة من Mubasher) ممكن O/H/L/V تبقى ناقصة: بنكمّلها من القفلة/وسيط الحجم عشان المدخلات ما تبوظش
+    C = C.where(C > 0)
+    O, H, L = (x.where(x > 0).fillna(C) for x in (O, H, L))
+    H = np.maximum(H, C)
+    L = np.minimum(L, C)
     V = V.where(V >= 0)
+    V = V.fillna(V.rolling(20, min_periods=5).median())
     TO = (C * V)                                  # قيمة التداول
     F = {}
     F["kmid"] = (C - O) / O
