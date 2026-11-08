@@ -988,6 +988,176 @@
     "ETRS": "neutral"
    },
    "made": "2026-11-06 18:38"
+  },
+  {
+   "date": "2026-11-08",
+   "h": 5,
+   "variant": "macro",
+   "picks": [
+    "RAYA",
+    "ETRS",
+    "CICH",
+    "DOMT",
+    "CANA",
+    "EAST",
+    "SCEM",
+    "ADPC",
+    "LCSW",
+    "SNFC"
+   ],
+   "labels": {
+    "RAYA": "بيع",
+    "ETRS": "بيع",
+    "CICH": "بيع",
+    "DOMT": "بيع",
+    "CANA": "بيع",
+    "EAST": "بيع",
+    "SCEM": "بيع",
+    "ADPC": "بيع",
+    "LCSW": "بيع",
+    "SNFC": "بيع"
+   },
+   "news": {
+    "RAYA": "neutral",
+    "CICH": "neutral",
+    "EAST": "disagree",
+    "SNFC": "disagree"
+   },
+   "made": "2026-11-08 23:22"
+  },
+  {
+   "date": "2026-11-08",
+   "h": 10,
+   "variant": "macro",
+   "picks": [
+    "SCEM",
+    "ETRS",
+    "EFIH",
+    "CIEB",
+    "DOMT",
+    "SDTI",
+    "HRHO",
+    "EAST",
+    "ADPC",
+    "MICH"
+   ],
+   "labels": {
+    "SCEM": "بيع",
+    "ETRS": "بيع",
+    "EFIH": "بيع",
+    "CIEB": "بيع",
+    "DOMT": "بيع",
+    "SDTI": "بيع",
+    "HRHO": "بيع",
+    "EAST": "بيع",
+    "ADPC": "بيع",
+    "MICH": "بيع"
+   },
+   "news": {
+    "CIEB": "neutral",
+    "SDTI": "agree",
+    "HRHO": "neutral",
+    "EAST": "disagree"
+   },
+   "made": "2026-11-08 23:22"
+  },
+  {
+   "date": "2026-11-08",
+   "h": 20,
+   "variant": "macro",
+   "picks": [
+    "SCEM",
+    "CIEB",
+    "ETRS",
+    "SNFC",
+    "SDTI",
+    "DOMT",
+    "GBCO",
+    "EFIH",
+    "RACC",
+    "CICH"
+   ],
+   "labels": {
+    "SCEM": "بيع",
+    "CIEB": "بيع",
+    "ETRS": "بيع",
+    "SNFC": "بيع",
+    "SDTI": "بيع",
+    "DOMT": "بيع",
+    "GBCO": "بيع",
+    "EFIH": "بيع",
+    "RACC": "بيع",
+    "CICH": "بيع"
+   },
+   "news": {
+    "CIEB": "neutral",
+    "SNFC": "disagree",
+    "SDTI": "agree",
+    "CICH": "neutral"
+   },
+   "made": "2026-11-08 23:22"
+  },
+  {
+   "date": "2026-11-08",
+   "h": 40,
+   "variant": "macro",
+   "picks": [
+    "RREI",
+    "ATLC",
+    "EFIC",
+    "GGCC",
+    "AMIA",
+    "ETRS",
+    "OBRI",
+    "MOSC",
+    "MOED",
+    "PRCL"
+   ],
+   "labels": {
+    "RREI": "شراء",
+    "ATLC": "شراء",
+    "EFIC": "شراء",
+    "GGCC": "شراء",
+    "AMIA": "شراء",
+    "ETRS": "شراء",
+    "OBRI": "شراء",
+    "MOSC": "شراء",
+    "MOED": "شراء",
+    "PRCL": "شراء"
+   },
+   "news": {},
+   "made": "2026-11-08 23:22"
+  },
+  {
+   "date": "2026-11-08",
+   "h": 60,
+   "variant": "macro",
+   "picks": [
+    "ATLC",
+    "GRCA",
+    "ETRS",
+    "DOMT",
+    "SPIN",
+    "MILS",
+    "ASPI",
+    "CCRS",
+    "RREI",
+    "TALM"
+   ],
+   "labels": {
+    "ATLC": "شراء",
+    "GRCA": "شراء",
+    "ETRS": "شراء",
+    "DOMT": "شراء",
+    "SPIN": "شراء",
+    "MILS": "شراء",
+    "ASPI": "شراء",
+    "CCRS": "شراء",
+    "RREI": "شراء",
+    "TALM": "شراء"
+   },
+   "news": {},
+   "made": "2026-11-08 23:22"
   }
  ]
 }
