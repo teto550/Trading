@@ -323,31 +323,31 @@
    "target": "2026-11-09",
    "data_date": "2026-11-08",
    "picks": [
-    "EMFD",
     "SUGR",
-    "CICH",
+    "SNFC",
+    "EMFD",
     "CPCI",
-    "MASR",
     "CLHO",
-    "RTVC",
     "SKPC",
     "AXPH",
+    "RTVC",
+    "GBCO",
     "EGCH"
    ],
    "labels": {
-    "EMFD": "انتظر",
     "SUGR": "انتظر",
-    "CICH": "انتظر",
+    "SNFC": "انتظر",
+    "EMFD": "انتظر",
     "CPCI": "انتظر",
-    "MASR": "انتظر",
     "CLHO": "انتظر",
-    "RTVC": "انتظر",
     "SKPC": "انتظر",
     "AXPH": "انتظر",
+    "RTVC": "انتظر",
+    "GBCO": "بيع",
     "EGCH": "انتظر"
    },
    "news": {},
-   "made": "2026-11-08 15:30"
+   "made": "2026-11-08 22:48"
   }
  ]
 }
