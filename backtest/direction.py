@@ -51,14 +51,35 @@ def _model(trees):
         eval_metric="logloss")
 
 
+def _fit_proba(X, y, w, Xnew, trees):
+    """متوسط احتمال XGBoost + LightGBM + CatBoost (لو اتنين فشلوا بيكمّل بالباقي)."""
+    ps = []
+    for kind in ("xgb", "lgbm", "cat"):
+        try:
+            if kind == "xgb":
+                m = _model(trees)
+            elif kind == "lgbm":
+                import lightgbm as lgb
+                m = lgb.LGBMClassifier(n_estimators=trees, max_depth=3, num_leaves=8, learning_rate=0.05,
+                                       subsample=0.7, subsample_freq=1, colsample_bytree=0.7,
+                                       min_child_samples=50, reg_lambda=10.0, n_jobs=2, random_state=0, verbose=-1)
+            else:
+                from catboost import CatBoostClassifier
+                m = CatBoostClassifier(iterations=trees, depth=4, learning_rate=0.06, l2_leaf_reg=10,
+                                       thread_count=2, random_seed=0, verbose=0, allow_writing_files=False)
+            m.fit(X, y, sample_weight=w)
+            ps.append(m.predict_proba(Xnew)[:, 1])
+        except Exception as e:  # noqa: BLE001
+            print(f"[direction] {kind} فشل: {str(e)[:80]}")
+    return np.mean(ps, axis=0) if ps else None
+
+
 def fit_predict(Xcs, ret, E, t, cols, trees=150):
     """بيدرّب على كل الصفوف الصالحة (E) وبيرجّع احتمال الصعود لأسهم `cols` في اليوم t."""
     y = (ret[E] > 0).astype(int)
     if len(y) < 5000 or y.min() == y.max():
         return None
-    m = _model(trees)
-    m.fit(Xcs[E], y, sample_weight=recency_w(E))
-    return m.predict_proba(Xcs[t, cols])[:, 1]
+    return _fit_proba(Xcs[E], y, recency_w(E), Xcs[t, cols], trees)
 
 
 def label(p):
@@ -81,9 +102,9 @@ def holdout(Xcs, ret, E, h, trees=150, test_days=250):
     Ete[start:] = E[start:]
     if int(Ete.sum()) < 500:
         return None
-    m = _model(trees)
-    m.fit(Xcs[Etr], ytr, sample_weight=recency_w(Etr))
-    p = m.predict_proba(Xcs[Ete])[:, 1]
+    p = _fit_proba(Xcs[Etr], ytr, recency_w(Etr), Xcs[Ete], trees)
+    if p is None:
+        return None
     y = (ret[Ete] > 0).astype(int)
     pred = (p >= 0.5).astype(int)
     up = float(y.mean())
