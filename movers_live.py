@@ -249,6 +249,7 @@ def main():
     state = load_state(today)
     state.setdefault("preds", [])
     state.setdefault("pred_done", [])
+    state.setdefault("scored", False)
     labels = load_labels(today)
     hist = {}
     cycles = 0
