@@ -1,18 +1,20 @@
-# EGX Paper Trade - آخر تحديث 2026-11-08 21:16
+# EGX Paper Trade - آخر تحديث 2026-11-09 19:37
 
 - احتفاظ 20 يوم تداول، شراء عند افتتاح اليوم التالي للإشارة، تكلفة 20.0 bps في الاتجاه
-- دفعات متسجلة: 21 | ناضجة (عدّى عليها 20 يوم): 1
+- دفعات متسجلة: 22 | ناضجة (عدّى عليها 20 يوم): 2
 - توقع الباكتست: حوالي +0.28% للصفقة بعد التكلفة (ميزة صغيرة وغير ثابتة)
 
 | | الفرق عن السوق | بعد التكلفة | نسبة الدفعات الكسبانة | تذبذب الدفعة |
 |---|---|---|---|---|
-| XGBoost | +2.49% | +2.09% | 100% (1) | nan% |
-| Low-vol (مرجع) | +4.31% | +3.91% | 100% (1) | nan% |
+| XGBoost | +2.72% | +2.32% | 100% (2) | nan% |
+| Low-vol (مرجع) | +4.18% | +3.78% | 100% (2) | nan% |
 
-متوسط عائد السوق (الأسهم الصالحة) لنفس الفترات: -10.53% للصفقة
-الدفعات من 2026-10-07 إلى 2026-10-07
+متوسط عائد السوق (الأسهم الصالحة) لنفس الفترات: -9.31% للصفقة
+الدفعات من 2026-10-07 إلى 2026-10-11
 
-## اختيارات آخر دفعة (2026-11-05)
-XGBoost (29): SNFC, FAIT, BINV, ETRS, CPCI, CIEB, SKPC, EMFD, DOMT, COMI, TMGH, SAUD, ICID, EGAL, ALCN, MICH, MIPH, HRHO, OFH, UNIT, ACGC, SCEM, CSAG, SWDY, ETEL, TALM, AJWA, CICH, EAST
+## اختيارات آخر دفعة (2026-11-08)
+XGBoost (29): EMFD, SNFC, FAIT, CPCI, BINV, COMI, ETRS, ACGC, SKPC, MIPH, CIEB, TMGH, DOMT, SDTI, ETEL, EGAL, CLHO, AXPH, GBCO, RTVC, OFH, PHTV, HRHO, SAUD, CANA, EAST, TALM, ECAP, ALCN
 
-Low-vol (29): CPCI, OLFI, COMI, EMFD, SNFC, SDTI, PHTV, CLHO, FAIT, BINV, HRHO, SAUD, CICH, CIEB, SKPC, FWRY, TALM, RTVC, ALCN, ECAP, CCAP, TMGH, AMOC, UEFM, ORWE, MENA, ACAMD, ADIB, SWDY
+LightGBM+Alpha158 (29): SCEM, ETRS, EAST, FAIT, RACC, CPCI, HRHO, LCSW, ADPC, DOMT, MICH, EFIH, SNFC, CIEB, EGAS, GBCO, RAYA, CICH, ACAMD, CEFM, CANA, RMDA, ETEL, COMI, EPCO, SPIN, AREH, PHTV, OBRI
+
+Low-vol (29): CPCI, COMI, EMFD, OLFI, SNFC, SDTI, PHTV, FAIT, CLHO, HRHO, BINV, SKPC, CICH, AMOC, FWRY, CIEB, TALM, TMGH, CCAP, RTVC, ECAP, ALCN, SAUD, UEFM, ORWE, MENA, ACAMD, ADIB, SWDY
