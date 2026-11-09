@@ -1,0 +1,45 @@
+name: Live Movers
+on:
+  schedule:
+    # الأحد للخميس. 07:30 UTC = 9:30 القاهرة (شتا) - السكريبت بيستنى لحد 9:55 وبيشتغل لحد 14:32
+    - cron: "37 7 * * 0-4"
+    - cron: "17 8 * * 0-4"   # احتياطي لو الأول اتسقّط
+  workflow_dispatch:
+    inputs:
+      force_run:
+        description: "تجربة خارج مواعيد السوق (دورتين بس)"
+        required: false
+        default: "false"
+concurrency:
+  group: movers
+  cancel-in-progress: false
+jobs:
+  movers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - name: Run live movers
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          FORCE_RUN: ${{ github.event.inputs.force_run || 'false' }}
+        run: python movers_live.py
+      - name: Commit state
+        if: always()
+        run: |
+          git config user.name "alert-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add movers_state.json || true
+          git diff --cached --quiet || git commit -m "movers state [skip ci]"
+          for i in 1 2 3 4 5 6; do
+            git pull --rebase --autostash -X theirs origin "${GITHUB_REF_NAME:-main}" || true
+            git push && break
+            sleep $((RANDOM % 8 + 3))
+          done
