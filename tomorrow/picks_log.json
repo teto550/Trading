@@ -354,82 +354,83 @@
    "data_date": "2026-11-09",
    "picks": [
     "SUGR",
-    "CPCI",
     "CSAG",
     "CICH",
     "MENA",
-    "ADPC",
-    "AMIA",
-    "SKPC",
     "ZMID",
+    "SKPC",
+    "ADPC",
+    "OLFI",
+    "BTFH",
     "EXPA"
    ],
    "labels": {
     "SUGR": "شراء",
-    "CPCI": "انتظر",
-    "CSAG": "انتظر",
+    "CSAG": "شراء",
     "CICH": "شراء",
     "MENA": "شراء",
-    "ADPC": "شراء",
-    "AMIA": "شراء",
-    "SKPC": "شراء",
     "ZMID": "شراء",
-    "EXPA": "انتظر"
+    "SKPC": "شراء",
+    "ADPC": "شراء",
+    "OLFI": "انتظر",
+    "BTFH": "شراء",
+    "EXPA": "شراء"
    },
    "news": {
-    "SUGR": "agree"
+    "SUGR": "agree",
+    "CSAG": "neutral"
    },
    "by_model": {
     "xgb": [
      "CICH",
      "CPCI",
-     "MENA",
-     "ZMID",
-     "ADPC",
      "AMIA",
-     "ETRS",
-     "ISMQ",
+     "CSAG",
+     "SUGR",
+     "MENA",
      "SKPC",
-     "CSAG"
+     "OLFI",
+     "SNFC",
+     "ZMID"
     ],
     "lgbm": [
      "CICH",
-     "SUGR",
-     "ADPC",
-     "AMIA",
      "MENA",
      "ZMID",
+     "OLFI",
+     "SUGR",
      "OFH",
      "AFDI",
-     "SKPC",
-     "MTIE"
+     "BTFH",
+     "EXPA",
+     "SKPC"
     ],
     "cat": [
      "CICH",
-     "MENA",
      "SUGR",
-     "SKPC",
+     "MENA",
      "CSAG",
      "ADPC",
-     "OIH",
-     "BTFH",
-     "MTIE",
-     "MFPC"
+     "ORWE",
+     "SKPC",
+     "ZMID",
+     "HELI",
+     "MTIE"
     ],
     "ens": [
      "CICH",
      "MENA",
-     "ADPC",
-     "AMIA",
      "SUGR",
-     "SKPC",
      "ZMID",
-     "CPCI",
      "CSAG",
+     "SKPC",
+     "ADPC",
+     "OLFI",
+     "BTFH",
      "EXPA"
     ]
    },
-   "made": "2026-11-09 21:34"
+   "made": "2026-11-09 22:09"
   }
  ]
 }
