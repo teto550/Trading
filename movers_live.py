@@ -30,6 +30,10 @@ FORCE = os.environ.get("FORCE_RUN", "false").lower() == "true"
 START = (9, 55)
 END = (14, 32)
 TOP = 8
+PRED_TIMES = ((10, 30), (11, 30), (12, 30), (13, 30))   # مواعيد التوقع اللحظي (القاهرة)
+SCORE_AT = (14, 25)
+CONFIRM = 0.3   # تأكيد الحركة الحية للتوقع (% عن قفلة امبارح)
+SCORECARD = os.path.join(HERE, "live_scorecard.json")
 
 
 def now():
@@ -52,7 +56,7 @@ def load_state(today):
             return s
     except Exception:  # noqa: BLE001
         pass
-    return {"date": today, "levels": {}, "fast": {}}
+    return {"date": today, "levels": {}, "fast": {}, "preds": [], "pred_done": [], "scored": False}
 
 
 def save_state(s):
@@ -74,6 +78,92 @@ def prev_closes(today):
             continue
         out[t] = p[-2] if (d and d[-1] >= today and len(p) >= 2) else p[-1]
     return out
+
+
+def load_labels(today):
+    """تصنيف الموديل (شراء/بيع) للجلسة دي من forecast/d1.json لو الـtarget هو النهارده."""
+    try:
+        with open(os.path.join(HERE, "forecast", "d1.json"), encoding="utf-8") as f:
+            d = json.load(f)
+    except Exception:  # noqa: BLE001
+        return {}
+    if d.get("target") != today and not FORCE:
+        print(f"[توقع] forecast/d1 للجلسة {d.get('target')} مش {today} - مفيش توقع لحظي")
+        return {}
+    return {k + ".CA": v.get("label") for k, v in d["stocks"].items()}
+
+
+def predict(labels, chg, ok, med, state, t_now):
+    """توقع لحظي = تصنيف الموديل + تأكيد من الحركة الحية، ومش بنتوقع ضد السوق لو بينهار/بيطير."""
+    ups, downs = [], []
+    done = {(p["t"], p["side"]) for p in state["preds"]}
+    for t, c in chg.items():
+        lab = labels.get(t)
+        if lab == "شراء" and c >= CONFIRM and med > -1.5 and (t, "up") not in done:
+            ups.append((c, t))
+        elif lab == "بيع" and c <= -CONFIRM and med < 1.5 and (t, "down") not in done:
+            downs.append((c, t))
+    ups.sort(reverse=True)
+    downs.sort()
+    for side, rows in (("up", ups[:TOP]), ("down", downs[:TOP])):
+        for c, t in rows:
+            state["preds"].append({"t": t, "side": side, "price": ok[t], "chg": c, "med": med,
+                                   "time": f"{t_now:%H:%M}"})
+    return ups[:TOP], downs[:TOP]
+
+
+def pred_message(t_now, med, ups, downs, ok):
+    lines = [f"🔮 توقع لحظي - {t_now:%H:%M}" + (" (تجربة)" if FORCE else ""),
+             f"السوق ككل: {med:+.1f}% | التوقع = تصنيف الموديل لجلسة النهارده + تأكيد من الحركة الحية", ""]
+    if ups:
+        lines.append("🟢 مرشحة تكمل طلوع لقفلة النهارده:")
+        lines += [f"• {t.replace('.CA', '')}: {ok[t]:.2f} ({c:+.1f}%)" for c, t in ups]
+    if downs:
+        lines += ["", "🔴 مرشحة تكمل نزول لقفلة النهارده:"]
+        lines += [f"• {t.replace('.CA', '')}: {ok[t]:.2f} ({c:+.1f}%)" for c, t in downs]
+    lines += ["", "⚠️ ده توقع تجريبي: الباكتست ماأثبتش ميزة للجلسة القصيرة بعد التكلفة، وأنا بسجّل كل توقع "
+              "وهقيّمه عند القفل وأبعتلك نسبة نجاحه الحقيقية. متعتمدش عليه لوحده."]
+    return "\n".join(lines)
+
+
+def score_preds(state, chg, ok, med, t_now):
+    P = state["preds"]
+    rows = []
+    for p in P:
+        t = p["t"]
+        if t not in ok:
+            continue
+        mv = (ok[t] / p["price"] - 1) * 100
+        mk = med - p["med"]
+        sgn = 1 if p["side"] == "up" else -1
+        rows.append({"t": t, "side": p["side"], "move": mv, "excess": sgn * (mv - mk), "dir_ok": sgn * mv > 0})
+    if not rows:
+        return None
+    try:
+        with open(SCORECARD, encoding="utf-8") as f:
+            sc = json.load(f)
+    except Exception:  # noqa: BLE001
+        sc = []
+    n = len(rows)
+    rec = {"date": state["date"], "n": n, "hit": sum(r["dir_ok"] for r in rows) / n * 100,
+           "excess": sum(r["excess"] for r in rows) / n,
+           "beat": sum(r["excess"] > 0 for r in rows) / n * 100}
+    sc = [x for x in sc if x["date"] != rec["date"]] + [rec]
+    if not FORCE:
+        with open(SCORECARD, "w", encoding="utf-8") as f:
+            json.dump(sc, f, ensure_ascii=False)
+    tn = sum(x["n"] for x in sc)
+    cum_h = sum(x["hit"] * x["n"] for x in sc) / tn
+    cum_e = sum(x["excess"] * x["n"] for x in sc) / tn
+    best = sorted(rows, key=lambda r: -r["excess"])[:3]
+    worst = sorted(rows, key=lambda r: r["excess"])[:3]
+    L = [f"🏁 نتيجة التوقع اللحظي - {state['date']}" + (" (تجربة)" if FORCE else ""),
+         f"{n} توقع: اتجاه صح في {rec['hit']:.0f}% | متوسط الزيادة عن السوق (من وقت التوقع للقفل): {rec['excess']:+.2f}% | غلبوا السوق: {rec['beat']:.0f}%",
+         f"التراكمي ({len(sc)} يوم، {tn} توقع): اتجاه صح {cum_h:.0f}% | زيادة عن السوق {cum_e:+.2f}% للتوقع",
+         "أحسن: " + "، ".join(f"{r['t'].replace('.CA','')} {r['excess']:+.1f}%" for r in best),
+         "أسوأ: " + "، ".join(f"{r['t'].replace('.CA','')} {r['excess']:+.1f}%" for r in worst),
+         "(الزيادة قبل تكلفة ~0.4% للصفقة، وغير مفيدة لو أقل منها)"]
+    return "\n".join(L)
 
 
 def fetch(t):
@@ -157,6 +247,9 @@ def main():
     tickers = mo.load_tickers()
     prev = prev_closes(today)
     state = load_state(today)
+    state.setdefault("preds", [])
+    state.setdefault("pred_done", [])
+    labels = load_labels(today)
     hist = {}
     cycles = 0
     try:
@@ -180,6 +273,21 @@ def main():
                     # أول دورة بنسجّل المستويات الحالية بس بدون إغراق لو كتير
                     if ups or downs:
                         mo.send_telegram(message(t_now, med, ups, downs, ok))
+            if r and labels:
+                med, ups, downs, chg, ok = r
+                due = [pt for pt in PRED_TIMES if hm(t_now) >= pt and list(pt) not in state["pred_done"]]
+                if FORCE and cycles == 1:
+                    due = [PRED_TIMES[0]]
+                if due:
+                    state["pred_done"] += [list(pt) for pt in due]
+                    pu, pd_ = predict(labels, chg, ok, med, state, t_now)
+                    if pu or pd_:
+                        mo.send_telegram(pred_message(t_now, med, pu, pd_, ok))
+                if (hm(t_now) >= SCORE_AT or FORCE and cycles == 2) and not state["scored"]:
+                    msg = score_preds(state, chg, ok, med, t_now)
+                    state["scored"] = True
+                    if msg:
+                        mo.send_telegram(msg)
             save_state(state)
             if FORCE and cycles >= 2:
                 break
