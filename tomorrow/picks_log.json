@@ -348,6 +348,39 @@
    },
    "news": {},
    "made": "2026-11-08 22:48"
+  },
+  {
+   "target": "2026-11-10",
+   "data_date": "2026-11-09",
+   "picks": [
+    "BINV",
+    "HRHO",
+    "EMFD",
+    "SKPC",
+    "MENA",
+    "EGAL",
+    "CCAP",
+    "ADPC",
+    "OFH",
+    "CICH"
+   ],
+   "labels": {
+    "BINV": "شراء",
+    "HRHO": "شراء",
+    "EMFD": "انتظر",
+    "SKPC": "شراء",
+    "MENA": "انتظر",
+    "EGAL": "شراء",
+    "CCAP": "شراء",
+    "ADPC": "شراء",
+    "OFH": "شراء",
+    "CICH": "شراء"
+   },
+   "news": {
+    "BINV": "neutral",
+    "HRHO": "neutral"
+   },
+   "made": "2026-11-09 18:29"
   }
  ]
 }
