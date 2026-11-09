@@ -35,7 +35,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import backtest as bt  # noqa: E402
+import alpha  # noqa: E402
 import direction as dr  # noqa: E402
+import models  # noqa: E402
 import news as nw  # noqa: E402
 
 OUT_DIR = os.path.join(ROOT, "tomorrow")
@@ -128,23 +130,30 @@ def train_and_score(C, H, L, V, O, min_turnover, trees):
     Xcs = np.stack([cs[k] for k in bt.XF] +
                    [np.repeat(mkt[k].values[:, None], N, axis=1) for k in bt.MF], axis=2).astype(np.float32)
     feat_ok = np.isfinite(Xcs).all(axis=2) & liquid.values
+    try:    # مدخلات Alpha158 الإضافية (نفس اللي في توقع الأيام)، بنلغيها لو قللت الأسهم الصالحة النهاردة
+        XA, an = alpha.build_alpha(C, H, L, V, O, liquid, bt.csrank)
+        X2 = np.concatenate([Xcs, XA], axis=2)
+        ok2 = np.isfinite(X2).all(axis=2) & liquid.values
+        if ok2[-1].sum() >= 0.8 * feat_ok[-1].sum():
+            Xcs, feat_ok = X2, ok2
+            print(f"[مدخلات] + {len(an)} Alpha158 = {Xcs.shape[2]}")
+    except Exception as e:  # noqa: BLE001
+        print(f"[مدخلات] Alpha158 فشلت: {str(e)[:120]}")
 
     # التدريب: نفس العالم ب في الباكتست (افتتاح→قفلة لليوم التالي، من غير الأسهم المقفولة على الحد)
     E = feat_ok & ~lock.values & np.isfinite(nxt_oc.values)
     if int(E.sum()) < 5000:
         raise bt.BacktestError(f"بيانات التدريب قليلة ({int(E.sum())} صف)")
     Y = (pd.DataFrame(np.where(E, nxt_oc.values, np.nan)).rank(axis=1, pct=True) - 0.5).values
-    model = xgb.XGBRegressor(
-        n_estimators=trees, max_depth=3, learning_rate=0.05, subsample=0.7, colsample_bytree=0.7,
-        min_child_weight=50, reg_lambda=10.0, tree_method="hist", n_jobs=2, random_state=0)
-    model.fit(Xcs[E], Y[E].astype(np.float32), sample_weight=dr.recency_w(E))
-
     t = T - 1
     # الأسهم اللي مناسبة للتقرير: features كاملة + سيولة + مش قافلة على الحد النهاردة
     cols = np.where(feat_ok[t] & ~lock.values[t])[0]
     if len(cols) < 30:
         raise bt.BacktestError(f"عدد الأسهم الصالحة في آخر يوم قليل ({len(cols)})")
-    score = model.predict(Xcs[t, cols])
+    scs = models.fit_scores(1, Xcs[E], Y[E].astype(np.float32), dr.recency_w(E), Xcs[t, cols], trees)
+    score, used = models.choose(1, scs)
+    bym = models.top_by_model(scs, cols, C.columns, 10)
+    print(f"[موديل الجلسة الجاية] {'+'.join(used)}")
     # شراء/بيع: موديل تاني بيجاوب "العائد المطلق بكره هيبقى موجب؟" + قياس دقته على آخر 250 يوم
     ret = nxt_oc.values
     dirp, hold = None, None
@@ -153,7 +162,7 @@ def train_and_score(C, H, L, V, O, min_turnover, trees):
         hold = dr.holdout(Xcs, ret, E, 1, trees)
     except Exception as e:  # noqa: BLE001
         print(f"[direction] فشل تصنيف شراء/بيع، هكمّل من غيره: {e}")
-    return score, cols, np.array(C.columns), f, lock, t, dirp, hold
+    return score, cols, np.array(C.columns), f, lock, t, dirp, hold, bym
 
 
 def price_range(C, col, t, window=RANGE_WINDOW):
@@ -250,7 +259,7 @@ def market_status(C, t):
 
 
 def build_report(C, H, L, V, O, a, now, note=None):
-    score, cols, names, f, lock, t, dirp, hold = train_and_score(C, H, L, V, O, a.min_turnover, a.trees)
+    score, cols, names, f, lock, t, dirp, hold, bym = train_and_score(C, H, L, V, O, a.min_turnover, a.trees)
     data_date = C.index[t].date()
     target = next_trading_day(now)
     stale_days = (now.date() - data_date).days
@@ -281,7 +290,7 @@ def build_report(C, H, L, V, O, a, now, note=None):
             "lv": ({k: (round(float(v), 4) if isinstance(v, (int, float, np.floating)) and v == v else None)
                     for k, v in lv_.items() if k in ("rsi", "atr_pct", "support", "resist", "stop", "target", "rr")}
                    if lv_ else None)}
-    forecast = {"data_date": str(data_date), "target": str(target), "n": n, "hold": hold, "stocks": all_stocks}
+    forecast = {"data_date": str(data_date), "target": str(target), "n": n, "hold": hold, "stocks": all_stocks, "by_model": bym}
 
     # أخبار الأسهم العشرة (تأكيد/تحذير بس، مبتغيّرش الترتيب ولا التصنيف)
     news_map = {}
@@ -382,7 +391,7 @@ def _save_json(path, obj):
         json.dump(obj, fh, ensure_ascii=False, indent=1)
 
 
-def record_picks(rows, target, data_date, now):
+def record_picks(rows, target, data_date, now, by_model=None):
     """بيسجّل أسهم التقرير لجلسة `target`. آخر تقرير لنفس الجلسة هو اللي بيتحسب،
     إلا لو الجلسة دي اتقيّمت خلاص فمبنغيّرش حاجة."""
     names = [r["name"] for r in rows]
@@ -395,7 +404,7 @@ def record_picks(rows, target, data_date, now):
     entry = {"target": str(target), "data_date": str(data_date), "picks": names,
              "labels": {r["name"]: r["label"] for r in rows if r.get("label")},
              "news": {r["name"]: r["news_ag"] for r in rows if r.get("news_ag")},
-             "made": now.strftime("%Y-%m-%d %H:%M")}
+             "by_model": by_model, "made": now.strftime("%Y-%m-%d %H:%M")}
     ent = [e for e in log["entries"] if e["target"] != entry["target"]] + [entry]
     log["entries"] = sorted(ent, key=lambda e: e["target"])[-250:]
     _save_json(PICKS_LOG, log)
@@ -434,6 +443,7 @@ def score_pending(C):
                "avg": round(float(np.mean([x["r"] for x in picks])), 3),
                "mkt_n": int(len(ret)), "mkt_up": int((ret > 0).sum()),
                "mkt_avg": round(float(ret.mean() * 100), 3), "picks": picks}
+        rec["models"] = models.perf(e.get("by_model"), lambda n: float(ret[n + ".CA"] * 100) if (n + ".CA") in ret.index else None)
         sc["days"].append(rec)
         new.append(rec)
     if new:
@@ -480,6 +490,7 @@ def scorecard_message(rec):
     else:
         L_.insert(3, "تصنيف شراء/بيع: مفيش توقع اتجاه اتقال (كلهم انتظر)")
     L_[3:3] = verdict_line(rec)
+    L_ += models.lines(rec, [d for d in _load_json(SCORE_FILE, {"days": []})["days"] if d["target"] < rec["target"]])
     days = _load_json(SCORE_FILE, {"days": []})["days"]
     if len(days) >= 2:
         tn, tu = sum(d["n"] for d in days), sum(d["up"] for d in days)
@@ -539,7 +550,7 @@ def main():
         scored = score_pending(C)
         text, rows, data_date, forecast = build_report(C, H, L, V, O, a, now, note)
         if not a.no_record:
-            record_picks(rows, next_trading_day(now), data_date, now)
+            record_picks(rows, next_trading_day(now), data_date, now, forecast.get("by_model"))
             _save_json(os.path.join(FORECAST_DIR, "d1.json"), forecast)
         os.makedirs(OUT_DIR, exist_ok=True)
         with open(os.path.join(OUT_DIR, "report_latest.md"), "w", encoding="utf-8") as fh:

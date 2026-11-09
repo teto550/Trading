@@ -37,7 +37,10 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import backtest as bt  # noqa: E402
+import alpha  # noqa: E402
 import backtest_horizons as bh  # noqa: E402
+import direction as dr  # noqa: E402
+import models  # noqa: E402
 
 PAPER_DIR = os.path.join(ROOT, "paper")
 HOLD = 20
@@ -55,7 +58,16 @@ def prepare(panel, min_turnover):
     Xcs = np.stack([cs[k] for k in bh.XF2] +
                    [np.repeat(mkt[k].values[:, None], N, axis=1) for k in bt.MF], axis=2).astype(np.float32)
     feat_ok = np.isfinite(Xcs).all(axis=2) & liquid.values & ~lock.values
-    return {"C": C, "O": O, "f": f, "Xcs": Xcs, "feat_ok": feat_ok, "TGT": bh.build_target(C, O, HOLD)}
+    P = {"C": C, "O": O, "f": f, "Xcs": Xcs, "feat_ok": feat_ok, "TGT": bh.build_target(C, O, HOLD)}
+    try:    # LightGBM + مدخلات Alpha158 (الأفضل في الاختبار لـ20 يوم): دفعة موازية للمقارنة الحية مع XGBoost القديم
+        XA, _an = alpha.build_alpha(C, H, L, V, O, liquid, bt.csrank)
+        X2 = np.concatenate([Xcs, XA], axis=2)
+        ok2 = np.isfinite(X2).all(axis=2) & liquid.values & ~lock.values
+        if ok2[-1].sum() >= 0.8 * feat_ok[-1].sum():
+            P["Xcs2"], P["ok2"] = X2, ok2
+    except Exception as e:  # noqa: BLE001
+        print(f"[paper] Alpha158 فشلت: {str(e)[:120]}")
+    return P
 
 
 def data_is_complete(C):
@@ -86,12 +98,24 @@ def make_cohort(P, trees):
     k = max(len(cols) // 5, 5)
     names = np.array(P["C"].columns)
     vol = P["f"]["vol20"].values[t, cols]
-    return {
+    coh = {
         "date": str(P["C"].index[t].date()),
         "universe": sorted(names[cols].tolist()),
         "xgb": names[cols[np.argsort(-score)[:k]]].tolist(),
         "lowvol": names[cols[np.argsort(vol)[:k]]].tolist(),
     }
+    if "Xcs2" in P:
+        try:
+            E2 = P["ok2"] & np.isfinite(P["TGT"].values)
+            Y2 = (pd.DataFrame(np.where(E2, P["TGT"].values, np.nan)).rank(axis=1, pct=True) - 0.5).values
+            m2 = models.make("lgbm", trees)
+            m2.fit(P["Xcs2"][E2], Y2[E2].astype(np.float32), sample_weight=dr.recency_w(E2))
+            c2 = np.where(P["ok2"][t])[0]
+            s2 = m2.predict(P["Xcs2"][t, c2])
+            coh["lgbm"] = names[c2[np.argsort(-s2)[:max(len(c2) // 5, 5)]]].tolist()
+        except Exception as e:  # noqa: BLE001
+            print(f"[paper] LightGBM فشل: {str(e)[:120]}")
+    return coh
 
 
 def score_cohorts(P, state, cost):
@@ -107,8 +131,8 @@ def score_cohorts(P, state, cost):
         if len(mk) < 20:
             continue                                       # لسه مخلصتش (أو بيانات ناقصة)
         rec = {"date": c["date"], "mkt": float(mk.mean()), "n_univ": int(len(mk))}
-        for key in ("xgb", "lowvol"):
-            v = row.reindex(c[key]).dropna()
+        for key in ("xgb", "lowvol", "lgbm"):
+            v = row.reindex(c.get(key, [])).dropna()
             rec[key] = float(v.mean() - mk.mean()) if len(v) >= 3 else float("nan")
         rows.append(rec)
     return rows
@@ -121,8 +145,10 @@ def summarize(rows, cost):
     d = pd.DataFrame(rows)
     out = {"n": len(d), "first": d["date"].iloc[0], "last": d["date"].iloc[-1],
            "mkt_pct": float(d["mkt"].mean() * 100)}
-    for key in ("xgb", "lowvol"):
-        ex = d[key].dropna()
+    for key in ("xgb", "lowvol", "lgbm"):
+        ex = d[key].dropna() if key in d else pd.Series(dtype=float)
+        if not len(ex):
+            continue
         out[key] = {"ex_pct": float(ex.mean() * 100), "net_pct": float((ex.mean() - rt) * 100),
                     "hit": float((ex > rt).mean()), "n": int(len(ex)),
                     "std_pct": float(ex.std(ddof=1) * 100) if len(ex) > 2 else float("nan")}
@@ -136,7 +162,9 @@ def fmt_summary_md(state, stats, new_cohort, cost_bps):
          f"- توقع الباكتست: حوالي {EXPECTED_NET_PCT:+.2f}% للصفقة بعد التكلفة (ميزة صغيرة وغير ثابتة)", ""]
     if stats:
         L += ["| | الفرق عن السوق | بعد التكلفة | نسبة الدفعات الكسبانة | تذبذب الدفعة |", "|---|---|---|---|---|"]
-        for key, label in (("xgb", "XGBoost"), ("lowvol", "Low-vol (مرجع)")):
+        for key, label in (("xgb", "XGBoost"), ("lgbm", "LightGBM+Alpha158"), ("lowvol", "Low-vol (مرجع)")):
+            if key not in stats:
+                continue
             s = stats[key]
             L.append(f"| {label} | {s['ex_pct']:+.2f}% | {s['net_pct']:+.2f}% | {s['hit'] * 100:.0f}% "
                      f"({s['n']}) | {s['std_pct']:.2f}% |")
@@ -144,6 +172,8 @@ def fmt_summary_md(state, stats, new_cohort, cost_bps):
               f"الدفعات من {stats['first']} إلى {stats['last']}"]
     L += ["", f"## اختيارات آخر دفعة ({new_cohort['date']})",
           f"XGBoost ({len(new_cohort['xgb'])}): " + ", ".join(t.replace(".CA", "") for t in new_cohort["xgb"]),
+          *([f"", f"LightGBM+Alpha158 ({len(new_cohort['lgbm'])}): " + ", ".join(t.replace(".CA", "") for t in new_cohort["lgbm"])]
+            if new_cohort.get("lgbm") else []),
           "", f"Low-vol ({len(new_cohort['lowvol'])}): " + ", ".join(t.replace(".CA", "") for t in new_cohort["lowvol"])]
     return "\n".join(L)
 
@@ -164,6 +194,10 @@ def tg_message(new_cohort, stats, n_total, cost_bps, created, stale_days=0):
         lines.append(f"📊 {stats['n']} دفعة ناضجة من {n_total}:")
         lines.append(f"XGBoost: {x['ex_pct']:+.2f}% عن السوق للصفقة، بعد التكلفة {x['net_pct']:+.2f}% "
                      f"(كسب {x['hit'] * 100:.0f}%)")
+        if "lgbm" in stats:
+            g = stats["lgbm"]
+            lines.append(f"LightGBM+Alpha158: {g['ex_pct']:+.2f}% عن السوق، بعد التكلفة {g['net_pct']:+.2f}% "
+                         f"(كسب {g['hit'] * 100:.0f}% من {g['n']} دفعة)")
         lines.append(f"Low-vol: {lv['ex_pct']:+.2f}%، بعد التكلفة {lv['net_pct']:+.2f}%")
         lines.append(f"توقع الباكتست حوالي {EXPECTED_NET_PCT:+.2f}%. العينة صغيرة، متحكمش قبل شهور.")
     else:

@@ -104,7 +104,9 @@ def top_picks(P, h, trees):
     cols = np.where(P["feat_ok"][t])[0]
     if len(cols) < 40:
         raise bt.BacktestError(f"عدد الأسهم الصالحة النهاردة قليل ({len(cols)})")
-    score, used = models.fit_score(h, P["Xcs"][E], Y[E].astype(np.float32), dr.recency_w(E), P["Xcs"][t, cols])
+    sc = models.fit_scores(h, P["Xcs"][E], Y[E].astype(np.float32), dr.recency_w(E), P["Xcs"][t, cols])
+    score, used = models.choose(h, sc)
+    bym = models.top_by_model(sc, cols, C.columns, TOP)
     print(f"[موديل {h} يوم] {'+'.join(used)}")
     # شراء/بيع: العائد المطلق للفترة هيبقى موجب؟ + دقة التصنيف ده على آخر 250 يوم
     dirp, hold = None, None
@@ -123,13 +125,13 @@ def top_picks(P, h, trees):
         if rank <= TOP:
             out.append({"rank": rank, "name": nm_, "last": float(C.iloc[t, col]),
                         "lv": tr.levels(C, P["H"], P["L"], col, t), "label": label})
-    return out, hold, {"n": len(cols), "hold": hold, "stocks": allr}
+    return out, hold, {"n": len(cols), "hold": hold, "stocks": allr, "by_model": bym}
 
 
 # ============================================================
 # التسجيل والتقييم
 # ============================================================
-def record(date, picks_by_h, now, variant="base"):
+def record(date, picks_by_h, now, variant="base", bym_by_h=None):
     log = _load(LOG_FILE, {"entries": []})
     scored = {(d["date"], d["h"]) for d in _load(SCORE_FILE, {"days": []})["days"]}
     ent = log["entries"]
@@ -140,6 +142,7 @@ def record(date, picks_by_h, now, variant="base"):
         ent.append({"date": date, "h": h, "variant": variant, "picks": [p["name"] for p in picks],
                     "labels": {p["name"]: p["label"] for p in picks if p.get("label")},
                     "news": {p["name"]: p["news_ag"] for p in picks if p.get("news_ag")},
+                    "by_model": (bym_by_h or {}).get(h),
                     "made": now.strftime("%Y-%m-%d %H:%M")})
     log["entries"] = sorted(ent, key=lambda e: (e["date"], e["h"]))[-400:]
     _save(LOG_FILE, log)
@@ -206,6 +209,7 @@ def score_pending(C):
                "avg": round(float(np.mean([x["r"] for x in picks])), 3),
                "mkt_n": int(len(ret)), "mkt_up": int((ret > 0).sum()),
                "mkt_avg": round(float(ret.mean() * 100), 3), "picks": picks}
+        rec["models"] = models.perf(e.get("by_model"), lambda n: float(ret[n + ".CA"] * 100) if (n + ".CA") in ret.index else None)
         sc["days"].append(rec)
         new.append(rec)
     if new:
@@ -247,6 +251,8 @@ def result_message(rec):
         L_.insert(3, "تصنيف شراء/بيع: مفيش توقع اتجاه اتقال (كلهم انتظر)")
     L_[3:3] = tr.verdict_line(rec)
     L_ += overlap_lines(rec)
+    L_ += models.lines(rec, [d for d in _load(SCORE_FILE, {"days": []})["days"]
+                             if d["h"] == h and d.get("variant", "base") == rec.get("variant", "base") and d["date"] < rec["date"]])
     days = [d for d in _load(SCORE_FILE, {"days": []})["days"]
             if d["h"] == h and d.get("variant", "base") == rec.get("variant", "base")]
     if len(days) >= 2:
@@ -399,7 +405,7 @@ def main():
         scored = []
         if not a.no_record:
             scored = score_pending(C)
-            record(date, picks_by_h, now, variant)
+            record(date, picks_by_h, now, variant, {h: r[2].get("by_model") for h, r in res.items()})
         if variant == "macro":
             usd = "والدولار" if (M is not None and "usd" in M.columns) else "(الدولار مجاش النهاردة)"
             egx = "EGX30" if egx_src == "yahoo" else "مؤشر تقريبي لـEGX30 (أكبر 30 سهم سيولة، لأن Yahoo رفض المؤشر الرسمي)"
