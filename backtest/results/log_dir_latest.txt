@@ -1,0 +1,103 @@
+[data] 25/251 سهم، اتجاب تاريخ لـ 25
+$VLMR.CA: possibly delisted; no timezone found
+$VLMRA.CA: possibly delisted; no timezone found
+$ACTF.CA: possibly delisted; no timezone found
+$AIDC.CA: possibly delisted; no timezone found
+$AIHC.CA: possibly delisted; no timezone found
+$BONY.CA: possibly delisted; no timezone found
+[data] 50/251 سهم، اتجاب تاريخ لـ 44
+$GOUR.CA: possibly delisted; no timezone found
+$GPIM.CA: possibly delisted; no timezone found
+[data] 75/251 سهم، اتجاب تاريخ لـ 67
+$TAQA.CA: possibly delisted; no timezone found
+$VALU.CA: possibly delisted; no timezone found
+[data] 100/251 سهم، اتجاب تاريخ لـ 90
+$GTHE.CA: possibly delisted; no timezone found
+$SNFI.CA: possibly delisted; no timezone found
+$IRAX.CA: possibly delisted; no timezone found
+$CRST.CA: possibly delisted; no timezone found
+[data] 125/251 سهم، اتجاب تاريخ لـ 111
+$NCGC.CA: possibly delisted; no timezone found
+$NBKE.CA: possibly delisted; no timezone found
+$QNBE.CA: possibly delisted; no timezone found
+[data] 150/251 سهم، اتجاب تاريخ لـ 133
+$PACH.CA: possibly delisted; no timezone found
+$UASG.CA: possibly delisted; no timezone found
+$EITP.CA: possibly delisted; no timezone found
+$SMPP.CA: possibly delisted; no timezone found
+[data] 175/251 سهم، اتجاب تاريخ لـ 154
+$ACRO.CA: possibly delisted; no timezone found
+$ESRS.CA: possibly delisted; no timezone found
+$WATP.CA: possibly delisted; no timezone found
+$SUCE.CA: possibly delisted; no timezone found
+$TORA.CA: possibly delisted; no timezone found
+$DCRC.CA: possibly delisted; no timezone found
+$GTWL.CA: possibly delisted; no timezone found
+$ALEX.CA: possibly delisted; no timezone found
+$TYCN.CA: possibly delisted; no timezone found
+$ARVA.CA: possibly delisted; no timezone found
+$HCFI.CA: possibly delisted; no timezone found
+$NARE.CA: possibly delisted; no timezone found
+[data] 200/251 سهم، اتجاب تاريخ لـ 167
+$UTOP.CA: possibly delisted; no timezone found
+$APPC.CA: possibly delisted; no timezone found
+$UBEE.CA: possibly delisted; no timezone found
+$NAPR.CA: possibly delisted; no timezone found
+$DIFC.CA: possibly delisted; no timezone found
+[data] 225/251 سهم، اتجاب تاريخ لـ 187
+$FCMD.CA: possibly delisted; no timezone found
+$VERT.CA: possibly delisted; no timezone found
+$ADRI.CA: possibly delisted; no timezone found
+$KRDI.CA: possibly delisted; no timezone found
+$UPMS.CA: possibly delisted; no timezone found
+$TANM.CA: possibly delisted; no timezone found
+$ACAP.CA: possibly delisted; no timezone found
+$DGTZ.CA: possibly delisted; no timezone found
+$PHGC.CA: possibly delisted; no timezone found
+$GTEX.CA: possibly delisted; no timezone found
+$GGRN.CA: possibly delisted; no timezone found
+$HBCO.CA: possibly delisted; no timezone found
+$CPME.CA: possibly delisted; no timezone found
+$TWSA.CA: possibly delisted; no timezone found
+[data] 250/251 سهم، اتجاب تاريخ لـ 198
+$KORA.CA: possibly delisted; no timezone found
+[data] خلص الجلب: 198 سهم اتجاب من 251
+/home/runner/work/Trading/Trading/backtest/dir_test.py:97: RuntimeWarning: Mean of empty slice
+  day_mean = np.where(E.sum(1) > 0, np.nanmean(np.where(E, ret, np.nan), axis=1), 0.0)
+[dir_test] آخر 250 يوم
+  [XGB (الحالي)] تم
+  [XGB+Alpha] تم
+  [LightGBM+Alpha] تم
+  [CatBoost+Alpha] تم
+[dir_test] 250 يوم قبلها
+  [XGB (الحالي)] تم
+  [XGB+Alpha] تم
+  [LightGBM+Alpha] تم
+  [CatBoost+Alpha] تم
+# EGX Direction Test - 2026-11-09 20:07
+
+- الهدف: السهم يقفل بكره فوق افتتاحه؟ (نفس اللي الموديل الحالي بيتوقعه) | التدريب قبل الفترة بيوم | وزن الأحدث 365 يوم
+- 'زيادة عن السوق' = عائد السهم - متوسط الأسهم نفس اليوم، قبل أي تكلفة (تكلفتك ~40 bps للصفقة)
+
+## آخر 250 يوم
+- 40154 مشاهدة | نسبة الطالع 44.3% | أحسن تخمين ثابت 55.7%
+
+| الموديل | AUC | أعلى 15%: صح% | أعلى 15%: زيادة عن السوق (bps) | أدنى 15%: صح% | أدنى 15%: زيادة (bps) | شراء ≥0.55 (عدد) | بيع ≤0.45 (عدد) |
+|---|---|---|---|---|---|---|---|
+| XGB (الحالي) | 0.540 | 49.4 | +2 | 59.3 | +4 | 51.2 (4488) | 58.3 (23350) |
+| XGB+Alpha | 0.550 | 50.3 | +2 | 61.3 | +9 | 50.7 (4352) | 59.0 (22879) |
+| LightGBM+Alpha | 0.545 | 49.7 | +4 | 61.6 | +10 | 49.8 (3254) | 58.6 (23085) |
+| CatBoost+Alpha | 0.548 | 50.8 | +3 | 59.8 | +7 | 49.7 (3845) | 59.1 (22892) |
+| متوسط الـ3 (+Alpha) | 0.551 | 50.3 | +4 | 60.7 | +10 | 49.7 (3806) | 59.1 (22869) |
+
+## 250 يوم قبلها
+- 34653 مشاهدة | نسبة الطالع 43.0% | أحسن تخمين ثابت 57.0%
+
+| الموديل | AUC | أعلى 15%: صح% | أعلى 15%: زيادة عن السوق (bps) | أدنى 15%: صح% | أدنى 15%: زيادة (bps) | شراء ≥0.55 (عدد) | بيع ≤0.45 (عدد) |
+|---|---|---|---|---|---|---|---|
+| XGB (الحالي) | 0.545 | 50.9 | +2 | 62.3 | +6 | 60.2 (1438) | 59.6 (21402) |
+| XGB+Alpha | 0.553 | 51.3 | +5 | 63.0 | +13 | 59.6 (1298) | 60.3 (20149) |
+| LightGBM+Alpha | 0.554 | 51.6 | +8 | 63.8 | +8 | 62.6 (604) | 60.0 (20541) |
+| CatBoost+Alpha | 0.561 | 52.8 | +8 | 65.4 | +7 | 61.8 (1130) | 60.3 (19754) |
+| متوسط الـ3 (+Alpha) | 0.558 | 52.2 | +6 | 64.1 | +12 | 60.7 (867) | 60.3 (20196) |
+
