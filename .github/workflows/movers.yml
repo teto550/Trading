@@ -2,8 +2,7 @@ name: Live Movers
 on:
   schedule:
     # الأحد للخميس. 07:30 UTC = 9:30 القاهرة (شتا) - السكريبت بيستنى لحد 9:55 وبيشتغل لحد 14:32
-    - cron: "37 7 * * 0-4"
-    - cron: "17 8 * * 0-4"   # احتياطي لو الأول اتسقّط
+    - cron: "7,37 7-9 * * 0-4"   # كذا محاولة عشان GitHub بيسقّط/يتأخر الـcron (الـconcurrency بيمنع التكرار)
   workflow_dispatch:
     inputs:
       force_run:
