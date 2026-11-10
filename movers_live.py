@@ -26,6 +26,7 @@ FAST_PCT = 2.0
 FAST_MIN = 30
 FAST_COOLDOWN_MIN = 45
 INTERVAL = int(os.environ.get("MOVERS_INTERVAL", "150"))
+DETECT = os.environ.get("MOVERS_DETECT", "false").lower() == "true"   # تنبيهات "سهم عدّى +3%" (اتقفلت: مكنتش مفيدة)
 FORCE = os.environ.get("FORCE_RUN", "false").lower() == "true"
 START = (9, 55)
 END = (14, 32)
@@ -110,6 +111,36 @@ def predict(labels, chg, ok, med, state, t_now):
             state["preds"].append({"t": t, "side": side, "price": ok[t], "chg": c, "med": med,
                                    "time": f"{t_now:%H:%M}"})
     return ups[:TOP], downs[:TOP]
+
+
+def followup(state, ok, flat=0.5):
+    """حالة التوقعات السابقة دلوقتي: طلع / نزل / ثبت، ومطابق للتوقع ولا لأ."""
+    rows = []
+    for p in state["preds"]:
+        t = p["t"]
+        if t not in ok:
+            continue
+        mv = (ok[t] / p["price"] - 1) * 100
+        st = "طلع" if mv >= flat else ("نزل" if mv <= -flat else "ثبت")
+        exp = "طلع" if p["side"] == "up" else "نزل"
+        mark = "✅" if st == exp else ("➖" if st == "ثبت" else "❌")
+        rows.append((mark, t, p, mv, st))
+    return rows
+
+
+def followup_lines(rows, limit=14):
+    if not rows:
+        return []
+    good = sum(r[0] == "✅" for r in rows)
+    bad = sum(r[0] == "❌" for r in rows)
+    flat = sum(r[0] == "➖" for r in rows)
+    L = [f"📍 متابعة توقعات النهارده ({len(rows)}): ✅ صح {good} | ❌ عكس {bad} | ➖ ثابت {flat}"]
+    for mark, t, p, mv, st in rows[:limit]:
+        L.append(f"{mark} {t.replace('.CA', '')} (توقعت {'طلوع' if p['side'] == 'up' else 'نزول'} الساعة {p['time']} من {p['price']:.2f}): "
+                 f"{st} {mv:+.1f}%")
+    if len(rows) > limit:
+        L.append(f"... و{len(rows) - limit} تانيين")
+    return L
 
 
 def pred_message(t_now, med, ups, downs, ok):
@@ -270,7 +301,7 @@ def main():
             cycles += 1
             if r:
                 med, ups, downs, chg, ok = r
-                if (ups or downs) and hm(t_now) >= (10, 0) or FORCE:
+                if DETECT and ((ups or downs) and hm(t_now) >= (10, 0) or FORCE):
                     # أول دورة بنسجّل المستويات الحالية بس بدون إغراق لو كتير
                     if ups or downs:
                         mo.send_telegram(message(t_now, med, ups, downs, ok))
@@ -281,14 +312,20 @@ def main():
                     due = [PRED_TIMES[0]]
                 if due:
                     state["pred_done"] += [list(pt) for pt in due]
+                    prev_rows = followup(state, ok)          # قبل ما نضيف توقعات الجولة دي
                     pu, pd_ = predict(labels, chg, ok, med, state, t_now)
+                    parts = []
+                    if prev_rows:
+                        parts.append("\n".join(followup_lines(prev_rows)))
                     if pu or pd_:
-                        mo.send_telegram(pred_message(t_now, med, pu, pd_, ok))
+                        parts.append(pred_message(t_now, med, pu, pd_, ok))
+                    if parts:
+                        mo.send_telegram("\n\n".join(parts))
                 if (hm(t_now) >= SCORE_AT or FORCE and cycles == 2) and not state["scored"]:
                     msg = score_preds(state, chg, ok, med, t_now)
                     state["scored"] = True
                     if msg:
-                        mo.send_telegram(msg)
+                        mo.send_telegram("\n".join(followup_lines(followup(state, ok), 30)) + "\n\n" + msg)
             save_state(state)
             if FORCE and cycles >= 2:
                 break

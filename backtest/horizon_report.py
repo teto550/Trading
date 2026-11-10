@@ -40,6 +40,7 @@ import direction as dr
 import alpha  # noqa: E402
 import models  # noqa: E402
 import macro  # noqa: E402
+import outlook as ol  # noqa: E402
 import news as nw  # noqa: E402
 import tomorrow_report as tr  # noqa: E402
 
@@ -421,13 +422,27 @@ def main():
             err = os.path.join(OUT_DIR, "error_latest.txt")
             if os.path.exists(err):
                 os.remove(err)
+        out_text = None
+        try:    # مرجع الدخول: مدى العائد والسعر لكل سهم + تتبع التوقعات
+            outl = ol.predict_all(P)
+            out_text, out_log = ol.build(P, {h: r[2] for h, r in res.items()}, outl)
+            out_msgs = ol.log_and_score(C, O, out_log) if not a.no_record else []
+        except Exception as e:  # noqa: BLE001
+            print(f"[outlook] فشل، هكمّل من غيره: {str(e)[:200]}")
+            out_msgs = []
         print(text)
+        if out_text:
+            print("\n" + out_text)
         for rec in scored:
             print("\n" + result_message(rec))
         if not a.no_telegram:
             for rec in scored[-4:]:
                 bt.send_telegram(result_message(rec))
             tr.send_long(text)
+            for m in out_msgs:
+                bt.send_telegram(m)
+            if out_text:
+                tr.send_long(out_text)
     except Exception as e:  # noqa: BLE001
         tb = traceback.format_exc()
         print(tb)
