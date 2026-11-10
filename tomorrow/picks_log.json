@@ -431,6 +431,90 @@
     ]
    },
    "made": "2026-11-10 02:28"
+  },
+  {
+   "target": "2026-11-11",
+   "data_date": "2026-11-10",
+   "picks": [
+    "SUGR",
+    "EGAS",
+    "RREI",
+    "CICH",
+    "AMIA",
+    "EXPA",
+    "OIH",
+    "SPMD",
+    "EFIH",
+    "HELI"
+   ],
+   "labels": {
+    "SUGR": "شراء",
+    "EGAS": "شراء",
+    "RREI": "شراء",
+    "CICH": "شراء",
+    "AMIA": "شراء",
+    "EXPA": "شراء",
+    "OIH": "شراء",
+    "SPMD": "شراء",
+    "EFIH": "شراء",
+    "HELI": "شراء"
+   },
+   "news": {
+    "SUGR": "agree",
+    "EGAS": "neutral",
+    "RREI": "neutral"
+   },
+   "by_model": {
+    "xgb": [
+     "EGAS",
+     "SUGR",
+     "CPCI",
+     "CICH",
+     "AMIA",
+     "EFIH",
+     "ETRS",
+     "EXPA",
+     "RREI",
+     "ABUK"
+    ],
+    "lgbm": [
+     "EGAS",
+     "RREI",
+     "SUGR",
+     "AMIA",
+     "ATQA",
+     "SPMD",
+     "CICH",
+     "SCFM",
+     "OIH",
+     "AFDI"
+    ],
+    "cat": [
+     "SUGR",
+     "EGAS",
+     "OIH",
+     "CICH",
+     "EXPA",
+     "ORHD",
+     "AMIA",
+     "SPMD",
+     "CIEB",
+     "SKPC"
+    ],
+    "ens": [
+     "EGAS",
+     "SUGR",
+     "CICH",
+     "AMIA",
+     "EXPA",
+     "OIH",
+     "SPMD",
+     "EFIH",
+     "RREI",
+     "HELI"
+    ]
+   },
+   "made": "2026-11-10 16:57"
   }
  ]
 }
