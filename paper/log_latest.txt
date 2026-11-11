@@ -11,39 +11,41 @@ $GPIM.CA: possibly delisted; no timezone found
 [data] 75/251 سهم، اتجاب تاريخ لـ 67
 $TAQA.CA: possibly delisted; no timezone found
 $VALU.CA: possibly delisted; no timezone found
-[data] 100/251 سهم، اتجاب تاريخ لـ 90
+$UNIP.CA: possibly delisted; no price data found  (1d 1927-12-07 -> 2026-11-12)
+[data] 100/251 سهم، اتجاب تاريخ لـ 89
 $GTHE.CA: possibly delisted; no timezone found
 $SNFI.CA: possibly delisted; no timezone found
 $IRAX.CA: possibly delisted; no timezone found
 $CRST.CA: possibly delisted; no timezone found
-[data] 125/251 سهم، اتجاب تاريخ لـ 111
+[data] 125/251 سهم، اتجاب تاريخ لـ 110
 $NCGC.CA: possibly delisted; no timezone found
 $NBKE.CA: possibly delisted; no timezone found
 $QNBE.CA: possibly delisted; no timezone found
-[data] 150/251 سهم، اتجاب تاريخ لـ 133
+[data] 150/251 سهم، اتجاب تاريخ لـ 132
 $PACH.CA: possibly delisted; no timezone found
 $UASG.CA: possibly delisted; no timezone found
 $EITP.CA: possibly delisted; no timezone found
 $SMPP.CA: possibly delisted; no timezone found
-[data] 175/251 سهم، اتجاب تاريخ لـ 154
+[data] 175/251 سهم، اتجاب تاريخ لـ 153
 $ACRO.CA: possibly delisted; no timezone found
 $ESRS.CA: possibly delisted; no timezone found
 $WATP.CA: possibly delisted; no timezone found
 $SUCE.CA: possibly delisted; no timezone found
 $TORA.CA: possibly delisted; no timezone found
 $DCRC.CA: possibly delisted; no timezone found
+$GTWL.CA: possibly delisted; no timezone found
 $ALEX.CA: possibly delisted; no timezone found
 $TYCN.CA: possibly delisted; no timezone found
 $ARVA.CA: possibly delisted; no timezone found
 $HCFI.CA: possibly delisted; no timezone found
 $NARE.CA: possibly delisted; no timezone found
-[data] 200/251 سهم، اتجاب تاريخ لـ 168
+[data] 200/251 سهم، اتجاب تاريخ لـ 166
 $UTOP.CA: possibly delisted; no timezone found
 $APPC.CA: possibly delisted; no timezone found
 $UBEE.CA: possibly delisted; no timezone found
 $NAPR.CA: possibly delisted; no timezone found
 $DIFC.CA: possibly delisted; no timezone found
-[data] 225/251 سهم، اتجاب تاريخ لـ 188
+[data] 225/251 سهم، اتجاب تاريخ لـ 186
 $FCMD.CA: possibly delisted; no timezone found
 $VERT.CA: possibly delisted; no timezone found
 $ADRI.CA: possibly delisted; no timezone found
@@ -58,7 +60,7 @@ $GGRN.CA: possibly delisted; no timezone found
 $HBCO.CA: possibly delisted; no timezone found
 $CPME.CA: possibly delisted; no timezone found
 $TWSA.CA: possibly delisted; no timezone found
-[data] 250/251 سهم، اتجاب تاريخ لـ 199
+[data] 250/251 سهم، اتجاب تاريخ لـ 197
 $KORA.CA: possibly delisted; no timezone found
-[data] خلص الجلب: 199 سهم اتجاب من 251
-[done] دفعة 2026-11-09 (جديدة) | ناضجة: 3 | تأخر Yahoo: 2 يوم | رسالة تليجرام: لأ
+[data] خلص الجلب: 197 سهم اتجاب من 251
+[done] دفعة 2026-11-10 (جديدة) | ناضجة: 4 | تأخر Yahoo: 2 يوم | رسالة تليجرام: أيوه

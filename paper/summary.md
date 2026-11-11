@@ -1,20 +1,20 @@
-# EGX Paper Trade - آخر تحديث 2026-11-10 22:28
+# EGX Paper Trade - آخر تحديث 2026-11-11 23:33
 
 - احتفاظ 20 يوم تداول، شراء عند افتتاح اليوم التالي للإشارة، تكلفة 20.0 bps في الاتجاه
-- دفعات متسجلة: 23 | ناضجة (عدّى عليها 20 يوم): 3
+- دفعات متسجلة: 24 | ناضجة (عدّى عليها 20 يوم): 4
 - توقع الباكتست: حوالي +0.28% للصفقة بعد التكلفة (ميزة صغيرة وغير ثابتة)
 
 | | الفرق عن السوق | بعد التكلفة | نسبة الدفعات الكسبانة | تذبذب الدفعة |
 |---|---|---|---|---|
-| XGBoost | +1.67% | +1.27% | 67% (3) | 1.83% |
-| Low-vol (مرجع) | +3.16% | +2.76% | 100% (3) | 1.78% |
+| XGBoost | +0.70% | +0.30% | 50% (4) | 2.39% |
+| Low-vol (مرجع) | +2.33% | +1.93% | 75% (4) | 2.15% |
 
-متوسط عائد السوق (الأسهم الصالحة) لنفس الفترات: -7.10% للصفقة
-الدفعات من 2026-10-07 إلى 2026-10-12
+متوسط عائد السوق (الأسهم الصالحة) لنفس الفترات: -4.74% للصفقة
+الدفعات من 2026-10-07 إلى 2026-10-13
 
-## اختيارات آخر دفعة (2026-11-09)
-XGBoost (30): SNFC, EMFD, BINV, ETRS, SKPC, CIEB, COMI, CPCI, HRHO, ORWE, MIPH, AXPH, CCAP, TMGH, RTVC, ALCN, ADPC, ETEL, ICID, ACGC, GBCO, FAIT, PHTV, MASR, EGAL, COSG, CANA, UNIT, EAST, ATQA
+## اختيارات آخر دفعة (2026-11-10)
+XGBoost (29): EMFD, SNFC, SKPC, ETRS, COMI, FAIT, BINV, CIEB, TMGH, CCAP, SDTI, ALCN, ORWE, CPCI, CICH, MIPH, ISMQ, ICID, ADIB, COSG, ADPC, SWDY, CANA, EAST, MASR, ACGC, HRHO, EGAL, FWRY
 
-LightGBM+Alpha158 (30): SCEM, ETRS, GBCO, SNFC, EGAS, MICH, CPCI, ACAMD, RACC, CIEB, CANA, ETEL, RREI, ORWE, CEFM, FWRY, EFIH, ADPC, TALM, EAST, OBRI, EFIC, ISPH, EMFD, UNIT, ALCN, HRHO, COMI, SDTI, EPCO
+LightGBM+Alpha158 (29): ETRS, SCEM, EAST, GBCO, PRCL, SKPC, MIPH, CICH, CEFM, ISPH, FAIT, CPCI, LCSW, SPMD, RACC, CIEB, RREI, COMI, SAUD, EBSC, EMFD, OBRI, BINV, MICH, EGAS, SNFC, UEFM, ISMQ, ETEL
 
-Low-vol (30): CPCI, COMI, EMFD, OLFI, SNFC, SDTI, PHTV, FAIT, HRHO, BINV, CICH, CLHO, CIEB, SKPC, AMOC, MENA, SAUD, FWRY, ALCN, RTVC, CCAP, TMGH, UEFM, ECAP, TALM, ORWE, ACAMD, ADIB, ACGC, SWDY
+Low-vol (29): CPCI, COMI, EMFD, SNFC, SDTI, OLFI, PHTV, CICH, FAIT, BINV, SKPC, MENA, CLHO, ECAP, CIEB, SAUD, AMOC, ALCN, TMGH, UEFM, CCAP, TALM, FWRY, HRHO, RTVC, ACAMD, ORWE, SWDY, ACGC
