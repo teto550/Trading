@@ -1,0 +1,135 @@
+[data] 25/251 سهم، اتجاب تاريخ لـ 25
+$VLMR.CA: possibly delisted; no timezone found
+$VLMRA.CA: possibly delisted; no timezone found
+$ACTF.CA: possibly delisted; no timezone found
+$AIDC.CA: possibly delisted; no timezone found
+$AIHC.CA: possibly delisted; no timezone found
+$BONY.CA: possibly delisted; no timezone found
+[data] 50/251 سهم، اتجاب تاريخ لـ 44
+$GOUR.CA: possibly delisted; no timezone found
+$GPIM.CA: possibly delisted; no timezone found
+[data] 75/251 سهم، اتجاب تاريخ لـ 67
+$TAQA.CA: possibly delisted; no timezone found
+$VALU.CA: possibly delisted; no timezone found
+[data] 100/251 سهم، اتجاب تاريخ لـ 90
+$GTHE.CA: possibly delisted; no timezone found
+$SNFI.CA: possibly delisted; no timezone found
+$IRAX.CA: possibly delisted; no timezone found
+$CRST.CA: possibly delisted; no timezone found
+[data] 125/251 سهم، اتجاب تاريخ لـ 111
+$NCGC.CA: possibly delisted; no timezone found
+$NBKE.CA: possibly delisted; no timezone found
+$QNBE.CA: possibly delisted; no timezone found
+[data] 150/251 سهم، اتجاب تاريخ لـ 133
+$PACH.CA: possibly delisted; no timezone found
+$UASG.CA: possibly delisted; no timezone found
+$EITP.CA: possibly delisted; no timezone found
+$SMPP.CA: possibly delisted; no timezone found
+[data] 175/251 سهم، اتجاب تاريخ لـ 154
+$ACRO.CA: possibly delisted; no timezone found
+$ESRS.CA: possibly delisted; no timezone found
+$WATP.CA: possibly delisted; no timezone found
+$SUCE.CA: possibly delisted; no timezone found
+$TORA.CA: possibly delisted; no timezone found
+$DCRC.CA: possibly delisted; no timezone found
+$GTWL.CA: possibly delisted; no timezone found
+$ALEX.CA: possibly delisted; no timezone found
+$TYCN.CA: possibly delisted; no timezone found
+$ARVA.CA: possibly delisted; no timezone found
+$HCFI.CA: possibly delisted; no timezone found
+$NARE.CA: possibly delisted; no timezone found
+[data] 200/251 سهم، اتجاب تاريخ لـ 167
+$UTOP.CA: possibly delisted; no timezone found
+$APPC.CA: possibly delisted; no timezone found
+$UBEE.CA: possibly delisted; no timezone found
+$NAPR.CA: possibly delisted; no timezone found
+$DIFC.CA: possibly delisted; no timezone found
+[data] 225/251 سهم، اتجاب تاريخ لـ 187
+$FCMD.CA: possibly delisted; no timezone found
+$VERT.CA: possibly delisted; no timezone found
+$ADRI.CA: possibly delisted; no timezone found
+$KRDI.CA: possibly delisted; no timezone found
+$UPMS.CA: possibly delisted; no timezone found
+$TANM.CA: possibly delisted; no timezone found
+$ACAP.CA: possibly delisted; no timezone found
+$DGTZ.CA: possibly delisted; no timezone found
+$PHGC.CA: possibly delisted; no timezone found
+$GTEX.CA: possibly delisted; no timezone found
+$GGRN.CA: possibly delisted; no timezone found
+$HBCO.CA: possibly delisted; no timezone found
+$CPME.CA: possibly delisted; no timezone found
+$TWSA.CA: possibly delisted; no timezone found
+[data] 250/251 سهم، اتجاب تاريخ لـ 198
+$KORA.CA: possibly delisted; no timezone found
+[data] خلص الجلب: 198 سهم اتجاب من 251
+^CASE30: Period 'max' is invalid, must be one of: 1d, 5d
+^CASE30: Period 'max' is invalid, must be one of: 1d, 5d
+[macro] egx30 (^CASE30): فشل
+$EGX30.CA: possibly delisted; no timezone found
+$EGX30.CA: possibly delisted; no timezone found
+[macro] egx30 (EGX30.CA): فشل
+$^EGX30: possibly delisted; no timezone found
+$^EGX30: possibly delisted; no timezone found
+[macro] egx30 (^EGX30): فشل
+[macro] usd (EGP=X): تمام 6381 يوم
+[conviction] h=20 xgb
+[conviction] h=20 lgbm
+[conviction] h=20 cat
+[conviction] h=40 xgb
+[conviction] h=40 lgbm
+[conviction] h=40 cat
+[conviction] h=60 xgb
+[conviction] h=60 lgbm
+[conviction] h=60 cat
+/home/runner/work/Trading/Trading/backtest/conviction_test.py:100: RuntimeWarning: Mean of empty slice
+  ens = np.nanmean(np.stack([R[(h, k)] for k in KINDS]), axis=0)
+# EGX Conviction Test - 2026-11-11 20:12
+
+- XGB+LightGBM+CatBoost × فترات 20/40/60، Alpha158، تكلفة 20.0 bps في الاتجاه، صفقات 2022+
+- 'صح' = السهم غلب متوسط السوق بعد التكلفة | 'ربح مطلق' = عائد السهم بعد التكلفة موجب | الفاصل = 95% بعدد صفقات مستقلة تقريبي (الصفقات متداخلة)
+
+## هدف 20 يوم
+
+| الإعداد | صفقات | زيادة (bps) | صح (غلب السوق) | فاصل الثقة | ربح مطلق | صفقات مستقلة |
+|---|---|---|---|---|---|---|
+| أعلى 20% (ensemble الموديلات) | 23833 (1154 يوم) | +34 | 40% | 38–43% | 56% | ~1191 |
+| أعلى 10% (ensemble الموديلات) | 11222 (1154 يوم) | +45 | 41% | 37–45% | 56% | ~561 |
+| 3 موديلات متفقين - أعلى 20% | 16890 (1154 يوم) | +40 | 40% | 37–44% | 56% | ~844 |
+| 3 موديلات متفقين - أعلى 10% | 7404 (1153 يوم) | +55 | 42% | 37–47% | 56% | ~370 |
+| كل الـ9 (3 موديلات × 3 فترات) متفقين - أعلى 20% | 6690 (1149 يوم) | +47 | 41% | 36–47% | 54% | ~334 |
+| كل الـ9 (3 موديلات × 3 فترات) متفقين - أعلى 10% | 2358 (981 يوم) | +64 | 42% | 33–51% | 55% | ~117 |
+
+الأسهم اللي الـ9 متفقين إنها الأضعف (أسفل 20%):
+
+- 8381 صفقة (1145 يوم): متوسط أداء السهم عن السوق -281 bps (بدون تكلفة).
+
+## هدف 40 يوم
+
+| الإعداد | صفقات | زيادة (bps) | صح (غلب السوق) | فاصل الثقة | ربح مطلق | صفقات مستقلة |
+|---|---|---|---|---|---|---|
+| أعلى 20% (ensemble الموديلات) | 22683 (1134 يوم) | +82 | 41% | 37–45% | 61% | ~567 |
+| أعلى 10% (ensemble الموديلات) | 10643 (1134 يوم) | +122 | 41% | 36–47% | 61% | ~266 |
+| 3 موديلات متفقين - أعلى 20% | 15733 (1134 يوم) | +100 | 41% | 36–46% | 61% | ~393 |
+| 3 موديلات متفقين - أعلى 10% | 6984 (1134 يوم) | +122 | 41% | 34–49% | 61% | ~174 |
+| كل الـ9 (3 موديلات × 3 فترات) متفقين - أعلى 20% | 6504 (1128 يوم) | +189 | 42% | 35–50% | 61% | ~162 |
+| كل الـ9 (3 موديلات × 3 فترات) متفقين - أعلى 10% | 2315 (961 يوم) | +145 | 42% | 30–55% | 62% | ~57 |
+
+الأسهم اللي الـ9 متفقين إنها الأضعف (أسفل 20%):
+
+- 7995 صفقة (1125 يوم): متوسط أداء السهم عن السوق -449 bps (بدون تكلفة).
+
+## هدف 60 يوم
+
+| الإعداد | صفقات | زيادة (bps) | صح (غلب السوق) | فاصل الثقة | ربح مطلق | صفقات مستقلة |
+|---|---|---|---|---|---|---|
+| أعلى 20% (ensemble الموديلات) | 21841 (1114 يوم) | +113 | 41% | 37–47% | 65% | ~364 |
+| أعلى 10% (ensemble الموديلات) | 10177 (1114 يوم) | +98 | 41% | 34–48% | 64% | ~169 |
+| 3 موديلات متفقين - أعلى 20% | 15149 (1114 يوم) | +91 | 41% | 35–47% | 64% | ~252 |
+| 3 موديلات متفقين - أعلى 10% | 6663 (1113 يوم) | +79 | 40% | 32–50% | 64% | ~111 |
+| كل الـ9 (3 موديلات × 3 فترات) متفقين - أعلى 20% | 6339 (1108 يوم) | +192 | 43% | 34–52% | 66% | ~105 |
+| كل الـ9 (3 موديلات × 3 فترات) متفقين - أعلى 10% | 2254 (940 يوم) | +192 | 43% | 29–59% | 68% | ~37 |
+
+الأسهم اللي الـ9 متفقين إنها الأضعف (أسفل 20%):
+
+- 7646 صفقة (1105 يوم): متوسط أداء السهم عن السوق -495 bps (بدون تكلفة).
+
