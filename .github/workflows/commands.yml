@@ -15,6 +15,7 @@ jobs:
     timeout-minutes: 350
     permissions:
       contents: write
+      actions: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -23,6 +24,10 @@ jobs:
           cache: pip
       - name: Install dependencies
         run: pip install -r requirements.txt
+      - name: Keep live movers running during the session
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: nohup python ensure_movers.py > ensure_movers.log 2>&1 &
       - name: Answer Telegram messages
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
