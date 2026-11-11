@@ -520,84 +520,84 @@
    "data_date": "2026-11-11",
    "picks": [
     "EMFD",
+    "ORWE",
     "CSAG",
-    "MASR",
     "CICH",
     "ISMQ",
-    "AMIA",
     "OIH",
+    "AMIA",
     "SKPC",
     "UNIT",
     "DSCW"
    ],
    "labels": {
     "EMFD": "بيع",
+    "ORWE": "بيع",
     "CSAG": "بيع",
-    "MASR": "بيع",
-    "CICH": "بيع",
+    "CICH": "انتظر",
     "ISMQ": "انتظر",
-    "AMIA": "بيع",
     "OIH": "انتظر",
+    "AMIA": "بيع",
     "SKPC": "انتظر",
-    "UNIT": "بيع",
+    "UNIT": "انتظر",
     "DSCW": "بيع"
    },
    "news": {
     "EMFD": "disagree",
-    "CSAG": "neutral",
-    "MASR": "neutral"
+    "ORWE": "neutral",
+    "CSAG": "neutral"
    },
    "by_model": {
     "xgb": [
      "CICH",
-     "EFIH",
      "ISMQ",
      "UNIT",
-     "COMI",
-     "AMIA",
-     "ALCN",
      "EMFD",
-     "OIH",
-     "ETRS"
+     "AMIA",
+     "COMI",
+     "EFIH",
+     "ETRS",
+     "ALCN",
+     "OIH"
     ],
     "lgbm": [
      "CICH",
-     "AMIA",
-     "SVCE",
      "OIH",
-     "CSAG",
-     "MASR",
-     "EMFD",
+     "UNIT",
      "ISMQ",
-     "AFDI",
-     "UNIT"
+     "AMIA",
+     "ALCN",
+     "RREI",
+     "SVCE",
+     "CSAG",
+     "ORWE"
     ],
     "cat": [
      "CICH",
      "ISMQ",
+     "EMFD",
      "ISPH",
+     "SKPC",
      "OIH",
      "ORHD",
-     "EMFD",
-     "SKPC",
-     "AMIA",
+     "DSCW",
      "SCFM",
-     "DSCW"
+     "ETEL"
     ],
     "ens": [
      "CICH",
      "ISMQ",
-     "AMIA",
      "OIH",
      "EMFD",
-     "CSAG",
+     "AMIA",
      "SKPC",
-     "MASR",
+     "ORWE",
+     "CSAG",
      "UNIT",
      "DSCW"
     ]
    },
-   "made": "2026-11-11 16:28"
+   "made": "2026-11-12 01:07"
   }
  ]
 }
