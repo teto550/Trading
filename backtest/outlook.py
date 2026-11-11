@@ -94,6 +94,16 @@ def build(P, res_rank, outl):
     mr /= len(hs)
     r20 = (C.iloc[t, cols].values / C.iloc[t - 20, cols].values - 1)
 
+    def agree(i, side):
+        """كام ترتيب من الـ9 (3 موديلات × 3 فترات) متفقين على السهم (أعلى 20% للطلوع / أسفل 20% للنزول)."""
+        k = tot = 0
+        for h in hs:
+            pc = res_rank[h]["stocks"].get(names[i], {}).get("pct", {})
+            for v in pc.values():
+                tot += 1
+                k += (v >= 0.8) if side > 0 else (v <= 0.2)
+        return k, tot
+
     def row(i, side):
         col, last = int(cols[i]), float(C.iloc[t, cols[i]])
         parts, best, bscore = [], None, -9
@@ -110,7 +120,8 @@ def build(P, res_rank, outl):
         except Exception:  # noqa: BLE001
             pass
         stop = f" | وقف {lv['stop']:.2f}" if (lv and side > 0) else ""
-        return (f"• {names[i]} (حاليًا {last:.2f}, آخر 20 يوم {r20[i] * 100:+.0f}%): " + " | ".join(parts)
+        ag, tg = agree(i, side)
+        return (f"• {names[i]} [اتفاق {ag}/{tg}] (حاليًا {last:.2f}, آخر 20 يوم {r20[i] * 100:+.0f}%): " + " | ".join(parts)
                 + f"{stop} | الأنسب: {best} يوم"), best
 
     ups = [i for i in np.argsort(mr) if all(outl[h]["q"][i][1] > COST for h in hs)][:TOP]
@@ -136,6 +147,7 @@ def build(P, res_rank, outl):
     cov = [f"{h}ي: {outl[h]['cov']['inside']:.0f}%" for h in hs if outl[h].get("cov")]
     L += ["دقة المدى: في آخر 250 يوم المدى ده غطى " + (" | ".join(cov) if cov else "(مش متاح)") +
           " من النتايج الفعلية (المفروض 60%) - لو أقل من كده يبقى المدى أضيق من الواقع.",
+          "اتفاق = كام ترتيب من الـ9 (3 موديلات × 3 فترات) حاطين السهم في أعلى/أسفل 20%. اختبرت الاتفاق: ماحسّنش نسبة الصح (حتى 9/9 غلب السوق في ~42% من الصفقات بس، والمتوسط موجب بسبب أسهم قليلة بتكسب كتير).",
           "⚠️ ده تقدير إحصائي مش وعد. في الباكتست الفترات دي (40 و60 يوم) هي الأقوى، لكن في التحقق بصفقات مش متداخلة الميزة صغيرة (+80 لـ+155 bps) "
           "وغير مثبتة إحصائيًا، والنزول بيتنفذ بس لو عندك طريقة بيع فعلية. بسجّل كل توقع وهقيّمه لما الفترة تخلص."]
     return "\n".join(L), log

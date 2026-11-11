@@ -122,7 +122,8 @@ def top_picks(P, h, trees):
         col = int(cols[i])
         label = dr.label(float(dirp[i])) if dirp is not None else None
         nm_ = C.columns[col].replace(".CA", "")
-        allr[nm_] = {"rank": rank, "label": label, "last": float(C.iloc[t, col])}
+        allr[nm_] = {"rank": rank, "label": label, "last": float(C.iloc[t, col]),
+                     "pct": {k: float(sc[k][i]) for k in models.ALL if k in sc}}
         if rank <= TOP:
             out.append({"rank": rank, "name": nm_, "last": float(C.iloc[t, col]),
                         "lv": tr.levels(C, P["H"], P["L"], col, t), "label": label})
