@@ -32,18 +32,19 @@ $WATP.CA: possibly delisted; no timezone found
 $SUCE.CA: possibly delisted; no timezone found
 $TORA.CA: possibly delisted; no timezone found
 $DCRC.CA: possibly delisted; no timezone found
+$GTWL.CA: possibly delisted; no timezone found
 $ALEX.CA: possibly delisted; no timezone found
 $TYCN.CA: possibly delisted; no timezone found
 $ARVA.CA: possibly delisted; no timezone found
 $HCFI.CA: possibly delisted; no timezone found
 $NARE.CA: possibly delisted; no timezone found
-[data] 200/251 سهم، اتجاب تاريخ لـ 168
+[data] 200/251 سهم، اتجاب تاريخ لـ 167
 $UTOP.CA: possibly delisted; no timezone found
 $APPC.CA: possibly delisted; no timezone found
 $UBEE.CA: possibly delisted; no timezone found
 $NAPR.CA: possibly delisted; no timezone found
 $DIFC.CA: possibly delisted; no timezone found
-[data] 225/251 سهم، اتجاب تاريخ لـ 188
+[data] 225/251 سهم، اتجاب تاريخ لـ 187
 $FCMD.CA: possibly delisted; no timezone found
 $VERT.CA: possibly delisted; no timezone found
 $ADRI.CA: possibly delisted; no timezone found
@@ -58,93 +59,93 @@ $GGRN.CA: possibly delisted; no timezone found
 $HBCO.CA: possibly delisted; no timezone found
 $CPME.CA: possibly delisted; no timezone found
 $TWSA.CA: possibly delisted; no timezone found
-[data] 250/251 سهم، اتجاب تاريخ لـ 199
+[data] 250/251 سهم، اتجاب تاريخ لـ 198
 $KORA.CA: possibly delisted; no timezone found
-[data] خلص الجلب: 199 سهم اتجاب من 251
+[data] خلص الجلب: 198 سهم اتجاب من 251
 [مدخلات] + 50 Alpha158 = 67
 [موديل الجلسة الجاية] xgb+lgbm+cat
-[news] اسم عربي SUGR (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
-[news] اسم عربي EGAS (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
-[news] اسم عربي AMIA (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
 [news] اسم عربي CICH (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[news] اسم عربي ISMQ (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[news] اسم عربي AMIA (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
 [news] اسم عربي OIH (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
-[news] اسم عربي PHTV (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
-[news] اسم عربي SPMD (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
-[news] اسم عربي HELI (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
-[news] اسم عربي EFIH (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
-[news] اسم عربي EXPA (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[news] اسم عربي CSAG (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[news] اسم عربي SKPC (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[news] اسم عربي MASR (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[news] اسم عربي UNIT (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[news] اسم عربي DSCW (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
 [news] أسماء عربي فشلت: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio
-[news] أسماء: 10 سهم | عربي: 0
+[news] أسماء: 10 سهم | عربي: 1
 [news] تقييم Gemini فشل، هستخدم الكلمات المفتاحية: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects
-🔮 تقرير جلسة بكره - الأربع 2026-11-11
-(مبني على بيانات قفلة 2026-11-10 - 161 سهم سيولته كافية)
-ℹ️ قفلة 2026-11-10 اتضافت من Mubasher (183 سهم) لأن Yahoo متأخر. القفلة حقيقية، لكن مدى اليوم وحجم التداول تقديريين.
+🔮 تقرير جلسة بكره - الخميس 2026-11-12
+(مبني على بيانات قفلة 2026-11-11 - 163 سهم سيولته كافية)
+ℹ️ قفلة 2026-11-11 اتضافت من Mubasher (187 سهم) لأن Yahoo متأخر. القفلة حقيقية، لكن مدى اليوم وحجم التداول تقديريين.
 
-🟡 السوق متذبذب: النهاردة +2.5% | 87% من الأسهم طلعت | آخر 5 جلسات +10.4% | آخر 20 جلسة +1.8% (وسيط الأسهم)
+🟡 السوق متذبذب: النهاردة +0.3% | 40% من الأسهم طلعت | آخر 5 جلسات +6.3% | آخر 20 جلسة +0.1% (وسيط الأسهم)
 
 📈 أقوى 10 سهم ترتيبًا لجلسة بكره + مستوياتهم الفنية:
 (مرتبين: اللي الخبر بيأكد تحليله الأول، وبعده اللي الخبر عكسه، وبعده الباقي. رقم ترتيب الموديل الأصلي جنب كل سهم)
 
-1. SUGR | آخر قفلة 47.53 | 🟢 شراء [ترتيب الموديل 1]
-   RSI 37 | تذبذب يومي 4.4% | دعم 44.62 | مقاومة 54.35
-   وقف خسارة 44.37 (-6.6%) | هدف 53.85 (+13.3%) | عائد/مخاطرة 2.0
-   نطاق بكره: 45.93 - 49.42 | نطاق الأسبوع: 45.06 - 50.30
-   📰 ✅ الخبر بيأكد التحليل | 🟢 إيجابي (بالكلمات)
-      «Delta Sugar stock faces two-stage cash dividend payout - ad-hoc-news.de» (ad-hoc-news.de، من 6 أيام)
+1. EMFD | آخر قفلة 12.56 | 🔴 بيع [ترتيب الموديل 5]
+   RSI 78 | تذبذب يومي 3.7% | دعم 10.60 | مقاومة 12.70
+   وقف خسارة 11.86 (-5.6%) | هدف 12.70 (+1.1%) (عند المقاومة) | عائد/مخاطرة 0.2 ⚠️ضعيف
+   نطاق بكره: 12.20 - 12.93 | نطاق الأسبوع: 11.79 - 13.55
+   📰 ⚠️ الخبر عكس التحليل | 🟢 إيجابي (بالكلمات)
+      «Innovo Construction Signs EGP 7.1 Billion Contract with Emaar Misr - الاقتصادي نيوز» (الاقتصادي نيوز، من 6 أيام)
 
-2. EGAS | آخر قفلة 49.20 | 🟢 شراء [ترتيب الموديل 2]
-   RSI 45 | تذبذب يومي 4.6% | دعم 43.00 | مقاومة 53.00
-   وقف خسارة 45.79 (-6.9%) | هدف 53.00 (+7.7%) (عند المقاومة) | عائد/مخاطرة 1.1 ⚠️ضعيف
-   نطاق بكره: 47.59 - 50.43 | نطاق الأسبوع: 46.72 - 51.21
+2. CSAG | آخر قفلة 35.23 | 🔴 بيع [ترتيب الموديل 6]
+   RSI 52 | تذبذب يومي 4.8% | دعم 30.10 | مقاومة 37.69
+   وقف خسارة 32.67 (-7.3%) | هدف 37.69 (+7.0%) (عند المقاومة) | عائد/مخاطرة 1.0 ⚠️ضعيف
+   نطاق بكره: 33.92 - 36.58 | نطاق الأسبوع: 33.00 - 37.26
    📰 ➖ الخبر محايد | ⚪ محايد (بالكلمات)
-      «East Alexandria: EGAS and Cheiron sign gas exploration deal with three-well commitment - O» (Oil & Gas Middle East، النهاردة)
+      «Canal Shipping Agencies stock: profit climbs 502% in Q1 - ad-hoc-news.de» (ad-hoc-news.de، من 3 أيام)
 
-3. AMIA | آخر قفلة 17.99 | 🟢 شراء [ترتيب الموديل 3]
-   RSI 51 | تذبذب يومي 5.6% | دعم 14.00 | مقاومة 19.08
-   وقف خسارة 16.48 (-8.4%) | هدف 19.08 (+6.1%) (عند المقاومة) | عائد/مخاطرة 0.7 ⚠️ضعيف
-   نطاق بكره: 17.48 - 18.72 | نطاق الأسبوع: 16.90 - 20.36
+3. MASR | آخر قفلة 7.02 | 🔴 بيع [ترتيب الموديل 8]
+   RSI 55 | تذبذب يومي 5.5% | دعم 5.60 | مقاومة 8.00
+   وقف خسارة 6.45 (-8.2%) | هدف 8.00 (+14.0%) (عند المقاومة) | عائد/مخاطرة 1.7
+   نطاق بكره: 6.75 - 7.25 | نطاق الأسبوع: 6.56 - 7.49
+   📰 ➖ الخبر محايد | ⚪ محايد (بالكلمات)
+      «Madinet Masr records EGP 45.4 billion in new sales during first nine months of 2026 - Prop» (Prop News Time، من 4 أيام)
+
+4. CICH | آخر قفلة 10.70 | 🔴 بيع [ترتيب الموديل 1]
+   RSI 47 | تذبذب يومي 4.7% | دعم 9.63 | مقاومة 11.20
+   وقف خسارة 9.95 (-7.0%) | هدف 11.20 (+4.7%) (عند المقاومة) | عائد/مخاطرة 0.7 ⚠️ضعيف
+   نطاق بكره: 10.42 - 10.90 | نطاق الأسبوع: 10.15 - 11.29
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
-4. CICH | آخر قفلة 10.72 | 🟢 شراء [ترتيب الموديل 4]
-   RSI 48 | تذبذب يومي 4.7% | دعم 9.63 | مقاومة 11.24
-   وقف خسارة 9.96 (-7.1%) | هدف 11.24 (+4.9%) (عند المقاومة) | عائد/مخاطرة 0.7 ⚠️ضعيف
-   نطاق بكره: 10.44 - 10.92 | نطاق الأسبوع: 10.17 - 11.33
+5. ISMQ | آخر قفلة 7.59 | ⚪ انتظر [ترتيب الموديل 2]
+   RSI 57 | تذبذب يومي 4.8% | دعم 5.96 | مقاومة 7.64
+   وقف خسارة 7.04 (-7.3%) | هدف 7.64 (+0.7%) (عند المقاومة) | عائد/مخاطرة 0.1 ⚠️ضعيف
+   نطاق بكره: 7.31 - 7.78 | نطاق الأسبوع: 7.02 - 8.22
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
-5. OIH | آخر قفلة 1.79 | 🟢 شراء [ترتيب الموديل 5]
-   RSI 51 | تذبذب يومي 5.1% | دعم 1.50 | مقاومة 1.84
-   وقف خسارة 1.65 (-7.7%) | هدف 1.84 (+2.8%) (عند المقاومة) | عائد/مخاطرة 0.4 ⚠️ضعيف
-   نطاق بكره: 1.73 - 1.84 | نطاق الأسبوع: 1.69 - 1.93
+6. AMIA | آخر قفلة 17.42 | 🔴 بيع [ترتيب الموديل 3]
+   RSI 47 | تذبذب يومي 5.9% | دعم 14.00 | مقاومة 19.08
+   وقف خسارة 15.87 (-8.9%) | هدف 19.08 (+9.5%) (عند المقاومة) | عائد/مخاطرة 1.1 ⚠️ضعيف
+   نطاق بكره: 16.90 - 18.12 | نطاق الأسبوع: 16.37 - 19.70
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
-6. PHTV | آخر قفلة 331.14 | 🟢 شراء [ترتيب الموديل 6]
-   RSI 45 | تذبذب يومي 4.1% | دعم 300.00 | مقاومة 343.00
-   وقف خسارة 310.58 (-6.2%) | هدف 343.00 (+3.6%) (عند المقاومة) | عائد/مخاطرة 0.6 ⚠️ضعيف
-   نطاق بكره: 322.20 - 339.10 | نطاق الأسبوع: 317.08 - 365.09
+7. OIH | آخر قفلة 1.75 | ⚪ انتظر [ترتيب الموديل 4]
+   RSI 49 | تذبذب يومي 5.1% | دعم 1.50 | مقاومة 1.84
+   وقف خسارة 1.62 (-7.7%) | هدف 1.84 (+5.1%) (عند المقاومة) | عائد/مخاطرة 0.7 ⚠️ضعيف
+   نطاق بكره: 1.70 - 1.80 | نطاق الأسبوع: 1.65 - 1.89
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
-7. SPMD | آخر قفلة 0.357 | 🟢 شراء [ترتيب الموديل 7]
-   RSI 46 | تذبذب يومي 5.6% | دعم 0.301 | مقاومة 0.392
-   وقف خسارة 0.327 (-8.5%) | هدف 0.392 (+9.8%) (عند المقاومة) | عائد/مخاطرة 1.2 ⚠️ضعيف
-   نطاق بكره: 0.340 - 0.367 | نطاق الأسبوع: 0.325 - 0.380
+8. SKPC | آخر قفلة 15.05 | ⚪ انتظر [ترتيب الموديل 7]
+   RSI 54 | تذبذب يومي 3.2% | دعم 14.01 | مقاومة 15.90
+   وقف خسارة 14.33 (-4.8%) | هدف 15.90 (+5.6%) (عند المقاومة) | عائد/مخاطرة 1.2 ⚠️ضعيف
+   نطاق بكره: 14.65 - 15.40 | نطاق الأسبوع: 14.18 - 15.83
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
-8. HELI | آخر قفلة 7.01 | 🟢 شراء [ترتيب الموديل 8]
-   RSI 50 | تذبذب يومي 5.1% | دعم 5.72 | مقاومة 7.43
-   وقف خسارة 6.47 (-7.7%) | هدف 7.43 (+6.0%) (عند المقاومة) | عائد/مخاطرة 0.8 ⚠️ضعيف
-   نطاق بكره: 6.77 - 7.24 | نطاق الأسبوع: 6.54 - 7.49
+9. UNIT | آخر قفلة 18.01 | 🔴 بيع [ترتيب الموديل 9]
+   RSI 58 | تذبذب يومي 4.4% | دعم 15.06 | مقاومة 19.00
+   وقف خسارة 16.83 (-6.5%) | هدف 19.00 (+5.5%) (عند المقاومة) | عائد/مخاطرة 0.8 ⚠️ضعيف
+   نطاق بكره: 17.50 - 18.61 | نطاق الأسبوع: 16.79 - 19.92
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
-9. EFIH | آخر قفلة 24.89 | 🟢 شراء [ترتيب الموديل 9]
-   RSI 56 | تذبذب يومي 5.2% | دعم 20.30 | مقاومة 24.94
-   وقف خسارة 22.97 (-7.7%) | هدف 28.74 (+15.5%) | عائد/مخاطرة 2.0
-   نطاق بكره: 24.23 - 25.66 | نطاق الأسبوع: 23.72 - 26.69
-   📰 مفيش أخبار عن السهم في آخر 7 أيام
-
-10. EXPA | آخر قفلة 14.72 | 🟢 شراء [ترتيب الموديل 10]
-   RSI 53 | تذبذب يومي 4.9% | دعم 12.00 | مقاومة 14.79
-   وقف خسارة 13.63 (-7.4%) | هدف 16.89 (+14.8%) | عائد/مخاطرة 2.0
-   نطاق بكره: 14.31 - 15.05 | نطاق الأسبوع: 13.99 - 15.45
+10. DSCW | آخر قفلة 1.56 | 🔴 بيع [ترتيب الموديل 10]
+   RSI 55 | تذبذب يومي 5.1% | دعم 1.23 | مقاومة 1.62
+   وقف خسارة 1.44 (-7.7%) | هدف 1.62 (+3.8%) (عند المقاومة) | عائد/مخاطرة 0.5 ⚠️ضعيف
+   نطاق بكره: 1.51 - 1.61 | نطاق الأسبوع: 1.46 - 1.64
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
 📰 رصيد Gemini خلصان (RESOURCE_EXHAUSTED)، فالتقييم النهاردة بالكلمات المفتاحية (أبسط وأقل دقة من الذكاء الاصطناعي، علامة «بالكلمات» جنب كل تقييم). شحن الرصيد من AI Studio بيرجّع التقييم الذكي.
@@ -152,7 +153,7 @@ $KORA.CA: possibly delisted; no timezone found
 📰 الأخبار تأكيد أو تحذير بس: مبتغيّرش الترتيب ولا شراء/بيع، ومفيش باكتست ليها لسه. أنا بقيس بعد كام جلسة لو التصنيف بيبقى أصح لما الأخبار بتأيده.
 
 🟢 شراء = الموديل شايف السهم هيقفل بكره فوق افتتاحه | 🔴 بيع = شايفه هيقفل تحته | ⚪ انتظر = مش واثق.
-⚠️ دقة شراء/بيع في آخر 250 يوم (على أيام الموديل ماشافهاش): 56% صح مقابل 56% لو خمّنا دايمًا الأغلب، يعني مش أحسن من التخمين الثابت. لما قال شراء: طلع 50% من المرات | لما قال بيع: نزل 57%
+⚠️ دقة شراء/بيع في آخر 250 يوم (على أيام الموديل ماشافهاش): 56% صح مقابل 55% لو خمّنا دايمًا الأغلب، يعني مش أحسن من التخمين الثابت. لما قال شراء: طلع 51% من المرات | لما قال بيع: نزل 57%
 
 إزاي تقرأ المستويات:
 • وقف الخسارة = 1.5 × التذبذب اليومي تحت القفلة. الهدف = 3 × التذبذب فوقها (أو المقاومة لو أقرب).
