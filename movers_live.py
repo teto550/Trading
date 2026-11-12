@@ -26,6 +26,7 @@ FAST_PCT = 2.0
 FAST_MIN = 30
 FAST_COOLDOWN_MIN = 45
 INTERVAL = int(os.environ.get("MOVERS_INTERVAL", "150"))
+SEND_PRED = os.environ.get("MOVERS_SEND_PRED", "false").lower() == "true"   # رسايل التوقع اللحظي (اتقفلت: 37% صح في تجربتين) - لسه بيتسجل ويتقيّم
 DETECT = os.environ.get("MOVERS_DETECT", "false").lower() == "true"   # تنبيهات "سهم عدّى +3%" (اتقفلت: مكنتش مفيدة)
 FORCE = os.environ.get("FORCE_RUN", "false").lower() == "true"
 START = (9, 55)
@@ -319,7 +320,7 @@ def main():
                         parts.append("\n".join(followup_lines(prev_rows)))
                     if pu or pd_:
                         parts.append(pred_message(t_now, med, pu, pd_, ok))
-                    if parts:
+                    if parts and SEND_PRED:
                         mo.send_telegram("\n\n".join(parts))
                 if (hm(t_now) >= SCORE_AT or FORCE and cycles == 2) and not state["scored"]:
                     msg = score_preds(state, chg, ok, med, t_now)
