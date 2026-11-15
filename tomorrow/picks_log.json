@@ -684,80 +684,80 @@
    "data_date": "2026-11-12",
    "picks": [
     "ORHD",
-    "CPCI",
+    "CICH",
     "AREH",
     "PHTV",
-    "CICH",
-    "GBCO",
     "AMIA",
-    "ZMID",
-    "CIEB",
-    "CSAG"
+    "GBCO",
+    "MASR",
+    "SKPC",
+    "CPCI",
+    "EFIH"
    ],
    "labels": {
     "ORHD": "انتظر",
-    "CPCI": "انتظر",
+    "CICH": "انتظر",
     "AREH": "انتظر",
     "PHTV": "بيع",
-    "CICH": "انتظر",
-    "GBCO": "انتظر",
     "AMIA": "انتظر",
-    "ZMID": "انتظر",
-    "CIEB": "انتظر",
-    "CSAG": "انتظر"
+    "GBCO": "انتظر",
+    "MASR": "انتظر",
+    "SKPC": "انتظر",
+    "CPCI": "انتظر",
+    "EFIH": "انتظر"
    },
    "news": {},
    "by_model": {
     "xgb": [
-     "AMIA",
-     "PHTV",
-     "CICH",
-     "AREH",
+     "EFIH",
      "CPCI",
-     "CIEB",
-     "ORHD",
-     "GBCO",
-     "BTFH",
-     "ZMID"
-    ],
-    "lgbm": [
-     "AREH",
-     "PHTV",
-     "GBCO",
-     "FAIT",
-     "CPCI",
-     "ZMID",
-     "CICH",
-     "CSAG",
-     "ICFC",
-     "ORHD"
-    ],
-    "cat": [
      "CICH",
      "AREH",
      "PHTV",
      "AMIA",
-     "CIEB",
      "GBCO",
      "MASR",
-     "COPR",
-     "ORHD",
-     "EFIH"
+     "SKPC",
+     "ADCI"
     ],
-    "ens": [
+    "lgbm": [
+     "CICH",
      "AREH",
      "PHTV",
-     "CICH",
+     "ETRS",
      "GBCO",
      "AMIA",
+     "IBCT",
      "ORHD",
-     "ZMID",
-     "CIEB",
-     "CSAG",
-     "CPCI"
+     "SKPC",
+     "COPR"
+    ],
+    "cat": [
+     "PHTV",
+     "AREH",
+     "CICH",
+     "AMIA",
+     "MASR",
+     "CPCI",
+     "GBCO",
+     "ORHD",
+     "SKPC",
+     "CSAG"
+    ],
+    "ens": [
+     "CICH",
+     "AREH",
+     "PHTV",
+     "AMIA",
+     "GBCO",
+     "MASR",
+     "ORHD",
+     "SKPC",
+     "CPCI",
+     "EFIH"
     ]
    },
-   "made": "2026-11-15 16:00"
+   "made": "2026-11-15 23:21"
   }
  ]
 }
