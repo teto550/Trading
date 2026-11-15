@@ -678,6 +678,86 @@
     ]
    },
    "made": "2026-11-13 00:28"
+  },
+  {
+   "target": "2026-11-16",
+   "data_date": "2026-11-12",
+   "picks": [
+    "ORHD",
+    "CPCI",
+    "AREH",
+    "PHTV",
+    "CICH",
+    "GBCO",
+    "AMIA",
+    "ZMID",
+    "CIEB",
+    "CSAG"
+   ],
+   "labels": {
+    "ORHD": "انتظر",
+    "CPCI": "انتظر",
+    "AREH": "انتظر",
+    "PHTV": "بيع",
+    "CICH": "انتظر",
+    "GBCO": "انتظر",
+    "AMIA": "انتظر",
+    "ZMID": "انتظر",
+    "CIEB": "انتظر",
+    "CSAG": "انتظر"
+   },
+   "news": {},
+   "by_model": {
+    "xgb": [
+     "AMIA",
+     "PHTV",
+     "CICH",
+     "AREH",
+     "CPCI",
+     "CIEB",
+     "ORHD",
+     "GBCO",
+     "BTFH",
+     "ZMID"
+    ],
+    "lgbm": [
+     "AREH",
+     "PHTV",
+     "GBCO",
+     "FAIT",
+     "CPCI",
+     "ZMID",
+     "CICH",
+     "CSAG",
+     "ICFC",
+     "ORHD"
+    ],
+    "cat": [
+     "CICH",
+     "AREH",
+     "PHTV",
+     "AMIA",
+     "CIEB",
+     "GBCO",
+     "MASR",
+     "COPR",
+     "ORHD",
+     "EFIH"
+    ],
+    "ens": [
+     "AREH",
+     "PHTV",
+     "CICH",
+     "GBCO",
+     "AMIA",
+     "ORHD",
+     "ZMID",
+     "CIEB",
+     "CSAG",
+     "CPCI"
+    ]
+   },
+   "made": "2026-11-15 16:00"
   }
  ]
 }
