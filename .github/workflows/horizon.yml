@@ -30,6 +30,12 @@ jobs:
           mkdir -p horizon news
           set -o pipefail
           python -u backtest/horizon_report.py --fresh 2>&1 | tee horizon/log_latest.txt
+      - name: Weekly summary
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python -u backtest/weekly_summary.py || true
       - name: Commit picks and scorecard
         if: always()
         run: |
