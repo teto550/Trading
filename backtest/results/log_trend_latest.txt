@@ -1,0 +1,114 @@
+[data] 25/251 سهم، اتجاب تاريخ لـ 25
+$VLMR.CA: possibly delisted; no timezone found
+$VLMRA.CA: possibly delisted; no timezone found
+$ACTF.CA: possibly delisted; no timezone found
+$AIDC.CA: possibly delisted; no timezone found
+$AIHC.CA: possibly delisted; no timezone found
+$BONY.CA: possibly delisted; no timezone found
+[data] 50/251 سهم، اتجاب تاريخ لـ 44
+$GOUR.CA: possibly delisted; no timezone found
+$GPIM.CA: possibly delisted; no timezone found
+[data] 75/251 سهم، اتجاب تاريخ لـ 67
+$TAQA.CA: possibly delisted; no timezone found
+$VALU.CA: possibly delisted; no timezone found
+[data] 100/251 سهم، اتجاب تاريخ لـ 90
+$GTHE.CA: possibly delisted; no timezone found
+$SNFI.CA: possibly delisted; no timezone found
+$IRAX.CA: possibly delisted; no timezone found
+$CRST.CA: possibly delisted; no timezone found
+[data] 125/251 سهم، اتجاب تاريخ لـ 111
+$NCGC.CA: possibly delisted; no timezone found
+$NBKE.CA: possibly delisted; no timezone found
+$QNBE.CA: possibly delisted; no timezone found
+[data] 150/251 سهم، اتجاب تاريخ لـ 133
+$PACH.CA: possibly delisted; no timezone found
+$UASG.CA: possibly delisted; no timezone found
+$EITP.CA: possibly delisted; no timezone found
+$SMPP.CA: possibly delisted; no timezone found
+[data] 175/251 سهم، اتجاب تاريخ لـ 154
+$ACRO.CA: possibly delisted; no timezone found
+$ESRS.CA: possibly delisted; no timezone found
+$WATP.CA: possibly delisted; no timezone found
+$SUCE.CA: possibly delisted; no timezone found
+$TORA.CA: possibly delisted; no timezone found
+$DCRC.CA: possibly delisted; no timezone found
+$ALEX.CA: possibly delisted; no timezone found
+$TYCN.CA: possibly delisted; no timezone found
+$ARVA.CA: possibly delisted; no timezone found
+$HCFI.CA: possibly delisted; no timezone found
+$NARE.CA: possibly delisted; no timezone found
+[data] 200/251 سهم، اتجاب تاريخ لـ 168
+$UTOP.CA: possibly delisted; no timezone found
+$APPC.CA: possibly delisted; no timezone found
+$UBEE.CA: possibly delisted; no timezone found
+$NAPR.CA: possibly delisted; no timezone found
+$DIFC.CA: possibly delisted; no timezone found
+[data] 225/251 سهم، اتجاب تاريخ لـ 188
+$FCMD.CA: possibly delisted; no timezone found
+$VERT.CA: possibly delisted; no timezone found
+$ADRI.CA: possibly delisted; no timezone found
+$KRDI.CA: possibly delisted; no timezone found
+$UPMS.CA: possibly delisted; no timezone found
+$TANM.CA: possibly delisted; no timezone found
+$ACAP.CA: possibly delisted; no timezone found
+$DGTZ.CA: possibly delisted; no timezone found
+$PHGC.CA: possibly delisted; no timezone found
+$GTEX.CA: possibly delisted; no timezone found
+$GGRN.CA: possibly delisted; no timezone found
+$HBCO.CA: possibly delisted; no timezone found
+$CPME.CA: possibly delisted; no timezone found
+$TWSA.CA: possibly delisted; no timezone found
+[data] 250/251 سهم، اتجاب تاريخ لـ 199
+$KORA.CA: possibly delisted; no timezone found
+[data] خلص الجلب: 199 سهم اتجاب من 251
+^CASE30: Period 'max' is invalid, must be one of: 1d, 5d
+^CASE30: Period 'max' is invalid, must be one of: 1d, 5d
+[macro] egx30 (^CASE30): فشل
+$EGX30.CA: possibly delisted; no timezone found
+$EGX30.CA: possibly delisted; no timezone found
+[macro] egx30 (EGX30.CA): فشل
+$^EGX30: possibly delisted; no timezone found
+$^EGX30: possibly delisted; no timezone found
+[macro] egx30 (^EGX30): فشل
+[macro] usd (EGP=X): تمام 6384 يوم
+[trend] h=20
+[trend] h=40
+[trend] h=60
+/home/runner/work/Trading/Trading/backtest/trend_test.py:86: RuntimeWarning: Mean of empty slice
+  ens = np.nanmean(np.stack([P[20], P[40], P[60]]), axis=0)
+# EGX Trend Filter Test - 2026-11-16 21:52
+
+- الموديل: ensemble 20/40/60 (LightGBM+Alpha158)، أعلى 20%، تكلفة 20.0 bps في الاتجاه، 2022+، صفقات مش متداخلة
+- الفلتر: مؤشر متوسط الأسهم (equal-weight) فوق متوسطه المتحرك وقت الدخول. 'برا' = كاش (عائد 0)
+- 'عائد' = متوسط عائد الصفقة بعد التكلفة (كل الفترات بما فيها الكاش) | 'سوق' = لو اشتريت متوسط الأسهم دايمًا | 'زيادة' = bps عن السوق وقت ما الفلتر دخل بس | 'أسوأ' = أسوأ فترة
+
+## احتفاظ 20 يوم
+
+| الإعداد | صفقات داخل/كل | عائد | سوق | زيادة (bps) | غلب السوق | أسوأ فترة |
+|---|---|---|---|---|---|---|
+| بدون فلتر | 1156/1156 | +3.80% | +3.43% | +37 | 54% | -18.7% |
+| السوق فوق متوسط 200 يوم | 1021/1156 | +3.83% | +3.43% | +46 | 55% | -18.7% |
+| السوق فوق متوسط 100 يوم | 958/1156 | +3.58% | +3.43% | +49 | 55% | -18.7% |
+| السوق صاعد آخر 60 يوم | 975/1156 | +3.49% | +3.43% | +49 | 55% | -18.7% |
+| (مرجع) بس لما السوق تحت متوسط 200 | 135/1156 | -0.03% | +3.43% | -34 | 48% | -16.0% |
+
+## احتفاظ 40 يوم
+
+| الإعداد | صفقات داخل/كل | عائد | سوق | زيادة (bps) | غلب السوق | أسوأ فترة |
+|---|---|---|---|---|---|---|
+| بدون فلتر | 1136/1136 | +8.77% | +7.57% | +120 | 59% | -27.2% |
+| السوق فوق متوسط 200 يوم | 1001/1136 | +8.50% | +7.57% | +130 | 59% | -27.2% |
+| السوق فوق متوسط 100 يوم | 941/1136 | +7.92% | +7.57% | +138 | 60% | -27.2% |
+| السوق صاعد آخر 60 يوم | 955/1136 | +7.89% | +7.57% | +145 | 61% | -27.2% |
+| (مرجع) بس لما السوق تحت متوسط 200 | 135/1136 | +0.27% | +7.57% | +42 | 57% | -19.4% |
+
+## احتفاظ 60 يوم
+
+| الإعداد | صفقات داخل/كل | عائد | سوق | زيادة (bps) | غلب السوق | أسوأ فترة |
+|---|---|---|---|---|---|---|
+| بدون فلتر | 1116/1116 | +13.38% | +12.14% | +124 | 57% | -27.9% |
+| السوق فوق متوسط 200 يوم | 981/1116 | +13.03% | +12.14% | +154 | 57% | -27.9% |
+| السوق فوق متوسط 100 يوم | 921/1116 | +12.13% | +12.14% | +156 | 58% | -27.9% |
+| السوق صاعد آخر 60 يوم | 935/1116 | +12.09% | +12.14% | +164 | 59% | -27.9% |
+| (مرجع) بس لما السوق تحت متوسط 200 | 135/1116 | +0.35% | +12.14% | -96 | 54% | -18.8% |
+
