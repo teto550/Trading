@@ -763,81 +763,81 @@
    "target": "2026-11-17",
    "data_date": "2026-11-12",
    "picks": [
-    "ORHD",
     "GBCO",
-    "CIEB",
     "MASR",
     "CICH",
-    "AREH",
     "PHTV",
+    "AREH",
+    "AMIA",
     "CPCI",
-    "ZMID",
-    "MENA"
+    "BTFH",
+    "ORHD",
+    "HELI"
    ],
    "labels": {
-    "ORHD": "انتظر",
     "GBCO": "انتظر",
-    "CIEB": "انتظر",
     "MASR": "انتظر",
     "CICH": "انتظر",
-    "AREH": "انتظر",
     "PHTV": "بيع",
+    "AREH": "انتظر",
+    "AMIA": "انتظر",
     "CPCI": "انتظر",
-    "ZMID": "انتظر",
-    "MENA": "بيع"
+    "BTFH": "انتظر",
+    "ORHD": "انتظر",
+    "HELI": "انتظر"
    },
    "news": {},
    "by_model": {
     "xgb": [
+     "PHTV",
      "CICH",
+     "GBCO",
      "AREH",
      "CPCI",
-     "GBCO",
-     "PHTV",
      "AMIA",
-     "ZMID",
+     "ETRS",
      "ORHD",
-     "CIEB",
+     "BTFH",
      "EFIH"
     ],
     "lgbm": [
-     "PHTV",
      "CICH",
-     "FAIT",
-     "AREH",
-     "CPCI",
-     "EGAL",
-     "ZMID",
-     "ORHD",
      "GBCO",
-     "MENA"
+     "PHTV",
+     "AREH",
+     "CIEB",
+     "AMIA",
+     "EMFD",
+     "HELI",
+     "BTFH",
+     "ZMID"
     ],
     "cat": [
-     "AREH",
-     "CICH",
      "PHTV",
-     "MENA",
+     "CICH",
+     "AREH",
+     "AMIA",
+     "CPCI",
+     "GBCO",
      "SKPC",
      "ORHD",
-     "ZMID",
      "MASR",
-     "CPCI",
-     "AMIA"
+     "HELI"
     ],
     "ens": [
      "CICH",
-     "AREH",
      "PHTV",
-     "CPCI",
-     "ZMID",
-     "ORHD",
      "GBCO",
-     "CIEB",
+     "AREH",
+     "AMIA",
+     "CPCI",
+     "BTFH",
+     "ORHD",
      "MASR",
-     "MENA"
+     "HELI"
     ]
    },
-   "made": "2026-11-16 17:54"
+   "made": "2026-11-17 02:31"
   }
  ]
 }
