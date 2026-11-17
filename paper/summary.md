@@ -1,20 +1,20 @@
-# EGX Paper Trade - آخر تحديث 2026-11-17 00:54
+# EGX Paper Trade - آخر تحديث 2026-11-17 23:55
 
 - احتفاظ 20 يوم تداول، شراء عند افتتاح اليوم التالي للإشارة، تكلفة 20.0 bps في الاتجاه
-- دفعات متسجلة: 26 | ناضجة (عدّى عليها 20 يوم): 6
+- دفعات متسجلة: 27 | ناضجة (عدّى عليها 20 يوم): 7
 - توقع الباكتست: حوالي +0.28% للصفقة بعد التكلفة (ميزة صغيرة وغير ثابتة)
 
 | | الفرق عن السوق | بعد التكلفة | نسبة الدفعات الكسبانة | تذبذب الدفعة |
 |---|---|---|---|---|
-| XGBoost | -0.57% | -0.97% | 33% (6) | 2.86% |
-| Low-vol (مرجع) | +0.92% | +0.52% | 50% (6) | 2.93% |
+| XGBoost | -0.95% | -1.35% | 29% (7) | 2.79% |
+| Low-vol (مرجع) | +0.42% | +0.02% | 43% (7) | 2.99% |
 
-متوسط عائد السوق (الأسهم الصالحة) لنفس الفترات: -3.08% للصفقة
-الدفعات من 2026-10-07 إلى 2026-10-15
+متوسط عائد السوق (الأسهم الصالحة) لنفس الفترات: -2.14% للصفقة
+الدفعات من 2026-10-07 إلى 2026-10-18
 
-## اختيارات آخر دفعة (2026-11-12)
-XGBoost (30): SNFC, EMFD, FAIT, CPCI, ETRS, CCAP, ALCN, COMI, PHTV, CIEB, EGAL, ACAMD, EFIH, SDTI, SKPC, ORWE, ICID, ACGC, GBCO, RMDA, MIPH, AMOC, SAUD, OIH, ISMQ, CICH, OFH, SWDY, MASR, TMGH
+## اختيارات آخر دفعة (2026-11-16)
+XGBoost (29): EMFD, SNFC, CPCI, ETRS, CIEB, ICID, SKPC, COMI, ALCN, FAIT, CCAP, EGAL, SAUD, PHTV, AMOC, GBCO, SWDY, SDTI, CICH, ACAMD, ORWE, TMGH, CSAG, EGCH, EFIH, RTVC, ISMQ, HELI, MASR
 
-LightGBM+Alpha158 (30): AIFI, SCEM, SDTI, SNFC, EBSC, SAUD, ELEC, GBCO, DSCW, CIEB, PHTV, BINV, AREH, ACAMD, NINH, SPIN, DOMT, HRHO, RREI, UNIP, CEFM, AMIA, EAST, EMFD, RAYA, ALUM, RACC, RTVC, BTFH, MICH
+LightGBM+Alpha158 (29): AMIA, AIFI, INFI, CIEB, OBRI, GBCO, SDTI, EBSC, EAST, ETEL, MFPC, AREH, HRHO, COMI, MICH, DSCW, SPIN, CLHO, RACC, ABUK, RAYA, EMFD, LCSW, UEFM, HELI, SPMD, SCEM, MOED, ORWE
 
-Low-vol (30): CPCI, COMI, SNFC, EMFD, SDTI, OLFI, PHTV, ACAMD, CICH, MENA, BINV, SKPC, CIEB, CLHO, FAIT, SAUD, ALCN, AMOC, ECAP, CCAP, UEFM, FWRY, TALM, TMGH, HRHO, ADIB, ORWE, SWDY, ACGC, EGAL
+Low-vol (29): CPCI, EMFD, COMI, SNFC, SDTI, OLFI, CICH, CIEB, SAUD, PHTV, SKPC, ALCN, EGAL, ACAMD, SWDY, FAIT, AMOC, CLHO, BINV, TALM, HRHO, CIRA, ECAP, ADIB, CCAP, ORWE, TMGH, UEFM, FWRY
