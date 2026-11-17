@@ -198,10 +198,14 @@ def score_preds(state, chg, ok, med, t_now):
     return "\n".join(L)
 
 
+ERRS = {}
+
+
 def fetch(t):
     try:
         return t, mo.fetch_price_mubasher(t)
-    except Exception:  # noqa: BLE001
+    except Exception as e:  # noqa: BLE001
+        ERRS[str(e)[:120]] = ERRS.get(str(e)[:120], 0) + 1
         return t, None
 
 
@@ -214,6 +218,9 @@ def cycle(tickers, prev, hist, state, t_now):
         pc = prev.get(t)
         if pc and pc > 0 and abs(p / pc - 1) <= 0.21:  # حد EGX 10%، أكتر من كده غالبًا بيانات غلط/تقسيم
             chg[t] = (p / pc - 1) * 100
+    if ERRS and len(ok) < len(tickers) * 0.5:
+        print("[أخطاء الجلب]", sorted(ERRS.items(), key=lambda x: -x[1])[:3])
+    ERRS.clear()
     print(f"[{t_now:%H:%M}] أسعار: {len(ok)}/{len(tickers)} | بتغيير صالح: {len(chg)}")
     if len(chg) < 20:
         return None
