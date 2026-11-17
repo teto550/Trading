@@ -843,86 +843,81 @@
    "target": "2026-11-18",
    "data_date": "2026-11-16",
    "picks": [
+    "EAST",
     "ETRS",
-    "FAIT",
-    "ETEL",
     "CPCI",
     "AIFI",
+    "ETEL",
     "EFIH",
     "EMFD",
-    "ADPC",
-    "UNIT",
-    "ICFC"
+    "ICFC",
+    "CCRS",
+    "ADPC"
    ],
    "labels": {
-    "ETRS": "شراء",
-    "FAIT": "شراء",
-    "ETEL": "شراء",
-    "CPCI": "شراء",
+    "EAST": "انتظر",
+    "ETRS": "انتظر",
+    "CPCI": "انتظر",
     "AIFI": "شراء",
-    "EFIH": "شراء",
+    "ETEL": "شراء",
+    "EFIH": "انتظر",
     "EMFD": "انتظر",
-    "ADPC": "شراء",
-    "UNIT": "شراء",
-    "ICFC": "شراء"
+    "ICFC": "انتظر",
+    "CCRS": "انتظر",
+    "ADPC": "انتظر"
    },
-   "news": {
-    "ETRS": "agree",
-    "FAIT": "agree",
-    "ETEL": "neutral",
-    "CPCI": "neutral"
-   },
+   "news": {},
    "by_model": {
     "xgb": [
-     "AIFI",
      "ETEL",
-     "ICFC",
-     "EFIH",
+     "AIFI",
      "ETRS",
-     "AREH",
+     "ICFC",
      "CPCI",
-     "ZMID",
-     "EMFD",
+     "EFIH",
+     "AMIA",
+     "UNIT",
+     "EAST",
      "ADPC"
     ],
     "lgbm": [
-     "ETEL",
      "AIFI",
+     "CCRS",
      "EMFD",
+     "EFIH",
+     "AJWA",
+     "ETEL",
      "INFI",
-     "UNIT",
-     "ETRS",
      "EAST",
-     "ADPC",
-     "ARCC",
-     "EFIH"
+     "ICFC",
+     "ATLC"
     ],
     "cat": [
-     "AIFI",
      "ETEL",
-     "EAST",
      "FAIT",
-     "EFIH",
-     "ETRS",
+     "AIFI",
+     "EAST",
      "CPCI",
      "EMFD",
-     "ADPC",
-     "COPR"
+     "ETRS",
+     "EFIH",
+     "ICFC",
+     "AJWA"
     ],
     "ens": [
      "AIFI",
      "ETEL",
-     "ETRS",
      "EFIH",
      "EMFD",
-     "ADPC",
-     "UNIT",
+     "EAST",
      "ICFC",
-     "FAIT",
-     "CPCI"
+     "ETRS",
+     "CPCI",
+     "CCRS",
+     "ADPC"
     ]
    },
-   "made": "2026-11-17 18:07"
+   "made": "2026-11-18 01:40"
   }
  ]
 }
