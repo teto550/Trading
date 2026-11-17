@@ -838,6 +838,91 @@
     ]
    },
    "made": "2026-11-17 02:31"
+  },
+  {
+   "target": "2026-11-18",
+   "data_date": "2026-11-16",
+   "picks": [
+    "ETRS",
+    "FAIT",
+    "ETEL",
+    "CPCI",
+    "AIFI",
+    "EFIH",
+    "EMFD",
+    "ADPC",
+    "UNIT",
+    "ICFC"
+   ],
+   "labels": {
+    "ETRS": "شراء",
+    "FAIT": "شراء",
+    "ETEL": "شراء",
+    "CPCI": "شراء",
+    "AIFI": "شراء",
+    "EFIH": "شراء",
+    "EMFD": "انتظر",
+    "ADPC": "شراء",
+    "UNIT": "شراء",
+    "ICFC": "شراء"
+   },
+   "news": {
+    "ETRS": "agree",
+    "FAIT": "agree",
+    "ETEL": "neutral",
+    "CPCI": "neutral"
+   },
+   "by_model": {
+    "xgb": [
+     "AIFI",
+     "ETEL",
+     "ICFC",
+     "EFIH",
+     "ETRS",
+     "AREH",
+     "CPCI",
+     "ZMID",
+     "EMFD",
+     "ADPC"
+    ],
+    "lgbm": [
+     "ETEL",
+     "AIFI",
+     "EMFD",
+     "INFI",
+     "UNIT",
+     "ETRS",
+     "EAST",
+     "ADPC",
+     "ARCC",
+     "EFIH"
+    ],
+    "cat": [
+     "AIFI",
+     "ETEL",
+     "EAST",
+     "FAIT",
+     "EFIH",
+     "ETRS",
+     "CPCI",
+     "EMFD",
+     "ADPC",
+     "COPR"
+    ],
+    "ens": [
+     "AIFI",
+     "ETEL",
+     "ETRS",
+     "EFIH",
+     "EMFD",
+     "ADPC",
+     "UNIT",
+     "ICFC",
+     "FAIT",
+     "CPCI"
+    ]
+   },
+   "made": "2026-11-17 18:07"
   }
  ]
 }
