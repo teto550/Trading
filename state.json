@@ -3773,7 +3773,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "VLMRA.CA": {
       "dates": [
@@ -3836,7 +3836,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "ACTF.CA": {
       "dates": [
@@ -3899,7 +3899,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "ATLC.CA": {
       "dates": [
@@ -4474,7 +4474,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "AIHC.CA": {
       "dates": [
@@ -4537,7 +4537,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "ARCC.CA": {
       "dates": [
@@ -5113,7 +5113,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "COSG.CA": {
       "dates": [
@@ -8449,7 +8449,7 @@
       "daily": [],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "GPIM.CA": {
       "dates": [
@@ -8512,7 +8512,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "HDBK.CA": {
       "dates": [
@@ -11775,7 +11775,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "MOED.CA": {
       "dates": [
@@ -11967,7 +11967,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "UNIP.CA": {
       "dates": [
@@ -13434,7 +13434,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17",
+      "seed_failed_on": "2026-11-18",
       "spike_warned_on": "2026-11-04"
     },
     "SUGR.CA": {
@@ -14136,7 +14136,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "IRAX.CA": {
       "dates": [
@@ -14197,7 +14197,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "CRST.CA": {
       "dates": [
@@ -14258,7 +14258,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "RTVC.CA": {
       "dates": [
@@ -15216,7 +15216,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "AXPH.CA": {
       "dates": [
@@ -15477,7 +15477,6 @@
     },
     "CPCI.CA": {
       "dates": [
-        "2026-08-19",
         "2026-08-20",
         "2026-08-23",
         "2026-08-24",
@@ -15536,10 +15535,10 @@
         "2026-11-09",
         "2026-11-10",
         "2026-11-11",
-        "2026-11-12"
+        "2026-11-12",
+        "2026-11-18"
       ],
       "daily": [
-        528.0399780273438,
         532.0900268554688,
         551.3800048828125,
         543.780029296875,
@@ -15598,7 +15597,8 @@
         594.39,
         597.27,
         598.31,
-        595.62
+        595.62,
+        NaN
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -16944,7 +16944,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "FAIT.CA": {
       "dates": [
@@ -17262,7 +17262,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "CANA.CA": {
       "dates": [
@@ -18610,7 +18610,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "UASG.CA": {
       "dates": [
@@ -18669,7 +18669,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17",
+      "seed_failed_on": "2026-11-18",
       "spike_warned_on": "2026-10-28"
     },
     "AFMC.CA": {
@@ -19885,7 +19885,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "MHOT.CA": {
       "dates": [
@@ -20587,7 +20587,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "RAKT.CA": {
       "dates": [
@@ -21032,7 +21032,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "ALUM.CA": {
       "dates": [
@@ -21222,7 +21222,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "GGCC.CA": {
       "dates": [
@@ -21407,7 +21407,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17",
+      "seed_failed_on": "2026-11-18",
       "spike_warned_on": "2026-11-09"
     },
     "SUCE.CA": {
@@ -21467,7 +21467,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17",
+      "seed_failed_on": "2026-11-18",
       "spike_warned_on": "2026-10-28"
     },
     "TORA.CA": {
@@ -21529,7 +21529,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "DCRC.CA": {
       "dates": [
@@ -21582,7 +21582,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17",
+      "seed_failed_on": "2026-11-18",
       "spike_warned_on": "2026-11-09"
     },
     "EBSC.CA": {
@@ -22030,7 +22030,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "CFGH.CA": {
       "dates": [
@@ -22603,7 +22603,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "CERA.CA": {
       "dates": [
@@ -23048,7 +23048,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "HCFI.CA": {
       "dates": [
@@ -23109,7 +23109,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "ADPC.CA": {
       "dates": [
@@ -23427,7 +23427,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "SEIG.CA": {
       "dates": [
@@ -24635,7 +24635,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "APPC.CA": {
       "dates": [
@@ -24696,7 +24696,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "MKIT.CA": {
       "dates": [
@@ -25646,7 +25646,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "IBCT.CA": {
       "dates": [
@@ -25835,7 +25835,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "CICH.CA": {
       "dates": [
@@ -26150,7 +26150,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17",
+      "seed_failed_on": "2026-11-18",
       "spike_warned_on": "2026-10-28"
     },
     "RACC.CA": {
@@ -26468,7 +26468,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "FNAR.CA": {
       "dates": [
@@ -26657,7 +26657,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "MBEG.CA": {
       "dates": [
@@ -27102,7 +27102,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "OLFI.CA": {
       "dates": [
@@ -27291,7 +27291,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "UPMS.CA": {
       "dates": [
@@ -27324,7 +27324,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "ACAMD.CA": {
       "dates": [
@@ -27769,7 +27769,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "ACAP.CA": {
       "dates": [
@@ -27830,7 +27830,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "LUTS.CA": {
       "dates": [
@@ -28145,7 +28145,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "PHGC.CA": {
       "dates": [
@@ -28206,7 +28206,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "GTEX.CA": {
       "dates": [
@@ -28237,7 +28237,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "GGRN.CA": {
       "dates": [
@@ -28298,7 +28298,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "HBCO.CA": {
       "dates": [
@@ -28359,7 +28359,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "CPME.CA": {
       "dates": [
@@ -28420,7 +28420,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "TWSA.CA": {
       "dates": [
@@ -28481,7 +28481,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17"
+      "seed_failed_on": "2026-11-18"
     },
     "KORA.CA": {
       "dates": [
@@ -28536,7 +28536,7 @@
       ],
       "last_signal": "NONE",
       "initialized": false,
-      "seed_failed_on": "2026-11-17",
+      "seed_failed_on": "2026-11-18",
       "spike_warned_on": "2026-10-15"
     }
   },
@@ -28597,7 +28597,7 @@
       "WATP.CA"
     ],
     "tg_offset": 629990218,
-    "report_date": "2026-11-17",
+    "report_date": "2026-11-18",
     "morning_date": "2026-10-12",
     "morning_picks": {
       "date": "2026-10-12",
