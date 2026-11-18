@@ -927,24 +927,24 @@
     "FAIT",
     "COMI",
     "SAUD",
+    "AIFI",
     "SNFC",
     "EFIH",
-    "AIFI",
     "ICID",
-    "UNIT",
-    "PHAR"
+    "COPR",
+    "ETEL"
    ],
    "labels": {
     "CPCI": "انتظر",
     "FAIT": "انتظر",
     "COMI": "بيع",
     "SAUD": "انتظر",
-    "SNFC": "بيع",
-    "EFIH": "انتظر",
     "AIFI": "انتظر",
-    "ICID": "انتظر",
-    "UNIT": "انتظر",
-    "PHAR": "انتظر"
+    "SNFC": "بيع",
+    "EFIH": "بيع",
+    "ICID": "بيع",
+    "COPR": "انتظر",
+    "ETEL": "انتظر"
    },
    "news": {
     "COMI": "neutral"
@@ -952,54 +952,54 @@
    "by_model": {
     "xgb": [
      "SAUD",
-     "FAIT",
      "CPCI",
-     "SNFC",
      "AIFI",
+     "SNFC",
+     "FAIT",
      "EFIH",
      "COPR",
-     "ETRS",
-     "SDTI",
-     "COMI"
+     "CIEB",
+     "UNIT",
+     "PHAR"
     ],
     "lgbm": [
      "SAUD",
-     "SNFC",
      "AIFI",
+     "SNFC",
      "CPCI",
      "FAIT",
-     "EFIH",
+     "AMOC",
      "UNIT",
-     "ICFC",
-     "ICID",
-     "AJWA"
+     "CCAP",
+     "COPR",
+     "ICID"
     ],
     "cat": [
-     "CPCI",
      "SAUD",
-     "EFIH",
+     "CPCI",
      "FAIT",
+     "ETEL",
+     "EFIH",
+     "AIFI",
      "SNFC",
      "COMI",
-     "AIFI",
-     "ETEL",
-     "CIEB",
-     "ICFC"
+     "SDTI",
+     "CIEB"
     ],
     "ens": [
      "SAUD",
      "CPCI",
+     "AIFI",
      "FAIT",
      "SNFC",
      "EFIH",
-     "AIFI",
      "COMI",
      "ICID",
-     "UNIT",
-     "PHAR"
+     "COPR",
+     "ETEL"
     ]
    },
-   "made": "2026-11-18 17:44"
+   "made": "2026-11-19 01:10"
   }
  ]
 }
