@@ -918,6 +918,88 @@
     ]
    },
    "made": "2026-11-18 01:40"
+  },
+  {
+   "target": "2026-11-19",
+   "data_date": "2026-11-17",
+   "picks": [
+    "CPCI",
+    "FAIT",
+    "COMI",
+    "SAUD",
+    "SNFC",
+    "EFIH",
+    "AIFI",
+    "ICID",
+    "UNIT",
+    "PHAR"
+   ],
+   "labels": {
+    "CPCI": "انتظر",
+    "FAIT": "انتظر",
+    "COMI": "بيع",
+    "SAUD": "انتظر",
+    "SNFC": "بيع",
+    "EFIH": "انتظر",
+    "AIFI": "انتظر",
+    "ICID": "انتظر",
+    "UNIT": "انتظر",
+    "PHAR": "انتظر"
+   },
+   "news": {
+    "COMI": "neutral"
+   },
+   "by_model": {
+    "xgb": [
+     "SAUD",
+     "FAIT",
+     "CPCI",
+     "SNFC",
+     "AIFI",
+     "EFIH",
+     "COPR",
+     "ETRS",
+     "SDTI",
+     "COMI"
+    ],
+    "lgbm": [
+     "SAUD",
+     "SNFC",
+     "AIFI",
+     "CPCI",
+     "FAIT",
+     "EFIH",
+     "UNIT",
+     "ICFC",
+     "ICID",
+     "AJWA"
+    ],
+    "cat": [
+     "CPCI",
+     "SAUD",
+     "EFIH",
+     "FAIT",
+     "SNFC",
+     "COMI",
+     "AIFI",
+     "ETEL",
+     "CIEB",
+     "ICFC"
+    ],
+    "ens": [
+     "SAUD",
+     "CPCI",
+     "FAIT",
+     "SNFC",
+     "EFIH",
+     "AIFI",
+     "COMI",
+     "ICID",
+     "UNIT",
+     "PHAR"
+    ]
+   },
+   "made": "2026-11-18 17:44"
   }
  ]
 }
