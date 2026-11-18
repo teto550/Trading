@@ -1,20 +1,20 @@
-# EGX Paper Trade - آخر تحديث 2026-11-17 23:55
+# EGX Paper Trade - آخر تحديث 2026-11-18 23:28
 
 - احتفاظ 20 يوم تداول، شراء عند افتتاح اليوم التالي للإشارة، تكلفة 20.0 bps في الاتجاه
-- دفعات متسجلة: 27 | ناضجة (عدّى عليها 20 يوم): 7
+- دفعات متسجلة: 28 | ناضجة (عدّى عليها 20 يوم): 8
 - توقع الباكتست: حوالي +0.28% للصفقة بعد التكلفة (ميزة صغيرة وغير ثابتة)
 
 | | الفرق عن السوق | بعد التكلفة | نسبة الدفعات الكسبانة | تذبذب الدفعة |
 |---|---|---|---|---|
-| XGBoost | -0.95% | -1.35% | 29% (7) | 2.79% |
-| Low-vol (مرجع) | +0.42% | +0.02% | 43% (7) | 2.99% |
+| XGBoost | -1.04% | -1.44% | 25% (8) | 2.60% |
+| Low-vol (مرجع) | +0.31% | -0.09% | 38% (8) | 2.78% |
 
-متوسط عائد السوق (الأسهم الصالحة) لنفس الفترات: -2.14% للصفقة
-الدفعات من 2026-10-07 إلى 2026-10-18
+متوسط عائد السوق (الأسهم الصالحة) لنفس الفترات: -1.75% للصفقة
+الدفعات من 2026-10-07 إلى 2026-10-19
 
-## اختيارات آخر دفعة (2026-11-16)
-XGBoost (29): EMFD, SNFC, CPCI, ETRS, CIEB, ICID, SKPC, COMI, ALCN, FAIT, CCAP, EGAL, SAUD, PHTV, AMOC, GBCO, SWDY, SDTI, CICH, ACAMD, ORWE, TMGH, CSAG, EGCH, EFIH, RTVC, ISMQ, HELI, MASR
+## اختيارات آخر دفعة (2026-11-17)
+XGBoost (30): EMFD, SNFC, ETRS, CPCI, ALCN, EGAL, CIEB, ICID, FAIT, AIFI, COMI, EFIH, CCAP, GBCO, SAUD, SKPC, CSAG, SDTI, SWDY, RTVC, ACGC, ABUK, ADCI, HRHO, CICH, ISMQ, ATQA, PHTV, ISPH, MIPH
 
-LightGBM+Alpha158 (29): AMIA, AIFI, INFI, CIEB, OBRI, GBCO, SDTI, EBSC, EAST, ETEL, MFPC, AREH, HRHO, COMI, MICH, DSCW, SPIN, CLHO, RACC, ABUK, RAYA, EMFD, LCSW, UEFM, HELI, SPMD, SCEM, MOED, ORWE
+LightGBM+Alpha158 (30): SDTI, GBCO, SNFC, SAUD, ORWE, EMFD, EBSC, MICH, EAST, MFPC, COMI, DSCW, SPIN, HELI, OBRI, SKPC, NINH, CIRA, CIEB, AMIA, CLHO, ABUK, SPMD, RACC, BINV, MIPH, ETEL, FAIT, RREI, AIFI
 
-Low-vol (29): CPCI, EMFD, COMI, SNFC, SDTI, OLFI, CICH, CIEB, SAUD, PHTV, SKPC, ALCN, EGAL, ACAMD, SWDY, FAIT, AMOC, CLHO, BINV, TALM, HRHO, CIRA, ECAP, ADIB, CCAP, ORWE, TMGH, UEFM, FWRY
+Low-vol (30): CPCI, EMFD, COMI, SNFC, SDTI, OLFI, EGAL, CICH, PHTV, CIEB, ALCN, SKPC, SAUD, SWDY, FAIT, CCAP, AMOC, BINV, HRHO, CLHO, TALM, ACAMD, CIRA, ECAP, ORWE, TMGH, ADIB, UEFM, FWRY, AMIA
