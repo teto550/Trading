@@ -1000,6 +1000,91 @@
     ]
    },
    "made": "2026-11-19 01:10"
+  },
+  {
+   "target": "2026-11-22",
+   "data_date": "2026-11-18",
+   "picks": [
+    "CIEB",
+    "FAIT",
+    "ADIB",
+    "COMI",
+    "AREH",
+    "HELI",
+    "COSG",
+    "EHDR",
+    "ISMQ",
+    "CLHO"
+   ],
+   "labels": {
+    "CIEB": "بيع",
+    "FAIT": "بيع",
+    "ADIB": "بيع",
+    "COMI": "بيع",
+    "AREH": "بيع",
+    "HELI": "بيع",
+    "COSG": "بيع",
+    "EHDR": "بيع",
+    "ISMQ": "بيع",
+    "CLHO": "بيع"
+   },
+   "news": {
+    "CIEB": "disagree",
+    "FAIT": "disagree",
+    "ADIB": "disagree",
+    "COMI": "neutral"
+   },
+   "by_model": {
+    "xgb": [
+     "CIEB",
+     "FAIT",
+     "AREH",
+     "EHDR",
+     "AIFI",
+     "COSG",
+     "HELI",
+     "CPCI",
+     "CLHO",
+     "SDTI"
+    ],
+    "lgbm": [
+     "AREH",
+     "FAIT",
+     "CIEB",
+     "HELI",
+     "ISMQ",
+     "COMI",
+     "COSG",
+     "CLHO",
+     "GBCO",
+     "EHDR"
+    ],
+    "cat": [
+     "AREH",
+     "CIEB",
+     "COSG",
+     "HELI",
+     "ADIB",
+     "FAIT",
+     "EHDR",
+     "ISMQ",
+     "MASR",
+     "ZMID"
+    ],
+    "ens": [
+     "AREH",
+     "CIEB",
+     "FAIT",
+     "HELI",
+     "COSG",
+     "EHDR",
+     "ISMQ",
+     "CLHO",
+     "COMI",
+     "ADIB"
+    ]
+   },
+   "made": "2026-11-19 17:49"
   }
  ]
 }
