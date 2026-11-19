@@ -3685,6 +3685,426 @@
     ]
    },
    "made": "2026-11-19 01:35"
+  },
+  {
+   "date": "2026-11-18",
+   "h": 5,
+   "variant": "macro",
+   "picks": [
+    "AIFI",
+    "EAST",
+    "LCSW",
+    "MPRC",
+    "SCEM",
+    "EHDR",
+    "FAIT",
+    "AREH",
+    "ICFC",
+    "ELEC"
+   ],
+   "labels": {
+    "AIFI": "شراء",
+    "EAST": "شراء",
+    "LCSW": "شراء",
+    "MPRC": "شراء",
+    "SCEM": "شراء",
+    "EHDR": "شراء",
+    "FAIT": "شراء",
+    "AREH": "شراء",
+    "ICFC": "شراء",
+    "ELEC": "شراء"
+   },
+   "news": {
+    "EAST": "agree",
+    "MPRC": "agree",
+    "FAIT": "agree"
+   },
+   "by_model": {
+    "xgb": [
+     "AIFI",
+     "EAST",
+     "LCSW",
+     "MPRC",
+     "SCEM",
+     "EHDR",
+     "FAIT",
+     "AREH",
+     "ICFC",
+     "ELEC"
+    ],
+    "lgbm": [
+     "AIFI",
+     "EAST",
+     "MPRC",
+     "GBCO",
+     "LCSW",
+     "EHDR",
+     "FAIT",
+     "ICFC",
+     "AREH",
+     "ARAB"
+    ],
+    "cat": [
+     "AIFI",
+     "EAST",
+     "EFIH",
+     "ETEL",
+     "SCEM",
+     "GBCO",
+     "LCSW",
+     "EHDR",
+     "FAIT",
+     "MPRC"
+    ],
+    "ens": [
+     "AIFI",
+     "EAST",
+     "LCSW",
+     "MPRC",
+     "EHDR",
+     "GBCO",
+     "SCEM",
+     "FAIT",
+     "ETEL",
+     "AREH"
+    ]
+   },
+   "made": "2026-11-20 01:49"
+  },
+  {
+   "date": "2026-11-18",
+   "h": 10,
+   "variant": "macro",
+   "picks": [
+    "AIFI",
+    "EAST",
+    "LCSW",
+    "DOMT",
+    "SCEM",
+    "CIEB",
+    "FAIT",
+    "GBCO",
+    "ETEL",
+    "SDTI"
+   ],
+   "labels": {
+    "AIFI": "شراء",
+    "EAST": "شراء",
+    "LCSW": "شراء",
+    "DOMT": "شراء",
+    "SCEM": "شراء",
+    "CIEB": "شراء",
+    "FAIT": "شراء",
+    "GBCO": "شراء",
+    "ETEL": "شراء",
+    "SDTI": "شراء"
+   },
+   "news": {
+    "EAST": "agree",
+    "CIEB": "agree",
+    "FAIT": "agree",
+    "GBCO": "neutral"
+   },
+   "by_model": {
+    "xgb": [
+     "AIFI",
+     "EAST",
+     "DOMT",
+     "LCSW",
+     "RTVC",
+     "SCEM",
+     "ETEL",
+     "CIEB",
+     "FAIT",
+     "GBCO"
+    ],
+    "lgbm": [
+     "AIFI",
+     "EAST",
+     "DOMT",
+     "LCSW",
+     "SDTI",
+     "FAIT",
+     "CIEB",
+     "MPRC",
+     "MICH",
+     "CIRA"
+    ],
+    "cat": [
+     "AIFI",
+     "EAST",
+     "ETEL",
+     "SCEM",
+     "GBCO",
+     "CPCI",
+     "CIEB",
+     "LCSW",
+     "FAIT",
+     "DOMT"
+    ],
+    "ens": [
+     "AIFI",
+     "EAST",
+     "LCSW",
+     "DOMT",
+     "SCEM",
+     "CIEB",
+     "FAIT",
+     "GBCO",
+     "ETEL",
+     "SDTI"
+    ]
+   },
+   "made": "2026-11-20 01:49"
+  },
+  {
+   "date": "2026-11-18",
+   "h": 20,
+   "variant": "macro",
+   "picks": [
+    "SDTI",
+    "AIFI",
+    "RTVC",
+    "ETEL",
+    "DOMT",
+    "GBCO",
+    "CPCI",
+    "CIEB",
+    "SNFC",
+    "SPIN"
+   ],
+   "labels": {
+    "SDTI": "شراء",
+    "AIFI": "شراء",
+    "RTVC": "شراء",
+    "ETEL": "شراء",
+    "DOMT": "شراء",
+    "GBCO": "شراء",
+    "CPCI": "شراء",
+    "CIEB": "شراء",
+    "SNFC": "شراء",
+    "SPIN": "شراء"
+   },
+   "news": {
+    "GBCO": "neutral",
+    "CPCI": "neutral",
+    "CIEB": "agree"
+   },
+   "by_model": {
+    "xgb": [
+     "AIFI",
+     "SDTI",
+     "RTVC",
+     "UEFM",
+     "CIEB",
+     "EAST",
+     "ETEL",
+     "SCEM",
+     "DOMT",
+     "SPIN"
+    ],
+    "lgbm": [
+     "SDTI",
+     "AIFI",
+     "RTVC",
+     "ETEL",
+     "DOMT",
+     "GBCO",
+     "CPCI",
+     "CIEB",
+     "SNFC",
+     "SPIN"
+    ],
+    "cat": [
+     "SDTI",
+     "AIFI",
+     "EAST",
+     "CIEB",
+     "DOMT",
+     "SCEM",
+     "RTVC",
+     "FAIT",
+     "ELEC",
+     "GBCO"
+    ],
+    "ens": [
+     "SDTI",
+     "AIFI",
+     "RTVC",
+     "CIEB",
+     "DOMT",
+     "EAST",
+     "GBCO",
+     "SCEM",
+     "ETEL",
+     "UEFM"
+    ]
+   },
+   "made": "2026-11-20 01:49"
+  },
+  {
+   "date": "2026-11-18",
+   "h": 40,
+   "variant": "macro",
+   "picks": [
+    "EBSC",
+    "GGCC",
+    "NINH",
+    "CCRS",
+    "SNFC",
+    "AMIA",
+    "RTVC",
+    "EFIH",
+    "SPIN",
+    "FAIT"
+   ],
+   "labels": {
+    "EBSC": "شراء",
+    "GGCC": "شراء",
+    "NINH": "شراء",
+    "CCRS": "شراء",
+    "SNFC": "شراء",
+    "AMIA": "شراء",
+    "RTVC": "شراء",
+    "EFIH": "شراء",
+    "SPIN": "شراء",
+    "FAIT": "شراء"
+   },
+   "news": {
+    "FAIT": "agree"
+   },
+   "by_model": {
+    "xgb": [
+     "RTVC",
+     "AMIA",
+     "SCEM",
+     "FAIT",
+     "SNFC",
+     "EBSC",
+     "SDTI",
+     "SPIN",
+     "AIFI",
+     "ADCI"
+    ],
+    "lgbm": [
+     "EBSC",
+     "GGCC",
+     "NINH",
+     "CCRS",
+     "SNFC",
+     "AMIA",
+     "RTVC",
+     "EFIH",
+     "SPIN",
+     "FAIT"
+    ],
+    "cat": [
+     "SNFC",
+     "EBSC",
+     "CIEB",
+     "SDTI",
+     "SCEM",
+     "OBRI",
+     "AMIA",
+     "SPIN",
+     "FAIT",
+     "GBCO"
+    ],
+    "ens": [
+     "EBSC",
+     "SNFC",
+     "AMIA",
+     "SCEM",
+     "SDTI",
+     "FAIT",
+     "SPIN",
+     "RTVC",
+     "CCRS",
+     "EFIH"
+    ]
+   },
+   "made": "2026-11-20 01:49"
+  },
+  {
+   "date": "2026-11-18",
+   "h": 60,
+   "variant": "macro",
+   "picks": [
+    "ASPI",
+    "SNFC",
+    "GGCC",
+    "CCRS",
+    "MEPA",
+    "SPIN",
+    "AMIA",
+    "SCEM",
+    "EBSC",
+    "RREI"
+   ],
+   "labels": {
+    "ASPI": "شراء",
+    "SNFC": "شراء",
+    "GGCC": "شراء",
+    "CCRS": "شراء",
+    "MEPA": "شراء",
+    "SPIN": "شراء",
+    "AMIA": "شراء",
+    "SCEM": "شراء",
+    "EBSC": "شراء",
+    "RREI": "شراء"
+   },
+   "news": {},
+   "by_model": {
+    "xgb": [
+     "SNFC",
+     "AMIA",
+     "SPIN",
+     "CEFM",
+     "SCEM",
+     "SUGR",
+     "GGCC",
+     "CIEB",
+     "PRDC",
+     "MEPA"
+    ],
+    "lgbm": [
+     "ASPI",
+     "SNFC",
+     "GGCC",
+     "CCRS",
+     "MEPA",
+     "SPIN",
+     "AMIA",
+     "SCEM",
+     "EBSC",
+     "RREI"
+    ],
+    "cat": [
+     "SNFC",
+     "AMIA",
+     "GGCC",
+     "GBCO",
+     "CIEB",
+     "SUGR",
+     "PRDC",
+     "CCRS",
+     "ASPI",
+     "SCEM"
+    ],
+    "ens": [
+     "SNFC",
+     "AMIA",
+     "GGCC",
+     "SPIN",
+     "ASPI",
+     "SCEM",
+     "SUGR",
+     "CCRS",
+     "CIEB",
+     "GBCO"
+    ]
+   },
+   "made": "2026-11-20 01:49"
   }
  ]
 }
