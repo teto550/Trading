@@ -1005,86 +1005,86 @@
    "target": "2026-11-22",
    "data_date": "2026-11-18",
    "picks": [
-    "CIEB",
     "FAIT",
     "ADIB",
+    "CIEB",
     "COMI",
     "AREH",
-    "HELI",
+    "ISMQ",
     "COSG",
     "EHDR",
-    "ISMQ",
+    "HELI",
     "CLHO"
    ],
    "labels": {
-    "CIEB": "بيع",
     "FAIT": "بيع",
     "ADIB": "بيع",
+    "CIEB": "بيع",
     "COMI": "بيع",
     "AREH": "بيع",
-    "HELI": "بيع",
+    "ISMQ": "بيع",
     "COSG": "بيع",
     "EHDR": "بيع",
-    "ISMQ": "بيع",
+    "HELI": "بيع",
     "CLHO": "بيع"
    },
    "news": {
-    "CIEB": "disagree",
     "FAIT": "disagree",
     "ADIB": "disagree",
+    "CIEB": "disagree",
     "COMI": "neutral"
    },
    "by_model": {
     "xgb": [
-     "CIEB",
+     "EHDR",
      "FAIT",
      "AREH",
-     "EHDR",
-     "AIFI",
      "COSG",
      "HELI",
-     "CPCI",
-     "CLHO",
-     "SDTI"
+     "EFIH",
+     "ADIB",
+     "ISMQ",
+     "CIEB",
+     "COMI"
     ],
     "lgbm": [
-     "AREH",
      "FAIT",
-     "CIEB",
-     "HELI",
-     "ISMQ",
-     "COMI",
-     "COSG",
-     "CLHO",
+     "AREH",
+     "EFIH",
      "GBCO",
-     "EHDR"
+     "ISMQ",
+     "HELI",
+     "CIEB",
+     "ADIB",
+     "CLHO",
+     "COSG"
     ],
     "cat": [
      "AREH",
-     "CIEB",
      "COSG",
-     "HELI",
-     "ADIB",
-     "FAIT",
-     "EHDR",
      "ISMQ",
-     "MASR",
-     "ZMID"
+     "COMI",
+     "EHDR",
+     "FAIT",
+     "HELI",
+     "ZMID",
+     "CPCI",
+     "ADIB"
     ],
     "ens": [
      "AREH",
-     "CIEB",
      "FAIT",
-     "HELI",
+     "ISMQ",
      "COSG",
      "EHDR",
-     "ISMQ",
-     "CLHO",
+     "HELI",
+     "ADIB",
+     "CIEB",
      "COMI",
-     "ADIB"
+     "CLHO"
     ]
    },
-   "made": "2026-11-19 17:49"
+   "made": "2026-11-20 01:17"
   }
  ]
 }
