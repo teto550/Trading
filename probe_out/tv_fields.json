@@ -1,0 +1,58 @@
+{
+ "time": [
+  200,
+  "{\"totalCount\":3,\"data\":[{\"s\":\"EGX:COMI\",\"d\":[\"COMI\",125.01,1795334400]},{\"s\":\"EGX:SWDY\",\"d\":[\"SWDY\",114.05,1795334400]},{\"s\":\"EGX:EFIH\",\"d\":[\"EFIH\",24.1,1795334400]}]}"
+ ],
+ "update_time": [
+  200,
+  "{\"totalCount\":3,\"data\":[{\"s\":\"EGX:SWDY\",\"d\":[\"SWDY\",114.05,1795350568]},{\"s\":\"EGX:COMI\",\"d\":[\"COMI\",125.01,1795350538]},{\"s\":\"EGX:EFIH\",\"d\":[\"EFIH\",24.1,1795350544]}]}"
+ ],
+ "last_bar_update_time": [
+  200,
+  "{\"totalCount\":3,\"data\":[{\"s\":\"EGX:COMI\",\"d\":[\"COMI\",125.01,1795365900]},{\"s\":\"EGX:EFIH\",\"d\":[\"EFIH\",24.1,1795365900]},{\"s\":\"EGX:SWDY\",\"d\":[\"SWDY\",114.05,1795365900]}]}"
+ ],
+ "lp_time": [
+  200,
+  "{\"totalCount\":3,\"data\":[{\"s\":\"EGX:COMI\",\"d\":[\"COMI\",125.01,null]},{\"s\":\"EGX:SWDY\",\"d\":[\"SWDY\",114.05,null]},{\"s\":\"EGX:EFIH\",\"d\":[\"EFIH\",24.1,null]}]}"
+ ],
+ "close_time": [
+  200,
+  "{\"totalCount\":3,\"data\":[{\"s\":\"EGX:SWDY\",\"d\":[\"SWDY\",114.05,null]},{\"s\":\"EGX:EFIH\",\"d\":[\"EFIH\",24.1,null]},{\"s\":\"EGX:COMI\",\"d\":[\"COMI\",125.01,null]}]}"
+ ],
+ "market_status": [
+  200,
+  "{\"totalCount\":3,\"data\":[{\"s\":\"EGX:COMI\",\"d\":[\"COMI\",125.01,null]},{\"s\":\"EGX:SWDY\",\"d\":[\"SWDY\",114.05,null]},{\"s\":\"EGX:EFIH\",\"d\":[\"EFIH\",24.1,null]}]}"
+ ],
+ "current_session": [
+  200,
+  "{\"totalCount\":3,\"data\":[{\"s\":\"EGX:SWDY\",\"d\":[\"SWDY\",114.05,\"out_of_session\"]},{\"s\":\"EGX:COMI\",\"d\":[\"COMI\",125.01,\"out_of_session\"]},{\"s\":\"EGX:EFIH\",\"d\":[\"EFIH\",24.1,\"out_of_session\"]}]}"
+ ],
+ "change_from_open": [
+  200,
+  "{\"totalCount\":3,\"data\":[{\"s\":\"EGX:COMI\",\"d\":[\"COMI\",125.01,-1.9529411764705844]},{\"s\":\"EGX:SWDY\",\"d\":[\"SWDY\",114.05,-2.9361702127659597]},{\"s\":\"EGX:EFIH\",\"d\":[\"EFIH\",24.1,-5.6012534273403825]}]}"
+ ],
+ "gap": [
+  200,
+  "{\"totalCount\":3,\"data\":[{\"s\":\"EGX:SWDY\",\"d\":[\"SWDY\",114.05,0]},{\"s\":\"EGX:EFIH\",\"d\":[\"EFIH\",24.1,0]},{\"s\":\"EGX:COMI\",\"d\":[\"COMI\",125.01,0]}]}"
+ ],
+ "Perf.W": [
+  200,
+  "{\"totalCount\":3,\"data\":[{\"s\":\"EGX:SWDY\",\"d\":[\"SWDY\",114.05,-5.509527754763882]},{\"s\":\"EGX:COMI\",\"d\":[\"COMI\",125.01,-2.904854368932035]},{\"s\":\"EGX:EFIH\",\"d\":[\"EFIH\",24.1,-3.4841810172206547]}]}"
+ ],
+ "average_volume_10d_calc": [
+  200,
+  "{\"totalCount\":3,\"data\":[{\"s\":\"EGX:COMI\",\"d\":[\"COMI\",125.01,2783549.6]},{\"s\":\"EGX:SWDY\",\"d\":[\"SWDY\",114.05,390208.7]},{\"s\":\"EGX:EFIH\",\"d\":[\"EFIH\",24.1,2522859.9]}]}"
+ ],
+ "relative_volume_10d_calc": [
+  200,
+  "{\"totalCount\":3,\"data\":[{\"s\":\"EGX:SWDY\",\"d\":[\"SWDY\",114.05,0.6901726164613637]},{\"s\":\"EGX:EFIH\",\"d\":[\"EFIH\",24.1,3.6628289398500122]},{\"s\":\"EGX:COMI\",\"d\":[\"COMI\",125.01,0.7883569240304547]}]}"
+ ],
+ "close[1]": [
+  200,
+  "{\"totalCount\":3,\"data\":[{\"s\":\"EGX:COMI\",\"d\":[\"COMI\",125.01,127.5]},{\"s\":\"EGX:EFIH\",\"d\":[\"EFIH\",24.1,25.53]},{\"s\":\"EGX:SWDY\",\"d\":[\"SWDY\",114.05,117.5]}]}"
+ ],
+ "currency": [
+  200,
+  "{\"totalCount\":3,\"data\":[{\"s\":\"EGX:SWDY\",\"d\":[\"SWDY\",114.05,\"EGP\"]},{\"s\":\"EGX:COMI\",\"d\":[\"COMI\",125.01,\"EGP\"]},{\"s\":\"EGX:EFIH\",\"d\":[\"EFIH\",24.1,\"EGP\"]}]}"
+ ]
+}
