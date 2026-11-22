@@ -96,7 +96,26 @@ def _px(x):
 
 
 def _lab(l):
-    return {"شراء": "🟢 شراء", "بيع": "🔴 بيع", "انتظر": "⚪ انتظر"}.get(l, "❔")
+    return {"شراء": "🟢 شراء", "بيع": "🔴 بيع", "انتظر": "⚪ انتظر", "احتفاظ": "🔵 احتفاظ"}.get(l, "❔")
+
+
+SWING_TXT = {"دخول": "🟢 ادخل عند افتتاح الجلسة الجاية", "احتفاظ": "🔵 احتفاظ (مركز مفتوح في المحفظة التجريبية)",
+             "خروج": "🔴 اخرج عند افتتاح الجلسة الجاية", "مراقبة": "⚪ مش مستوفي شروط الدخول دلوقتي"}
+
+
+def swing_lines(base):
+    """قرار محرك الدخول/الخروج (signals_report.py) للسهم ده."""
+    sw = _load("swing.json")
+    st = (sw or {}).get("stocks", {}).get(base)
+    if not sw:
+        return []
+    if not st:
+        return [f"🧭 قرار الدخول/الخروج (قفلة {sw.get('data_date')}): السهم مش في الموديل (سيولة قليلة أو بيانات ناقصة)."]
+    top = max(1, round((1 - st["score"]) * 100))
+    out = [f"🧭 قرار الدخول/الخروج (قفلة {sw.get('data_date')}): {SWING_TXT.get(st['status'], st['status'])}",
+           f"   ترتيبه في موديل 20-60 يوم: أعلى {top}% من الأسهم"
+           + ("" if sw.get("regime_on", True) else " | ⚠️ السوق في اتجاه هابط: مفيش دخول جديد")]
+    return out
 
 
 def forecast_text(base, news_info=None, now=None):
@@ -106,6 +125,7 @@ def forecast_text(base, news_info=None, now=None):
     nm = _names().get(base, {})
     title = f"🔮 توقعات {base}" + (f" - {nm['ar']}" if nm.get("ar") else (f" - {nm['en']}" if nm.get("en") else ""))
     L = [title]
+    L += swing_lines(base)
     s1 = (d1 or {}).get("stocks", {}).get(base)
     if d1 and s1:
         tgt = d1.get("target")
@@ -154,7 +174,6 @@ def forecast_text(base, news_info=None, now=None):
         L.append(stale)
     if not d1 and not d5:
         L.append("لسه مفيش توقعات متسجلة (التقرير اليومي ماشتغلش لحد دلوقتي).")
-    L += ["", "⚠️ شراء/بيع = تقدير إحصائي ضعيف (دقته قريبة من التخمين الثابت)، الترتيب نسبي بين الأسهم، "
-              "ومش توصية. القرار والمسؤولية ليك.",
-          "(الترتيب والتصنيف حاجتين منفصلتين: ممكن سهم ترتيبه ضعيف بين الأسهم وتصنيفه شراء لو الموديل شايف الكل طالع)"]
+    L += ["", "⚠️ قرار 🧭 هو المعتمد للدخول والخروج (اتختبر كمحفظة كاملة). ترتيبات الجلسة و5/10 أيام إحصائية ضعيفة "
+              "ومش توصية. القرار والمسؤولية ليك."]
     return "\n".join(L)

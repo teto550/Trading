@@ -371,7 +371,9 @@ def main():
             keep = C.index.date != now.date()
             C, H, L, V, O = (x[keep] for x in (C, H, L, V, O))
         if a.source == "yfinance":
-            C, H, L, V, O, _note = tr.extend_with_state(C, H, L, V, O, now)
+            C, H, L, V, O, _note = tr.egxdata.extend_panel(C, H, L, V, O, now)
+            if _note is None:
+                C, H, L, V, O, _note = tr.extend_with_state(C, H, L, V, O, now)
         date = str(C.index[-1].date())
         M, egx_src = None, None
         if not a.no_macro:

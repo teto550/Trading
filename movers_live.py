@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 مراقبة لحظية لأسهم EGX أثناء الجلسة: بتبعت تليجرام لما سهم يطلع أو ينزل بسرعة/بنسبة كبيرة.
-- بتدور في loop طول الجلسة (10:00 - 14:30 القاهرة) وتسحب كل الأسهم من Mubasher كل ~دقيقتين ونص.
+- بتدور في loop طول الجلسة (10:00 - 14:30 القاهرة) وتسحب كل الأسهم من TradingView كل ~دقيقتين ونص.
 - تنبيه "مستوى اليوم": تغيير عن قفلة امبارح عدّى +3/+5/+8% (أو -3/-5/-8%) - كل مستوى مرة في اليوم.
 - تنبيه "حركة سريعة": تغيير 2% أو أكتر في آخر ~30 دقيقة.
 - بيبعت رسالة واحدة مجمّعة في كل دورة، ومعاها حالة السوق ككل.
@@ -18,6 +18,9 @@ from zoneinfo import ZoneInfo
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import monitor_once as mo  # noqa: E402
+sys.path.insert(0, os.path.join(HERE, "backtest"))
+import paper_account as pa  # noqa: E402
+PAPER_K = pa.live_params()
 
 TZ = ZoneInfo("Africa/Cairo")
 STATE = os.path.join(HERE, "movers_state.json")
@@ -307,6 +310,11 @@ def main():
                     break
             r = cycle(tickers, prev, hist, state, t_now)
             cycles += 1
+            try:                       # الحساب التجريبي: تنفيذ أوامر الافتتاح + بيع فوري لو سهم كسر الوقف (انعكاس)
+                import egxdata
+                pa.live_tick(egxdata.tv_snapshot(), t_now, PAPER_K, mo.send_telegram)
+            except Exception as e:  # noqa: BLE001
+                print(f"[الحساب التجريبي] {str(e)[:150]}")
             if r:
                 med, ups, downs, chg, ok = r
                 if DETECT and ((ups or downs) and hm(t_now) >= (10, 0) or FORCE):

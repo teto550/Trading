@@ -424,6 +424,10 @@ def send_telegram(msg):
     tok, chat = os.environ.get("TELEGRAM_BOT_TOKEN", ""), os.environ.get("TELEGRAM_CHAT_ID", "")
     if not tok or not chat:
         return
+    sys.path.insert(0, ROOT)
+    import notify
+    if not notify.allowed():
+        return
     try:
         import requests
         for part in _split_msg(msg):

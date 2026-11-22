@@ -39,6 +39,8 @@ import alpha  # noqa: E402
 import direction as dr  # noqa: E402
 import models  # noqa: E402
 import news as nw  # noqa: E402
+sys.path.insert(0, ROOT)
+import egxdata  # noqa: E402
 
 OUT_DIR = os.path.join(ROOT, "tomorrow")
 FORECAST_DIR = os.path.join(ROOT, "forecast")   # توقع كل الأسهم (البوت بيقرا منه لما تكتب اسم سهم)
@@ -156,12 +158,8 @@ def train_and_score(C, H, L, V, O, min_turnover, trees):
     print(f"[موديل الجلسة الجاية] {'+'.join(used)}")
     # شراء/بيع: موديل تاني بيجاوب "العائد المطلق بكره هيبقى موجب؟" + قياس دقته على آخر 250 يوم
     ret = nxt_oc.values
-    dirp, hold = None, None
-    try:
-        dirp = dr.fit_predict(Xcs, ret, E, t, cols, trees)
-        hold = dr.holdout(Xcs, ret, E, 1, trees)
-    except Exception as e:  # noqa: BLE001
-        print(f"[direction] فشل تصنيف شراء/بيع، هكمّل من غيره: {e}")
+    dirp, hold = None, None   # تصنيف "فوق/تحت الافتتاح بكره" اتلغى (مش أحسن من التخمين)، التصنيف دلوقتي من swing.json
+    del ret
     return score, cols, np.array(C.columns), f, lock, t, dirp, hold, bym
 
 
@@ -258,9 +256,28 @@ def market_status(C, t):
             "med20": med20 * 100, "med5": med5 * 100}
 
 
+SWING_FILE = os.path.join(FORECAST_DIR, "swing.json")
+SWING_LAB = {"دخول": dr.BUY, "خروج": dr.SELL, "احتفاظ": dr.HOLD, "مراقبة": dr.WAIT}
+
+
+def swing_labels(data_date):
+    """تصنيف كل سهم من محرك الدخول/الخروج (signals_report.py) لو متعمل على نفس القفلة، وإلا None.
+    (تصنيف "هيقفل بكره فوق/تحت الافتتاح" القديم اتشال: دقته 56% مقابل 56% للتخمين الثابت.)"""
+    sw = _load_json(SWING_FILE, None)
+    if not sw or sw.get("data_date") != str(data_date):
+        return None
+    return {n: SWING_LAB.get(v.get("status")) for n, v in sw.get("stocks", {}).items()}
+
+
 def build_report(C, H, L, V, O, a, now, note=None):
     score, cols, names, f, lock, t, dirp, hold, bym = train_and_score(C, H, L, V, O, a.min_turnover, a.trees)
     data_date = C.index[t].date()
+    swl = swing_labels(data_date)
+
+    def lab_of(i, col):
+        if swl is not None:
+            return swl.get(names[col].replace(".CA", ""), dr.WAIT)
+        return None
     target = next_trading_day(now)
     stale_days = (now.date() - data_date).days
 
@@ -274,7 +291,7 @@ def build_report(C, H, L, V, O, a, now, note=None):
         if pr is None:
             continue
         rows.append({"rank": rank, "name": names[col].replace(".CA", ""), "pr": pr, "lv": levels(C, H, L, col, t),
-                     "label": dr.label(float(dirp[i])) if dirp is not None else None,
+                     "label": lab_of(i, col),
                      "r1": float(f["r1"].iloc[t, col]) * 100 if np.isfinite(f["r1"].iloc[t, col]) else float("nan")})
 
     # توقع كل الأسهم الصالحة (للبوت: اكتب اسم سهم)
@@ -285,7 +302,7 @@ def build_report(C, H, L, V, O, a, now, note=None):
         lv_ = levels(C, H, L, col, t)
         all_stocks[names[col].replace(".CA", "")] = {
             "rank": rank, "last": float(C.iloc[t, col]),
-            "label": dr.label(float(dirp[i])) if dirp is not None else None,
+            "label": lab_of(i, col),
             "lo": round(pr_["low"], 4) if pr_ else None, "hi": round(pr_["high"], 4) if pr_ else None,
             "lv": ({k: (round(float(v), 4) if isinstance(v, (int, float, np.floating)) and v == v else None)
                     for k, v in lv_.items() if k in ("rsi", "atr_pct", "support", "resist", "stop", "target", "rr")}
@@ -355,9 +372,12 @@ def build_report(C, H, L, V, O, a, now, note=None):
     if news_map:
         L_ += ["📰 الأخبار تأكيد أو تحذير بس: مبتغيّرش الترتيب ولا شراء/بيع، ومفيش باكتست ليها لسه. "
                "أنا بقيس بعد كام جلسة لو التصنيف بيبقى أصح لما الأخبار بتأيده.", ""]
-    if dirp is not None:
-        L_ += ["🟢 شراء = الموديل شايف السهم هيقفل بكره فوق افتتاحه | 🔴 بيع = شايفه هيقفل تحته | ⚪ انتظر = مش واثق.",
-               "⚠️ " + dr.holdout_line(hold), ""]
+    if swl is not None:
+        L_ += ["التصنيف جنب كل سهم من رسالة 🧭 (محرك الدخول والخروج المتختبر على محفظة كاملة):",
+               "🟢 شراء = إشارة دخول بكره | 🔵 احتفاظ = مركز مفتوح | 🔴 بيع = إشارة خروج | ⚪ انتظر = ترتيبه كويس بس مش مستوفي شروط الدخول.",
+               "الترتيب هنا لجلسة واحدة (ميزة ضعيفة)، أما قرار الدخول والخروج فمن رسالة 🧭.", ""]
+    else:
+        L_ += ["ℹ️ إشارات الدخول والخروج (🧭) متعملتش على نفس القفلة دي، فمفيش تصنيف شراء/بيع جنب الأسهم.", ""]
     L_ += ["إزاي تقرأ المستويات:",
            "• وقف الخسارة = 1.5 × التذبذب اليومي تحت القفلة. الهدف = 3 × التذبذب فوقها (أو المقاومة لو أقرب).",
            "• عائد/مخاطرة = كام هتكسب لو وصل الهدف مقابل كام هتخسر لو ضرب الوقف. أقل من 1.5 يبقى مش مجزي.",
@@ -545,7 +565,9 @@ def main():
         if now.weekday() in TRADING_DAYS and (now.hour, now.minute) < (14, 45):
             keep = C.index.date != now.date()
             C, H, L, V, O = (x[keep] for x in (C, H, L, V, O))
-        C, H, L, V, O, note = extend_with_state(C, H, L, V, O, now)
+        C, H, L, V, O, note = egxdata.extend_panel(C, H, L, V, O, now)   # TradingView: Yahoo بيتأخر جلسة أو أكتر
+        if note is None:
+            C, H, L, V, O, note = extend_with_state(C, H, L, V, O, now)
         # 1) نتيجة ترشيحات الجلسات اللي خلصت (قبل ما نسجّل ترشيحات الجلسة الجاية)
         scored = score_pending(C)
         text, rows, data_date, forecast = build_report(C, H, L, V, O, a, now, note)

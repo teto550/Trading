@@ -193,21 +193,15 @@ def append_alert_log(ticker, signal, price, sma20, sma50):
 # مع فحص أمان للقفزات الغريبة)
 # ============================================================
 def fetch_price_mubasher(ticker):
-    import re
-    symbol = ticker.replace(".CA", "")
-    url = f"https://english.mubasher.info/markets/EGX/stocks/{symbol}"
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
-    resp = requests.get(url, headers=headers, timeout=15)
-    resp.raise_for_status()
-    match = re.search(
-        r'market time\.(?:(?!\d{1,4}\.\d{1,3}).){0,300}?(\d{1,4}\.\d{1,3})',
-        resp.text, re.DOTALL,
-    )
-    if not match:
-        raise ValueError("مش قادر ألاقي السعر في صفحة Mubasher")
-    LAST_SOURCE[ticker] = {"src": "mubasher",
-                           "snip": " ".join(resp.text[match.start():match.end()].split())[-140:]}
-    return float(match.group(1))
+    """الاسم القديم متساب عشان movers_live بيناديه. Mubasher بقى تطبيق Angular (من ~12/11/2026) ومبقاش
+    فيه سعر في الصفحة، فالسعر دلوقتي من TradingView scanner (طلب واحد لكل الأسهم، كاش دقيقة)."""
+    import egxdata
+    price, rec = egxdata.price(ticker)
+    today = datetime.now(ZoneInfo("Africa/Cairo")).strftime("%Y-%m-%d")
+    if rec.get("date") and rec["date"] != today:
+        raise ValueError(f"آخر شمعة عند TradingView بتاريخ {rec['date']} مش النهاردة (إجازة أو السهم موقوف)")
+    LAST_SOURCE[ticker] = {"src": "tradingview", "snip": f"close={price} prev={rec.get('prev')} date={rec.get('date')}"}
+    return float(price)
 
 
 def fetch_price_yfinance(ticker):
@@ -231,7 +225,7 @@ def fetch_price(ticker, prev_price=None):
     try:
         price = fetch_price_mubasher(ticker)
     except Exception as e:
-        print(f"  [Mubasher] فشل الجلب ({e})، هجرب yfinance كـ fallback")
+        print(f"  [TradingView] فشل الجلب ({e})، هجرب yfinance كـ fallback")
         return fetch_price_yfinance(ticker)
 
     if prev_price and prev_price > 0:
@@ -256,6 +250,9 @@ def fetch_price(ticker, prev_price=None):
 def send_telegram(message):
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
         print("[تليجرام] التوكن أو chat_id فاضيين")
+        return
+    import notify
+    if not notify.allowed():
         return
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     try:
@@ -417,6 +414,18 @@ def process_stock(ticker, stock_state):
         except Exception as e:
             stock_state["seed_failed_on"] = today_str
             print(f"  فشل seed: {e}")
+
+    # تاريخ قديم (مثلاً بعد ما مصدر السعر وقع أيام): نعيد ملاه من yfinance عشان المتوسطات متبقاش فيها فجوة
+    dts = stock_state.get("dates", [])
+    if dts and stock_state.get("seed_failed_on") != today_str:
+        gap = (datetime.strptime(today_str, "%Y-%m-%d") - datetime.strptime(dts[-1], "%Y-%m-%d")).days
+        if gap > 6:
+            try:
+                seed_history(ticker, stock_state)
+                print(f"  [seed] التاريخ كان واقف من {gap} يوم، اتعاد ملاه")
+            except Exception as e:
+                stock_state["seed_failed_on"] = today_str
+                print(f"  فشل إعادة الملء: {e}")
 
     daily = stock_state.get("daily", [])
     prev_price = daily[-1] if daily else None
@@ -613,6 +622,52 @@ def refresh_forecast_files():
         print("[توقعات] مقدرتش أحدّث ملفات التوقعات:", e)
 
 
+def paper_portfolio_text():
+    """رد "محفظتي": الحساب التجريبي بأسعار لحظية من TradingView + أوامر الافتتاح الجاية + آخر العمليات."""
+    import subprocess
+    if os.environ.get("GITHUB_ACTIONS"):
+        try:
+            subprocess.run(["git", "fetch", "-q", "--depth=1", "origin", os.environ.get("GITHUB_REF_NAME", "main")],
+                           check=True, timeout=60)
+            subprocess.run(["git", "checkout", "-q", "FETCH_HEAD", "--", "signals"], check=True, timeout=60)
+        except Exception as e:
+            print("[محفظة] مقدرتش أحدّث الملف:", e)
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "backtest"))
+    import paper_account as pa
+    acc = pa.load()
+    if not acc:
+        return "💼 الحساب التجريبي لسه ماتفتحش (بيتفتح بـ100,000 جنيه أول ما تقرير المسا يشتغل)."
+    prices = {}
+    try:
+        import egxdata
+        prices = {n: r["close"] for n, r in egxdata.tv_snapshot().items()}
+    except Exception as e:
+        print("[محفظة] أسعار لحظية فشلت:", e)
+    k = pa.live_params()[0]
+    L = pa.summary_lines(acc, prices) + [""]
+    if acc["pos"]:
+        L.append(f"📂 الأسهم ({len(acc['pos'])}):")
+        for n, ps in acc["pos"].items():
+            p = prices.get(n, ps["last_px"])
+            val = ps["shares"] * p
+            pnl = val - ps["cost"]
+            st = pa.stop_px(ps, k)
+            L.append(f"- {n}: {ps['shares']:,} سهم | شراء {pa.px(ps['entry_px'])} | دلوقتي {pa.px(p)} = {pa.money(val)} جنيه "
+                     f"({'+' if pnl >= 0 else '-'}{pa.money(abs(pnl))}، {pnl / ps['cost'] * 100:+.1f}%)"
+                     + (f" | الوقف {pa.px(st)}" if st else ""))
+    else:
+        L.append("📂 مفيش أسهم دلوقتي، الحساب كاش.")
+    if acc["orders"]:
+        L += ["", "⏳ أوامر مستنية الافتتاح:"]
+        for o in acc["orders"]:
+            L.append(f"- {'شراء' if o['side'] == 'buy' else 'بيع'} {o['name']}"
+                     + (f" بحوالي {pa.money(o['budget'])} جنيه" if o["side"] == "buy" else ""))
+    last = acc["history"][-6:]
+    if last:
+        L += ["", "🧾 آخر العمليات:"] + [pa.trade_line(r) for r in reversed(last)]
+    return "\n".join(L)
+
+
 def handle_telegram_commands(state):
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
         return
@@ -648,6 +703,9 @@ def handle_telegram_commands(state):
         words = [w.upper() for w in re.findall(r"[A-Za-z0-9]{2,8}", text)]
         if any(w in ("ALL", "LIST") for w in words) or text in ("/all", "/list", "الكل"):
             send_long(overview_text(state))
+            continue
+        if any(k in text for k in ("محفظ", "الحساب", "حسابي")) or text.lower() in ("/portfolio", "portfolio"):
+            send_long(paper_portfolio_text())
             continue
         ticker = next((bases[w] for w in words if w in bases), None)
         suggestions = None

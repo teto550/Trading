@@ -2,3 +2,4 @@ backtest/data/
 __pycache__/
 *.pyc
 catboost_info/
+probe_out/

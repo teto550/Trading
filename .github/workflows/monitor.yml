@@ -46,6 +46,7 @@ jobs:
           git config user.name "alert-bot"
           git config user.email "bot@users.noreply.github.com"
           git add state.json
+          [ -d data ] && git add -A data || true
           # alert_log.csv بيتعمل بس أول ما يحصل تنبيه فعلي - لسه مش
           # موجود في أول تشغيلات، فبنضيفه بس لو موجود عشان الأمر
           # ميفشلش
