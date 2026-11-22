@@ -38,3 +38,4 @@ def yf_():
 for n, f in [("mub", mub), ("mubapi", mub_api), ("tv", tv), ("tvsym", tvhist), ("yf", yf_)]:
     tryit(n, f)
 print(os.listdir(OUT))
+# rerun
