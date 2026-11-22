@@ -6,9 +6,6 @@ on:
         description: "إعادة تدريب الدرجات من الأول"
         required: false
         default: "false"
-  push:
-    branches: [upgrade-signals]
-    paths: [backtest/swing.py, backtest/swing_core.py]
 concurrency:
   group: swing-backtest
   cancel-in-progress: true
