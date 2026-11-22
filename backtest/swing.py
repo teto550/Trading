@@ -190,8 +190,16 @@ def run(a):
     eq35, ex35, tr35 = sc.simulate(D, p35, first, T)
     pdl = dict(best_p, exec_close=True)
     eqd, exd, trd = sc.simulate(D, pdl, first, T)
-    pil = dict(best_p, intraday_stop=True)
-    eqi, exi, tri = sc.simulate(D, pil, first, T)
+    # البيع اللحظي: نجرب مستوى الوقف نفسه، وأعمق منه بـ1 و2 تذبذب يومي (انهيار حقيقي مش هزة)، والاختيار على التطوير بس
+    live_rows, live_best, live_dev_best = [], None, best_dev["sharpe"]
+    for ex_ in (0.0, 1.0, 2.0):
+        pil = dict(best_p, intraday_stop=True, live_extra=ex_)
+        e_, x_, t_ = sc.simulate(D, pil, first, T)
+        md_, mt_ = sc.metrics(D, e_, x_, t_, *dev), sc.metrics(D, e_, x_, t_, *test)
+        live_rows.append((ex_, md_, mt_))
+        if md_ and md_["sharpe"] > live_dev_best:
+            live_best, live_dev_best = ex_, md_["sharpe"]
+    eqi, exi, tri = sc.simulate(D, dict(best_p, intraday_stop=True, live_extra=live_best or 0.0), first, T)
     # نفس القواعد بدرجات بديلة
     alts = {}
     for kind in ("random", "lowvol"):
@@ -213,8 +221,14 @@ def run(a):
            f"| **اختبار {test[0].year}+** " + fmt(best_test),
            f"| اختبار بتكلفة {a.cost_bps + 15:.0f} bps " + fmt(sc.metrics(D, eq35, ex35, tr35, *test)),
            "| اختبار بتنفيذ بقفلة اليوم التالي (تأخير) " + fmt(sc.metrics(D, eqd, exd, trd, *test)),
-           "| اختبار + بيع لحظي لما السعر يكسر الوقف خلال الجلسة " + fmt(sc.metrics(D, eqi, exi, tri, *test)),
-           "| تطوير + بيع لحظي " + fmt(sc.metrics(D, eqi, exi, tri, *dev)), "",
+           "", "### بيع لحظي أثناء الجلسة (بدل ما نستنى القفلة)", "",
+           "| الإعداد " + HEAD[0], "|---" + HEAD[1],
+           *[f"| {lab} " + fmt(m) for ex_, md_, mt_ in live_rows
+             for lab, m in ((f"تطوير - بيع لحظي {'عند الوقف' if not ex_ else f'تحت الوقف بـ{ex_:.0f}×ATR'}", md_),
+                            (f"اختبار - بيع لحظي {'عند الوقف' if not ex_ else f'تحت الوقف بـ{ex_:.0f}×ATR'}", mt_))],
+           "", ("الاختيار (على التطوير بس): " + ("مفيش بيع لحظي أحسن من استنى القفلة، فالحساب بيحذّر لحظيًا "
+                "وبيبيع بافتتاح اليوم اللي بعده لو القفلة تحت الوقف." if live_best is None else
+                f"بيع لحظي لو السعر نزل تحت الوقف بـ{live_best:.0f}×ATR (انهيار)، والوقف العادي بيستنى القفلة.")), "",
            f"للمقارنة: أعلى Sharpe منفرد على التطوير كان ({pdesc(top1[0])}) → اختبار:", "", "|" + HEAD[0][1:], HEAD[1],
            fmt(top1[2]), "",
            "## هل الموديل نفسه بيضيف؟ (نفس القواعد بالظبط بدرجات تانية)", "",
@@ -244,6 +258,7 @@ def run(a):
     if a.source == "yfinance":
         with open(BEST_FILE, "w", encoding="utf-8") as fh:
             json.dump({"params": best_p, "dev": best_dev, "test": best_test,
+                       "live_extra": live_best,
                        "intraday": {"dev": sc.metrics(D, eqi, exi, tri, *dev), "test": sc.metrics(D, eqi, exi, tri, *test)}, "made": f"{datetime.now():%Y-%m-%d %H:%M}",
                        "data_to": str(C.index[-1].date())}, fh, ensure_ascii=False, indent=1)
     print(text)

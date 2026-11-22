@@ -65,7 +65,10 @@ def load_params():
             meta = json.load(fh)
         p.update(meta.get("params", {}))
     # البيع اللحظي لما السعر يكسر الوقف (طلب ديفيد): بيتقاس في swing.py كمان ("+ بيع لحظي")
-    p["intraday_stop"] = os.environ.get("PAPER_INTRADAY_STOP", "true").lower() == "true"
+    # البيع اللحظي: بس لو الباكتست (على فترة التطوير) قال إنه أحسن من استنى القفلة، وبالمستوى اللي اختاره
+    live_extra = (meta or {}).get("live_extra")
+    p["intraday_stop"] = live_extra is not None and os.environ.get("PAPER_INTRADAY_STOP", "true").lower() == "true"
+    p["live_extra"] = float(live_extra or 0.0)
     if os.environ.get("SWING_PARAMS"):                          # للتجربة: '{"regime": 0}'
         p.update(json.loads(os.environ["SWING_PARAMS"]))
     return p, meta
@@ -143,7 +146,7 @@ def run_account(D, p, bars):
                 o, lo, c, _pv = raw[n]
                 ps = acc["pos"][n]
                 # 2) وقف لحظي فاته التشغيل اللحظي: لو أقل سعر لمس الوقف نبيع عنده (نفس الباكتست)
-                stop = pa.stop_px(ps, p["trail_k"])
+                stop = pa.stop_px(ps, p["trail_k"] + p["live_extra"]) if p["trail_k"] else None
                 if p.get("intraday_stop") and stop and ps["entry_date"] < d and np.isfinite(lo) and lo <= stop:
                     price = min(stop, o) if np.isfinite(o) else stop
                     r = pa.sell(acc, n, round(float(price), 3), (d, "أثناء الجلسة"), "stop_live")
@@ -254,7 +257,9 @@ def build_message(D, p, meta, acc, done, now, note):
            + (" وفوق متوسط 50 يوم" if p["trend50"] else "") + (" والسوق في اتجاه صاعد" if p["regime"] else "")
            + f"، بـ1/{p['max_pos']} من قيمة الحساب، وأقصى {p['max_pos']} أسهم مع بعض.",
            "• بيع: " + "، ".join(x for x in [
-               f"لحظيًا لو السعر كسر الوقف المتحرك ({p['trail_k']}× التذبذب اليومي تحت أعلى قفلة من وقت الشراء)" if p["trail_k"] else None,
+               (f"لو قفل تحت الوقف المتحرك ({p['trail_k']}× التذبذب اليومي تحت أعلى قفلة من وقت الشراء) بيتباع الافتتاح اللي بعده"
+                + (f"، ولو انهار تحته بـ{p['live_extra']:.0f}× التذبذب أثناء الجلسة بيتباع فورًا" if p.get("intraday_stop") else
+                   "، وأثناء الجلسة بيجيلك تنبيه لحظي أول ما يكسره")) if p["trail_k"] else None,
                f"أو ترتيبه نزل تحت {p['q_out']:.0%}", f"أو عدّى {p['max_hold']} جلسة",
                "أو السوق قلب لهابط" if p["exit_on_regime"] else None] if x) + ".",
            f"• عمولة {fee * 100:.1f}% في كل عملية محسوبة في الأرقام.",

@@ -640,7 +640,7 @@ def paper_portfolio_text():
         prices = {n: r["close"] for n, r in egxdata.tv_snapshot().items()}
     except Exception as e:
         print("[محفظة] أسعار لحظية فشلت:", e)
-    k = pa.live_params()
+    k = pa.live_params()[0]
     L = pa.summary_lines(acc, prices) + [""]
     if acc["pos"]:
         L.append(f"📂 الأسهم ({len(acc['pos'])}):")

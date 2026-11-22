@@ -168,22 +168,27 @@ def summary_lines(acc, prices=None, mkt_ret=None):
 # المراقبة اللحظية (بتتنادى من movers_live كل دورة)
 # ============================================================
 def live_params():
-    """معامل الوقف من إعدادات الباكتست (None = البيع اللحظي مقفول)."""
-    if os.environ.get("PAPER_INTRADAY_STOP", "true").lower() != "true":
-        return None
+    """(معامل الوقف, عمق البيع اللحظي أو None) من إعدادات الباكتست. None = تنبيه لحظي بس والبيع بيستنى القفلة
+    (الباكتست لقى إن البيع أول ما السعر يلمس الوقف أسوأ: الأسهم بتلمسه وترجع)."""
     try:
         with open(os.path.join(HERE, "results", "swing_best.json"), encoding="utf-8") as fh:
-            return float(json.load(fh)["params"].get("trail_k") or 0) or None
+            m = json.load(fh)
+        k = float(m["params"].get("trail_k") or 0) or None
+        extra = m.get("live_extra")
     except (OSError, ValueError, KeyError):
-        return 2.5
+        k, extra = 2.5, None
+    if os.environ.get("PAPER_INTRADAY_STOP", "true").lower() != "true":
+        extra = None
+    return k, extra
 
 
-def live_tick(snap, now, k, send, today=None):
+def live_tick(snap, now, kp, send, today=None):
     """snap: لقطة TradingView {اسم: {open, close, high, prev, date}}. بينفذ أوامر الافتتاح، وبيبيع فورًا لو
     سهم في المحفظة كسر الوقف المتحرك (انعكاس)، وبيحذّر مرة لو بينعكس بقوة وقرب من الوقف. بيرجّع True لو اتغير حاجة."""
     acc = load()
     if not acc:
         return False
+    k, extra = kp if isinstance(kp, tuple) else (kp, None)
     today = today or now.strftime("%Y-%m-%d")
     when = (today, now.strftime("%H:%M"))
     changed = False
@@ -211,14 +216,28 @@ def live_tick(snap, now, k, send, today=None):
         ps = acc["pos"][n]
         p = r["close"]
         stop = stop_px(ps, k)
-        if stop and p <= stop:
+        deep = stop_px(ps, k + extra) if (k and extra is not None) else None
+        if deep and p <= deep:
             rec = sell(acc, n, p, when, "stop_live")
             if rec:
-                sold.append((rec, stop, r))
+                sold.append((rec, deep, r))
+            continue
+        broke = al.setdefault("broke", [])
+        if stop and p <= stop and n not in broke:
+            broke.append(n)
+            changed = True
+            send(f"🚨 انعكاس شديد في {n}: السعر {px(p)} كسر الوقف المتحرك {px(stop)} "
+                 f"(النهاردة {((p / r['prev']) - 1) * 100 if r.get('prev') else 0:+.1f}%، أعلى سعر {px(r.get('high') or p)})\n"
+                 f"المركز: {ps['shares']:,} سهم من {px(ps['entry_px'])} = {money(ps['shares'] * p)} جنيه "
+                 f"({(p / ps['entry_px'] - 1) * 100:+.1f}%)\n"
+                 + ("لو قفل تحت الوقف هبيعه عند افتتاح بكره (القاعدة المتختبرة)"
+                    + (f"، ولو نزل لـ{px(deep)} هبيع فورًا." if deep else
+                       ". الباكتست بيقول البيع أول ما يلمس الوقف أسوأ من استنى القفلة (أسهم كتير بتلمسه وترجع)، "
+                       "بس لو عايز تخرج بإيدك دلوقتي ده وقته.")))
             continue
         hi = r.get("high") or p
         drop_hi = (p / hi - 1) if hi else 0
-        if (stop and n not in al["warned"] and drop_hi <= -1.5 * ps["atr"] and p <= stop * (1 + ps["atr"])):
+        if (stop and n not in al["warned"] and n not in broke and drop_hi <= -1.5 * ps["atr"] and p <= stop * (1 + ps["atr"])):
             al["warned"].append(n)
             changed = True
             send(f"⚠️ انعكاس بيتكوّن في {n}: نزل {abs(drop_hi) * 100:.1f}% من أعلى سعر النهاردة ({px(hi)}) ووصل {px(p)}\n"
@@ -226,10 +245,10 @@ def live_tick(snap, now, k, send, today=None):
                  f"المركز: {ps['shares']:,} سهم من {px(ps['entry_px'])} ({(p / ps['entry_px'] - 1) * 100:+.1f}%)")
     if sold:
         changed = True
-        L = [f"🚨 انعكاس شديد - بيع فوري {now:%H:%M}", ""]
+        L = [f"🚨 انهيار - بيع فوري {now:%H:%M}", ""]
         for rec, stop, r in sold:
             L.append(trade_line(rec))
-            L.append(f"   السعر كسر الوقف المتحرك {px(stop)} (النهاردة {((r['close'] / r['prev']) - 1) * 100 if r.get('prev') else 0:+.1f}%، "
+            L.append(f"   السعر نزل تحت مستوى الانهيار {px(stop)} (النهاردة {((r['close'] / r['prev']) - 1) * 100 if r.get('prev') else 0:+.1f}%، "
                      f"وأعلى سعر كان {px(r.get('high') or r['close'])}). الخروج بدري بيحمي من نزول أكتر.")
         L += ["", *summary_lines(acc, {n: r["close"] for n, r in live.items()}),
               "", "⚠️ تجريبي: نفس القاعدة اللي في الباكتست (الوقف المتحرك)، بس بتتنفذ لحظيًا. مش ضمان إنه هيكمل نزول."]

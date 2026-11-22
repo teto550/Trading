@@ -26,3 +26,4 @@ jobs:
           P
       - name: tomorrow report labels
         run: python -u backtest/tomorrow_report.py --no-telegram --no-record --no-news 2>&1 | grep -E "^[0-9]+\. " | head -10
+# v2

@@ -144,7 +144,7 @@ def mark_close(D, t, bk, p=None):
             ps = bk["pos"][i]
             if ps["et"] == t or i in bk["pend_x"]:
                 continue
-            stop = ps["peak"] * (1 - p["trail_k"] * ps["atr"])
+            stop = ps["peak"] * (1 - (p["trail_k"] + p.get("live_extra", 0.0)) * ps["atr"])
             if ps["rel"] * (1 + D["lc"][t, i]) <= stop and D["lc"][t, i] < 0:
                 ex = min(stop, ps["rel"] * (1 + D["co"][t, i]))
                 ps["val"] *= ex / ps["rel"]
