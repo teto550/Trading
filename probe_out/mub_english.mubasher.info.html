@@ -1,0 +1,150 @@
+status 200
+<!doctype html>
+<html lang="en" dir="ltr" data-beasties-container="">
+<head>
+  <meta charset="utf-8">
+  <title>MubasherInfo</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="strix-verification" content="strix-verify-5ca1462c96f0baf888c4af54470eed38">
+
+  <link rel="icon" type="image/svg+xml" href="fav_icon.svg">
+  <!-- Installable PWA: no service worker on purpose (cached market data would be stale prices).
+       On Android the manifest's prefer_related_applications points the install offer at the
+       Play Store app instead. -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0075BC">
+  <link rel="apple-touch-icon" href="pwa/apple-touch-icon.png">
+  <!-- iOS Safari: Apple's own "Open / Get" app banner. Other phone browsers get app-store-prompt. -->
+  <meta name="apple-itunes-app" content="app-id=6472443851">
+  <!-- Inter is self-hosted via styles.scss. flag-icons is vendored as a plain
+       static asset (not run through the CSS/JS bundler): its 4x3/ and 1x1/
+       folders both ship a handful of identically-named files with different
+       content (e.g. xk.svg, un.svg), which esbuild's asset pipeline can't
+       dedupe — it hard-errors on the collision. A <link> to the copied file
+       under src/assets sidesteps that entirely while still being same-origin. -->
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin="">
+  <!-- Preload the ad banner placeholder where it is the LCP element: phones (compact file) -->
+  <link rel="preload" as="image" href="assets/images/landing-page-ad-phone.webp" type="image/webp" media="(max-width: 767px)">
+  <!-- Starts the federation manifest fetch at parse time instead of waiting for the
+       market-talks route to be activated, since loadRemoteModule() blocks on it first. -->
+  <link rel="preload" href="/federation.manifest.json" as="fetch" crossorigin="anonymous">
+  <!-- Loaded without blocking the first paint. It is 28KB of render-blocking CSS on EVERY
+       route, and the only things that use its fi-* classes are the /advertise page and two
+       shared-auth screens (country-phone-input, onboarding) -- none of them on the homepage.
+       media="print" makes the browser fetch it at low priority and apply nothing; onload
+       promotes it to all once it has arrived. It cannot be moved into the bundler for the
+       reason given above, so this is how it stops blocking. -->
+  <link rel="stylesheet" href="assets/flag-icons/css/flag-icons.min.css" media="print" onload="this.media='all'; this.onload=null">
+  <noscript><link rel="stylesheet" href="assets/flag-icons/css/flag-icons.min.css"></noscript>
+  <!-- Deployment's site domains (SITE_* in .env) as window.__MI_SITE__, before the app
+       boots — served by the BFF, see src/bff/routes/site-config.routes.ts. -->
+  <script src="/site-config.js"></script>
+<style>@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url(/assets/fonts/inter-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url(/assets/fonts/inter-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Inter;font-style:italic;font-weight:100 900;font-display:swap;src:url(/assets/fonts/inter-italic-latin.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Noto Kufi Arabic;font-style:normal;font-weight:100 900;font-display:swap;src:url(/assets/fonts/noto-kufi-arabic.woff2) format("woff2");unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}*,:before,:after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(147 197 253 / .5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }*,:before,:after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}:before,:after{--tw-content:""}html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}svg{display:block;vertical-align:middle}body{-webkit-user-select:none;user-select:none;overflow-x:hidden;font-family:Inter,Noto Kufi Arabic,sans-serif;background-color:var(--color-bg-page);color:var(--color-text-primary);padding-bottom:var(--app-store-prompt-h, 0px)}:root{--color-brand:#017AFF;--color-brand-50:#EFF6FF;--color-brand-100:#DBEAFE;--color-brand-200:#BFDBFE;--color-brand-dark:#0060CC;--color-brand-darker:#004A9E;--color-text-primary:#111827;--color-text-secondary:#374151;--color-text-muted:#667085;--color-text-inverse:#FFFFFF;--color-bg-page:#F6F6F6;--color-surface-card:#FFFFFF;--color-surface-elevated:#F9FAFB;--color-border:#E5E7EB;--color-border-subtle:#F3F4F6;--color-skeleton:#E5E7EB;--color-highlight:#FDE68A;--color-positive:#10B74C;--color-positive-subtle:#E1F7F0;--color-negative:#EA322B;--color-negative-subtle:#FDECEA;--color-flat:#667085;--color-flat-subtle:#F3F4F6;--color-text-label:#374151;--font-size-xs:.75rem;--font-size-sm:.8125rem;--font-size-base:.875rem;--font-size-md:1rem;--font-size-lg:1.125rem;--font-size-xl:1.25rem;--font-size-2xl:1.5rem;--font-weight-regular:400;--font-weight-medium:500;--font-weight-bold:700}#app-splash .splash-logo{animation:splash-reveal .3s cubic-bezier(.16,1,.3,1) both;transform-origin:center}@keyframes splash-reveal{0%{opacity:.6;transform:scale(.85)}to{opacity:1;transform:scale(1)}}@media(prefers-reduced-motion:reduce){#app-splash .splash-logo{animation:none}}</style><link rel="stylesheet" href="styles-LSS5M37J.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles-LSS5M37J.css"></noscript><meta property="og:image" content="https://english.mubasher.info/assets/images/share-default.png"><meta name="twitter:card" content="summary_large_image"></head>
+<body ngcm="">
+		
+<script type="esms-options">{"shimMode":true}</script>
+
+  <script type="importmap-shim">
+  {
+    "imports": {
+      "@angular/common/locales/ar": "/assets/locales/ar.js",
+      "@angular/common/locales/extra/ar": "/assets/locales/extra/ar.js"
+    }
+  }
+  </script>
+  <script type="esms-options">{"shimMode": true}</script>
+  <app-root>
+    <!-- Splash screen (design: Figma 10322-174362) — replaced by Angular on bootstrap -->
+    <div id="app-splash" style="position:fixed; inset:0; z-index:9999; background:#F6F6F6; overflow:hidden;">
+      <svg viewBox="0 0 1920 1100" fill="none" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MubasherInfo is loading" style="width:100%; height:100%; display:block;">
+        <g clip-path="url(#splash_clip0)">
+          <rect width="1920" height="1100" fill="#F6F6F6"/>
+          <g opacity="0.8">
+            <g opacity="0.5" filter="url(#splash_blur_bg)">
+              <g opacity="0.4" filter="url(#splash_blur0)">
+                <circle cx="763.959" cy="497.179" r="339.537" fill="url(#splash_paint0)"/>
+              </g>
+              <g opacity="0.4" filter="url(#splash_blur1)">
+                <ellipse cx="264.668" cy="458.779" rx="753.645" ry="339.537" fill="url(#splash_paint1)"/>
+              </g>
+              <path opacity="0.8" d="M0 151.28L792.951 0L1920 10.4419L1207.99 407.742L0 151.28Z" fill="url(#splash_paint2)"/>
+              <path opacity="0.2" d="M489.914 74.9688L0 293.141L864 543.601L1885.74 324.974L489.914 74.9688Z" fill="url(#splash_paint3)"/>
+            </g>
+            <!-- Figma node 10322:174412 "blur": backdrop-blur(101.766px) over the shapes above, then this fade-to-background wash on top -->
+            <rect width="1920" height="897.347" transform="translate(0 0.0336914)" fill="url(#splash_paint4)" fill-opacity="0.1"/>
+          </g>
+          <g class="splash-logo" clip-path="url(#splash_clip1)">
+            <path d="M939.417 566.696H937.127L933.767 585.746H927.027C924.707 585.746 923.807 584.306 924.317 581.426L925.727 573.236C926.327 569.856 923.727 566.766 920.297 566.766H918.067L915.467 581.666C915.197 583.176 914.637 584.286 913.777 584.976C912.917 585.676 911.727 586.016 910.187 586.016C908.647 586.016 907.407 585.666 906.637 584.956C905.867 584.246 905.607 583.156 905.877 581.656L907.337 573.226C907.937 569.846 905.337 566.756 901.907 566.756H899.677L897.117 581.416C896.607 584.296 895.197 585.736 892.877 585.736H888.317C883.937 585.736 882.057 584.046 882.647 580.656L885.107 566.686H876.247L869.137 608.546H870.537C874.097 608.546 878.557 606.086 879.357 602.606L881.387 589.156C881.627 590.306 882.317 591.246 883.457 591.966C884.597 592.696 885.787 593.056 887.017 593.056H896.237C897.647 593.056 899.087 592.556 900.557 591.556C902.027 590.556 902.847 589.756 903.037 589.156H903.307C903.577 590.386 904.417 591.376 905.837 592.116C907.257 592.866 909.057 593.236 911.237 593.236C915.707 593.236 919.117 591.876 921.447 589.156H921.687C921.927 590.306 922.627 591.246 923.787 591.966C924.947 592.696 926.147 593.056 927.377 593.056H941.317L944.827 573.156C945.427 569.776 942.827 566.686 939.397 566.686L939.417 566.696Z" fill="#017AFF"/>
+            <path d="M941.887 554.203C939.567 554.203 937.688 556.083 937.688 558.403C937.688 560.723 939.567 562.603 941.887 562.603C944.207 562.603 946.087 560.723 946.087 558.403C946.087 556.083 944.207 554.203 941.887 554.203Z" fill="#017AFF"/>
+            <path d="M971.083 593.132C968.763 593.132 966.883 595.012 966.883 597.332C966.883 599.652 968.763 601.532 971.083 601.532C973.403 601.532 975.283 599.652 975.283 597.332C975.283 595.012 973.403 593.132 971.083 593.132Z" fill="#017AFF"/>
+            <path d="M918.223 558.403C918.223 560.723 920.103 562.603 922.423 562.603C924.743 562.603 926.623 560.723 926.623 558.403C926.623 556.083 924.743 554.203 922.423 554.203C920.103 554.203 918.223 556.083 918.223 558.403Z" fill="#017AFF"/>
+            <path d="M899.605 558.403C899.605 560.723 901.485 562.603 903.805 562.603C906.125 562.603 908.005 560.723 908.005 558.403C908.005 556.083 906.125 554.203 903.805 554.203C901.485 554.203 899.605 556.083 899.605 558.403Z" fill="#017AFF"/>
+            <path d="M1016.45 566.584C1015.19 565.344 1013.63 564.404 1011.78 563.774C1009.93 563.134 1007.83 562.824 1005.49 562.824C1002.39 562.824 999.527 563.394 996.917 564.544C994.307 565.694 992.087 567.434 990.267 569.764C988.447 572.094 987.247 574.864 986.687 578.064C986.447 579.434 986.537 580.824 986.947 582.234C987.367 583.644 987.987 584.794 988.817 585.684L988.777 585.924H980.837C979.427 585.924 978.287 585.414 977.417 584.384C976.547 583.354 976.287 581.854 976.637 579.874L977.787 573.344C978.387 569.964 975.787 566.874 972.357 566.874H970.127L967.617 581.114C967.317 582.784 966.657 584.004 965.607 584.774C964.567 585.544 963.517 585.924 962.467 585.924H955.827L961.427 552.094H961.437L963.377 540.874L949.757 552.094H952.987L945.727 593.244H961.167C962.837 593.244 964.687 592.914 966.727 592.264C968.757 591.614 970.587 590.514 972.207 588.984C972.887 590.154 973.907 591.154 975.257 591.994C976.607 592.834 978.037 593.254 979.527 593.254H1000.11C1002.45 593.254 1004.66 592.934 1006.73 592.304C1008.81 591.664 1010.7 590.734 1012.39 589.504C1014.09 588.274 1015.52 586.684 1016.69 584.744C1017.86 582.794 1018.66 580.574 1019.11 578.074C1019.55 575.574 1019.53 573.344 1019.05 571.394C1018.57 569.434 1017.7 567.844 1016.43 566.604L1016.45 566.584ZM1009.97 578.064C1009.54 580.484 1008.57 582.464 1007.06 584.004C1005.55 585.544 1003.64 586.314 1001.35 586.314C999.057 586.314 997.377 585.564 996.407 584.064C995.427 582.564 995.167 580.564 995.607 578.064C996.037 575.644 997.007 573.644 998.537 572.074C1000.07 570.504 1001.98 569.714 1004.28 569.714C1006.58 569.714 1008.21 570.504 1009.17 572.074C1010.13 573.644 1010.4 575.644 1009.97 578.064Z" fill="#017AFF"/>
+            <path d="M852 568.187H854.89V575.647H856.38V568.187H859.23V566.897H852V568.187Z" fill="#017AFF"/>
+            <path d="M869.041 575.647V566.897H867.171L864.761 573.737L862.341 566.897H860.461V575.647H861.941V569.637L864.051 575.647H865.441L867.561 569.637V575.647H869.041Z" fill="#017AFF"/>
+            <path d="M1033.11 583.399C1030.42 583.399 1028.24 585.579 1028.24 588.269C1028.24 590.959 1030.42 593.139 1033.11 593.139C1035.8 593.139 1037.98 590.959 1037.98 588.269C1037.98 585.579 1035.8 583.399 1033.11 583.399Z" fill="#017AFF"/>
+            <path d="M905.877 536.022L908.837 519.252C909.337 516.402 907.147 513.792 904.257 513.792H902.327L899.497 529.842H872.717C870.767 529.842 869.997 528.632 870.427 526.202L871.617 519.302C872.117 516.452 869.927 513.842 867.037 513.842H865.157L862.967 526.402C862.967 526.402 860.617 536.012 873.017 536.012H905.857L905.877 536.022Z" fill="#017AFF"/>
+            <path d="M924.645 536.13H939.635C941.605 536.13 943.465 535.86 945.215 535.33C946.965 534.8 948.555 534.01 949.985 532.97C951.415 531.93 952.625 530.6 953.615 528.96C954.595 527.32 955.275 525.45 955.655 523.34C956.025 521.23 956.005 519.36 955.605 517.71C955.195 516.06 954.465 514.72 953.395 513.67C952.335 512.63 951.015 511.83 949.455 511.3C947.895 510.76 946.125 510.5 944.155 510.5C941.535 510.5 939.125 510.98 936.925 511.95C934.725 512.92 932.855 514.38 931.325 516.35C929.795 518.31 928.785 520.64 928.305 523.34C928.105 524.49 928.175 525.67 928.525 526.86C928.875 528.05 929.405 529.02 930.105 529.77L930.065 529.97H923.375C922.185 529.97 921.225 529.54 920.495 528.67C919.765 527.8 919.545 526.54 919.835 524.87L924.785 497.46C925.285 494.61 923.095 492 920.205 492H918.325L910.395 536.11L923.685 536.13H924.615H924.645ZM935.825 523.34C936.185 521.3 937.005 519.62 938.295 518.29C939.585 516.96 941.195 516.3 943.135 516.3C945.075 516.3 946.445 516.96 947.255 518.29C948.065 519.61 948.295 521.3 947.935 523.34C947.575 525.38 946.755 527.05 945.485 528.35C944.215 529.65 942.605 530.3 940.665 530.3C938.725 530.3 937.325 529.67 936.505 528.4C935.685 527.13 935.455 525.45 935.825 523.34Z" fill="#017AFF"/>
+            <path d="M1068.32 517.7C1067.91 516.05 1067.18 514.71 1066.11 513.66C1065.05 512.61 1063.73 511.83 1062.17 511.29C1060.61 510.76 1058.84 510.49 1056.87 510.49C1054.25 510.49 1051.84 510.97 1049.64 511.94C1047.44 512.91 1045.57 514.37 1044.04 516.34C1042.51 518.3 1041.5 520.63 1041.02 523.33C1040.82 524.48 1040.89 525.66 1041.24 526.85C1041.59 528.04 1042.12 529.01 1042.82 529.76L1042.78 529.96H1034.54C1034.11 529.96 1033.72 529.88 1033.35 529.77C1033.53 529.51 1033.72 529.25 1033.89 528.97C1034.55 527.87 1035.06 526.66 1035.45 525.35H1027.64C1027.2 526.5 1026.59 527.52 1025.76 528.36C1024.49 529.66 1022.88 530.31 1020.94 530.31C1019 530.31 1017.6 529.68 1016.78 528.41C1015.96 527.14 1015.73 525.46 1016.1 523.35C1016.46 521.31 1017.28 519.63 1018.57 518.3C1019.86 516.97 1021.47 516.31 1023.41 516.31C1025.35 516.31 1026.72 516.97 1027.53 518.3C1027.63 518.46 1027.69 518.63 1027.77 518.8H1036.08C1036.03 518.43 1035.97 518.06 1035.88 517.71C1035.47 516.06 1034.74 514.72 1033.67 513.67C1032.61 512.63 1031.29 511.83 1029.73 511.3C1028.17 510.76 1026.4 510.5 1024.43 510.5C1021.81 510.5 1019.4 510.98 1017.2 511.95C1015 512.92 1013.13 514.38 1011.6 516.35C1010.07 518.31 1009.06 520.64 1008.58 523.34C1008.38 524.49 1008.45 525.67 1008.8 526.86C1009.15 528.05 1009.68 529.02 1010.38 529.77L1010.34 529.97H1003.65C1002.46 529.97 1001.5 529.54 1000.77 528.67C1000.04 527.8 999.816 526.54 1000.11 524.87L1004.93 497.46C1005.43 494.61 1003.24 492 1000.35 492H998.466L992.506 525.91C992.256 527.32 991.696 528.35 990.816 528.99C989.936 529.64 989.056 529.96 988.176 529.96H984.546L985.576 525.66C985.776 524.98 985.956 524.29 986.076 523.55C986.416 521.53 986.386 519.73 985.976 518.15C985.566 516.57 984.856 515.28 983.816 514.27C982.786 513.27 981.516 512.51 980.006 512C978.496 511.49 976.796 511.23 974.906 511.23C972.396 511.23 970.076 511.69 967.976 512.62C965.866 513.55 964.086 514.96 962.626 516.84C961.166 518.72 960.216 520.96 959.786 523.55C959.786 523.55 957.886 536.46 970.786 535.83C972.676 535.83 974.466 535.57 976.146 535.06C976.256 535.03 976.346 534.97 976.446 534.94L971.706 558.91H974.066C977.106 558.91 979.716 556.81 980.366 553.86L983.716 536.13H987.066C988.476 536.13 990.036 535.85 991.746 535.3C993.456 534.75 994.996 533.83 996.366 532.54C996.936 533.53 997.796 534.37 998.936 535.07C1000.08 535.78 1001.28 536.13 1002.54 536.13H1019.88C1021.85 536.13 1023.71 535.86 1025.46 535.33C1026.53 535 1027.54 534.57 1028.5 534.05C1028.89 534.41 1029.33 534.75 1029.83 535.06C1030.97 535.77 1032.17 536.12 1033.43 536.12H1052.32C1054.29 536.12 1056.15 535.85 1057.9 535.32C1059.65 534.78 1061.24 534 1062.67 532.96C1064.1 531.92 1065.31 530.59 1066.3 528.95C1067.28 527.31 1067.96 525.44 1068.33 523.33C1068.7 521.22 1068.68 519.35 1068.28 517.7H1068.32ZM978.686 523.56C978.356 525.52 977.586 527.12 976.376 528.37C975.166 529.62 973.626 530.24 971.766 530.24C969.906 530.24 968.546 529.63 967.746 528.42C966.946 527.21 966.716 525.59 967.056 523.57C967.386 521.61 968.166 520 969.386 518.73C970.616 517.46 972.156 516.82 974.016 516.82C975.876 516.82 977.206 517.46 977.996 518.73C978.786 520 979.016 521.61 978.686 523.57V523.56ZM1060.65 523.33C1060.29 525.37 1059.47 527.04 1058.2 528.34C1056.93 529.64 1055.32 530.29 1053.38 530.29C1051.44 530.29 1050.04 529.66 1049.22 528.39C1048.4 527.12 1048.17 525.44 1048.54 523.33C1048.9 521.29 1049.72 519.61 1051.01 518.28C1052.3 516.95 1053.91 516.29 1055.85 516.29C1057.79 516.29 1059.16 516.95 1059.97 518.28C1060.78 519.6 1061.01 521.29 1060.65 523.33Z" fill="#017AFF"/>
+            <path d="M890.872 520.872C892.832 520.872 894.412 519.282 894.412 517.332C894.412 515.382 892.822 513.792 890.872 513.792C888.922 513.792 887.332 515.382 887.332 517.332C887.332 519.282 888.922 520.872 890.872 520.872Z" fill="#017AFF"/>
+            <path d="M883.601 520.924C885.511 520.924 887.061 519.374 887.061 517.464C887.061 515.554 885.511 514.004 883.601 514.004C881.691 514.004 880.141 515.554 880.141 517.464C880.141 519.374 881.691 520.924 883.601 520.924Z" fill="#017AFF"/>
+          </g>
+        </g>
+        <defs>
+          <filter id="splash_blur0" x="274.864" y="8.0842" width="978.19" height="978.19" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+            <feGaussianBlur stdDeviation="74.7789"/>
+          </filter>
+          <filter id="splash_blur1" x="-638.534" y="-30.3157" width="1806.4" height="978.19" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+            <feGaussianBlur stdDeviation="74.7789"/>
+          </filter>
+          <filter id="splash_blur_bg" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" color-interpolation-filters="sRGB">
+            <feGaussianBlur stdDeviation="101.766"/>
+          </filter>
+          <linearGradient id="splash_paint0" x1="763.959" y1="157.642" x2="763.959" y2="836.716" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#4899EF" stop-opacity="0"/>
+            <stop offset="1" stop-color="#4899EF" stop-opacity="0.5"/>
+          </linearGradient>
+          <linearGradient id="splash_paint1" x1="264.668" y1="119.242" x2="264.668" y2="798.316" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#70DAE3" stop-opacity="0"/>
+            <stop offset="1" stop-color="#70DAE3" stop-opacity="0.4"/>
+          </linearGradient>
+          <linearGradient id="splash_paint2" x1="960" y1="0" x2="960" y2="407.742" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#1739F4"/>
+            <stop offset="0.851224" stop-color="#21D4FD" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="splash_paint3" x1="1207.03" y1="112.627" x2="943.509" y2="855.232" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#21D4FD"/>
+            <stop offset="1" stop-color="#2452F1"/>
+          </linearGradient>
+          <linearGradient id="splash_paint4" x1="960" y1="-1.94802e-07" x2="960" y2="897.323" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#F3F4F6"/>
+            <stop offset="1" stop-color="#F3F4F6" stop-opacity="0"/>
+          </linearGradient>
+          <clipPath id="splash_clip0">
+            <rect width="1920" height="1100" fill="white"/>
+          </clipPath>
+          <clipPath id="splash_clip1">
+            <rect width="216.65" height="116.71" fill="white" transform="translate(852 492)"/>
+          </clipPath>
+        </defs>
+      </svg>
+    </div>
+  </app-root>
+<link rel="modulepreload" href="chunk-R26ZRKLH.js"><link rel="modulepreload" href="chunk-2NFLSA4Y.js"><script type="module" src="polyfills-WLPZLA5P.js"></script><script type="module-shim" src="main-IRKU6SEG.js"></script>
+<link rel="modulepreload" href="chunk-DKHJ6GLT.js">
+<link rel="modulepreload" href="chunk-WRQXIMCW.js">
+<link rel="modulepreload" href="chunk-32T2ZGVN.js">
+<link rel="modulepreload" href="chunk-AV2QLJTB.js">
+<link rel="modulepreload" href="chunk-OR7WPOHJ.js">
+<link rel="modulepreload" href="chunk-L3AH3MTV.js">
+<link rel="modulepreload" href="chunk-Z4CCOLGQ.js">
+<link rel="modulepreload" href="chunk-CZXI4Q4M.js">
+<link rel="modulepreload" href="chunk-GXDEKWAP.js">
+<link rel="modulepreload" href="chunk-6Y45J5XJ.js">
+</body>
+</html>
