@@ -1,0 +1,44 @@
+name: EGX Swing Backtest
+on:
+  workflow_dispatch:
+    inputs:
+      rebuild:
+        description: "إعادة تدريب الدرجات من الأول"
+        required: false
+        default: "false"
+  push:
+    branches: [upgrade-signals]
+    paths: [backtest/swing.py, backtest/swing_core.py, .github/workflows/swing_backtest.yml]
+concurrency:
+  group: swing-backtest
+  cancel-in-progress: true
+jobs:
+  swing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r backtest/requirements.txt
+      - name: Run swing backtest
+        run: |
+          set -o pipefail
+          EXTRA=""
+          if [ "${{ github.event.inputs.rebuild }}" = "true" ]; then EXTRA="--rebuild"; fi
+          python -u backtest/swing.py $EXTRA 2>&1 | tee backtest/results/log_swing_latest.txt
+      - name: Commit results
+        if: always()
+        run: |
+          git config user.name "alert-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add -A backtest/results
+          git diff --cached --quiet || git commit -m "swing backtest results [skip ci]"
+          for i in 1 2 3 4 5; do
+            git pull --rebase --autostash -X theirs origin "$GITHUB_REF_NAME" || true
+            git push && break; sleep 5
+          done
