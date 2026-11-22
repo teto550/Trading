@@ -6,9 +6,6 @@ on:
         description: "إعادة تدريب الدرجات من الأول"
         required: false
         default: "false"
-  push:
-    branches: [upgrade-signals]
-    paths: [backtest/swing.py, backtest/swing_core.py, .github/workflows/swing_backtest.yml]
 concurrency:
   group: swing-backtest
   cancel-in-progress: true
@@ -39,6 +36,6 @@ jobs:
           git add -A backtest/results
           git diff --cached --quiet || git commit -m "swing backtest results [skip ci]"
           for i in 1 2 3 4 5; do
-            git pull --rebase --autostash -X theirs origin "$GITHUB_REF_NAME" || true
+            git pull --rebase --autostash -X theirs origin "${GITHUB_REF_NAME:-main}" || true
             git push && break; sleep 5
           done
