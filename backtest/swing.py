@@ -37,9 +37,32 @@ DEV = (pd.Timestamp("2012-01-01"), pd.Timestamp("2022-01-01"))
 TEST = (pd.Timestamp("2022-01-01"), pd.Timestamp("2100-01-01"))
 PRED_FILE = os.path.join(bt.RES_DIR, "swing_preds.npz")
 BEST_FILE = os.path.join(bt.RES_DIR, "swing_best.json")
+HORIZONS = (20, 40, 60)
 
-GRID = dict(q_in=[0.90, 0.95], q_out=[0.30, 0.50], max_pos=[5, 10], trail_k=[0.0, 2.5, 4.0],
-            max_hold=[40, 60], regime=[0, 100, 200], trend50=[False, True])
+GRID = dict(q_in=[0.90, 0.95], q_out=[0.30, 0.50], max_pos=[3, 5, 8], trail_k=[0.0, 2.5, 3.5],
+            max_hold=[40, 60], regime=[0, 100, 200], trend50=[False, True], exit_on_regime=[False, True])
+
+
+def robust_pick(results, keys):
+    """اختيار ضد الـoverfitting (على التطوير بس): درجة كل إعداد = متوسط Sharpe بتاعه وبتاع كل الإعدادات اللي
+    بتختلف عنه في قيمة واحدة بس. كده بنختار منطقة كويسة مش نقطة محظوظة."""
+    idx = {tuple(r[0][k] for k in keys): r for r in results}
+    best, best_s = None, -1e9
+    for kv, r in idx.items():
+        if not r[1] or r[1]["n"] < 80:
+            continue
+        nb = [r[1]["sharpe"]]
+        for j, k in enumerate(keys):
+            for v in GRID[k]:
+                if v == kv[j]:
+                    continue
+                q = idx.get(kv[:j] + (v,) + kv[j + 1:])
+                if q and q[1]:
+                    nb.append(q[1]["sharpe"])
+        sc_ = float(np.mean(nb))
+        if sc_ > best_s:
+            best, best_s = r, sc_
+    return best, best_s
 
 
 def load_data(a):
@@ -53,11 +76,10 @@ def load_data(a):
     return C, H, L, V, O, liquid, lock
 
 
-def build_scores(C, H, L, V, O, liquid, lock, a):
-    """درجات walk-forward: ترتيب متوسط LightGBM 20/40/60 (نفس اللي في final_test)."""
+def features(C, H, L, V, O, liquid, lock, a):
+    """مصفوفة المدخلات (T,N,K) ومين صالح: المدخلات الأساسية + EGX30/الدولار + Alpha158."""
     import alpha as al
     import improve as im
-    import improve2 as i2
     import macro
     _f, mkt0, *_ = bt.build_features(C, H, L, V, O, a.min_turnover)
     if a.source == "yfinance":
@@ -69,17 +91,27 @@ def build_scores(C, H, L, V, O, liquid, lock, a):
     XA, _names = al.build_alpha(C, H, L, V, O, liquid, bt.csrank)
     X2 = np.concatenate([X, XA], axis=2)
     ok2 = np.isfinite(X2).all(axis=2) & liquid.values & ~lock.values
+    return X2, ok2
+
+
+def rank_mean(preds):
+    st = np.stack([pd.DataFrame(p).rank(axis=1, pct=True).values for p in preds])
+    S = np.where(np.isfinite(st).all(axis=0), st.mean(axis=0), np.nan)
+    return pd.DataFrame(S).rank(axis=1, pct=True).values     # نرجّعها توزيع 0..1 تاني
+
+
+def build_scores(C, H, L, V, O, liquid, lock, a):
+    """درجات walk-forward: ترتيب متوسط LightGBM 20/40/60 (نفس اللي في final_test)."""
+    import improve2 as i2
+    X2, ok2 = features(C, H, L, V, O, liquid, lock, a)
     preds = []
-    for h in (20, 40, 60):
+    for h in HORIZONS:
         t = time.time()
         TGT, E, fv, Y = i2.prep(C, O, h, ok2)
         p, _t0 = i2.walk("lgbm", X2, Y, E, fv, a, h - 1)
         print(f"[swing] درجات h={h} خلصت في {time.time() - t:.0f}s", flush=True)
         preds.append(np.where(ok2, p, np.nan))
-    st = np.stack([pd.DataFrame(p).rank(axis=1, pct=True).values for p in preds])
-    S = np.where(np.isfinite(st).all(axis=0), st.mean(axis=0), np.nan)
-    S = pd.DataFrame(S).rank(axis=1, pct=True).values     # نرجّعها توزيع 0..1 تاني
-    return S
+    return rank_mean(preds)
 
 
 def alt_scores(C, liquid, kind, seed=0):
@@ -108,7 +140,8 @@ HEAD = ["| عائد سنوي | السوق سنوي | أقصى هبوط (السو
 def pdesc(p):
     return (f"أعلى {round((1 - p['q_in']) * 100)}% دخول، خروج تحت {p['q_out']:.0%}، {p['max_pos']} مراكز، "
             f"وقف {p['trail_k']}×ATR{'' if p['trail_k'] else ' (من غير)'}، أقصى {p['max_hold']} يوم، "
-            f"فلتر السوق {('SMA' + str(p['regime'])) if p['regime'] else 'مفيش'}، فوق SMA50: {'آه' if p['trend50'] else 'لأ'}")
+            f"فلتر السوق {('SMA' + str(p['regime'])) if p['regime'] else 'مفيش'}، فوق SMA50: {'آه' if p['trend50'] else 'لأ'}، "
+            f"خروج لما السوق يقلب: {'آه' if p['exit_on_regime'] else 'لأ'}")
 
 
 def run(a):
@@ -145,7 +178,8 @@ def run(a):
     print(f"[swing] {len(results)} إعداد في {time.time() - t_start:.0f}s")
     ok = [r for r in results if r[1] and r[1]["n"] >= 80]
     ok.sort(key=lambda r: -r[1]["sharpe"])
-    best_p, best_dev, best_test = ok[0]
+    top1 = ok[0]
+    (best_p, best_dev, best_test), nb_sharpe = robust_pick(results, keys)
 
     # الأفضل + ثباته: متوسط الـ10 الأوائل على التطوير، وإيه اللي حصل لهم في الاختبار
     top10 = ok[:10]
@@ -154,6 +188,8 @@ def run(a):
     # تكلفة أعلى
     p35 = dict(best_p, cost=(a.cost_bps + 15) / 1e4)
     eq35, ex35, tr35 = sc.simulate(D, p35, first, T)
+    pdl = dict(best_p, exec_close=True)
+    eqd, exd, trd = sc.simulate(D, pdl, first, T)
     # نفس القواعد بدرجات بديلة
     alts = {}
     for kind in ("random", "lowvol"):
@@ -166,13 +202,17 @@ def run(a):
     out = [f"# EGX Swing Backtest - {datetime.now():%Y-%m-%d %H:%M}", "",
            f"- الأسهم {N} | {C.index[0].date()} → {C.index[-1].date()} | تكلفة {a.cost_bps:.0f} bps في كل اتجاه | "
            f"شراء وبيع بافتتاح الجلسة اللي بعد الإشارة | السوق = متوسط الأسهم السايلة (equal-weight)",
-           f"- الإعدادات اتختارت على فترة التطوير {dev[0].year}-{dev[1].year - 1} بس (أعلى Sharpe من {len(ok)} إعداد). "
+           f"- الإعدادات اتختارت على فترة التطوير {dev[0].year}-{dev[1].year - 1} بس: الإعداد اللي هو وجيرانه (اللي بيختلفوا في قيمة واحدة) "
+           f"أعلى متوسط Sharpe ({nb_sharpe:.2f}) من {len(ok)} إعداد، عشان منختارش نقطة محظوظة. "
            f"**فترة الاختبار {test[0].year}+ الموديل والإعدادات مشافوهاش.**", "",
            "## الإعداد المختار", "", pdesc(best_p), "",
            "| الفترة " + HEAD[0], "|---" + HEAD[1],
            f"| تطوير {dev[0].year}-{dev[1].year - 1} " + fmt(best_dev),
            f"| **اختبار {test[0].year}+** " + fmt(best_test),
-           f"| اختبار بتكلفة {a.cost_bps + 15:.0f} bps " + fmt(sc.metrics(D, eq35, ex35, tr35, *test)), "",
+           f"| اختبار بتكلفة {a.cost_bps + 15:.0f} bps " + fmt(sc.metrics(D, eq35, ex35, tr35, *test)),
+           "| اختبار بتنفيذ بقفلة اليوم التالي (تأخير) " + fmt(sc.metrics(D, eqd, exd, trd, *test)), "",
+           f"للمقارنة: أعلى Sharpe منفرد على التطوير كان ({pdesc(top1[0])}) → اختبار:", "", "|" + HEAD[0][1:], HEAD[1],
+           fmt(top1[2]), "",
            "## هل الموديل نفسه بيضيف؟ (نفس القواعد بالظبط بدرجات تانية)", "",
            "| الدرجات " + HEAD[0], "|---" + HEAD[1],
            "| الموديل - اختبار " + fmt(best_test)]

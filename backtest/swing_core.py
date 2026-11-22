@@ -94,61 +94,78 @@ def decide(D, p, t, pos, pending_exit):
     return exits, entries
 
 
+def new_book():
+    return {"cash": 1.0, "pos": {}, "pend_x": {}, "pend_in": [], "trades": []}
+
+
+def exec_open(D, p, t, bk):
+    """تنفيذ قرارات قفلة امبارح عند افتتاح اليوم t: خروج الأول وبعدين دخول. بيرجّع (خرج, دخل)."""
+    cost, pos = p["cost"], bk["pos"]
+    out_, in_ = [], []
+    for i in list(bk["pend_x"]):
+        if i not in pos:
+            bk["pend_x"].pop(i)
+            continue
+        if not np.isfinite(D["O"][t, i]):
+            continue                                       # السهم موقوف: نحاول بكره
+        ps = pos.pop(i)
+        g = 1 + (D["rc"][t, i] if p.get("exec_close") else D["co"][t, i])   # exec_close: تنفيذ بقفلة اليوم (اختبار تأخير)
+        ps["val"] *= g
+        ps["rel"] *= g
+        bk["cash"] += ps["val"] * (1 - cost)
+        tr = {"i": i, "et": ps["et"], "xt": t, "ret": ps["rel"] * (1 - cost) ** 2 - 1,
+              "days": ps["days"], "why": bk["pend_x"].pop(i)}
+        bk["trades"].append(tr)
+        out_.append(tr)
+    eq_now = bk["cash"] + sum(ps["val"] for ps in pos.values())
+    slot = eq_now / p["max_pos"]
+    for i in bk["pend_in"]:
+        if i in pos or len(pos) >= p["max_pos"]:
+            continue
+        if not np.isfinite(D["O"][t, i]) or not (D["gap"][t, i] < LIMIT_GAP):
+            continue
+        alloc = min(bk["cash"], slot)
+        if alloc < 0.25 * slot:
+            break
+        bk["cash"] -= alloc
+        g = 1.0 if p.get("exec_close") else 1 + D["oc"][t, i]
+        pos[i] = {"val": alloc * (1 - cost) * g, "rel": g, "peak": max(g, 1.0), "atr": float(D["atr"][t - 1, i]),
+                  "days": 0, "et": t}
+        in_.append(i)
+    bk["pend_in"] = []
+    return out_, in_
+
+
+def mark_close(D, t, bk):
+    for i, ps in bk["pos"].items():
+        if ps["et"] != t:
+            g = 1 + D["rc"][t, i]
+            ps["val"] *= g
+            ps["rel"] *= g
+            ps["days"] += 1
+            ps["peak"] = max(ps["peak"], ps["rel"])
+    inv = sum(ps["val"] for ps in bk["pos"].values())
+    eq = bk["cash"] + inv
+    return eq, (inv / eq if eq > 0 else 0.0)
+
+
 def simulate(D, p, t0, t1):
     """محاكاة يوم بيوم من t0 لـ t1. بيرجّع (equity يومي, exposure يومي, صفقات)."""
     T = len(D["dates"])
     t1 = min(t1, T)
-    cost = p["cost"]
-    cash, pos = 1.0, {}
-    pend_x, pend_in = {}, []
+    bk = new_book()
     eq = np.full(T, np.nan)
     expo = np.zeros(T)
-    trades = []
     for t in range(t0, t1):
-        # 1) تنفيذ قرارات امبارح عند الافتتاح: خروج الأول وبعدين دخول
-        for i in list(pend_x):
-            if not np.isfinite(D["O"][t, i]):
-                continue                                   # السهم موقوف: نحاول بكره
-            ps = pos.pop(i)
-            g = 1 + D["co"][t, i]
-            ps["val"] *= g
-            ps["rel"] *= g
-            cash += ps["val"] * (1 - cost)
-            trades.append({"i": i, "et": ps["et"], "xt": t, "ret": ps["rel"] * (1 - cost) ** 2 - 1,
-                           "days": ps["days"], "why": pend_x.pop(i)})
-        eq_now = cash + sum(ps["val"] for ps in pos.values())
-        slot = eq_now / p["max_pos"]
-        for i in pend_in:
-            if i in pos or len(pos) >= p["max_pos"]:
-                continue
-            if not np.isfinite(D["O"][t, i]) or not (D["gap"][t, i] < LIMIT_GAP):
-                continue
-            alloc = min(cash, slot)
-            if alloc < 0.25 * slot:
-                break
-            cash -= alloc
-            g = 1 + D["oc"][t, i]
-            pos[i] = {"val": alloc * (1 - cost) * g, "rel": g, "peak": max(g, 1.0), "atr": float(D["atr"][t - 1, i]),
-                      "days": 0, "et": t}
-        pend_in = []
-        # 2) تقييم آخر اليوم
-        for i, ps in pos.items():
-            if ps["et"] != t:
-                g = 1 + D["rc"][t, i]
-                ps["val"] *= g
-                ps["rel"] *= g
-                ps["days"] += 1
-                ps["peak"] = max(ps["peak"], ps["rel"])
-        inv = sum(ps["val"] for ps in pos.values())
-        eq[t] = cash + inv
-        expo[t] = inv / eq[t] if eq[t] > 0 else 0
-        # 3) قرارات القفلة (بتتنفذ بكره)
+        exec_open(D, p, t, bk)
+        eq[t], expo[t] = mark_close(D, t, bk)
         if t < t1 - 1:
-            ex, en = decide(D, p, t, pos, pend_x)
-            pend_x.update(ex)
-            pend_in = en
-    for i, ps in pos.items():                              # تقفيل دفتري في الآخر
-        trades.append({"i": i, "et": ps["et"], "xt": t1 - 1, "ret": ps["rel"] * (1 - cost) ** 2 - 1,
+            ex, en = decide(D, p, t, bk["pos"], bk["pend_x"])
+            bk["pend_x"].update(ex)
+            bk["pend_in"] = en
+    trades = list(bk["trades"])
+    for i, ps in bk["pos"].items():                        # تقفيل دفتري في الآخر
+        trades.append({"i": i, "et": ps["et"], "xt": t1 - 1, "ret": ps["rel"] * (1 - p["cost"]) ** 2 - 1,
                        "days": ps["days"], "why": "end", "open": True})
     return eq, expo, trades
 

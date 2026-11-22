@@ -44,6 +44,7 @@ jobs:
           git add -A horizon
           [ -d news ] && git add -A news || true
           [ -d forecast ] && git add -A forecast || true
+          [ -d data ] && git add -A data || true
           git diff --cached --quiet || git commit -m "horizon picks update [skip ci]"
           for i in 1 2 3 4 5 6; do
             git pull --rebase --autostash -X theirs origin "${GITHUB_REF_NAME:-main}" || true

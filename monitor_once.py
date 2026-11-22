@@ -193,21 +193,15 @@ def append_alert_log(ticker, signal, price, sma20, sma50):
 # مع فحص أمان للقفزات الغريبة)
 # ============================================================
 def fetch_price_mubasher(ticker):
-    import re
-    symbol = ticker.replace(".CA", "")
-    url = f"https://english.mubasher.info/markets/EGX/stocks/{symbol}"
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
-    resp = requests.get(url, headers=headers, timeout=15)
-    resp.raise_for_status()
-    match = re.search(
-        r'market time\.(?:(?!\d{1,4}\.\d{1,3}).){0,300}?(\d{1,4}\.\d{1,3})',
-        resp.text, re.DOTALL,
-    )
-    if not match:
-        raise ValueError("مش قادر ألاقي السعر في صفحة Mubasher")
-    LAST_SOURCE[ticker] = {"src": "mubasher",
-                           "snip": " ".join(resp.text[match.start():match.end()].split())[-140:]}
-    return float(match.group(1))
+    """الاسم القديم متساب عشان movers_live بيناديه. Mubasher بقى تطبيق Angular (من ~12/11/2026) ومبقاش
+    فيه سعر في الصفحة، فالسعر دلوقتي من TradingView scanner (طلب واحد لكل الأسهم، كاش دقيقة)."""
+    import egxdata
+    price, rec = egxdata.price(ticker)
+    today = datetime.now(ZoneInfo("Africa/Cairo")).strftime("%Y-%m-%d")
+    if rec.get("date") and rec["date"] != today:
+        raise ValueError(f"آخر شمعة عند TradingView بتاريخ {rec['date']} مش النهاردة (إجازة أو السهم موقوف)")
+    LAST_SOURCE[ticker] = {"src": "tradingview", "snip": f"close={price} prev={rec.get('prev')} date={rec.get('date')}"}
+    return float(price)
 
 
 def fetch_price_yfinance(ticker):
@@ -231,7 +225,7 @@ def fetch_price(ticker, prev_price=None):
     try:
         price = fetch_price_mubasher(ticker)
     except Exception as e:
-        print(f"  [Mubasher] فشل الجلب ({e})، هجرب yfinance كـ fallback")
+        print(f"  [TradingView] فشل الجلب ({e})، هجرب yfinance كـ fallback")
         return fetch_price_yfinance(ticker)
 
     if prev_price and prev_price > 0:
@@ -417,6 +411,18 @@ def process_stock(ticker, stock_state):
         except Exception as e:
             stock_state["seed_failed_on"] = today_str
             print(f"  فشل seed: {e}")
+
+    # تاريخ قديم (مثلاً بعد ما مصدر السعر وقع أيام): نعيد ملاه من yfinance عشان المتوسطات متبقاش فيها فجوة
+    dts = stock_state.get("dates", [])
+    if dts and stock_state.get("seed_failed_on") != today_str:
+        gap = (datetime.strptime(today_str, "%Y-%m-%d") - datetime.strptime(dts[-1], "%Y-%m-%d")).days
+        if gap > 6:
+            try:
+                seed_history(ticker, stock_state)
+                print(f"  [seed] التاريخ كان واقف من {gap} يوم، اتعاد ملاه")
+            except Exception as e:
+                stock_state["seed_failed_on"] = today_str
+                print(f"  فشل إعادة الملء: {e}")
 
     daily = stock_state.get("daily", [])
     prev_price = daily[-1] if daily else None
