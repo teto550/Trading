@@ -19,7 +19,7 @@ LIMIT_GAP = 0.09    # افتتاح فوق قفلة امبارح بـ9%+ = غال
 DEFAULT = dict(q_in=0.95, q_out=0.50, max_pos=8, trail_k=3.0, max_hold=40, min_hold=5,
                regime=100, trend50=True, exit_on_regime=False, cost=0.002)
 
-REASON_AR = {"stop": "ضرب الوقف المتحرك", "rank": "ترتيبه في الموديل نزل", "time": "خلص مدة الاحتفاظ",
+REASON_AR = {"stop": "ضرب الوقف المتحرك", "stop_live": "انعكاس لحظي: كسر الوقف المتحرك خلال الجلسة", "rank": "ترتيبه في الموديل نزل", "time": "خلص مدة الاحتفاظ",
              "regime": "السوق قلب لاتجاه هابط", "end": "نهاية الفترة"}
 
 
@@ -37,6 +37,7 @@ def prepare(C, H, L, V, O, S, liquid, lock):
     rc = _clean(Cf / prev - 1)                       # قفلة لقفلة (بالسعر المكمّل)
     oc = _clean(Cv / Ov - 1)                         # يوم الدخول: افتتاح → قفلة
     co = _clean(Ov / prev - 1)                       # يوم الخروج: قفلة امبارح → افتتاح
+    lc = _clean(L.values.astype(float) / prev - 1)   # أقل سعر في اليوم عن قفلة امبارح (للوقف اللحظي)
     gap = np.where(np.isfinite(Ov / prev), Ov / prev - 1, np.nan)
     pc = C.shift(1)
     tr = pd.concat([(H - L), (H - pc).abs(), (L - pc).abs()]).groupby(level=0).max().reindex(C.index)
@@ -56,7 +57,7 @@ def prepare(C, H, L, V, O, S, liquid, lock):
         m = ok_in[t] & (S[t] >= 0.80)
         ii = np.where(m)[0]
         order.append(ii[np.argsort(-S[t, ii])])
-    return dict(dates=C.index, names=np.array(C.columns), C=Cv, O=Ov, rc=rc, oc=oc, co=co, gap=gap,
+    return dict(dates=C.index, names=np.array(C.columns), C=Cv, O=Ov, rc=rc, oc=oc, co=co, lc=lc, gap=gap,
                 atr=atr, sma50=sma50, S=S, ok_in=ok_in, reg=reg, order=order, mkt=rl.mean(axis=1).fillna(0).values)
 
 
@@ -136,7 +137,22 @@ def exec_open(D, p, t, bk):
     return out_, in_
 
 
-def mark_close(D, t, bk):
+def mark_close(D, t, bk, p=None):
+    if p and p.get("intraday_stop") and p["trail_k"]:
+        # وقف لحظي: لو السعر لمس الوقف المتحرك خلال الجلسة نبيع عنده (أو بالافتتاح لو فتح تحته)
+        for i in list(bk["pos"]):
+            ps = bk["pos"][i]
+            if ps["et"] == t or i in bk["pend_x"]:
+                continue
+            stop = ps["peak"] * (1 - p["trail_k"] * ps["atr"])
+            if ps["rel"] * (1 + D["lc"][t, i]) <= stop and D["lc"][t, i] < 0:
+                ex = min(stop, ps["rel"] * (1 + D["co"][t, i]))
+                ps["val"] *= ex / ps["rel"]
+                ps["rel"] = ex
+                bk["pos"].pop(i)
+                bk["cash"] += ps["val"] * (1 - p["cost"])
+                bk["trades"].append({"i": i, "et": ps["et"], "xt": t, "ret": ex * (1 - p["cost"]) ** 2 - 1,
+                                     "days": ps["days"] + 1, "why": "stop_live"})
     for i, ps in bk["pos"].items():
         if ps["et"] != t:
             g = 1 + D["rc"][t, i]
@@ -158,7 +174,7 @@ def simulate(D, p, t0, t1):
     expo = np.zeros(T)
     for t in range(t0, t1):
         exec_open(D, p, t, bk)
-        eq[t], expo[t] = mark_close(D, t, bk)
+        eq[t], expo[t] = mark_close(D, t, bk, p)
         if t < t1 - 1:
             ex, en = decide(D, p, t, bk["pos"], bk["pend_x"])
             bk["pend_x"].update(ex)

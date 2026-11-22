@@ -190,6 +190,8 @@ def run(a):
     eq35, ex35, tr35 = sc.simulate(D, p35, first, T)
     pdl = dict(best_p, exec_close=True)
     eqd, exd, trd = sc.simulate(D, pdl, first, T)
+    pil = dict(best_p, intraday_stop=True)
+    eqi, exi, tri = sc.simulate(D, pil, first, T)
     # نفس القواعد بدرجات بديلة
     alts = {}
     for kind in ("random", "lowvol"):
@@ -210,7 +212,9 @@ def run(a):
            f"| تطوير {dev[0].year}-{dev[1].year - 1} " + fmt(best_dev),
            f"| **اختبار {test[0].year}+** " + fmt(best_test),
            f"| اختبار بتكلفة {a.cost_bps + 15:.0f} bps " + fmt(sc.metrics(D, eq35, ex35, tr35, *test)),
-           "| اختبار بتنفيذ بقفلة اليوم التالي (تأخير) " + fmt(sc.metrics(D, eqd, exd, trd, *test)), "",
+           "| اختبار بتنفيذ بقفلة اليوم التالي (تأخير) " + fmt(sc.metrics(D, eqd, exd, trd, *test)),
+           "| اختبار + بيع لحظي لما السعر يكسر الوقف خلال الجلسة " + fmt(sc.metrics(D, eqi, exi, tri, *test)),
+           "| تطوير + بيع لحظي " + fmt(sc.metrics(D, eqi, exi, tri, *dev)), "",
            f"للمقارنة: أعلى Sharpe منفرد على التطوير كان ({pdesc(top1[0])}) → اختبار:", "", "|" + HEAD[0][1:], HEAD[1],
            fmt(top1[2]), "",
            "## هل الموديل نفسه بيضيف؟ (نفس القواعد بالظبط بدرجات تانية)", "",
@@ -239,7 +243,8 @@ def run(a):
         fh.write(text)
     if a.source == "yfinance":
         with open(BEST_FILE, "w", encoding="utf-8") as fh:
-            json.dump({"params": best_p, "dev": best_dev, "test": best_test, "made": f"{datetime.now():%Y-%m-%d %H:%M}",
+            json.dump({"params": best_p, "dev": best_dev, "test": best_test,
+                       "intraday": {"dev": sc.metrics(D, eqi, exi, tri, *dev), "test": sc.metrics(D, eqi, exi, tri, *test)}, "made": f"{datetime.now():%Y-%m-%d %H:%M}",
                        "data_to": str(C.index[-1].date())}, fh, ensure_ascii=False, indent=1)
     print(text)
 
