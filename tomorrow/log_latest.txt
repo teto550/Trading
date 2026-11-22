@@ -1,155 +1,96 @@
-[data] 25/251 سهم، اتجاب تاريخ لـ 25
-$VLMR.CA: possibly delisted; no timezone found
-$VLMRA.CA: possibly delisted; no timezone found
-$ACTF.CA: possibly delisted; no timezone found
-$AIDC.CA: possibly delisted; no timezone found
-$AIHC.CA: possibly delisted; no timezone found
-$BONY.CA: possibly delisted; no timezone found
-[data] 50/251 سهم، اتجاب تاريخ لـ 44
-$GOUR.CA: possibly delisted; no timezone found
-$GPIM.CA: possibly delisted; no timezone found
-[data] 75/251 سهم، اتجاب تاريخ لـ 67
-$TAQA.CA: possibly delisted; no timezone found
-$VALU.CA: possibly delisted; no timezone found
-[data] 100/251 سهم، اتجاب تاريخ لـ 90
-$GTHE.CA: possibly delisted; no timezone found
-$SNFI.CA: possibly delisted; no timezone found
-$IRAX.CA: possibly delisted; no timezone found
-$CRST.CA: possibly delisted; no timezone found
-[data] 125/251 سهم، اتجاب تاريخ لـ 111
-$NCGC.CA: possibly delisted; no timezone found
-$NBKE.CA: possibly delisted; no timezone found
-$QNBE.CA: possibly delisted; no timezone found
-[data] 150/251 سهم، اتجاب تاريخ لـ 133
-$PACH.CA: possibly delisted; no timezone found
-$UASG.CA: possibly delisted; no timezone found
-$EITP.CA: possibly delisted; no timezone found
-$SMPP.CA: possibly delisted; no timezone found
-[data] 175/251 سهم، اتجاب تاريخ لـ 154
-$ACRO.CA: possibly delisted; no timezone found
-$ESRS.CA: possibly delisted; no timezone found
-$WATP.CA: possibly delisted; no timezone found
-$SUCE.CA: possibly delisted; no timezone found
-$TORA.CA: possibly delisted; no timezone found
-$DCRC.CA: possibly delisted; no timezone found
-$GTWL.CA: possibly delisted; no timezone found
-$ALEX.CA: possibly delisted; no timezone found
-$TYCN.CA: possibly delisted; no timezone found
-$ARVA.CA: possibly delisted; no timezone found
-$HCFI.CA: possibly delisted; no timezone found
-$NARE.CA: possibly delisted; no timezone found
-[data] 200/251 سهم، اتجاب تاريخ لـ 167
-$UTOP.CA: possibly delisted; no timezone found
-$APPC.CA: possibly delisted; no timezone found
-$UBEE.CA: possibly delisted; no timezone found
-$NAPR.CA: possibly delisted; no timezone found
-$DIFC.CA: possibly delisted; no timezone found
-[data] 225/251 سهم، اتجاب تاريخ لـ 187
-$FCMD.CA: possibly delisted; no timezone found
-$VERT.CA: possibly delisted; no timezone found
-$ADRI.CA: possibly delisted; no timezone found
-$KRDI.CA: possibly delisted; no timezone found
-$UPMS.CA: possibly delisted; no timezone found
-$TANM.CA: possibly delisted; no timezone found
-$ACAP.CA: possibly delisted; no timezone found
-$DGTZ.CA: possibly delisted; no timezone found
-$PHGC.CA: possibly delisted; no timezone found
-$GTEX.CA: possibly delisted; no timezone found
-$GGRN.CA: possibly delisted; no timezone found
-$HBCO.CA: possibly delisted; no timezone found
-$CPME.CA: possibly delisted; no timezone found
-$TWSA.CA: possibly delisted; no timezone found
-[data] 250/251 سهم، اتجاب تاريخ لـ 198
-$KORA.CA: possibly delisted; no timezone found
-[data] خلص الجلب: 198 سهم اتجاب من 251
+[data] بستخدم الكاش: /home/runner/work/Trading/Trading/backtest/data/prices.pkl
 [مدخلات] + 50 Alpha158 = 67
 [موديل الجلسة الجاية] xgb+lgbm+cat
-[news] اسم عربي AIFI (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
-[news] اسم عربي BTFH (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
-[news] اسم عربي HELI (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
 [news] اسم عربي EFIH (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
-[news] اسم عربي RACC (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
-[news] اسم عربي EHDR (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
-[news] اسم عربي ASCM (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[news] اسم عربي ISMQ (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[news] اسم عربي UNIP (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[news] اسم عربي CSAG (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[news] اسم عربي AIFI (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
+[news] اسم عربي SAUD (Mubasher): 403 Client Error: Forbidden for url: https://www.mubasher.info/markets/EGX/stock
 [news] أسماء عربي فشلت: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio
-[news] أسماء: 10 سهم | عربي: 3
+[news] أسماء: 10 سهم | عربي: 4
 [news] تقييم Gemini فشل، هستخدم الكلمات المفتاحية: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects
 🔮 تقرير جلسة النهاردة - الاتنين 2026-11-23
-(مبني على بيانات قفلة 2026-11-19 - 162 سهم سيولته كافية)
+(مبني على بيانات قفلة 2026-11-22 - 149 سهم سيولته كافية)
+ℹ️ اتضاف من TradingView 1 جلسة Yahoo لسه منزّلهاش (2026-11-22).
 
-🟡 السوق متذبذب: النهاردة -0.1% | 32% من الأسهم طلعت | آخر 5 جلسات -4.6% | آخر 20 جلسة -0.5% (وسيط الأسهم)
+⚠️ السوق نزل -4.8% في جلسة واحدة (حركة كبيرة). مفيش ارتداد مضمون بعد يوم زي ده (طلع اليوم اللي بعده في 44% من المرات بس)، والموديل بيغلط أكتر في الأيام دي، فالتصنيف أقل اعتمادية من العادي.
+
+🔴 السوق نازل بقوة: النهاردة -4.8% | 2% من الأسهم طلعت | آخر 5 جلسات -9.3% | آخر 20 جلسة -2.4% (وسيط الأسهم)
+⚠️ السوق نازل بقوة: الترشيحات دي أضعف من العادي، والدخول عكس اتجاه السوق خطره أعلى. الأحسن تتابع وتستنى بدل ما تدخل.
 
 📈 أقوى 10 سهم ترتيبًا لجلسة النهاردة + مستوياتهم الفنية:
 (مرتبين: اللي الخبر بيأكد تحليله الأول، وبعده اللي الخبر عكسه، وبعده الباقي. رقم ترتيب الموديل الأصلي جنب كل سهم)
 
-1. CPCI | آخر قفلة 575.30 | 🔴 بيع [ترتيب الموديل 2]
-   RSI 36 | تذبذب يومي 1.5% | دعم 550.84 | مقاومة 597.07
-   وقف خسارة 562.71 (-2.2%) | هدف 597.07 (+3.8%) (عند المقاومة) | عائد/مخاطرة 1.7
-   نطاق النهاردة: 569.28 - 585.72 | نطاق الأسبوع: 566.72 - 620.60
-   📰 ➖ الخبر محايد | ⚪ محايد (بالكلمات)
+1. CPCI | آخر قفلة 563.00 | ⚪ انتظر [ترتيب الموديل 8]
+   RSI 37 | تذبذب يومي 1.6% | دعم 550.84 | مقاومة 597.07
+   وقف خسارة 549.55 (-2.4%) | هدف 589.89 (+4.8%) | عائد/مخاطرة 2.0
+   نطاق النهاردة: 556.70 - 573.20 | نطاق الأسبوع: 554.50 - 607.33
+   📰 ⚪ محايد (بالكلمات)
       «الرقابة المالية تُقر شطب وتصفية اتحاد العاملين المساهمين بـ «القاهرة للأدوية» وتُعين مصفيا» (جريدة الدستور، النهاردة)
 
-2. BTFH | آخر قفلة 2.25 | 🔴 بيع [ترتيب الموديل 4]
-   RSI 40 | تذبذب يومي 4.1% | دعم 2.05 | مقاومة 2.64
-   وقف خسارة 2.11 (-6.1%) | هدف 2.53 (+12.3%) | عائد/مخاطرة 2.0
-   نطاق النهاردة: 2.20 - 2.30 | نطاق الأسبوع: 2.12 - 2.33
-   📰 ➖ الخبر محايد | ⚪ محايد (بالكلمات)
-      «Egypt's Act Financial cuts stake in Beltone Holding to 4.9% - Zawya» (Zawya، من 3 أيام)
+2. FAIT | آخر قفلة 45.27 | ⚪ انتظر [ترتيب الموديل 9]
+   RSI 61 | تذبذب يومي 3.3% | دعم 40.00 | مقاومة 47.46
+   وقف خسارة 43.00 (-5.0%) | هدف 47.46 (+4.8%) (عند المقاومة) | عائد/مخاطرة 1.0 ⚠️ضعيف
+   نطاق النهاردة: 44.08 - 46.74 | نطاق الأسبوع: 43.53 - 47.99
+   📰 🟢 إيجابي (بالكلمات)
+      «بنك فيصل الإسلامي المصري يرفع حجم أعماله إلى 316.7 مليار جنيه بنهاية أكتوبر 2026 بنمو 25.1» (followict، من 7 أيام)
 
-3. SNFC | آخر قفلة 11.38 | 🔴 بيع [ترتيب الموديل 1]
-   RSI 71 | تذبذب يومي 2.5% | دعم 10.08 | مقاومة 11.48
-   وقف خسارة 10.95 (-3.8%) | هدف 11.48 (+0.9%) (عند المقاومة) | عائد/مخاطرة 0.2 ⚠️ضعيف
-   نطاق النهاردة: 11.17 - 11.58 | نطاق الأسبوع: 10.92 - 11.75
+3. EFIH | آخر قفلة 24.10 | ⚪ انتظر [ترتيب الموديل 1]
+   RSI 62 | تذبذب يومي 4.3% | دعم 20.30 | مقاومة 26.18
+   وقف خسارة 22.56 (-6.4%) | هدف 26.18 (+8.6%) (عند المقاومة) | عائد/مخاطرة 1.3 ⚠️ضعيف
+   نطاق النهاردة: 23.44 - 24.76 | نطاق الأسبوع: 22.97 - 25.84
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
-4. AIFI | آخر قفلة 2.54 | 🔴 بيع [ترتيب الموديل 3]
-   RSI 84 | تذبذب يومي 5.1% | دعم 1.67 | مقاومة 2.62
-   وقف خسارة 2.34 (-7.7%) | هدف 2.62 (+3.1%) (عند المقاومة) | عائد/مخاطرة 0.4 ⚠️ضعيف
-   نطاق النهاردة: 2.42 - 2.66 | نطاق الأسبوع: 2.39 - 2.76
+4. ISMQ | آخر قفلة 6.40 | ⚪ انتظر [ترتيب الموديل 2]
+   RSI 34 | تذبذب يومي 3.8% | دعم 5.68 | مقاومة 7.34
+   وقف خسارة 6.03 (-5.8%) | هدف 7.14 (+11.5%) | عائد/مخاطرة 2.0
+   نطاق النهاردة: 6.13 - 6.56 | نطاق الأسبوع: 5.91 - 6.93
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
-5. HELI | آخر قفلة 6.60 | 🔴 بيع [ترتيب الموديل 5]
-   RSI 53 | تذبذب يومي 4.3% | دعم 5.72 | مقاومة 7.20
-   وقف خسارة 6.18 (-6.4%) | هدف 7.20 (+9.1%) (عند المقاومة) | عائد/مخاطرة 1.4 ⚠️ضعيف
-   نطاق النهاردة: 6.38 - 6.82 | نطاق الأسبوع: 6.14 - 7.08
+5. UNIP | آخر قفلة 0.283 | ⚪ انتظر [ترتيب الموديل 3]
+   RSI 49 | تذبذب يومي 4.5% | دعم 0.251 | مقاومة 0.330
+   وقف خسارة 0.264 (-6.8%) | هدف 0.321 (+13.6%) | عائد/مخاطرة 2.0
+   نطاق النهاردة: 0.272 - 0.294 | نطاق الأسبوع: 0.253 - 0.311
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
-6. EFIH | آخر قفلة 25.53 | 🔴 بيع [ترتيب الموديل 6]
-   RSI 92 | تذبذب يومي 3.8% | دعم 20.30 | مقاومة 26.18
-   وقف خسارة 24.06 (-5.7%) | هدف 26.18 (+2.5%) (عند المقاومة) | عائد/مخاطرة 0.4 ⚠️ضعيف
-   نطاق النهاردة: 24.87 - 26.23 | نطاق الأسبوع: 24.33 - 27.38
+6. ETRS | آخر قفلة 11.10 | ⚪ انتظر [ترتيب الموديل 4]
+   RSI 65 | تذبذب يومي 3.0% | دعم 9.51 | مقاومة 11.58
+   وقف خسارة 10.60 (-4.5%) | هدف 11.58 (+4.3%) (عند المقاومة) | عائد/مخاطرة 1.0 ⚠️ضعيف
+   نطاق النهاردة: 10.78 - 11.41 | نطاق الأسبوع: 10.57 - 12.06
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
-7. MFPC | آخر قفلة 38.22 | 🔴 بيع [ترتيب الموديل 7]
-   RSI 24 | تذبذب يومي 4.0% | دعم 37.23 | مقاومة 47.63
-   وقف خسارة 35.92 (-6.0%) | هدف 42.82 (+12.0%) | عائد/مخاطرة 2.0
-   نطاق النهاردة: 36.97 - 39.63 | نطاق الأسبوع: 35.38 - 40.77
+7. CSAG | آخر قفلة 36.23 | ⚪ انتظر [ترتيب الموديل 5]
+   RSI 77 | تذبذب يومي 3.7% | دعم 30.10 | مقاومة 37.36
+   وقف خسارة 34.23 (-5.5%) | هدف 37.36 (+3.1%) (عند المقاومة) | عائد/مخاطرة 0.6 ⚠️ضعيف
+   نطاق النهاردة: 35.02 - 37.50 | نطاق الأسبوع: 33.93 - 38.32
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
-8. RACC | آخر قفلة 7.88 | 🔴 بيع [ترتيب الموديل 8]
-   RSI 69 | تذبذب يومي 4.5% | دعم 6.10 | مقاومة 8.55
-   وقف خسارة 7.35 (-6.7%) | هدف 8.55 (+8.5%) (عند المقاومة) | عائد/مخاطرة 1.3 ⚠️ضعيف
-   نطاق النهاردة: 7.66 - 8.15 | نطاق الأسبوع: 7.34 - 8.28
+8. AIFI | آخر قفلة 2.40 | ⚪ انتظر [ترتيب الموديل 6]
+   RSI 68 | تذبذب يومي 5.1% | دعم 1.67 | مقاومة 2.62
+   وقف خسارة 2.22 (-7.7%) | هدف 2.62 (+9.2%) (عند المقاومة) | عائد/مخاطرة 1.2 ⚠️ضعيف
+   نطاق النهاردة: 2.29 - 2.51 | نطاق الأسبوع: 2.26 - 2.61
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
-9. EHDR | آخر قفلة 2.09 | 🔴 بيع [ترتيب الموديل 9]
-   RSI 54 | تذبذب يومي 4.4% | دعم 1.80 | مقاومة 2.28
-   وقف خسارة 1.95 (-6.7%) | هدف 2.28 (+9.1%) (عند المقاومة) | عائد/مخاطرة 1.4 ⚠️ضعيف
-   نطاق النهاردة: 2.01 - 2.17 | نطاق الأسبوع: 1.90 - 2.26
+9. SAUD | آخر قفلة 22.73 | ⚪ انتظر [ترتيب الموديل 7]
+   RSI 67 | تذبذب يومي 4.0% | دعم 19.30 | مقاومة 24.00
+   وقف خسارة 21.36 (-6.0%) | هدف 24.00 (+5.6%) (عند المقاومة) | عائد/مخاطرة 0.9 ⚠️ضعيف
+   نطاق النهاردة: 21.95 - 23.54 | نطاق الأسبوع: 21.39 - 24.15
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
-10. ASCM | آخر قفلة 44.20 | 🔴 بيع [ترتيب الموديل 10]
-   RSI 52 | تذبذب يومي 4.6% | دعم 38.20 | مقاومة 50.40
-   وقف خسارة 41.16 (-6.9%) | هدف 50.29 (+13.8%) | عائد/مخاطرة 2.0
-   نطاق النهاردة: 42.64 - 45.76 | نطاق الأسبوع: 40.65 - 47.60
+10. SNFC | آخر قفلة 11.14 | ⚪ انتظر [ترتيب الموديل 10]
+   RSI 63 | تذبذب يومي 2.5% | دعم 10.08 | مقاومة 11.48
+   وقف خسارة 10.72 (-3.8%) | هدف 11.48 (+3.1%) (عند المقاومة) | عائد/مخاطرة 0.8 ⚠️ضعيف
+   نطاق النهاردة: 10.93 - 11.33 | نطاق الأسبوع: 10.69 - 11.49
    📰 مفيش أخبار عن السهم في آخر 7 أيام
 
 📰 رصيد Gemini خلصان (RESOURCE_EXHAUSTED)، فالتقييم النهاردة بالكلمات المفتاحية (أبسط وأقل دقة من الذكاء الاصطناعي، علامة «بالكلمات» جنب كل تقييم). شحن الرصيد من AI Studio بيرجّع التقييم الذكي.
 
 📰 الأخبار تأكيد أو تحذير بس: مبتغيّرش الترتيب ولا شراء/بيع، ومفيش باكتست ليها لسه. أنا بقيس بعد كام جلسة لو التصنيف بيبقى أصح لما الأخبار بتأيده.
 
-🟢 شراء = الموديل شايف السهم هيقفل بكره فوق افتتاحه | 🔴 بيع = شايفه هيقفل تحته | ⚪ انتظر = مش واثق.
-⚠️ دقة شراء/بيع في آخر 250 يوم (على أيام الموديل ماشافهاش): 56% صح مقابل 56% لو خمّنا دايمًا الأغلب، يعني مش أحسن من التخمين الثابت. لما قال شراء: طلع 50% من المرات | لما قال بيع: نزل 57%
+التصنيف جنب كل سهم من رسالة 🧭 (محرك الدخول والخروج المتختبر على محفظة كاملة):
+🟢 شراء = إشارة دخول بكره | 🔵 احتفاظ = مركز مفتوح | 🔴 بيع = إشارة خروج | ⚪ انتظر = ترتيبه كويس بس مش مستوفي شروط الدخول.
+الترتيب هنا لجلسة واحدة (ميزة ضعيفة)، أما قرار الدخول والخروج فمن رسالة 🧭.
 
 إزاي تقرأ المستويات:
 • وقف الخسارة = 1.5 × التذبذب اليومي تحت القفلة. الهدف = 3 × التذبذب فوقها (أو المقاومة لو أقرب).
@@ -161,3 +102,6 @@ $KORA.CA: possibly delisted; no timezone found
 • بعد تكلفة الشراء والبيع (20 bps في الاتجاه، متوسط تكلفتك الفعلية) النتيجة في الباكتست كانت سالبة من 2022 لليوم الواحد.
 • الوقف والهدف لإدارة الخسارة مش لضمان الوصول. أي سهم ممكن ينزل بكره.
 • مش توصية شراء ولا بيع. القرار والمسؤولية ليك.
+[تليجرام] اتقفل في الوضع المركّز (tomorrow_report.py) - الرسالة اتسجلت في اللوج بس
+[تليجرام] اتقفل في الوضع المركّز (tomorrow_report.py) - الرسالة اتسجلت في اللوج بس
+[تليجرام] اتقفل في الوضع المركّز (tomorrow_report.py) - الرسالة اتسجلت في اللوج بس

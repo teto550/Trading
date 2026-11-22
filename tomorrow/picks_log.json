@@ -1088,86 +1088,83 @@
   },
   {
    "target": "2026-11-23",
-   "data_date": "2026-11-19",
+   "data_date": "2026-11-22",
    "picks": [
     "CPCI",
-    "BTFH",
-    "SNFC",
-    "AIFI",
-    "HELI",
+    "FAIT",
     "EFIH",
-    "MFPC",
-    "RACC",
-    "EHDR",
-    "ASCM"
+    "ISMQ",
+    "UNIP",
+    "ETRS",
+    "CSAG",
+    "AIFI",
+    "SAUD",
+    "SNFC"
    ],
    "labels": {
-    "CPCI": "بيع",
-    "BTFH": "بيع",
-    "SNFC": "بيع",
-    "AIFI": "بيع",
-    "HELI": "بيع",
-    "EFIH": "بيع",
-    "MFPC": "بيع",
-    "RACC": "بيع",
-    "EHDR": "بيع",
-    "ASCM": "بيع"
+    "CPCI": "انتظر",
+    "FAIT": "انتظر",
+    "EFIH": "انتظر",
+    "ISMQ": "انتظر",
+    "UNIP": "انتظر",
+    "ETRS": "انتظر",
+    "CSAG": "انتظر",
+    "AIFI": "انتظر",
+    "SAUD": "انتظر",
+    "SNFC": "انتظر"
    },
-   "news": {
-    "CPCI": "neutral",
-    "BTFH": "neutral"
-   },
+   "news": {},
    "by_model": {
     "xgb": [
-     "CPCI",
-     "AIFI",
-     "HELI",
-     "BTFH",
-     "SNFC",
-     "EHDR",
+     "CSAG",
      "EFIH",
-     "MFPC",
-     "EGCH",
-     "RACC"
+     "ISMQ",
+     "AIFI",
+     "CPCI",
+     "SNFC",
+     "ARAB",
+     "UNIP",
+     "FAIT",
+     "ETRS"
     ],
     "lgbm": [
-     "SNFC",
-     "AIFI",
-     "MFPC",
-     "BTFH",
-     "CPCI",
+     "EFIH",
+     "ISMQ",
+     "ICFC",
+     "UNIP",
+     "FAIT",
+     "MAAL",
+     "SAUD",
      "ETRS",
-     "ASCM",
-     "HELI",
-     "LCSW",
-     "RACC"
+     "RTVC",
+     "HRHO"
     ],
     "cat": [
-     "SNFC",
-     "CPCI",
      "EFIH",
-     "ADIB",
-     "BTFH",
-     "HELI",
-     "RACC",
+     "UNIP",
+     "ALUM",
      "AIFI",
-     "ADCI",
-     "FWRY"
+     "ETEL",
+     "ETRS",
+     "DSCW",
+     "ISMQ",
+     "LCSW",
+     "SNFC"
     ],
     "ens": [
-     "SNFC",
-     "CPCI",
-     "AIFI",
-     "BTFH",
-     "HELI",
      "EFIH",
-     "MFPC",
-     "RACC",
-     "EHDR",
-     "ASCM"
+     "ISMQ",
+     "UNIP",
+     "ETRS",
+     "CSAG",
+     "AIFI",
+     "SAUD",
+     "CPCI",
+     "FAIT",
+     "SNFC"
     ]
    },
-   "made": "2026-11-23 00:10"
+   "made": "2026-11-23 01:27"
   }
  ]
 }
