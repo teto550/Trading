@@ -1091,84 +1091,83 @@
    "data_date": "2026-11-19",
    "picks": [
     "CPCI",
-    "ADIB",
-    "FAIT",
     "BTFH",
-    "EFIH",
     "SNFC",
     "AIFI",
-    "MFPC",
     "HELI",
+    "EFIH",
+    "MFPC",
+    "RACC",
+    "EHDR",
     "ASCM"
    ],
    "labels": {
     "CPCI": "بيع",
-    "ADIB": "بيع",
-    "FAIT": "بيع",
-    "BTFH": "انتظر",
-    "EFIH": "بيع",
+    "BTFH": "بيع",
     "SNFC": "بيع",
-    "AIFI": "انتظر",
-    "MFPC": "بيع",
+    "AIFI": "بيع",
     "HELI": "بيع",
-    "ASCM": "انتظر"
+    "EFIH": "بيع",
+    "MFPC": "بيع",
+    "RACC": "بيع",
+    "EHDR": "بيع",
+    "ASCM": "بيع"
    },
    "news": {
-    "CPCI": "disagree",
-    "ADIB": "disagree",
-    "FAIT": "disagree"
+    "CPCI": "neutral",
+    "BTFH": "neutral"
    },
    "by_model": {
     "xgb": [
-     "EFIH",
      "CPCI",
+     "AIFI",
      "HELI",
      "BTFH",
-     "FAIT",
+     "SNFC",
+     "EHDR",
+     "EFIH",
      "MFPC",
-     "RMDA",
-     "AIFI",
-     "ADIB",
-     "SNFC"
+     "EGCH",
+     "RACC"
     ],
     "lgbm": [
-     "AIFI",
-     "EFIH",
      "SNFC",
+     "AIFI",
+     "MFPC",
+     "BTFH",
      "CPCI",
      "ETRS",
-     "MASR",
-     "ADIB",
+     "ASCM",
      "HELI",
      "LCSW",
-     "ASCM"
+     "RACC"
     ],
     "cat": [
-     "CPCI",
      "SNFC",
+     "CPCI",
      "EFIH",
-     "FWRY",
      "ADIB",
-     "MFPC",
-     "AIFI",
      "BTFH",
-     "FAIT",
-     "RMDA"
+     "HELI",
+     "RACC",
+     "AIFI",
+     "ADCI",
+     "FWRY"
     ],
     "ens": [
-     "EFIH",
-     "CPCI",
      "SNFC",
+     "CPCI",
      "AIFI",
-     "ADIB",
-     "MFPC",
-     "HELI",
      "BTFH",
-     "FAIT",
+     "HELI",
+     "EFIH",
+     "MFPC",
+     "RACC",
+     "EHDR",
      "ASCM"
     ]
    },
-   "made": "2026-11-22 16:39"
+   "made": "2026-11-23 00:10"
   }
  ]
 }
