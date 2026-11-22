@@ -619,6 +619,52 @@ def refresh_forecast_files():
         print("[توقعات] مقدرتش أحدّث ملفات التوقعات:", e)
 
 
+def paper_portfolio_text():
+    """رد "محفظتي": الحساب التجريبي بأسعار لحظية من TradingView + أوامر الافتتاح الجاية + آخر العمليات."""
+    import subprocess
+    if os.environ.get("GITHUB_ACTIONS"):
+        try:
+            subprocess.run(["git", "fetch", "-q", "--depth=1", "origin", os.environ.get("GITHUB_REF_NAME", "main")],
+                           check=True, timeout=60)
+            subprocess.run(["git", "checkout", "-q", "FETCH_HEAD", "--", "signals"], check=True, timeout=60)
+        except Exception as e:
+            print("[محفظة] مقدرتش أحدّث الملف:", e)
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "backtest"))
+    import paper_account as pa
+    acc = pa.load()
+    if not acc:
+        return "💼 الحساب التجريبي لسه ماتفتحش (بيتفتح بـ100,000 جنيه أول ما تقرير المسا يشتغل)."
+    prices = {}
+    try:
+        import egxdata
+        prices = {n: r["close"] for n, r in egxdata.tv_snapshot().items()}
+    except Exception as e:
+        print("[محفظة] أسعار لحظية فشلت:", e)
+    k = pa.live_params()
+    L = pa.summary_lines(acc, prices) + [""]
+    if acc["pos"]:
+        L.append(f"📂 الأسهم ({len(acc['pos'])}):")
+        for n, ps in acc["pos"].items():
+            p = prices.get(n, ps["last_px"])
+            val = ps["shares"] * p
+            pnl = val - ps["cost"]
+            st = pa.stop_px(ps, k)
+            L.append(f"- {n}: {ps['shares']:,} سهم | شراء {pa.px(ps['entry_px'])} | دلوقتي {pa.px(p)} = {pa.money(val)} جنيه "
+                     f"({'+' if pnl >= 0 else '-'}{pa.money(abs(pnl))}، {pnl / ps['cost'] * 100:+.1f}%)"
+                     + (f" | الوقف {pa.px(st)}" if st else ""))
+    else:
+        L.append("📂 مفيش أسهم دلوقتي، الحساب كاش.")
+    if acc["orders"]:
+        L += ["", "⏳ أوامر مستنية الافتتاح:"]
+        for o in acc["orders"]:
+            L.append(f"- {'شراء' if o['side'] == 'buy' else 'بيع'} {o['name']}"
+                     + (f" بحوالي {pa.money(o['budget'])} جنيه" if o["side"] == "buy" else ""))
+    last = acc["history"][-6:]
+    if last:
+        L += ["", "🧾 آخر العمليات:"] + [pa.trade_line(r) for r in reversed(last)]
+    return "\n".join(L)
+
+
 def handle_telegram_commands(state):
     if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
         return
@@ -654,6 +700,9 @@ def handle_telegram_commands(state):
         words = [w.upper() for w in re.findall(r"[A-Za-z0-9]{2,8}", text)]
         if any(w in ("ALL", "LIST") for w in words) or text in ("/all", "/list", "الكل"):
             send_long(overview_text(state))
+            continue
+        if any(k in text for k in ("محفظ", "الحساب", "حسابي")) or text.lower() in ("/portfolio", "portfolio"):
+            send_long(paper_portfolio_text())
             continue
         ticker = next((bases[w] for w in words if w in bases), None)
         suggestions = None

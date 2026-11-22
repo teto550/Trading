@@ -36,6 +36,7 @@ sys.path.insert(0, ROOT)
 import backtest as bt  # noqa: E402
 import swing as sw  # noqa: E402
 import swing_core as sc  # noqa: E402
+import paper_account as pa  # noqa: E402
 
 OUT_DIR = os.path.join(ROOT, "signals")
 BOOK_FILE = os.path.join(OUT_DIR, "portfolio.json")
@@ -63,6 +64,8 @@ def load_params():
         with open(sw.BEST_FILE, encoding="utf-8") as fh:
             meta = json.load(fh)
         p.update(meta.get("params", {}))
+    # البيع اللحظي لما السعر يكسر الوقف (طلب ديفيد): بيتقاس في swing.py كمان ("+ بيع لحظي")
+    p["intraday_stop"] = os.environ.get("PAPER_INTRADAY_STOP", "true").lower() == "true"
     if os.environ.get("SWING_PARAMS"):                          # للتجربة: '{"regime": 0}'
         p.update(json.loads(os.environ["SWING_PARAMS"]))
     return p, meta
@@ -96,202 +99,179 @@ def today_scores(C, H, L, V, O, liquid, lock, a):
 
 
 # ============================================================
-# المحفظة التجريبية (بالأسماء، عشان قايمة الأسهم ممكن تتغير بين الأيام)
+# الحساب التجريبي بالجنيه (paper_account)
 # ============================================================
-def load_book(D):
-    if not os.path.exists(BOOK_FILE):
-        return None
-    with open(BOOK_FILE, encoding="utf-8") as fh:
-        raw = json.load(fh)
-    name_i = {n: i for i, n in enumerate(D["names"])}
-    di = {str(d.date()): i for i, d in enumerate(D["dates"])}
-    bk = sc.new_book()
-    bk["cash"] = raw["cash"]
-    for n, ps in raw["pos"].items():
-        if n not in name_i:
-            print(f"[signals] {n} مش موجود في البيانات النهاردة، بيتساب في المحفظة من غير تقييم")
-            bk.setdefault("orphans", {})[n] = ps
-            continue
-        q = dict(ps)
-        q["et"] = di.get(ps["entry_date"], -1)
-        bk["pos"][name_i[n]] = q
-    bk["pend_x"] = {name_i[n]: w for n, w in raw.get("pend_x", {}).items() if n in name_i}
-    bk["pend_in"] = [name_i[n] for n in raw.get("pend_in", []) if n in name_i]
-    bk["carry_x"] = {name_i[n]: w for n, w in raw.get("carry_x", {}).items() if n in name_i}
-    bk["meta"] = raw
-    return bk
+def _raw(D, bars, tt, name, i):
+    """أسعار اليوم tt الحقيقية (من أرشيف TradingView لو موجودة، وإلا من البيانات): (افتتاح, أقل, قفلة, قفلة امبارح)."""
+    b = bars.get(str(D["dates"][tt].date()), {}).get(name)
+    C, O = D["C"], D["O"]
+    if b and b[3]:
+        return b[0] or b[3], b[2] or b[3], b[3], b[5]
+    o = O[tt, i] if np.isfinite(O[tt, i]) else np.nan
+    c = C[tt, i]
+    prev = C[tt - 1, i] if tt > 0 else np.nan
+    lo = c * (1 + D["lc"][tt, i]) / (1 + D["rc"][tt, i]) if np.isfinite(c) else np.nan
+    return o, lo, c, prev
 
 
-def save_book(bk, D, last_date, closed_now, eq_hist, carry):
-    names = D["names"]
-    raw = bk.get("meta", {})
-    pos = {}
-    for i, ps in bk["pos"].items():
-        q = {k: v for k, v in ps.items() if k != "et"}
-        q["entry_date"] = ps.get("entry_date") or str(D["dates"][ps["et"]].date())
-        pos[str(names[i])] = q
-    pos.update(bk.get("orphans", {}))
-    closed = raw.get("closed", []) + closed_now
-    out = {"start": raw.get("start", last_date), "last_date": last_date, "cash": bk["cash"], "pos": pos,
-           "pend_x": {str(names[i]): w for i, w in bk["pend_x"].items()},
-           "pend_in": [str(names[i]) for i in bk["pend_in"]],
-           "carry_x": {str(names[i]): w for i, w in carry.items()},
-           "closed": closed[-500:], "equity": eq_hist[-1500:]}
-    os.makedirs(OUT_DIR, exist_ok=True)
-    with open(BOOK_FILE, "w", encoding="utf-8") as fh:
-        json.dump(out, fh, ensure_ascii=False, indent=1)
-    return out
-
-
-def run_book(D, p, record):
-    """بيكمّل المحفظة من آخر يوم اتسجل لحد آخر يوم في البيانات، وبيقرر لبكره."""
+def run_account(D, p, bars):
     T = len(D["dates"])
-    t_last = T - 1
-    bk = load_book(D)
-    names = D["names"]
-    closed_now, opened_now = [], []
-    if bk is None:
-        bk = sc.new_book()
-        bk["meta"] = {}
-        start_t = t_last                                       # أول تشغيل: نبدأ من النهاردة بقرارات بس
-        eq_hist = [[str(D["dates"][t_last].date()), 1.0, 1.0]]
+    t = T - 1
+    day = str(D["dates"][t].date())
+    names = [str(n).replace(".CA", "") for n in D["names"]]
+    idx = {n: i for i, n in enumerate(names)}
+    acc = pa.load() or pa.new(p["cost"], day)
+    done = []
+    if acc["last_date"] is None:
+        acc["last_date"] = day
+        acc["equity"].append([day, acc["cash"], 1.0])
+    elif acc["last_date"] < day:
+        mk = acc["equity"][-1][2] if acc["equity"] else 1.0
+        for tt in range(T):
+            d = str(D["dates"][tt].date())
+            if d <= acc["last_date"]:
+                continue
+            raw = {n: _raw(D, bars, tt, n, idx[n]) for n in set(acc["pos"]) | {o["name"] for o in acc["orders"]} if n in idx}
+            # 1) أوامر ماتنفذتش لحظيًا: تتنفذ بافتتاح اليوم
+            if acc["orders"]:
+                opens = {n: (r[0] if np.isfinite(r[0]) else None) for n, r in raw.items()}
+                prevs = {n: r[3] for n, r in raw.items()}
+                done += pa.fill_orders(acc, opens, prevs, (d, "افتتاح"))
+            for n in list(acc["pos"]):
+                if n not in raw:
+                    continue
+                o, lo, c, _pv = raw[n]
+                ps = acc["pos"][n]
+                # 2) وقف لحظي فاته التشغيل اللحظي: لو أقل سعر لمس الوقف نبيع عنده (نفس الباكتست)
+                stop = pa.stop_px(ps, p["trail_k"])
+                if p.get("intraday_stop") and stop and ps["entry_date"] < d and np.isfinite(lo) and lo <= stop:
+                    price = min(stop, o) if np.isfinite(o) else stop
+                    r = pa.sell(acc, n, round(float(price), 3), (d, "أثناء الجلسة"), "stop_live")
+                    if r:
+                        done.append(r)
+                    continue
+                # 3) تقييم القفلة
+                if np.isfinite(c):
+                    ps["last_px"] = float(c)
+                    ps["peak_px"] = max(ps["peak_px"], float(c))
+                if ps["entry_date"] < d:
+                    ps["days"] += 1
+            mk *= 1 + D["mkt"][tt]
+            acc["equity"].append([d, round(pa.equity(acc), 2), round(mk, 6)])
+        acc["last_date"] = day
     else:
-        last = pd.Timestamp(bk["meta"]["last_date"])
-        start_t = int(np.searchsorted(D["dates"], last, side="right"))
-        eq_hist = bk["meta"].get("equity", [])
-        mk = eq_hist[-1][2] if eq_hist else 1.0
-        for t in range(start_t, T):
-            out_, in_ = sc.exec_open(D, p, t, bk)
-            for tr in out_:
-                closed_now.append({"name": str(names[tr["i"]]), "entry_date": str(D["dates"][tr["et"]].date()) if tr["et"] >= 0 else "?",
-                                   "exit_date": str(D["dates"][t].date()), "ret": round(tr["ret"] * 100, 2),
-                                   "days": tr["days"], "why": tr["why"]})
-            for i in in_:
-                bk["pos"][i]["entry_date"] = str(D["dates"][t].date())
-                opened_now.append(str(names[i]))
-            eq, _ex = sc.mark_close(D, t, bk)
-            mk *= 1 + D["mkt"][t]
-            eq_hist.append([str(D["dates"][t].date()), round(eq, 6), round(mk, 6)])
-        if start_t > t_last:
-            # تشغيل تاني لنفس القفلة: نرجع لحالة ما قبل قرارات المرة اللي فاتت ونقرر من جديد
-            bk["pend_x"] = dict(bk.get("carry_x", {}))
-            bk["pend_in"] = []
-    carry = dict(bk["pend_x"])                                 # خروج متأجل من قبل كده (السهم كان موقوف)
-    exits, entries = sc.decide(D, p, t_last, bk["pos"], bk["pend_x"])
-    bk["pend_x"].update(exits)
-    bk["pend_in"] = entries
-    state = None
-    if record:
-        state = save_book(bk, D, str(D["dates"][t_last].date()), closed_now, eq_hist, carry)
-    else:
-        state = {"closed": bk.get("meta", {}).get("closed", []) + closed_now, "equity": eq_hist,
-                 "start": bk.get("meta", {}).get("start", str(D["dates"][t_last].date()))}
-    bk["carry"] = carry
-    return bk, exits, entries, closed_now, opened_now, state
+        # تشغيل تاني لنفس القفلة: نشيل أوامر المرة اللي فاتت ونقرر من جديد
+        acc["orders"] = [o for o in acc["orders"] if o.get("decided") != day]
+    # تحديث آخر سعر من بيانات النهاردة (لو التشغيل اللحظي باع/اشترى النهاردة)
+    for n, ps in acc["pos"].items():
+        if n in idx:
+            c = _raw(D, bars, t, n, idx[n])[2]
+            if np.isfinite(c):
+                ps["last_px"] = float(c)
+                ps["peak_px"] = max(ps["peak_px"], float(c))
+    today_hist = [h for h in acc["history"] if h["date"] == day and h not in done]
+    # قرارات بكره (نفس swing_core.decide)
+    pos_i = {idx[n]: {"rel": ps["last_px"] / ps["entry_px"], "peak": ps["peak_px"] / ps["entry_px"],
+                      "atr": ps["atr"], "days": ps["days"]} for n, ps in acc["pos"].items() if n in idx}
+    pend = {idx[o["name"]]: o["why"] for o in acc["orders"] if o["side"] == "sell" and o["name"] in idx}
+    exits, entries = sc.decide(D, p, t, pos_i, pend)
+    eq = pa.equity(acc)
+    for i, why in exits.items():
+        acc["orders"].append({"side": "sell", "name": names[i], "why": why, "decided": day, "ref_px": float(D["C"][t, i])})
+    for i in entries:
+        acc["orders"].append({"side": "buy", "name": names[i], "why": "signal", "decided": day,
+                              "budget": round(eq / p["max_pos"], 2), "ref_px": float(D["C"][t, i]),
+                              "atr": float(D["atr"][t, i]), "score": round(float(D["S"][t, i]), 4)})
+    return acc, done + today_hist, exits, entries
 
 
-def build_message(D, p, meta, bk, exits, entries, closed_now, opened_now, state, now, note):
+def build_message(D, p, meta, acc, done, now, note):
     t = len(D["dates"]) - 1
-    names, C, S = D["names"], D["C"], D["S"]
     data_date = D["dates"][t].date()
     target = next_session(pd.Timestamp(data_date)).date()
     reg_on = bool(D["reg"][p["regime"]][t])
-    L_ = [f"🧭 إشارات الدخول والخروج - لجلسة {AR_DAYS[target.weekday()]} {target}",
-          f"(مبنية على قفلة {data_date} | التنفيذ عند افتتاح الجلسة)"]
+    fee = acc["fee"]
+    L_ = [f"🧭 الحساب التجريبي - أوامر جلسة {AR_DAYS[target.weekday()]} {target}",
+          f"(مبنية على قفلة {data_date} | الأوامر بتتنفذ لوحدها عند الافتتاح، والمحفظة بتتراقب لحظيًا طول الجلسة)"]
     if note:
         L_.append(note)
     L_.append("")
     if p["regime"]:
         L_.append(("🟢 السوق في اتجاه صاعد (متوسط الأسهم فوق متوسط " if reg_on else
                    "🔴 السوق في اتجاه هابط (متوسط الأسهم تحت متوسط ") + f"{p['regime']} جلسة)" +
-                  (" → مسموح دخول صفقات جديدة" if reg_on else " → مفيش دخول جديد لحد ما يرجع فوقه"))
+                  (" → مسموح شراء جديد" if reg_on else " → مفيش شراء جديد لحد ما يرجع فوقه"))
         L_.append("")
-
-    def px(i):
-        return float(C[t, i])
-
-    if entries:
-        L_.append(f"🟢 ادخل عند الافتتاح ({len(entries)}):")
-        for k, i in enumerate(entries, 1):
-            atr = float(D["atr"][t, i])
-            stop = px(i) * (1 - p["trail_k"] * atr) if p["trail_k"] else None
-            L_.append(f"{k}. {names[i].replace('.CA', '')} | آخر قفلة {fmt_px(px(i))} | ترتيب الموديل: أعلى "
-                      f"{max(1, round((1 - S[t, i]) * 100))}% | تذبذب يومي {atr * 100:.1f}%")
-            L_.append(f"   متشتريش لو فتح فوق {fmt_px(px(i) * 1.09)} (على الحد الأعلى)"
-                      + (f" | وقف مبدئي {fmt_px(stop)} ({-p['trail_k'] * atr * 100:.1f}%)" if stop else ""))
-            L_.append(f"   حجم الصفقة: 1/{p['max_pos']} من رأس المال المخصص")
+    if done:
+        L_.append("🧾 اللي اتنفذ من آخر تقرير:")
+        L_ += [pa.trade_line(r, str(data_date)) for r in done]
         L_.append("")
-    if exits:
-        L_.append(f"🔴 اخرج عند الافتتاح ({len(exits)}):")
-        for i, why in exits.items():
-            ps = bk["pos"][i]
-            entry = px(i) / ps["rel"]
-            L_.append(f"- {names[i].replace('.CA', '')} | السبب: {sc.REASON_AR.get(why, why)} | "
-                      f"دخلنا {ps.get('entry_date', '?')} بسعر ~{fmt_px(entry)} | دلوقتي {fmt_px(px(i))} "
-                      f"({(ps['rel'] * (1 - p['cost']) ** 2 - 1) * 100:+.1f}% صافي)")
+    sells = [o for o in acc["orders"] if o["side"] == "sell"]
+    buys = [o for o in acc["orders"] if o["side"] == "buy"]
+    if sells:
+        L_.append(f"🔴 هبيع عند الافتتاح ({len(sells)}):")
+        for o in sells:
+            ps = acc["pos"].get(o["name"])
+            if not ps:
+                continue
+            amt = ps["shares"] * ps["last_px"]
+            pnl = amt * (1 - fee) - ps["cost"]
+            L_.append(f"- {o['name']}: {ps['shares']:,} سهم × ~{pa.px(ps['last_px'])} ≈ {pa.money(amt)} جنيه | "
+                      f"{'مكسب' if pnl > 0 else 'خسارة'} تقريبًا {pa.money(abs(pnl))} ({pnl / ps['cost'] * 100:+.1f}%) | "
+                      f"السبب: {pa.REASON_AR.get(o['why'], o['why'])}")
         L_.append("")
-    holds = [i for i in bk["pos"] if i not in bk["pend_x"]]
-    if holds:
-        L_.append(f"📂 احتفظ ({len(holds)}):")
-        for i in sorted(holds, key=lambda j: -bk["pos"][j]["rel"]):
-            ps = bk["pos"][i]
-            entry = px(i) / ps["rel"]
-            stop = entry * ps["peak"] * (1 - p["trail_k"] * ps["atr"]) if p["trail_k"] else None
-            L_.append(f"- {names[i].replace('.CA', '')} | من {ps.get('entry_date', '?')} بـ~{fmt_px(entry)} | "
-                      f"دلوقتي {fmt_px(px(i))} ({(ps['rel'] - 1) * 100:+.1f}%)"
-                      + (f" | الوقف المتحرك {fmt_px(stop)}" if stop else "")
-                      + f" | جلسة {ps['days']} من {p['max_hold']}")
+    if buys:
+        L_.append(f"🟢 هشتري عند الافتتاح ({len(buys)}) - كل صفقة حوالي {pa.money(buys[0]['budget'])} جنيه:")
+        for o in buys:
+            sh = int(o["budget"] // (o["ref_px"] * (1 + fee)))
+            stop = o["ref_px"] * (1 - p["trail_k"] * o["atr"]) if p["trail_k"] else None
+            L_.append(f"- {o['name']}: ~{sh:,} سهم × ~{pa.px(o['ref_px'])} ≈ {pa.money(sh * o['ref_px'])} جنيه | "
+                      f"ترتيب الموديل أعلى {max(1, round((1 - o['score']) * 100))}%"
+                      + (f" | وقف مبدئي {pa.px(stop)} ({-p['trail_k'] * o['atr'] * 100:.1f}%)" if stop else "")
+                      + " | لو فتح على الحد الأعلى (+9%) مش هشتري")
         L_.append("")
-    pend = [i for i in bk.get("carry", {}) if i not in exits]
-    if pend:
-        L_.append("⏳ لسه مستني يخرج (السهم كان موقوف): " + ", ".join(names[i].replace(".CA", "") for i in pend))
+    if acc["pos"]:
+        L_.append(f"📂 المحفظة دلوقتي ({len(acc['pos'])} سهم):")
+        for n, ps in sorted(acc["pos"].items(), key=lambda kv: -(kv[1]["last_px"] / kv[1]["entry_px"])):
+            val = ps["shares"] * ps["last_px"]
+            pnl = val - ps["cost"]
+            stop = pa.stop_px(ps, p["trail_k"])
+            L_.append(f"- {n}: {ps['shares']:,} سهم | شراء {pa.px(ps['entry_px'])} يوم {ps['entry_date']} | دلوقتي {pa.px(ps['last_px'])} "
+                      f"= {pa.money(val)} جنيه ({'+' if pnl >= 0 else '-'}{pa.money(abs(pnl))}، {pnl / ps['cost'] * 100:+.1f}%)"
+                      + (f" | الوقف {pa.px(stop)}" if stop else "") + f" | جلسة {ps['days']} من {p['max_hold']}")
         L_.append("")
-    if not entries and not exits and not holds:
-        L_ += ["⚪ مفيش صفقات النهاردة: الموديل مش شايف فرصة بالشروط (ده قرار كمان - الكاش مركز).", ""]
-    if opened_now or closed_now:
-        L_.append("🧾 اللي اتنفذ في المحفظة التجريبية من آخر تقرير:")
-        if opened_now:
-            L_.append("• دخول: " + ", ".join(n.replace(".CA", "") for n in opened_now))
-        for c in closed_now:
-            L_.append(f"• خروج {c['name'].replace('.CA', '')}: {c['ret']:+.1f}% صافي في {c['days']} جلسة ({sc.REASON_AR.get(c['why'], c['why'])})")
-        L_.append("")
-    eqh = state.get("equity") or []
-    closed = state.get("closed") or []
-    if len(eqh) >= 2:
-        e0, m0 = eqh[0][1], eqh[0][2]
-        e1, m1 = eqh[-1][1], eqh[-1][2]
-        wins = sum(1 for c in closed if c["ret"] > 0)
-        L_.append(f"💼 المحفظة التجريبية من {state.get('start')}: {(e1 / e0 - 1) * 100:+.1f}% | السوق: {(m1 / m0 - 1) * 100:+.1f}%"
-                  + (f" | صفقات مقفولة {len(closed)} (كسبانة {wins})" if closed else ""))
+    if not buys and not sells and not acc["pos"]:
+        L_ += ["⚪ مفيش أوامر لبكره والحساب كله كاش: الموديل مش شايف فرصة بالشروط (ده قرار كمان).", ""]
+    eqh = acc["equity"]
+    mret = (eqh[-1][2] / eqh[0][2] - 1) * 100 if len(eqh) >= 2 else None
+    L_ += pa.summary_lines(acc, None, mret)
     if meta and meta.get("test"):
         m = meta["test"]
         L_.append(f"📊 الباكتست على {m.get('n', 0)} صفقة في 2022+ (فترة الموديل مشافهاش): عائد سنوي {m['cagr']:+.0f}% "
-                  f"مقابل {m['mkt_cagr']:+.0f}% للسوق | أقصى هبوط {m['mdd']:.0f}% | كسبانة {m['win']:.0f}% | "
-                  f"متوسط المكسب {m['avg_win']:+.1f}% والخسارة {m['avg_loss']:+.1f}%")
+                  f"مقابل {m['mkt_cagr']:+.0f}% للسوق | أقصى هبوط {m['mdd']:.0f}% | كسبانة {m['win']:.0f}%")
     L_ += ["",
-           "📌 القواعد (ثابتة ومتختبرة، مش رأي يومي):",
-           f"• دخول: السهم من أعلى {round((1 - p['q_in']) * 100)}% في ترتيب الموديل"
-           + (" وفوق متوسط 50 يوم" if p["trend50"] else "") + (" والسوق في اتجاه صاعد" if p["regime"] else "") + ".",
-           "• خروج: " + ", ".join(x for x in [
-               f"وقف متحرك {p['trail_k']}× التذبذب اليومي تحت أعلى سعر من وقت الدخول" if p["trail_k"] else None,
-               f"أو ترتيبه نزل تحت {p['q_out']:.0%} (بعد {p['min_hold']} جلسات على الأقل)",
-               f"أو عدّى {p['max_hold']} جلسة",
+           "📌 القواعد (ثابتة ومتختبرة):",
+           f"• شراء: السهم من أعلى {round((1 - p['q_in']) * 100)}% في ترتيب الموديل"
+           + (" وفوق متوسط 50 يوم" if p["trend50"] else "") + (" والسوق في اتجاه صاعد" if p["regime"] else "")
+           + f"، بـ1/{p['max_pos']} من قيمة الحساب، وأقصى {p['max_pos']} أسهم مع بعض.",
+           "• بيع: " + "، ".join(x for x in [
+               f"لحظيًا لو السعر كسر الوقف المتحرك ({p['trail_k']}× التذبذب اليومي تحت أعلى قفلة من وقت الشراء)" if p["trail_k"] else None,
+               f"أو ترتيبه نزل تحت {p['q_out']:.0%}", f"أو عدّى {p['max_hold']} جلسة",
                "أو السوق قلب لهابط" if p["exit_on_regime"] else None] if x) + ".",
-           f"• كل صفقة 1/{p['max_pos']} من رأس المال، وأقصى {p['max_pos']} صفقات مع بعض.",
-           "⚠️ دي محفظة تجريبية بقواعد إحصائية، مش ضمان مكسب. أي سهم ممكن ينزل، والوقف بيحد الخسارة مش بيمنعها. القرار ليك."]
+           f"• عمولة {fee * 100:.1f}% في كل عملية محسوبة في الأرقام.",
+           "⚠️ حساب تجريبي بفلوس وهمية. مش ضمان مكسب، والوقف بيحد الخسارة مش بيمنعها."]
     return "\n".join(L_), target
 
 
-def write_forecast(D, p, bk, exits, entries, target):
+def write_forecast(D, p, acc, exits, entries, target):
     t = len(D["dates"]) - 1
     names, S = D["names"], D["S"]
     status = {}
     for i in range(len(names)):
         if not np.isfinite(S[t, i]):
             continue
-        st = ("دخول" if i in entries else "خروج" if (i in exits or i in bk["pend_x"]) else
-              "احتفاظ" if i in bk["pos"] else "مراقبة")
-        status[names[i].replace(".CA", "")] = {"score": round(float(S[t, i]), 4), "status": st}
+        n = str(names[i]).replace(".CA", "")
+        st = ("دخول" if i in entries else "خروج" if i in exits else "احتفاظ" if n in acc["pos"] else "مراقبة")
+        status[n] = {"score": round(float(S[t, i]), 4), "status": st}
     out = {"data_date": str(D["dates"][t].date()), "target": str(target), "params": p,
            "regime_on": bool(D["reg"][p["regime"]][t]), "stocks": status}
     os.makedirs(os.path.dirname(FORECAST), exist_ok=True)
@@ -330,10 +310,15 @@ def main():
         S = today_scores(C, H, L, V, O, liquid, lock, a)
         D = sc.prepare(C, H, L, V, O, S, liquid, lock)
         p, meta = load_params()
-        bk, exits, entries, closed_now, opened_now, state = run_book(D, p, not a.no_record)
-        text, target = build_message(D, p, meta, bk, exits, entries, closed_now, opened_now, state, now, note)
+        bars = {}
+        if a.source == "yfinance":
+            import egxdata
+            bars = egxdata.load_bars()
+        acc, done, exits, entries = run_account(D, p, bars)
+        text, target = build_message(D, p, meta, acc, done, now, note)
         if not a.no_record:
-            write_forecast(D, p, bk, exits, entries, target)
+            pa.save(acc)
+            write_forecast(D, p, acc, exits, entries, target)
         os.makedirs(OUT_DIR, exist_ok=True)
         with open(os.path.join(OUT_DIR, "report_latest.md"), "w", encoding="utf-8") as fh:
             fh.write(text)
