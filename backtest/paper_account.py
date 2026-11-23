@@ -59,6 +59,27 @@ def save(acc):
         json.dump(acc, fh, ensure_ascii=False, indent=1)
 
 
+def git_sync(msg="paper account [skip ci]"):
+    """على GitHub Actions: commit + push لملف الحساب فورًا (عشان أي تنفيذ لحظي ميضيعش لو الـjob وقع، و"محفظتي" تشوفه)."""
+    if not os.environ.get("GITHUB_ACTIONS"):
+        return
+    import subprocess
+    import random
+    import time as _t
+    run = lambda *a: subprocess.run(list(a), cwd=ROOT, capture_output=True, text=True, timeout=120)  # noqa: E731
+    run("git", "add", FILE)
+    if run("git", "diff", "--cached", "--quiet").returncode == 0:
+        return
+    run("git", "commit", "-m", msg)
+    ref = os.environ.get("GITHUB_REF_NAME", "main") or "main"
+    for _ in range(5):
+        run("git", "pull", "--rebase", "--autostash", "-X", "theirs", "origin", ref)
+        if run("git", "push").returncode == 0:
+            return
+        _t.sleep(3 + random.random() * 5)
+    print("[الحساب التجريبي] push فشل، هيتعمل في آخر الـjob")
+
+
 def stop_px(ps, k):
     return ps["peak_px"] * (1 - k * ps["atr"]) if k else None
 
@@ -82,7 +103,7 @@ def buy(acc, name, price, budget, when, why="signal", atr=0.03):
     f = amount * fee
     acc["cash"] -= amount + f
     acc["pos"][name] = {"shares": shares, "entry_px": price, "entry_date": when[0], "cost": amount + f,
-                        "peak_px": price, "last_px": price, "atr": float(atr), "days": 0}
+                        "peak_px": price, "last_px": price, "atr": float(atr), "days": 0, "last_date": ""}
     rec = {"date": when[0], "time": when[1], "side": "buy", "name": name, "shares": shares, "price": price,
            "amount": round(amount, 2), "fee": round(f, 2), "why": why}
     acc["history"].append(rec)
@@ -103,6 +124,32 @@ def sell(acc, name, price, when, why):
            "entry_px": ps["entry_px"], "days": ps["days"]}
     acc["history"].append(rec)
     return rec
+
+
+def adjust_actions(acc, prevs, day, prev_day):
+    """أسهم مجانية / تجزئة: TradingView بيعدّل قفلة امبارح (prev) بعد التوزيع، فلو prev بعيد عن آخر سعر عندنا
+    بأكتر من 5% يبقى فيه إجراء على السهم → نضرب عدد الأسهم في المعامل ونقسم الأسعار عليه (القيمة متتغيرش).
+    من غير ده، سهم وزّع مجاني 20% كان هيبان كأنه وقع 20% ويتباع غلط. بيرجّع قايمة رسايل."""
+    out = []
+    for n, ps in acc["pos"].items():
+        pv = prevs.get(n)
+        # بنقارن بس لو آخر سعر عندنا هو قفلة الجلسة اللي قبلها بالظبط (وإلا الفرق ممكن يكون حركة حقيقية)
+        if (not pv or pv <= 0 or ps.get("adj_day") == day or ps.get("entry_date") == day
+                or not prev_day or ps.get("last_date") != prev_day):
+            continue
+        f = ps["last_px"] / pv
+        if 0.95 <= f <= 1.05 or not (0.2 <= f <= 10):
+            continue
+        old = ps["shares"]
+        ps["shares"] = int(round(old * f))
+        for k in ("entry_px", "peak_px", "last_px"):
+            ps[k] = ps[k] / f
+        ps["adj_day"] = day
+        acc["history"].append({"date": day, "time": "", "side": "action", "name": n, "shares": ps["shares"],
+                               "price": ps["last_px"], "amount": 0, "fee": 0, "why": f"تعديل {f:.4f}"})
+        out.append(f"ℹ️ {n}: إجراء على السهم (أسهم مجانية/تجزئة بمعامل {f:.3f}) → الأسهم بقت {ps['shares']:,} بدل {old:,}، "
+                   f"وسعر الشراء المعدّل {px(ps['entry_px'])}. قيمة المركز متغيرتش.")
+    return out
 
 
 def fill_orders(acc, opens, prevs, when):
@@ -138,6 +185,8 @@ def trade_line(r, day=None):
 
 
 def _trade_line(r):
+    if r["side"] == "note":
+        return r["why"]
     if r["side"] == "buy":
         return (f"🛒 اشتريت {r['shares']:,} سهم {r['name']} بسعر {px(r['price'])} = {money(r['amount'])} جنيه "
                 f"(+ عمولة {money(r['fee'])})")
@@ -195,6 +244,16 @@ def live_tick(snap, now, kp, send, today=None):
     live = {n: r for n, r in snap.items() if r.get("date") == today}
     if not live:
         return False
+    # 0) أسهم مجانية/تجزئة قبل أي مقارنة بالوقف
+    try:
+        import egxdata
+        prev_day = max([d for d in egxdata.load_bars() if d < today] or [None])
+    except Exception:  # noqa: BLE001
+        prev_day = None
+    adj = adjust_actions(acc, {n: r.get("prev") for n, r in live.items()}, today, prev_day)
+    if adj:
+        changed = True
+        send("\n".join(adj))
     # 1) أوامر الافتتاح
     if acc["orders"] and (now.hour, now.minute) >= (10, 2):
         opens = {n: (r.get("open") or None) for n, r in live.items()}
@@ -255,4 +314,5 @@ def live_tick(snap, now, kp, send, today=None):
         send("\n".join(L))
     if changed:
         save(acc)
+        git_sync()
     return changed

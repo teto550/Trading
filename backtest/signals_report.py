@@ -135,6 +135,10 @@ def run_account(D, p, bars):
             if d <= acc["last_date"]:
                 continue
             raw = {n: _raw(D, bars, tt, n, idx[n]) for n in set(acc["pos"]) | {o["name"] for o in acc["orders"]} if n in idx}
+            bday = bars.get(d, {})
+            pday = str(D["dates"][tt - 1].date()) if tt > 0 else None
+            for msg in pa.adjust_actions(acc, {n: bday[n][5] for n in acc["pos"] if n in bday and bday[n][5]}, d, pday):
+                done.append({"side": "note", "name": "", "why": msg, "date": d})
             # 1) أوامر ماتنفذتش لحظيًا: تتنفذ بافتتاح اليوم
             if acc["orders"]:
                 opens = {n: (r[0] if np.isfinite(r[0]) else None) for n, r in raw.items()}
@@ -157,6 +161,7 @@ def run_account(D, p, bars):
                 if np.isfinite(c):
                     ps["last_px"] = float(c)
                     ps["peak_px"] = max(ps["peak_px"], float(c))
+                    ps["last_date"] = d
                 if ps["entry_date"] < d:
                     ps["days"] += 1
             mk *= 1 + D["mkt"][tt]
@@ -172,6 +177,7 @@ def run_account(D, p, bars):
             if np.isfinite(c):
                 ps["last_px"] = float(c)
                 ps["peak_px"] = max(ps["peak_px"], float(c))
+                ps["last_date"] = day
     today_hist = [h for h in acc["history"] if h["date"] == day and h not in done]
     # قرارات بكره (نفس swing_core.decide)
     pos_i = {idx[n]: {"rel": ps["last_px"] / ps["entry_px"], "peak": ps["peak_px"] / ps["entry_px"],
@@ -247,6 +253,14 @@ def build_message(D, p, meta, acc, done, now, note, picks=None, pred_res=None):
     buys = [o for o in acc["orders"] if o["side"] == "buy"]
     sells = [o for o in acc["orders"] if o["side"] == "sell"]
     L_ = [f"🧭 البوت - جلسة {AR_DAYS[target.weekday()]} {target} (على قفلة {data_date})"]
+    expect = pd.Timestamp(now.date())
+    if not (now.weekday() in TRADING_DAYS and (now.hour, now.minute) >= (15, 0)):
+        expect -= pd.Timedelta(days=1)
+    while expect.weekday() not in TRADING_DAYS:
+        expect -= pd.Timedelta(days=1)
+    if pd.Timestamp(data_date) < expect:
+        L_.append(f"⚠️ آخر بيانات عندي قفلة {data_date} ومتوقع {expect.date()}: يا إما إجازة رسمية، يا إما مصدر الأسعار "
+                  "(TradingView) واقع. لو مش إجازة قولّي.")
     if note:
         L_.append(note)
     L_.append("")
