@@ -162,14 +162,19 @@ def fill_orders(acc, opens, prevs, when):
             left.append(o)
             continue
         if o["side"] == "sell":
-            r = sell(acc, o["name"], op, when, o["why"])
+            ps0 = acc["pos"].get(o["name"], {})
+            slip = o.get("slip", ps0.get("slip", 0.0))
+            r = sell(acc, o["name"], round(op * (1 - slip), 4), when, o["why"])
         else:
             pv = prevs.get(o["name"])
             if pv and op >= pv * (1 + LIMIT_GAP):
                 done.append({"side": "skip", "name": o["name"], "price": op,
                              "why": "فتح على الحد الأعلى، مش هنطارده"})
                 continue
-            r = buy(acc, o["name"], op, o["budget"], when, o.get("why", "signal"), o.get("atr", 0.03))
+            slip = o.get("slip", 0.0)       # نص فرق سعر الشراء/البيع المقدّر: بنشتري أغلى شوية من الافتتاح زي الحقيقة
+            r = buy(acc, o["name"], round(op * (1 + slip), 4), o["budget"], when, o.get("why", "signal"), o.get("atr", 0.03))
+            if r:
+                acc["pos"][o["name"]]["slip"] = slip
             if r is None:
                 done.append({"side": "skip", "name": o["name"], "price": op, "why": "الكاش مش كفاية"})
                 continue
@@ -277,7 +282,7 @@ def live_tick(snap, now, kp, send, today=None):
         stop = stop_px(ps, k)
         deep = stop_px(ps, k + extra) if (k and extra is not None) else None
         if deep and p <= deep:
-            rec = sell(acc, n, p, when, "stop_live")
+            rec = sell(acc, n, round(p * (1 - ps.get("slip", 0.0)), 4), when, "stop_live")
             if rec:
                 sold.append((rec, deep, r))
             continue

@@ -186,10 +186,16 @@ def run_account(D, p, bars):
     exits, entries = sc.decide(D, p, t, pos_i, pend)
     eq = pa.equity(acc)
     for i, why in exits.items():
-        acc["orders"].append({"side": "sell", "name": names[i], "why": why, "decided": day, "ref_px": float(D["C"][t, i])})
+        acc["orders"].append({"side": "sell", "name": names[i], "why": why, "decided": day, "ref_px": float(D["C"][t, i]),
+                              "slip": float(D["hs"][t, i]) if p.get("real_cost") else 0.0})
     for i in entries:
+        atr_i = float(D["atr"][t, i])
+        budget = eq / p["max_pos"]
+        if p.get("size", "eq") != "eq":          # حجم حسب المخاطرة (نفس swing_core.exec_open)
+            budget = min(eq * float(p["size"]) / ((p["trail_k"] or 2.5) * atr_i), eq * 0.30)
         acc["orders"].append({"side": "buy", "name": names[i], "why": "signal", "decided": day,
-                              "budget": round(eq / p["max_pos"], 2), "ref_px": float(D["C"][t, i]),
+                              "budget": round(budget, 2), "ref_px": float(D["C"][t, i]),
+                              "slip": float(D["hs"][t, i]) if p.get("real_cost") else 0.0,
                               "atr": float(D["atr"][t, i]), "score": round(float(D["S"][t, i]), 4)})
     return acc, done + today_hist, exits, entries
 
@@ -273,7 +279,9 @@ def build_message(D, p, meta, acc, done, now, note, picks=None, pred_res=None):
             tag = " ← 🟢 هيشتريه بكره" if n in bset else (" ← 📂 معانا في المحفظة" if n in hset else "")
             L_.append(f"{k}. {n} | {pa.px(float(D['C'][t, i]))}{tag}")
         if p["regime"] and not reg_on:
-            L_.append("⏸ السوق في اتجاه هابط، فالبوت مش هيشتري حاجة جديدة لحد ما يرجع صاعد.")
+            br = float(D["breadth"][t]) * 100
+            L_.append(f"⏸ فلتر السوق ({sw.REG_AR.get(p['regime'], p['regime'])}) قافل، فالبوت مش هيشتري جديد دلوقتي "
+                      f"(نسبة الأسهم فوق متوسط 50 يوم: {br:.0f}%).")
         L_.append("")
     # 2) أوامر بكره
     if sells or buys:
@@ -285,7 +293,7 @@ def build_message(D, p, meta, acc, done, now, note, picks=None, pred_res=None):
                 L_.append(f"🔴 بيع {ps['shares']:,} سهم {o['name']} ≈ {pa.money(ps['shares'] * ps['last_px'])} جنيه "
                           f"({'+' if pnl >= 0 else '-'}{pa.money(abs(pnl))}) - {pa.REASON_AR.get(o['why'], o['why'])}")
         for o in buys:
-            sh = int(o["budget"] // (o["ref_px"] * (1 + fee)))
+            sh = int(o["budget"] // (o["ref_px"] * (1 + o.get("slip", 0)) * (1 + fee)))
             L_.append(f"🟢 شراء ~{sh:,} سهم {o['name']} × {pa.px(o['ref_px'])} ≈ {pa.money(sh * o['ref_px'])} جنيه")
         L_.append("")
     # 3) اللي اتنفذ
@@ -367,9 +375,10 @@ def main():
                 C, H, L, V, O = (x[keep] for x in (C, H, L, V, O))
             C, H, L, V, O, note = egxdata.extend_panel(C, H, L, V, O, now)
             _f, _m, _n, _noc, lock, liquid, _fl = bt.build_features(C, H, L, V, O, a.min_turnover)
+        p, meta = load_params()
+        a.sector = bool((meta or {}).get("sector"))
         S = today_scores(C, H, L, V, O, liquid, lock, a)
         D = sc.prepare(C, H, L, V, O, S, liquid, lock)
-        p, meta = load_params()
         bars = {}
         if a.source == "yfinance":
             import egxdata

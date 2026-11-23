@@ -6,13 +6,16 @@ on:
         description: "إعادة تدريب الدرجات من الأول"
         required: false
         default: "false"
+  push:
+    branches: [improve2]
+    paths: [backtest/swing.py, backtest/swing_core.py]
 concurrency:
   group: swing-backtest
   cancel-in-progress: true
 jobs:
   swing:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 170
     permissions:
       contents: write
     steps:
@@ -22,6 +25,9 @@ jobs:
           python-version: "3.11"
           cache: pip
       - run: pip install -r backtest/requirements.txt
+      - name: Update universe + sectors (TradingView)
+        continue-on-error: true
+        run: python -u update_universe.py
       - name: Run swing backtest
         run: |
           set -o pipefail
@@ -33,7 +39,7 @@ jobs:
         run: |
           git config user.name "alert-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add -A backtest/results
+          git add -A backtest/results tickers.txt data
           git diff --cached --quiet || git commit -m "swing backtest results [skip ci]"
           for i in 1 2 3 4 5; do
             git pull --rebase --autostash -X theirs origin "${GITHUB_REF_NAME:-main}" || true
