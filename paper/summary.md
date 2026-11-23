@@ -1,20 +1,20 @@
-# EGX Paper Trade - آخر تحديث 2026-11-22 22:33
+# EGX Paper Trade - آخر تحديث 2026-11-23 13:53
 
 - احتفاظ 20 يوم تداول، شراء عند افتتاح اليوم التالي للإشارة، تكلفة 20.0 bps في الاتجاه
-- دفعات متسجلة: 30 | ناضجة (عدّى عليها 20 يوم): 10
+- دفعات متسجلة: 31 | ناضجة (عدّى عليها 20 يوم): 11
 - توقع الباكتست: حوالي +0.28% للصفقة بعد التكلفة (ميزة صغيرة وغير ثابتة)
 
 | | الفرق عن السوق | بعد التكلفة | نسبة الدفعات الكسبانة | تذبذب الدفعة |
 |---|---|---|---|---|
-| XGBoost | -0.88% | -1.28% | 20% (10) | 2.33% |
-| Low-vol (مرجع) | +0.08% | -0.32% | 30% (10) | 2.51% |
+| XGBoost | -0.86% | -1.26% | 18% (11) | 2.21% |
+| Low-vol (مرجع) | +0.01% | -0.39% | 27% (11) | 2.39% |
 
-متوسط عائد السوق (الأسهم الصالحة) لنفس الفترات: -1.60% للصفقة
-الدفعات من 2026-10-07 إلى 2026-10-21
+متوسط عائد السوق (الأسهم الصالحة) لنفس الفترات: -1.70% للصفقة
+الدفعات من 2026-10-07 إلى 2026-10-22
 
-## اختيارات آخر دفعة (2026-11-19)
-XGBoost (29): SNFC, EMFD, CPCI, ETRS, ALCN, EGAL, FAIT, SKPC, ICID, CIEB, EFIH, ABUK, AIFI, CSAG, GBCO, RTVC, CIRA, SAUD, ISPH, AXPH, ACGC, PHTV, SDTI, ADCI, HRHO, CCAP, MICH, DOMT, UNIP
+## اختيارات آخر دفعة (2026-11-22)
+XGBoost (27): SNFC, ICID, SKPC, SAUD, CPCI, EMFD, EGAL, ETRS, ALCN, AIFI, CIEB, EFIH, ABUK, CSAG, FAIT, CCAP, GBCO, EAST, HRHO, ORWE, TMGH, SDTI, PHTV, CICH, RTVC, CIRA, SPIN
 
-LightGBM+Alpha158 (29): AIFI, SPIN, RTVC, CIEB, SAUD, SDTI, EBSC, MFPC, DOMT, AMIA, OBRI, SCEM, LCSW, EMFD, ORWE, UEFM, SPMD, FAIT, CEFM, SNFC, ABUK, DAPH, ELEC, UNIP, CSAG, HRHO, CICH, CIRA, GBCO
+LightGBM+Alpha158 (27): AIFI, CSAG, ETRS, SAUD, RTVC, LCSW, ELEC, EMFD, GBCO, EBSC, MFPC, FAIT, RACC, EAST, ALCN, SDTI, AREH, SCEM, MFSC, CIEB, CIRA, ABUK, ELKA, DAPH, SPIN, CCRS, ORWE
 
-Low-vol (29): CPCI, COMI, EMFD, SNFC, OLFI, SDTI, SKPC, EGAL, TMGH, PHTV, ALCN, CICH, CIEB, AMOC, FAIT, CCAP, SWDY, CIRA, BINV, SAUD, TALM, CLHO, ECAP, ACAMD, ADIB, ORWE, GBCO, UEFM, AMIA
+Low-vol (27): CPCI, COMI, SKPC, SNFC, PHTV, OLFI, SDTI, EMFD, EGAL, TMGH, CICH, CIEB, FAIT, ALCN, EFIH, SWDY, ADIB, AMOC, CLHO, GBCO, TALM, BINV, CCAP, ECAP, ORWE, CIRA, ACAMD
