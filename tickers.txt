@@ -258,3 +258,17 @@ HBCO.CA
 CPME.CA
 TWSA.CA
 KORA.CA
+
+# --- اتضاف أوتوماتيك من TradingView (update_universe.py) ---
+AMES.CA  # Alexandria New Medical Center Co.
+DCCC.CA  # Damietta Container and Cargo Handling
+EEII.CA  # El Arabia Engineering Industries
+EGREF.CA  # Egyptians Real Estate Fund
+FAITA.CA  # Faisal Islamic Bank of Egypt
+GPPL.CA  # Golden Pyramids Plaza
+ICLE.CA  # International Co. for Leasing SAE
+IRON.CA  # Egyptian Iron & Steel
+KZPC.CA  # Kafr El Zayat Pesticides & Chemical Co.
+MEGM.CA  # Middle East Glass Manufacturing SAE
+NDRL.CA  # National Drilling Co.
+SPHT.CA  # El Shams Pyramids Co. for Hotels & Touristic Projects SAE
