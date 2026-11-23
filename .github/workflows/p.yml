@@ -1,0 +1,8 @@
+name: p
+on: {push: {branches: [probe2]}}
+jobs:
+  p:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install requests && python tools/p.py
