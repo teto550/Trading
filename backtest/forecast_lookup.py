@@ -177,3 +177,116 @@ def forecast_text(base, news_info=None, now=None):
     L += ["", "⚠️ قرار 🧭 هو المعتمد للدخول والخروج (اتختبر كمحفظة كاملة). ترتيبات الجلسة و5/10 أيام إحصائية ضعيفة "
               "ومش توصية. القرار والمسؤولية ليك."]
     return "\n".join(L)
+
+
+# ============================================================
+# رد "كود سهم" الجديد: رد واحد مبني على قواعد البوت الحية وأرقام من التاريخ الفعلي بس
+# ============================================================
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def _acc():
+    try:
+        with open(os.path.join(ROOT_DIR, "signals", "account.json"), encoding="utf-8") as fh:
+            return json.load(fh)
+    except (OSError, ValueError):
+        return None
+
+
+def _desc(base):
+    try:
+        with open(os.path.join(ROOT_DIR, "data", "sectors.json"), encoding="utf-8") as fh:
+            d = json.load(fh).get(base, {})
+        return d.get("desc"), d.get("sector")
+    except (OSError, ValueError):
+        return None, None
+
+
+def stock_view(base, live=None, news_info=None):
+    """live: {close, prev, date} من TradingView (اختياري)."""
+    sw = _load("swing.json")
+    desc, sector = _desc(base)
+    head = f"🔎 {base}" + (f" - {desc}" if desc else "") + (f" ({sector})" if sector and sector != "?" else "")
+    if not sw:
+        return head + "\nبيانات البوت لسه متعملتش (بتتحدث كل يوم بعد القفل)."
+    st = sw.get("stocks", {}).get(base)
+    p = sw.get("params", {})
+    L = [head]
+    if not st or st.get("close") is None:
+        return "\n".join(L + ["مفيش بيانات أسعار كفاية للسهم ده (ممكن يكون موقوف أو جديد)."])
+    px = f"قفلة {sw['data_date']}: {_px(st['close'])}"
+    if live and live.get("close"):
+        ch = (live["close"] / live["prev"] - 1) * 100 if live.get("prev") else None
+        px += f" | دلوقتي {_px(live['close'])}" + (f" ({ch:+.1f}%)" if ch is not None else "")
+    L.append(px)
+    L.append("")
+    acc = _acc() or {}
+    pos = acc.get("pos", {}).get(base)
+    status = st["status"]
+    q_in = p.get("q_in", 0.9)
+    top = max(1, round((1 - st["score"]) * 100)) if st.get("score") is not None else None
+    need_top = round((1 - q_in) * 100)
+    # 1) القرار
+    if status == "دخول":
+        L.append("🧭 قرار البوت: 🟢 هيشتريه عند افتتاح الجلسة الجاية")
+    elif status == "خروج":
+        L.append("🧭 قرار البوت: 🔴 هيبيعه عند افتتاح الجلسة الجاية")
+    elif pos:
+        L.append("🧭 قرار البوت: 🔵 معانا في المحفظة - احتفاظ")
+    else:
+        L.append("🧭 قرار البوت: ⚪ مش هيشتريه دلوقتي")
+    # 2) الشروط
+    if pos:
+        cur = live["close"] if live and live.get("close") else pos["last_px"]
+        pnl = pos["shares"] * cur - pos["cost"]
+        k = p.get("trail_k") or 0
+        stop = pos["peak_px"] * (1 - k * pos["atr"]) if k else None
+        L += [f"• معانا {pos['shares']:,} سهم من {pos['entry_date']} بسعر {_px(pos['entry_px'])} → "
+              f"{'+' if pnl >= 0 else '-'}{abs(pnl):,.0f} جنيه ({pnl / pos['cost'] * 100:+.1f}%)"]
+        if stop:
+            L.append(f"• الوقف المتحرك {_px(stop)} (بعيد {(cur / stop - 1) * 100:.1f}%): لو قفل تحته يتباع الافتتاح اللي بعده")
+        L.append(f"• بيتباع كمان لو ترتيبه نزل تحت أعلى {round((1 - p.get('q_out', 0.3)) * 100)}% "
+                 f"(دلوقتي أعلى {top}%) أو عدّى {p.get('max_hold', 60)} جلسة (عدّى {pos['days']})")
+    else:
+        ok = lambda b: "✅" if b else "❌"  # noqa: E731
+        L.append(f"{ok(st['liquid'])} السيولة كفاية للتداول")
+        if top is not None:
+            L.append(f"{ok(st['score'] >= q_in)} ترتيبه: أعلى {top}% من الأسهم (الشرط: من أعلى {need_top}%)")
+        if p.get("trend50"):
+            L.append(f"{ok(st['sma50'])} فوق متوسط 50 جلسة (اتجاهه صاعد)")
+        if p.get("regime"):
+            need = sw.get("regime_need")
+            L.append(f"{ok(sw.get('regime_on'))} السوق في اتجاه صاعد"
+                     + ("" if sw.get("regime_on") or not need else f" (مؤشر السوق محتاج يطلع {need:+.1f}%)"))
+        allok = st["liquid"] and st.get("score", 0) >= q_in and (st["sma50"] or not p.get("trend50")) and sw.get("regime_on")
+        if allok and status == "مراقبة":
+            L.append("ℹ️ مستوفي الشروط، بس المحفظة مليانة أو فيه أسهم ترتيبها أعلى منه.")
+    # 3) من التاريخ: الأسهم اللي كانت في نفس الترتيب
+    hist = sw.get("hist") or {}
+    reg = "on" if sw.get("regime_on") else "off"
+    if st.get("score") is not None and hist.get(reg):
+        d = str(min(9, int(st["score"] * 10)))
+        h = hist[reg].get(d)
+        if h:
+            L += ["", f"📊 من التاريخ (2012-{sw['data_date'][:4]}): الأسهم اللي كانت في نفس ترتيبه "
+                      f"والسوق {'صاعد' if reg == 'on' else 'هابط'} زي دلوقتي ({h['n']:,} حالة)، بعد {sw.get('hist_h', 40)} جلسة:",
+                  f"   طلعت في {h['win']:.0f}% من المرات | المتوسط {h['avg']:+.1f}% والوسيط {h['med']:+.1f}% | "
+                  f"الفرق عن السوق {h['exc']:+.1f}%"]
+            best = hist[reg].get("9")
+            if best and d != "9":
+                L.append(f"   (للمقارنة: أعلى 10% في الترتيب: طلعت {best['win']:.0f}% من المرات، المتوسط {best['avg']:+.1f}%)")
+    tr = st.get("track")
+    if tr:
+        L.append(f"🤖 البوت بنفس القواعد عمل على السهم ده {tr['n']} صفقة من 2012: كسب في {tr['win']}، "
+                 f"متوسط الصفقة {tr['avg']:+.1f}%" + (f" | آخر مرة {tr['last'][0]} → {tr['last'][1]}: {tr['last'][2]:+.1f}%"
+                                                     if tr.get("last") else ""))
+    elif st.get("score") is not None:
+        L.append("🤖 البوت بنفس القواعد ماشتراش السهم ده قبل كده في الباكتست (2012+).")
+    # 4) أرقام السهم
+    L += ["", f"📈 تذبذبه اليومي {st['atr']:.1f}% | تكلفة الشراء+البيع حوالي {st['spread'] * 2 + 0.3:.1f}% "
+              + (f"| بعيد عن أعلى سعر في سنة {st['from_hi']:+.0f}%" if st.get("from_hi") is not None else "")]
+    if news_info and news_info.get("head"):
+        t_, src, age = news_info["head"]
+        L.append(f"📰 آخر خبر: {t_} ({src}{'، ' + str(age) if age else ''})")
+    L.append("⚠️ أرقام من تاريخ السوق الفعلي، مش ضمان للجاي.")
+    return "\n".join(L)

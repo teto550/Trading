@@ -358,18 +358,88 @@ def build_message(D, p, meta, acc, done, now, note, picks=None, pred_res=None):
     return "\n".join(L_), target
 
 
+HIST_H = 40           # إحصائيات "اللي كانوا في نفس الترتيب" بعد كام جلسة
+
+
+def rank_history(D, H=HIST_H, start="2012-01-01"):
+    """لكل عُشر في ترتيب البوت: الأسهم اللي كانت فيه طلعت كام بعد H جلسة (من قفلة اليوم اللي بعده)،
+    مقارنة بالسوق، ونسبة المرات اللي طلعت فيها. كله من الماضي الفعلي، مش تقدير."""
+    S = D["S"]
+    T = len(D["dates"])
+    if np.isfinite(S[:-H]).sum() < 5000:
+        return None
+    lr = np.log1p(D["rc"])
+    cs = np.vstack([np.zeros((1, lr.shape[1])), np.cumsum(lr, axis=0)])
+    fwd = np.full(S.shape, np.nan)
+    fwd[:T - H - 1] = np.exp(cs[H + 2:T + 1] - cs[2:T - H + 1]) - 1        # من قفلة t+1 لقفلة t+1+H
+    mk = np.concatenate([[0], np.cumsum(np.log1p(D["mkt"]))])
+    mf = np.full(T, np.nan)
+    mf[:T - H - 1] = np.exp(mk[H + 2:T + 1] - mk[2:T - H + 1]) - 1
+    t0 = int(np.searchsorted(D["dates"], pd.Timestamp(start)))
+    out = {}
+    for lab, regmask in (("all", np.ones(T, bool)), ("on", D["reg"][100]), ("off", ~D["reg"][100])):
+        rows = {}
+        for d in range(10):
+            m = np.isfinite(S) & np.isfinite(fwd) & D["ok_in"] & (np.floor(np.clip(S, 0, 0.9999) * 10) == d)
+            m[:t0] = False
+            m &= regmask[:, None]
+            v = fwd[m]
+            if len(v) < 200:
+                continue
+            ex = v - np.broadcast_to(mf[:, None], S.shape)[m]
+            rows[d] = {"n": int(len(v)), "avg": round(float(v.mean() * 100), 2), "med": round(float(np.median(v) * 100), 2),
+                       "win": round(float((v > 0).mean() * 100), 1), "exc": round(float(ex.mean() * 100), 2)}
+        out[lab] = rows
+    return out
+
+
+def stock_track(D, p):
+    """سجل البوت لكل سهم في الباكتست بنفس القواعد الحية (2012+): عدد الصفقات، كسبانة، متوسط."""
+    S = D["S"]
+    if np.isfinite(S[:-60]).sum() < 5000:
+        return {}
+    t0 = int(np.searchsorted(D["dates"], pd.Timestamp("2012-01-01")))
+    _e, _x, trades = sc.simulate(D, p, t0, len(D["dates"]))
+    out = {}
+    for tr in trades:
+        if tr.get("open"):
+            continue
+        n = str(D["names"][tr["i"]]).replace(".CA", "")
+        o = out.setdefault(n, {"n": 0, "win": 0, "sum": 0.0, "last": None})
+        o["n"] += 1
+        o["win"] += int(tr["ret"] > 0)
+        o["sum"] += tr["ret"]
+        o["last"] = [str(D["dates"][tr["et"]].date()), str(D["dates"][tr["xt"]].date()), round(tr["ret"] * 100, 1)]
+    for o in out.values():
+        o["avg"] = round(o.pop("sum") / o["n"] * 100, 2)
+    return out
+
+
 def write_forecast(D, p, acc, exits, entries, target):
     t = len(D["dates"]) - 1
-    names, S = D["names"], D["S"]
+    names, S, C = D["names"], D["S"], D["C"]
+    try:
+        hist = rank_history(D)
+        track = stock_track(D, p)
+    except Exception as e:  # noqa: BLE001
+        print(f"[signals] إحصائيات الترتيب فشلت: {e}")
+        hist, track = None, {}
+    Cf = pd.DataFrame(C).ffill().values
     status = {}
     for i in range(len(names)):
-        if not np.isfinite(S[t, i]):
-            continue
         n = str(names[i]).replace(".CA", "")
+        sc_ = float(S[t, i]) if np.isfinite(S[t, i]) else None
         st = ("دخول" if i in entries else "خروج" if i in exits else "احتفاظ" if n in acc["pos"] else "مراقبة")
-        status[n] = {"score": round(float(S[t, i]), 4), "status": st}
+        c = float(Cf[t, i]) if np.isfinite(Cf[t, i]) else None
+        hi = np.nanmax(Cf[max(0, t - 244):t + 1, i]) if c else None
+        status[n] = {"score": round(sc_, 4) if sc_ is not None else None, "status": st, "close": c,
+                     "liquid": bool(D["ok_in"][t, i]), "sma50": bool(D["sma50"][t, i]),
+                     "atr": round(float(D["atr"][t, i]) * 100, 2), "spread": round(float(D["hs"][t, i]) * 100, 2),
+                     "from_hi": round((c / hi - 1) * 100, 1) if c and hi else None,
+                     "track": track.get(n)}
     out = {"data_date": str(D["dates"][t].date()), "target": str(target), "params": p,
-           "regime_on": bool(D["reg"][p["regime"]][t]), "stocks": status}
+           "regime_on": bool(D["reg"][p["regime"]][t]), "regime_need": regime_need(D, p["regime"]),
+           "breadth": round(float(D["breadth"][t]) * 100, 1), "hist": hist, "hist_h": HIST_H, "stocks": status}
     os.makedirs(os.path.dirname(FORECAST), exist_ok=True)
     with open(FORECAST, "w", encoding="utf-8") as fh:
         json.dump(out, fh, ensure_ascii=False, indent=1)
@@ -414,7 +484,7 @@ def main():
         elif kind == "blend":
             S[t_] = sw.blend_scores(Sml[t_:t_ + 1], sw.alt_scores(C, liquid, "lowvol")[t_:t_ + 1])[0]
         else:
-            S[t_] = sw.make_scores(kind, C, liquid)[t_]
+            S = sw.make_scores(kind, C, liquid)          # تاريخ كامل (رخيص) → إحصائيات وسجل البوت لكل سهم
         D = sc.prepare(C, H, L, V, O, S, liquid, lock)
         bars = {}
         if a.source == "yfinance":
