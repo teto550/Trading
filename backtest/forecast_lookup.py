@@ -249,15 +249,16 @@ def stock_view(base, live=None, news_info=None):
                  f"(دلوقتي أعلى {top}%) أو عدّى {p.get('max_hold', 60)} جلسة (عدّى {pos['days']})")
     else:
         ok = lambda b: "✅" if b else "❌"  # noqa: E731
-        L.append(f"{ok(st['liquid'])} السيولة كفاية للتداول")
+        L.append("✅ سيولته كفاية للتداول" if st["liquid"] else "❌ سيولته قليلة (أقل من مليون جنيه تداول في اليوم) أو مقفول على الحد")
         if top is not None:
             L.append(f"{ok(st['score'] >= q_in)} ترتيبه: أعلى {top}% من الأسهم (الشرط: من أعلى {need_top}%)")
         if p.get("trend50"):
-            L.append(f"{ok(st['sma50'])} فوق متوسط 50 جلسة (اتجاهه صاعد)")
+            L.append("✅ السهم فوق متوسط 50 جلسة (اتجاهه صاعد)" if st["sma50"] else
+                     "❌ السهم تحت متوسط 50 جلسة (لازم يبقى فوقه)")
         if p.get("regime"):
             need = sw.get("regime_need")
-            L.append(f"{ok(sw.get('regime_on'))} السوق في اتجاه صاعد"
-                     + ("" if sw.get("regime_on") or not need else f" (مؤشر السوق محتاج يطلع {need:+.1f}%)"))
+            L.append("✅ السوق في اتجاه صاعد" if sw.get("regime_on") else
+                     "❌ السوق في اتجاه هابط" + (f" (مؤشر السوق محتاج يطلع {need:+.1f}% عشان البوت يشتري أي سهم)" if need else ""))
         allok = st["liquid"] and st.get("score", 0) >= q_in and (st["sma50"] or not p.get("trend50")) and sw.get("regime_on")
         if allok and status == "مراقبة":
             L.append("ℹ️ مستوفي الشروط، بس المحفظة مليانة أو فيه أسهم ترتيبها أعلى منه.")
