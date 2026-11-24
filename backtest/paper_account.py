@@ -22,7 +22,7 @@ from zoneinfo import ZoneInfo
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-FILE = os.path.join(ROOT, "signals", "account.json")
+FILE = os.environ.get("PAPER_ACCOUNT_FILE") or os.path.join(ROOT, "signals", "account.json")
 CAPITAL = float(os.environ.get("PAPER_CAPITAL", "100000"))
 TZ = ZoneInfo("Africa/Cairo")
 LIMIT_GAP = 0.09
