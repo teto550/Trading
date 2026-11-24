@@ -17,7 +17,7 @@ MAX_ABS = 0.25      # أي حركة يومية أكبر من كده = تقسيم
 LIMIT_GAP = 0.09    # افتتاح فوق قفلة امبارح بـ9%+ = غالبًا مقفول على الحد، مش هتلحق تشتري
 
 DEFAULT = dict(q_in=0.95, q_out=0.50, max_pos=8, trail_k=3.0, max_hold=40, min_hold=5,
-               regime=100, trend50=True, exit_on_regime=False, cost=0.002)
+               regime=100, trend50=True, exit_on_regime=False, cost=0.002, size="eq", real_cost=False)
 
 REASON_AR = {"stop": "ضرب الوقف المتحرك", "stop_live": "انعكاس لحظي: كسر الوقف المتحرك خلال الجلسة", "rank": "ترتيبه في الموديل نزل", "time": "خلص مدة الاحتفاظ",
              "regime": "السوق قلب لاتجاه هابط", "end": "نهاية الفترة"}
@@ -51,13 +51,30 @@ def prepare(C, H, L, V, O, S, liquid, lock):
     idx = (1 + rl.mean(axis=1).fillna(0)).cumprod()
     reg = {n: (idx > idx.rolling(n, min_periods=n).mean()).values for n in (50, 100, 200)}
     reg[0] = np.ones(len(idx), bool)
+    # اتساع السوق: نسبة الأسهم السايلة اللي فوق متوسط 50 يومها (أسرع من متوسط المؤشر في الدخول والخروج)
+    sm = pd.DataFrame(sma50, index=C.index, columns=C.columns).where(liquid).astype(float)
+    breadth = sm.mean(axis=1).rolling(3, min_periods=1).mean()
+    reg["br"] = (breadth > 0.5).values
+    reg["mix"] = ((idx > idx.rolling(100, min_periods=100).mean()) | (breadth > 0.6)).values   # 100 أو اتساع قوي
+    # تكلفة فرق سعر الشراء/البيع (Abdi-Ranaldo 2017 من أعلى/أقل/قفلة، بيانات الماضي بس) + حد أدنى = نص "تيك"
+    lh, ll, lc_ = np.log(H.values.astype(float)), np.log(L.values.astype(float)), np.log(Cv)
+    eta = (lh + ll) / 2
+    eta_p = np.vstack([np.full((1, Cv.shape[1]), np.nan), eta[:-1]])
+    c_p = np.vstack([np.full((1, Cv.shape[1]), np.nan), lc_[:-1]])
+    s2 = 4 * (c_p - eta_p) * (c_p - eta)
+    s2m = pd.DataFrame(s2, index=C.index).rolling(60, min_periods=20).mean().values
+    spread = np.sqrt(np.clip(np.nan_to_num(s2m, nan=0.0), 0, None))
+    tick = np.where(Cf < 1, 0.001, 0.01)
+    hs = np.clip(np.maximum(spread / 2, 0.5 * tick / np.where(Cf > 0, Cf, np.nan)), 0.0005, 0.03)
+    hs = np.nan_to_num(hs, nan=0.01)
     ok_in = liquid.values & ~lock.values & np.isfinite(S) & np.isfinite(Cv)
     order = []
     for t in range(len(C)):
         m = ok_in[t] & (S[t] >= 0.80)
         ii = np.where(m)[0]
         order.append(ii[np.argsort(-S[t, ii])])
-    return dict(dates=C.index, names=np.array(C.columns), C=Cv, O=Ov, rc=rc, oc=oc, co=co, lc=lc, gap=gap,
+    return dict(dates=C.index, names=np.array(C.columns), C=Cv, O=Ov, rc=rc, oc=oc, co=co, lc=lc, gap=gap, hs=hs,
+                breadth=breadth.values,
                 atr=atr, sma50=sma50, S=S, ok_in=ok_in, reg=reg, order=order, mkt=rl.mean(axis=1).fillna(0).values)
 
 
@@ -95,13 +112,18 @@ def decide(D, p, t, pos, pending_exit):
     return exits, entries
 
 
+def cost_of(D, p, t, i):
+    """تكلفة اتجاه واحد: عمولة + (لو real_cost) نص فرق سعر الشراء/البيع المقدّر للسهم ده."""
+    return p["cost"] + (float(D["hs"][max(t, 0), i]) if p.get("real_cost") else 0.0)
+
+
 def new_book():
     return {"cash": 1.0, "pos": {}, "pend_x": {}, "pend_in": [], "trades": []}
 
 
 def exec_open(D, p, t, bk):
     """تنفيذ قرارات قفلة امبارح عند افتتاح اليوم t: خروج الأول وبعدين دخول. بيرجّع (خرج, دخل)."""
-    cost, pos = p["cost"], bk["pos"]
+    pos = bk["pos"]
     out_, in_ = [], []
     for i in list(bk["pend_x"]):
         if i not in pos:
@@ -113,8 +135,9 @@ def exec_open(D, p, t, bk):
         g = 1 + (D["rc"][t, i] if p.get("exec_close") else D["co"][t, i])   # exec_close: تنفيذ بقفلة اليوم (اختبار تأخير)
         ps["val"] *= g
         ps["rel"] *= g
-        bk["cash"] += ps["val"] * (1 - cost)
-        tr = {"i": i, "et": ps["et"], "xt": t, "ret": ps["rel"] * (1 - cost) ** 2 - 1,
+        c_out = cost_of(D, p, t - 1, i)
+        bk["cash"] += ps["val"] * (1 - c_out)
+        tr = {"i": i, "et": ps["et"], "xt": t, "ret": ps["rel"] * (1 - ps.get("c_in", p["cost"])) * (1 - c_out) - 1,
               "days": ps["days"], "why": bk["pend_x"].pop(i)}
         bk["trades"].append(tr)
         out_.append(tr)
@@ -125,13 +148,19 @@ def exec_open(D, p, t, bk):
             continue
         if not np.isfinite(D["O"][t, i]) or not (D["gap"][t, i] < LIMIT_GAP):
             continue
-        alloc = min(bk["cash"], slot)
-        if alloc < 0.25 * slot:
-            break
+        atr_i = float(D["atr"][t - 1, i])
+        want = slot
+        if p.get("size", "eq") != "eq":
+            # حجم حسب المخاطرة: لو ضرب الوقف نخسر نسبة ثابتة من الحساب (السهم المتذبذب ياخد مبلغ أقل)
+            want = min(eq_now * float(p["size"]) / ((p["trail_k"] or 2.5) * atr_i), eq_now * 0.30)
+        alloc = min(bk["cash"], want)
+        if alloc < 0.25 * want:
+            continue
         bk["cash"] -= alloc
+        c_in = cost_of(D, p, t - 1, i)
         g = 1.0 if p.get("exec_close") else 1 + D["oc"][t, i]
-        pos[i] = {"val": alloc * (1 - cost) * g, "rel": g, "peak": max(g, 1.0), "atr": float(D["atr"][t - 1, i]),
-                  "days": 0, "et": t}
+        pos[i] = {"val": alloc * (1 - c_in) * g, "rel": g, "peak": max(g, 1.0), "atr": atr_i,
+                  "days": 0, "et": t, "c_in": c_in}
         in_.append(i)
     bk["pend_in"] = []
     return out_, in_
@@ -150,8 +179,9 @@ def mark_close(D, t, bk, p=None):
                 ps["val"] *= ex / ps["rel"]
                 ps["rel"] = ex
                 bk["pos"].pop(i)
-                bk["cash"] += ps["val"] * (1 - p["cost"])
-                bk["trades"].append({"i": i, "et": ps["et"], "xt": t, "ret": ex * (1 - p["cost"]) ** 2 - 1,
+                c_out = cost_of(D, p, t - 1, i)
+                bk["cash"] += ps["val"] * (1 - c_out)
+                bk["trades"].append({"i": i, "et": ps["et"], "xt": t, "ret": ex * (1 - ps.get("c_in", p["cost"])) * (1 - c_out) - 1,
                                      "days": ps["days"] + 1, "why": "stop_live"})
     for i, ps in bk["pos"].items():
         if ps["et"] != t:
@@ -181,7 +211,8 @@ def simulate(D, p, t0, t1):
             bk["pend_in"] = en
     trades = list(bk["trades"])
     for i, ps in bk["pos"].items():                        # تقفيل دفتري في الآخر
-        trades.append({"i": i, "et": ps["et"], "xt": t1 - 1, "ret": ps["rel"] * (1 - p["cost"]) ** 2 - 1,
+        trades.append({"i": i, "et": ps["et"], "xt": t1 - 1,
+                       "ret": ps["rel"] * (1 - ps.get("c_in", p["cost"])) * (1 - cost_of(D, p, t1 - 2, i)) - 1,
                        "days": ps["days"], "why": "end", "open": True})
     return eq, expo, trades
 

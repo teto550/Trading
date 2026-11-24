@@ -23,6 +23,10 @@ jobs:
           python-version: "3.11"
       - name: Install dependencies
         run: pip install -r backtest/requirements.txt
+      - name: Universe + sectors (new listings weekly on Thursday)
+        continue-on-error: true
+        run: |
+          if [ "$(TZ=Africa/Cairo date +%u)" = "4" ]; then python -u update_universe.py; else python -u update_universe.py --no-add; fi
       - name: Entry/exit signals (swing engine + paper portfolio)
         continue-on-error: true
         env:
@@ -48,6 +52,7 @@ jobs:
           git config user.email "bot@users.noreply.github.com"
           git add -A tomorrow
           [ -d signals ] && git add -A signals || true
+          git add tickers.txt || true
           [ -d news ] && git add -A news || true
           [ -d forecast ] && git add -A forecast || true
           [ -d data ] && git add -A data || true
