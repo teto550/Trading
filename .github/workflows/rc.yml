@@ -1,0 +1,11 @@
+name: rc
+on: {push: {branches: [regime-check]}}
+jobs:
+  rc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with: {python-version: "3.11", cache: pip}
+      - run: pip install -r backtest/requirements.txt
+      - run: python tools/regime_check.py 2>&1 | grep -v "possibly delisted\|^\[data\]"
