@@ -156,6 +156,17 @@ def build_scores(C, H, L, V, O, liquid, lock, a):
     return rank_mean(preds)
 
 
+VAR_AR = {"ml": "الموديل (أساسي)", "sec": "الموديل + القطاعات", "lowvol": "تذبذب منخفض (من غير موديل)",
+          "blend": "الموديل + تذبذب منخفض (متوسط الترتيب)"}
+
+
+def blend_scores(Sml, Slv):
+    """متوسط ترتيب الموديل وترتيب التذبذب المنخفض (لو واحد ناقص ناخد التاني)."""
+    st = np.stack([Sml, Slv])
+    S = np.where(np.isfinite(Sml) & np.isfinite(Slv), np.nanmean(st, axis=0), np.nan)
+    return pd.DataFrame(S).rank(axis=1, pct=True).values
+
+
 def alt_scores(C, liquid, kind, seed=0):
     if kind == "random":
         rng = np.random.default_rng(seed)
@@ -219,13 +230,15 @@ def run(a):
     C, H, L, V, O, liquid, lock = load_data(a)
     T, N = C.shape
     base_cost = a.base_bps / 1e4
-    Ss = {False: get_scores(C, H, L, V, O, liquid, lock, a, False)}
+    Sml = get_scores(C, H, L, V, O, liquid, lock, a, False)
+    Slv = alt_scores(C, liquid, "lowvol")
+    Ss = {"ml": Sml, "lowvol": Slv, "blend": blend_scores(Sml, Slv)}
     if a.source == "yfinance" or os.path.exists(SECTORS_FILE):
-        Ss[True] = get_scores(C, H, L, V, O, liquid, lock, a, True)
-    S0 = Ss[False]
+        Ss["sec"] = get_scores(C, H, L, V, O, liquid, lock, a, True)
+    S0 = Sml
     first = int(np.where(np.isfinite(S0).sum(axis=1) >= 30)[0][0])
     Ds = {k: sc.prepare(C, H, L, V, O, S, liquid, lock) for k, S in Ss.items()}
-    D0 = Ds[False]
+    D0 = Ds["ml"]
     dev = DEV if a.source == "yfinance" else (C.index[first], C.index[first + (T - first) * 2 // 3])
     test = TEST if a.source == "yfinance" else (dev[1], pd.Timestamp("2100-01-01"))
     print(f"[swing] أول يوم بدرجات: {C.index[first].date()} | تطوير {dev[0].date()}→{dev[1].date()} | اختبار {test[0].date()}+")
@@ -235,11 +248,9 @@ def run(a):
         return sc.metrics(D, e, x, t, *dev), sc.metrics(D, e, x, t, *test), (e, x, t)
 
     # (1) الإعداد القديم: بتكلفة ثابتة 20 bps، وبالتكلفة الحقيقية (عمولة + فرق سعر الشراء/البيع لكل سهم)
-    old_p = None
-    if os.path.exists(BEST_FILE):
-        with open(BEST_FILE, encoding="utf-8") as fh:
-            old_p = json.load(fh).get("params")
-    old_p = dict(sc.DEFAULT, **(old_p or {}))
+    # الإعداد اللي كان شغال لايف قبل التحديث ده (23/11/2026)
+    old_p = dict(sc.DEFAULT, q_in=0.90, q_out=0.30, max_pos=5, trail_k=2.5, max_hold=40, regime=100,
+                 trend50=False, exit_on_regime=True, size="eq")
     old_flat = mt(D0, dict(old_p, cost=0.002, real_cost=False))
     old_real = mt(D0, dict(old_p, cost=base_cost, real_cost=True))
     hs_test = D0["hs"][(D0["dates"] >= test[0])]
@@ -250,7 +261,7 @@ def run(a):
         res, keys = run_grid(D, first, T, dev, test, base_cost)
         (bp, bd, bt_), nb = robust_pick(res, keys)
         picks[k] = (bp, bd, bt_, nb, res)
-        print(f"[swing] {'قطاعات' if k else 'أساسي'}: {len(res)} إعداد، أفضل منطقة Sharpe {nb:.2f}", flush=True)
+        print(f"[swing] {VAR_AR[k]}: {len(res)} إعداد، أفضل منطقة Sharpe {nb:.2f}", flush=True)
     print(f"[swing] الشبكة خلصت في {time.time() - t0:.0f}s")
     use_sec = max(picks, key=lambda k: picks[k][3])
     best_p, best_dev, best_test, nb_sharpe, results = picks[use_sec]
@@ -290,14 +301,14 @@ def run(a):
            R("تطوير - تكلفة ثابتة 20 bps (القديم)", old_flat[0]), R("اختبار - تكلفة ثابتة 20 bps (القديم)", old_flat[1]),
            R("تطوير - تكلفة حقيقية", old_real[0]), R("**اختبار - تكلفة حقيقية**", old_real[1]), "",
            "## الإعداد الجديد المختار (بالتكلفة الحقيقية)", "",
-           f"المدخلات: {'الأساسية + القطاعات' if use_sec else 'الأساسية بس (القطاعات مزودتش على التطوير)'}", "",
+           f"الدرجات: {VAR_AR[use_sec]} (اتختارت على التطوير بس من: {'، '.join(VAR_AR[k] for k in picks)})", "",
            pdesc(best_p), "", *H2,
            R(f"تطوير {dev[0].year}-{dev[1].year - 1}", best_dev), R(f"**اختبار {test[0].year}+**", best_test),
            R("اختبار + عمولة أعلى بـ15 bps", hi_cost[1]), R("اختبار + تنفيذ بقفلة اليوم التالي", delay[1]), "",
-           "## (6) القطاعات: أفضل إعداد لكل نوع مدخلات", "", *H2]
+           "## (6) أنواع الدرجات: أفضل إعداد لكل نوع (الاختيار بـSharpe المنطقة على التطوير)", "", *H2]
     for k in picks:
-        out += [R(f"{'قطاعات' if k else 'أساسي'} - تطوير (Sharpe المنطقة {picks[k][3]:.2f})", picks[k][1]),
-                R(f"{'قطاعات' if k else 'أساسي'} - اختبار", picks[k][2])]
+        out += [R(f"{VAR_AR[k]} - تطوير (Sharpe المنطقة {picks[k][3]:.2f})", picks[k][1]),
+                R(f"{VAR_AR[k]} - اختبار", picks[k][2])]
     out += ["", "## (4) فلتر السوق (نفس الإعداد، الفلتر بس بيتغير)", "", *H2]
     for r, md_, mt_ in reg_rows:
         out += [R(f"{REG_AR[r]} - تطوير", md_), R(f"{REG_AR[r]} - اختبار", mt_)]
@@ -327,7 +338,7 @@ def run(a):
         fh.write(text)
     if a.source == "yfinance":
         with open(BEST_FILE, "w", encoding="utf-8") as fh:
-            json.dump({"params": best_p, "sector": bool(use_sec), "dev": best_dev, "test": best_test,
+            json.dump({"params": best_p, "scores": use_sec, "sector": use_sec == "sec", "dev": best_dev, "test": best_test,
                        "live_extra": live_best, "old_real_test": old_real[1], "old_flat_test": old_flat[1],
                        "made": f"{datetime.now():%Y-%m-%d %H:%M}", "data_to": str(C.index[-1].date())},
                       fh, ensure_ascii=False, indent=1)

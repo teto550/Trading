@@ -376,8 +376,17 @@ def main():
             C, H, L, V, O, note = egxdata.extend_panel(C, H, L, V, O, now)
             _f, _m, _n, _noc, lock, liquid, _fl = bt.build_features(C, H, L, V, O, a.min_turnover)
         p, meta = load_params()
-        a.sector = bool((meta or {}).get("sector"))
-        S = today_scores(C, H, L, V, O, liquid, lock, a)
+        kind = (meta or {}).get("scores") or ("sec" if (meta or {}).get("sector") else "ml")
+        a.sector = kind == "sec"
+        t_ = len(C) - 1
+        if kind == "lowvol":
+            S = np.full(C.shape, np.nan)
+            S[t_] = sw.alt_scores(C, liquid, "lowvol")[t_]
+        else:
+            S = today_scores(C, H, L, V, O, liquid, lock, a)
+            if kind == "blend":
+                lv = sw.alt_scores(C, liquid, "lowvol")
+                S[t_] = sw.blend_scores(S[t_:t_ + 1], lv[t_:t_ + 1])[0]
         D = sc.prepare(C, H, L, V, O, S, liquid, lock)
         bars = {}
         if a.source == "yfinance":
