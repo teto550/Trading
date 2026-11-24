@@ -272,6 +272,7 @@ def run(a):
     # فلاتر السوق وطرق الحجم على الإعداد المختار
     reg_rows = [(r, *mt(D, dict(best_p, regime=r))[:2]) for r in GRID["regime"]]
     size_rows = [(z, *mt(D, dict(best_p, size=z))[:2]) for z in GRID["size"]]
+    stop_rows = [(k_, *mt(D, dict(best_p, trail_k=k_))[:2]) for k_ in (0.0, 2.5, 3.5, 5.0)]
     hi_cost = mt(D, dict(best_p, cost=base_cost + 0.0015))
     delay = mt(D, dict(best_p, exec_close=True))
     # بيع لحظي
@@ -315,17 +316,23 @@ def run(a):
     out += ["", "## (5) حجم الصفقة (نفس الإعداد، الحجم بس بيتغير)", "", *H2]
     for z, md_, mt_ in size_rows:
         out += [R(f"{SIZE_AR[z]} - تطوير", md_), R(f"{SIZE_AR[z]} - اختبار", mt_)]
+    out += ["", "## الوقف المتحرك (نفس الإعداد، الوقف بس بيتغير)", "", *H2]
+    for k_, md_, mt_ in stop_rows:
+        lab = "من غير وقف" if not k_ else f"وقف {k_}×ATR"
+        out += [R(f"{lab} - تطوير", md_), R(f"{lab} - اختبار", mt_)]
     out += ["", "## بيع لحظي أثناء الجلسة", "", *H2]
     for ex_, md_, mt_ in live_rows:
         lab = "عند الوقف" if not ex_ else f"تحت الوقف بـ{ex_:.0f}×ATR"
         out += [R(f"تطوير - {lab}", md_), R(f"اختبار - {lab}", mt_)]
     out += ["", "الاختيار: " + ("مفيش بيع لحظي أحسن من استنى القفلة (تنبيه لحظي بس)." if live_best is None else
                                 f"بيع لحظي تحت الوقف بـ{live_best:.0f}×ATR."), "",
-            "## هل الموديل نفسه بيضيف؟ (نفس القواعد بدرجات تانية - اختبار)", "", *H2, R("الموديل", best_test),
-            R("عشوائي", alts["random"][1]), R("تذبذب منخفض", alts["lowvol"][1]),
+            "## نفس القواعد بدرجات تانية", "", *H2, R("المختار - تطوير", best_dev), R("المختار - اختبار", best_test),
+            R("عشوائي - تطوير", alts["random"][0]), R("عشوائي - اختبار", alts["random"][1]),
+            R("الموديل (ML) - تطوير", mt(Ds["ml"], best_p)[0]), R("الموديل (ML) - اختبار", mt(Ds["ml"], best_p)[1]),
             "", "## سنة بسنة (الإعداد المختار)", "", "| السنة | المحفظة | السوق | الفرق |", "|---|---|---|---|"]
     out += [f"| {y} | {s_:+.1f}% | {m:+.1f}% | {s_ - m:+.1f}% |" for y, s_, m in yr]
     out += ["", "## أسباب الخروج في الاختبار", ""] + [f"- {sc.REASON_AR.get(k, k)}: {v}" for k, v in reasons.items()]
+    out += ["", "(سطر 'نهاية الفترة' = صفقات لسه مفتوحة)"]
     tests = [r[2] for r in ok if r[2]]
     beat = sum(1 for m in tests if m["cagr"] > m["mkt_cagr"])
     out += ["", f"من كل الـ{len(tests)} إعداد (بالتكلفة الحقيقية): {beat} غلبوا السوق في الاختبار "
