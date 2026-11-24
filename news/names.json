@@ -55,6 +55,10 @@
   "ar": null,
   "en": "Amer Group Holding Company S.A.E."
  },
+ "AMES": {
+  "ar": null,
+  "en": "Alexandria New Medical Center"
+ },
  "AMIA": {
   "ar": null,
   "en": "Arab Moltaqa Investments Company"
@@ -195,6 +199,10 @@
   "ar": null,
   "en": "Development & Engineering Consultants"
  },
+ "DCCC": {
+  "ar": null,
+  "en": "Damietta Container & Cargo Handling Co."
+ },
  "DEIN": {
   "ar": null,
   "en": "Delta Insurance Company"
@@ -235,6 +243,10 @@
   "ar": null,
   "en": "East Delta Flour Mills"
  },
+ "EEII": {
+  "ar": null,
+  "en": "Arab Engineering Industries"
+ },
  "EFIC": {
   "ar": null,
   "en": "Egyptian Financial and Industrial SAE"
@@ -262,6 +274,10 @@
  "EGCH": {
   "ar": null,
   "en": "Egyptian Chemical Industries"
+ },
+ "EGREF": {
+  "ar": null,
+  "en": "Egyptian Real Estate Fund"
  },
  "EGSA": {
   "ar": null,
@@ -331,6 +347,10 @@
   "ar": "بنك فيصل الإسلامي المصري",
   "en": "Faisal Islamic Bank of Egypt"
  },
+ "FAITA": {
+  "ar": null,
+  "en": "Faisal Islamic Bank of Egypt"
+ },
  "FERC": {
   "ar": null,
   "en": "Ferchem Misr for fertilizers and chemicals S.A.E"
@@ -371,6 +391,10 @@
   "ar": null,
   "en": "GMC Group For Industrial Commercial & Financial Investments"
  },
+ "GPPL": {
+  "ar": null,
+  "en": "Golden Pyramids Plaza S.A.E."
+ },
  "GRCA": {
   "ar": null,
   "en": "Grand Capital for Financial Investments"
@@ -407,6 +431,10 @@
   "ar": "العالمية للاستثمار والتنمية",
   "en": "International Co. For Investment & Development"
  },
+ "ICLE": {
+  "ar": null,
+  "en": "International Company for Leasing S.A.E."
+ },
  "IDRE": {
   "ar": null,
   "en": "Ismailia Development and Real Estate Co"
@@ -422,6 +450,10 @@
  "INFI": {
   "ar": null,
   "en": "Ismailia National Co. for Food Industries"
+ },
+ "IRON": {
+  "ar": null,
+  "en": "Egyptian Iron and Steel Company"
  },
  "ISMA": {
   "ar": null,
@@ -446,6 +478,10 @@
  "KWIN": {
   "ar": null,
   "en": "El Kahera El Watania Investment"
+ },
+ "KZPC": {
+  "ar": null,
+  "en": "Kafr El Zayat For Pesticides & Chemicals Co.(S.A.E)"
  },
  "LCSW": {
   "ar": null,
@@ -478,6 +514,10 @@
  "MCRO": {
   "ar": null,
   "en": "Macro Group Pharmaceuticals (Macro Capital) S.A.E"
+ },
+ "MEGM": {
+  "ar": null,
+  "en": "Middle East Glass Manufacturing Company S.A.E."
  },
  "MENA": {
   "ar": null,
@@ -562,6 +602,10 @@
  "NCCW": {
   "ar": null,
   "en": "Nasr Company for Civil Works"
+ },
+ "NDRL": {
+  "ar": null,
+  "en": "National Drilling Company"
  },
  "NEDA": {
   "ar": null,
@@ -726,6 +770,10 @@
  "SNFC": {
   "ar": "الشرقية الوطنية للأمن الغذائي",
   "en": "Sharkia National Company for Food Security"
+ },
+ "SPHT": {
+  "ar": null,
+  "en": "El Shams Pyramids Co. For Hotels & Touristic Projects S.A.E"
  },
  "SPIN": {
   "ar": null,
