@@ -197,6 +197,8 @@ def run_account(D, p, bars):
         budget = eq / p["max_pos"]
         if p.get("size", "eq") != "eq":          # حجم حسب المخاطرة (نفس swing_core.exec_open)
             budget = min(eq * float(p["size"]) / ((p["trail_k"] or 2.5) * atr_i), eq * 0.30)
+        if p.get("volman"):
+            budget *= float(D["vscale"][t])
         acc["orders"].append({"side": "buy", "name": names[i], "why": "signal", "decided": day,
                               "budget": round(budget, 2), "ref_px": float(D["C"][t, i]),
                               "slip": float(D["hs"][t, i]) if p.get("real_cost") else 0.0,
@@ -254,7 +256,14 @@ def update_predictions(D, picks, record):
     return sorted(res, key=lambda r: -r["ret"])
 
 
-def build_message(D, p, meta, acc, done, now, note, picks=None, pred_res=None):
+def regime_need(D, reg):
+    """قد إيه مؤشر السوق (متوسط الأسهم السايلة) محتاج يطلع في جلسة عشان يعدّي متوسطه وفلتر السوق يفتح."""
+    idx = np.asarray(D["idx"], float)
+    n = reg if isinstance(reg, int) else 100           # "mix" فيه SMA100؛ "br" بيعتمد على الاتساع
+    if reg == "br" or len(idx) < n:
+        return None
+    x = idx[-(n - 1):].sum() / (n - 1)                 # x > (sum(آخر n-1) + x) / n
+    return (x / idx[-1] - 1) * 100
     """رسالة واحدة مركّزة: توقعات البوت، هيعمل إيه بكره، اللي اتنفذ، التوقعات اللي اتحققت، والمحفظة."""
     t = len(D["dates"]) - 1
     data_date = D["dates"][t].date()
@@ -286,6 +295,9 @@ def build_message(D, p, meta, acc, done, now, note, picks=None, pred_res=None):
             tag = " ← 🟢 هيشتريه بكره" if n in bset else (" ← 📂 معانا في المحفظة" if n in hset else "")
             L_.append(f"{k}. {n} | {pa.px(float(D['C'][t, i]))}{tag}")
         if p["regime"] and not reg_on:
+            need = regime_need(D, p["regime"])
+            if need:
+                L_.append(f"📏 عشان البوت يبدأ يشتري: مؤشر السوق محتاج يطلع حوالي {need:+.1f}% من قفلة النهاردة.")
             br = float(D["breadth"][t]) * 100
             L_.append(f"⏸ فلتر السوق ({sw.REG_AR.get(p['regime'], p['regime'])}) قافل، فالبوت مش هيشتري جديد دلوقتي "
                       f"(نسبة الأسهم فوق متوسط 50 يوم: {br:.0f}%).")
@@ -386,14 +398,14 @@ def main():
         kind = (meta or {}).get("scores") or ("sec" if (meta or {}).get("sector") else "ml")
         a.sector = kind == "sec"
         t_ = len(C) - 1
-        if kind == "lowvol":
-            S = np.full(C.shape, np.nan)
-            S[t_] = sw.alt_scores(C, liquid, "lowvol")[t_]
+        S = np.full(C.shape, np.nan)
+        Sml = today_scores(C, H, L, V, O, liquid, lock, a) if kind in ("ml", "sec", "blend") else None
+        if kind in ("ml", "sec"):
+            S = Sml
+        elif kind == "blend":
+            S[t_] = sw.blend_scores(Sml[t_:t_ + 1], sw.alt_scores(C, liquid, "lowvol")[t_:t_ + 1])[0]
         else:
-            S = today_scores(C, H, L, V, O, liquid, lock, a)
-            if kind == "blend":
-                lv = sw.alt_scores(C, liquid, "lowvol")
-                S[t_] = sw.blend_scores(S[t_:t_ + 1], lv[t_:t_ + 1])[0]
+            S[t_] = sw.make_scores(kind, C, liquid)[t_]
         D = sc.prepare(C, H, L, V, O, S, liquid, lock)
         bars = {}
         if a.source == "yfinance":

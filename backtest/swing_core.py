@@ -17,7 +17,7 @@ MAX_ABS = 0.25      # أي حركة يومية أكبر من كده = تقسيم
 LIMIT_GAP = 0.09    # افتتاح فوق قفلة امبارح بـ9%+ = غالبًا مقفول على الحد، مش هتلحق تشتري
 
 DEFAULT = dict(q_in=0.95, q_out=0.50, max_pos=8, trail_k=3.0, max_hold=40, min_hold=5,
-               regime=100, trend50=True, exit_on_regime=False, cost=0.002, size="eq", real_cost=False)
+               regime=100, trend50=True, exit_on_regime=False, cost=0.002, size="eq", real_cost=False, volman=False)
 
 REASON_AR = {"stop": "ضرب الوقف المتحرك", "stop_live": "انعكاس لحظي: كسر الوقف المتحرك خلال الجلسة", "rank": "ترتيبه في الموديل نزل", "time": "خلص مدة الاحتفاظ",
              "regime": "السوق قلب لاتجاه هابط", "end": "نهاية الفترة"}
@@ -73,7 +73,12 @@ def prepare(C, H, L, V, O, S, liquid, lock):
         m = ok_in[t] & (S[t] >= 0.80)
         ii = np.where(m)[0]
         order.append(ii[np.argsort(-S[t, ii])])
+    mret = rl.mean(axis=1).fillna(0)
+    mvol = mret.rolling(20, min_periods=10).std()
+    mref = mvol.rolling(500, min_periods=120).median()          # "العادي" من الماضي بس
+    vscale = np.clip(np.nan_to_num((mref / mvol).values, nan=1.0), 0.25, 1.0)
     return dict(dates=C.index, names=np.array(C.columns), C=Cv, O=Ov, rc=rc, oc=oc, co=co, lc=lc, gap=gap, hs=hs,
+                vscale=vscale, idx=idx.values,
                 breadth=breadth.values,
                 atr=atr, sma50=sma50, S=S, ok_in=ok_in, reg=reg, order=order, mkt=rl.mean(axis=1).fillna(0).values)
 
@@ -153,6 +158,8 @@ def exec_open(D, p, t, bk):
         if p.get("size", "eq") != "eq":
             # حجم حسب المخاطرة: لو ضرب الوقف نخسر نسبة ثابتة من الحساب (السهم المتذبذب ياخد مبلغ أقل)
             want = min(eq_now * float(p["size"]) / ((p["trail_k"] or 2.5) * atr_i), eq_now * 0.30)
+        if p.get("volman"):
+            want *= float(D["vscale"][t - 1])            # السوق متهز أكتر من العادي → صفقة أصغر
         alloc = min(bk["cash"], want)
         if alloc < 0.25 * want:
             continue
