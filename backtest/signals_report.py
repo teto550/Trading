@@ -60,8 +60,10 @@ def fmt_px(x):
 def load_params():
     p = dict(sc.DEFAULT)
     meta = None
-    if os.path.exists(sw.BEST_FILE):
-        with open(sw.BEST_FILE, encoding="utf-8") as fh:
+    live = os.path.join(os.path.dirname(sw.BEST_FILE), "swing_live.json")   # الإعداد الحي المثبّت (بيغلب البحثي)
+    src = live if os.path.exists(live) else sw.BEST_FILE
+    if os.path.exists(src):
+        with open(src, encoding="utf-8") as fh:
             meta = json.load(fh)
         p.update(meta.get("params", {}))
     ov = os.path.join(os.path.dirname(sw.BEST_FILE), "swing_override.json")
