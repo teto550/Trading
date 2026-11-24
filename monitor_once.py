@@ -617,7 +617,8 @@ def refresh_forecast_files():
     try:
         subprocess.run(["git", "fetch", "-q", "--depth=1", "origin", os.environ.get("GITHUB_REF_NAME", "main")],
                        check=True, timeout=60)
-        subprocess.run(["git", "checkout", "-q", "FETCH_HEAD", "--", "forecast", "news"], check=True, timeout=60)
+        subprocess.run(["git", "checkout", "-q", "FETCH_HEAD", "--", "forecast", "news", "signals", "data/sectors.json"],
+                       check=True, timeout=60)
     except Exception as e:
         print("[توقعات] مقدرتش أحدّث ملفات التوقعات:", e)
 
@@ -722,21 +723,25 @@ def handle_telegram_commands(state):
             except Exception as e:
                 print("[توقعات] فشل البحث بالاسم:", e)
         if ticker:
-            send_telegram(analyze_stock_text(ticker, state["stocks"][ticker]))
-            if fl:
+            base = ticker.replace(".CA", "")
+            try:
+                refresh_forecast_files()
+                live = None
                 try:
-                    refresh_forecast_files()
-                    base = ticker.replace(".CA", "")
-                    news_info = None
-                    try:
-                        import news as nw
-                        news_info = nw.news_for([base]).get(base)
-                    except Exception as e:
-                        print("[أخبار] فشل:", e)
-                    send_long(fl.forecast_text(base, news_info))
+                    import egxdata
+                    live = egxdata.tv_snapshot().get(base)
                 except Exception as e:
-                    print("[توقعات] فشل:", e)
-                    send_telegram("التحليل الفني فوق تمام، بس التوقعات مش متاحة دلوقتي.")
+                    print("[سعر لحظي] فشل:", e)
+                news_info = None
+                try:
+                    import news as nw
+                    news_info = nw.news_for([base]).get(base)
+                except Exception as e:
+                    print("[أخبار] فشل:", e)
+                send_long(fl.stock_view(base, live, news_info) if fl else analyze_stock_text(ticker, state["stocks"][ticker]))
+            except Exception as e:
+                print("[سهم] فشل:", e)
+                send_telegram(analyze_stock_text(ticker, state["stocks"][ticker]))
         elif suggestions:
             send_telegram("تقصد أنهي سهم؟ " + "، ".join(suggestions) + "\nاكتب الكود بالظبط (زي ABUK).")
         else:
