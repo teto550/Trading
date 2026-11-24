@@ -39,11 +39,11 @@ PRED_FILE = os.path.join(bt.RES_DIR, "swing_preds.npz")
 BEST_FILE = os.path.join(bt.RES_DIR, "swing_best.json")
 HORIZONS = (20, 40, 60)
 
-GRID = dict(q_in=[0.90, 0.95], q_out=[0.30, 0.50], max_pos=[5, 8], trail_k=[0.0, 2.5, 3.5],
-            max_hold=[40, 60], regime=[0, 50, 100, 200, "br", "mix"], trend50=[False, True],
-            exit_on_regime=[False, True], size=["eq", 0.01, 0.02])
+GRID = dict(q_in=[0.90, 0.95], q_out=[0.30, 0.50], max_pos=[5, 8, 12], trail_k=[5.0],   # وقف 5×ATR ثابت: ديفيد عايز خروج عند الانعكاس الشديد
+            max_hold=[40, 60], regime=[100, 200, "mix"], trend50=[False, True], volman=[False, True])
 REG_AR = {0: "مفيش", 50: "SMA50", 100: "SMA100", 200: "SMA200", "br": "اتساع السوق (>50% فوق SMA50)",
           "mix": "SMA100 أو اتساع قوي (>60%)"}
+VOLMAN_AR = {False: "ثابت", True: "بيقل لما السوق يتهز (Moreira-Muir)"}
 SIZE_AR = {"eq": "بالتساوي", 0.01: "مخاطرة 1% من الحساب لكل صفقة", 0.02: "مخاطرة 2% من الحساب لكل صفقة"}
 SECTORS_FILE = os.path.join(os.path.dirname(HERE), "data", "sectors.json")
 
@@ -156,8 +156,10 @@ def build_scores(C, H, L, V, O, liquid, lock, a):
     return rank_mean(preds)
 
 
-VAR_AR = {"ml": "الموديل (أساسي)", "sec": "الموديل + القطاعات", "lowvol": "تذبذب منخفض (من غير موديل)",
-          "blend": "الموديل + تذبذب منخفض (متوسط الترتيب)"}
+VAR_AR = {"ml": "موديل ML", "sec": "ML + القطاعات", "lowvol": "تذبذب منخفض",
+          "blend": "ML + تذبذب منخفض", "lowmax": "تجنب أسهم اليانصيب (MAX)", "hi52": "القرب من قمة 52 أسبوع",
+          "lv_max": "تذبذب منخفض + MAX", "lv_hi52": "تذبذب منخفض + قمة 52 أسبوع",
+          "lv_max_hi52": "تذبذب منخفض + MAX + قمة 52 أسبوع"}
 
 
 def blend_scores(Sml, Slv):
@@ -172,10 +174,36 @@ def alt_scores(C, liquid, kind, seed=0):
         rng = np.random.default_rng(seed)
         R = pd.DataFrame(rng.random(C.shape), index=C.index, columns=C.columns)
         R = R.rolling(20, min_periods=1).mean()            # عشوائي بس ثابت نسبيًا (عشان ميعملش churn)
-    else:  # lowvol
+    else:
         r = (C / C.shift(1) - 1).where(lambda x: x.abs() <= 0.25)
-        R = -r.rolling(60, min_periods=40).std()
+        if kind == "lowvol":      # Ang et al. 2006 / Blitz & van Vliet 2007: الأسهم الهادية بتكسب أكتر من المتوقع
+            R = -r.rolling(60, min_periods=40).std()
+        elif kind == "lowmax":    # Bali, Cakici & Whitelaw 2011: نتجنب أسهم "اليانصيب" (أعلى طلعة يومية في شهر)
+            R = -r.rolling(21, min_periods=15).max()
+        elif kind == "hi52":      # George & Hwang 2004: القرب من أعلى سعر في 52 أسبوع
+            P = np.exp(np.log1p(r.fillna(0)).cumsum()).where(C.notna())
+            R = P / P.rolling(245, min_periods=120).max()
+        else:
+            raise ValueError(kind)
     return R.where(liquid).rank(axis=1, pct=True).values
+
+
+COMBOS = {"lv_max": ("lowvol", "lowmax"), "lv_hi52": ("lowvol", "hi52"), "lv_max_hi52": ("lowvol", "lowmax", "hi52")}
+
+
+def make_scores(kind, C, liquid, Sml=None):
+    """درجات أي نوع: ml (لازم Sml)، blend = ml+lowvol، أو عامل واحد، أو مزيج عوامل (متوسط الترتيب)."""
+    if kind == "ml":
+        return Sml
+    if kind == "blend":
+        return blend_scores(Sml, alt_scores(C, liquid, "lowvol"))
+    parts = COMBOS.get(kind, (kind,))
+    mats = [alt_scores(C, liquid, k) for k in parts]
+    if len(mats) == 1:
+        return mats[0]
+    st = np.stack(mats)
+    S = np.where(np.isfinite(st).all(axis=0), st.mean(axis=0), np.nan)
+    return pd.DataFrame(S).rank(axis=1, pct=True).values
 
 
 def fmt(m):
@@ -194,7 +222,8 @@ def pdesc(p):
     return (f"أعلى {round((1 - p['q_in']) * 100)}% دخول، خروج تحت {p['q_out']:.0%}، {p['max_pos']} مراكز، "
             f"وقف {p['trail_k']}×ATR{'' if p['trail_k'] else ' (من غير)'}، أقصى {p['max_hold']} يوم، "
             f"فلتر السوق {REG_AR.get(p['regime'], p['regime'])}، فوق SMA50: {'آه' if p['trend50'] else 'لأ'}، "
-            f"خروج لما السوق يقلب: {'آه' if p['exit_on_regime'] else 'لأ'}، الحجم: {SIZE_AR.get(p.get('size', 'eq'))}")
+            f"خروج لما السوق يقلب: {'آه' if p['exit_on_regime'] else 'لأ'}، الحجم: {SIZE_AR.get(p.get('size', 'eq'))}، "
+            f"حجم الاستثمار: {VOLMAN_AR[bool(p.get('volman'))]}")
 
 
 def get_scores(C, H, L, V, O, liquid, lock, a, sector):
@@ -231,10 +260,7 @@ def run(a):
     T, N = C.shape
     base_cost = a.base_bps / 1e4
     Sml = get_scores(C, H, L, V, O, liquid, lock, a, False)
-    Slv = alt_scores(C, liquid, "lowvol")
-    Ss = {"ml": Sml, "lowvol": Slv, "blend": blend_scores(Sml, Slv)}
-    if a.source == "yfinance" or os.path.exists(SECTORS_FILE):
-        Ss["sec"] = get_scores(C, H, L, V, O, liquid, lock, a, True)
+    Ss = {k: make_scores(k, C, liquid, Sml) for k in ("ml", "blend", "lowvol", "lowmax", "hi52", "lv_max", "lv_hi52", "lv_max_hi52")}
     S0 = Sml
     first = int(np.where(np.isfinite(S0).sum(axis=1) >= 30)[0][0])
     Ds = {k: sc.prepare(C, H, L, V, O, S, liquid, lock) for k, S in Ss.items()}
@@ -270,8 +296,9 @@ def run(a):
     eq, ex, tr = sc.simulate(D, best_p, first, T)
     yr = sc.yearly(D, eq, C.index[first])
     # فلاتر السوق وطرق الحجم على الإعداد المختار
-    reg_rows = [(r, *mt(D, dict(best_p, regime=r))[:2]) for r in GRID["regime"]]
-    size_rows = [(z, *mt(D, dict(best_p, size=z))[:2]) for z in GRID["size"]]
+    reg_rows = [(r, *mt(D, dict(best_p, regime=r))[:2]) for r in (0, 50, 100, 200, "br", "mix")]
+    size_rows = [(z, *mt(D, dict(best_p, size=z))[:2]) for z in ("eq", 0.01, 0.02)]
+    vm_rows = [(v, *mt(D, dict(best_p, volman=v))[:2]) for v in (False, True)]
     stop_rows = [(k_, *mt(D, dict(best_p, trail_k=k_))[:2]) for k_ in (0.0, 2.5, 3.5, 5.0)]
     hi_cost = mt(D, dict(best_p, cost=base_cost + 0.0015))
     delay = mt(D, dict(best_p, exec_close=True))
@@ -316,6 +343,9 @@ def run(a):
     out += ["", "## (5) حجم الصفقة (نفس الإعداد، الحجم بس بيتغير)", "", *H2]
     for z, md_, mt_ in size_rows:
         out += [R(f"{SIZE_AR[z]} - تطوير", md_), R(f"{SIZE_AR[z]} - اختبار", mt_)]
+    out += ["", "## إدارة حجم الاستثمار حسب تذبذب السوق (Moreira & Muir 2017)", "", *H2]
+    for v, md_, mt_ in vm_rows:
+        out += [R(f"{VOLMAN_AR[v]} - تطوير", md_), R(f"{VOLMAN_AR[v]} - اختبار", mt_)]
     out += ["", "## الوقف المتحرك (نفس الإعداد، الوقف بس بيتغير)", "", *H2]
     for k_, md_, mt_ in stop_rows:
         lab = "من غير وقف" if not k_ else f"وقف {k_}×ATR"
@@ -329,6 +359,8 @@ def run(a):
             "## نفس القواعد بدرجات تانية", "", *H2, R("المختار - تطوير", best_dev), R("المختار - اختبار", best_test),
             R("عشوائي - تطوير", alts["random"][0]), R("عشوائي - اختبار", alts["random"][1]),
             R("الموديل (ML) - تطوير", mt(Ds["ml"], best_p)[0]), R("الموديل (ML) - اختبار", mt(Ds["ml"], best_p)[1]),
+            "", f"⚠️ اتجرب {len(picks)} نوع درجات × {len(picks[use_sec][4])} إعداد؛ كل ما التجارب تكتر احتمال إن الأحسن على التطوير "
+            "يكون حظ بيزيد، عشان كده الحكم الحقيقي على فترة الاختبار والمحفظة التجريبية.",
             "", "## سنة بسنة (الإعداد المختار)", "", "| السنة | المحفظة | السوق | الفرق |", "|---|---|---|---|"]
     out += [f"| {y} | {s_:+.1f}% | {m:+.1f}% | {s_ - m:+.1f}% |" for y, s_, m in yr]
     out += ["", "## أسباب الخروج في الاختبار", ""] + [f"- {sc.REASON_AR.get(k, k)}: {v}" for k, v in reasons.items()]

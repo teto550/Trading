@@ -225,7 +225,8 @@ def live_params():
     """(معامل الوقف, عمق البيع اللحظي أو None) من إعدادات الباكتست. None = تنبيه لحظي بس والبيع بيستنى القفلة
     (الباكتست لقى إن البيع أول ما السعر يلمس الوقف أسوأ: الأسهم بتلمسه وترجع)."""
     try:
-        with open(os.path.join(HERE, "results", "swing_best.json"), encoding="utf-8") as fh:
+        live = os.path.join(HERE, "results", "swing_live.json")
+        with open(live if os.path.exists(live) else os.path.join(HERE, "results", "swing_best.json"), encoding="utf-8") as fh:
             m = json.load(fh)
         k = float(m["params"].get("trail_k") or 0) or None
         extra = m.get("live_extra")
