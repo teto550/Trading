@@ -39,8 +39,12 @@ import swing_core as sc  # noqa: E402
 import paper_account as pa  # noqa: E402
 
 OUT_DIR = os.path.join(ROOT, "signals")
+if "synthetic" in " ".join(sys.argv) or os.environ.get("SIGNALS_TEST_DROP"):
+    # تجربة: منكتبش فوق ملفات الحساب الحقيقية أبدًا
+    OUT_DIR = "/tmp/signals_test"
+    pa.FILE = os.path.join(OUT_DIR, "account.json")
 BOOK_FILE = os.path.join(OUT_DIR, "portfolio.json")
-FORECAST = os.path.join(ROOT, "forecast", "swing.json")
+FORECAST = os.path.join(OUT_DIR if OUT_DIR.startswith("/tmp") else os.path.join(ROOT, "forecast"), "swing.json")
 TZ = ZoneInfo("Africa/Cairo")
 TRADING_DAYS = {6, 0, 1, 2, 3}
 AR_DAYS = {6: "الأحد", 0: "الاتنين", 1: "التلات", 2: "الأربع", 3: "الخميس", 4: "الجمعة", 5: "السبت"}
