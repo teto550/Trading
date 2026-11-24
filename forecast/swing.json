@@ -14,702 +14,3379 @@
   "cost": 0.0015,
   "size": "eq",
   "real_cost": true,
+  "volman": false,
   "intraday_stop": false,
   "live_extra": 0.0
  },
  "regime_on": false,
+ "regime_need": 8.86744163636446,
+ "breadth": 18.1,
+ "hist": {
+  "all": {
+   "0": {
+    "n": 22170,
+    "avg": 2.09,
+    "med": -2.39,
+    "win": 44.5,
+    "exc": -3.03
+   },
+   "1": {
+    "n": 24534,
+    "avg": 4.53,
+    "med": -0.09,
+    "win": 49.6,
+    "exc": -0.54
+   },
+   "2": {
+    "n": 25109,
+    "avg": 5.46,
+    "med": 0.82,
+    "win": 51.9,
+    "exc": 0.39
+   },
+   "3": {
+    "n": 24963,
+    "avg": 5.05,
+    "med": 1.1,
+    "win": 52.4,
+    "exc": 0.03
+   },
+   "4": {
+    "n": 24690,
+    "avg": 5.84,
+    "med": 1.68,
+    "win": 53.8,
+    "exc": 0.81
+   },
+   "5": {
+    "n": 25850,
+    "avg": 4.61,
+    "med": 1.1,
+    "win": 52.7,
+    "exc": -0.44
+   },
+   "6": {
+    "n": 25606,
+    "avg": 5.16,
+    "med": 1.71,
+    "win": 54.1,
+    "exc": 0.15
+   },
+   "7": {
+    "n": 25266,
+    "avg": 5.23,
+    "med": 2.08,
+    "win": 55.6,
+    "exc": 0.18
+   },
+   "8": {
+    "n": 25677,
+    "avg": 5.38,
+    "med": 2.41,
+    "win": 57.5,
+    "exc": 0.32
+   },
+   "9": {
+    "n": 27537,
+    "avg": 6.16,
+    "med": 2.86,
+    "win": 59.6,
+    "exc": 1.22
+   }
+  },
+  "on": {
+   "0": {
+    "n": 17548,
+    "avg": 2.6,
+    "med": -2.42,
+    "win": 44.2,
+    "exc": -3.09
+   },
+   "1": {
+    "n": 19220,
+    "avg": 5.11,
+    "med": 0.08,
+    "win": 50.2,
+    "exc": -0.56
+   },
+   "2": {
+    "n": 19618,
+    "avg": 6.03,
+    "med": 0.97,
+    "win": 52.4,
+    "exc": 0.32
+   },
+   "3": {
+    "n": 19540,
+    "avg": 5.46,
+    "med": 1.5,
+    "win": 53.3,
+    "exc": -0.15
+   },
+   "4": {
+    "n": 19384,
+    "avg": 6.64,
+    "med": 2.29,
+    "win": 55.2,
+    "exc": 0.99
+   },
+   "5": {
+    "n": 20126,
+    "avg": 4.99,
+    "med": 1.48,
+    "win": 53.7,
+    "exc": -0.64
+   },
+   "6": {
+    "n": 20029,
+    "avg": 5.76,
+    "med": 2.1,
+    "win": 55.2,
+    "exc": 0.18
+   },
+   "7": {
+    "n": 19778,
+    "avg": 6.14,
+    "med": 2.56,
+    "win": 57.0,
+    "exc": 0.5
+   },
+   "8": {
+    "n": 20078,
+    "avg": 6.26,
+    "med": 2.71,
+    "win": 58.7,
+    "exc": 0.63
+   },
+   "9": {
+    "n": 21223,
+    "avg": 6.99,
+    "med": 3.4,
+    "win": 61.1,
+    "exc": 1.44
+   }
+  },
+  "off": {
+   "0": {
+    "n": 4622,
+    "avg": 0.16,
+    "med": -2.22,
+    "win": 45.6,
+    "exc": -2.78
+   },
+   "1": {
+    "n": 5314,
+    "avg": 2.41,
+    "med": -1.38,
+    "win": 47.7,
+    "exc": -0.49
+   },
+   "2": {
+    "n": 5491,
+    "avg": 3.46,
+    "med": 0.18,
+    "win": 50.4,
+    "exc": 0.64
+   },
+   "3": {
+    "n": 5423,
+    "avg": 3.56,
+    "med": -0.32,
+    "win": 49.0,
+    "exc": 0.67
+   },
+   "4": {
+    "n": 5306,
+    "avg": 2.94,
+    "med": -0.32,
+    "win": 48.8,
+    "exc": 0.14
+   },
+   "5": {
+    "n": 5724,
+    "avg": 3.25,
+    "med": -0.25,
+    "win": 49.2,
+    "exc": 0.25
+   },
+   "6": {
+    "n": 5577,
+    "avg": 2.99,
+    "med": 0.18,
+    "win": 50.4,
+    "exc": 0.07
+   },
+   "7": {
+    "n": 5488,
+    "avg": 1.98,
+    "med": 0.17,
+    "win": 50.7,
+    "exc": -0.99
+   },
+   "8": {
+    "n": 5599,
+    "avg": 2.2,
+    "med": 1.19,
+    "win": 53.1,
+    "exc": -0.81
+   },
+   "9": {
+    "n": 6314,
+    "avg": 3.35,
+    "med": 1.3,
+    "win": 54.6,
+    "exc": 0.49
+   }
+  }
+ },
+ "hist_h": 40,
  "stocks": {
   "ABUK": {
    "score": 0.6358,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 73.71000362765866,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.3,
+   "spread": 0.05,
+   "from_hi": -23.0,
+   "track": {
+    "n": 5,
+    "win": 4,
+    "last": [
+     "2025-12-15",
+     "2026-02-23",
+     39.4
+    ],
+    "avg": 23.8
+   }
   },
   "ADIB": {
    "score": 0.9133,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 46.15000030333539,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.03,
+   "spread": 0.33,
+   "from_hi": -16.7,
+   "track": {
+    "n": 5,
+    "win": 3,
+    "last": [
+     "2021-06-06",
+     "2021-08-24",
+     45.0
+    ],
+    "avg": 6.09
+   }
   },
   "ALCN": {
    "score": 0.7341,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 31.53,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.02,
+   "spread": 1.06,
+   "from_hi": -10.1,
+   "track": {
+    "n": 1,
+    "win": 0,
+    "last": [
+     "2025-10-13",
+     "2025-11-12",
+     -3.4
+    ],
+    "avg": -3.41
+   }
   },
   "AMOC": {
    "score": 0.7514,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 12.250000224124898,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.62,
+   "spread": 0.05,
+   "from_hi": -15.4,
+   "track": {
+    "n": 7,
+    "win": 5,
+    "last": [
+     "2025-12-24",
+     "2026-03-12",
+     27.2
+    ],
+    "avg": 9.3
+   }
   },
   "BTFH": {
    "score": 0.6647,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 2.160000116052762,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.37,
+   "spread": 0.23,
+   "from_hi": -40.0,
+   "track": null
   },
   "CCAP": {
    "score": 0.8266,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 5.680000186788625,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.5,
+   "spread": 0.19,
+   "from_hi": -21.5,
+   "track": {
+    "n": 2,
+    "win": 2,
+    "last": [
+     "2018-03-04",
+     "2018-03-25",
+     51.9
+    ],
+    "avg": 36.92
+   }
   },
   "CLHO": {
    "score": 0.9538,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 14.300000115817772,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.98,
+   "spread": 0.05,
+   "from_hi": -21.9,
+   "track": {
+    "n": 2,
+    "win": 1,
+    "last": [
+     "2020-12-21",
+     "2021-03-18",
+     0.5
+    ],
+    "avg": -5.7
+   }
   },
   "COMI": {
    "score": 0.9942,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 126.47,
+   "liquid": true,
+   "sma50": false,
+   "atr": 1.63,
+   "spread": 0.15,
+   "from_hi": -11.9,
+   "track": {
+    "n": 32,
+    "win": 16,
+    "last": [
+     "2026-08-30",
+     "2026-09-16",
+     -5.6
+    ],
+    "avg": 4.31
+   }
   },
   "EAST": {
    "score": 0.8902,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 33.79999906820764,
+   "liquid": true,
+   "sma50": true,
+   "atr": 3.55,
+   "spread": 0.58,
+   "from_hi": -23.5,
+   "track": {
+    "n": 11,
+    "win": 7,
+    "last": [
+     "2021-09-22",
+     "2021-12-20",
+     -2.6
+    ],
+    "avg": 9.52
+   }
   },
   "EFID": {
    "score": 0.763,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 20.97999960768457,
+   "liquid": true,
+   "sma50": true,
+   "atr": 4.36,
+   "spread": 0.83,
+   "from_hi": -36.8,
+   "track": {
+    "n": 8,
+    "win": 5,
+    "last": [
+     "2025-07-15",
+     "2025-10-13",
+     70.5
+    ],
+    "avg": 13.21
+   }
   },
   "EFIH": {
    "score": 0.7803,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 25.28999922198634,
+   "liquid": true,
+   "sma50": true,
+   "atr": 3.56,
+   "spread": 0.69,
+   "from_hi": -0.9,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2023-08-02",
+     "2023-10-30",
+     2.3
+    ],
+    "avg": 2.26
+   }
   },
   "EGAL": {
    "score": 0.9249,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 298.0,
+   "liquid": true,
+   "sma50": false,
+   "atr": 2.91,
+   "spread": 0.05,
+   "from_hi": -17.8,
+   "track": {
+    "n": 3,
+    "win": 3,
+    "last": [
+     "2024-12-24",
+     "2025-02-12",
+     22.2
+    ],
+    "avg": 22.92
+   }
   },
   "EMFD": {
    "score": 0.8092,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 12.199999608913389,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.56,
+   "spread": 1.08,
+   "from_hi": -18.1,
+   "track": {
+    "n": 7,
+    "win": 4,
+    "last": [
+     "2026-03-30",
+     "2026-07-06",
+     24.2
+    ],
+    "avg": 5.08
+   }
   },
   "ETEL": {
    "score": 0.7225,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 140.9999956964067,
+   "liquid": true,
+   "sma50": true,
+   "atr": 3.91,
+   "spread": 0.05,
+   "from_hi": -6.6,
+   "track": {
+    "n": 23,
+    "win": 12,
+    "last": [
+     "2025-05-14",
+     "2025-08-18",
+     28.8
+    ],
+    "avg": 2.18
+   }
   },
   "FWRY": {
    "score": 0.9711,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 17.44,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.24,
+   "spread": 0.05,
+   "from_hi": -17.9,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2020-06-07",
+     "2020-08-25",
+     113.7
+    ],
+    "avg": 113.69
+   }
   },
   "GBCO": {
    "score": 0.8035,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 22.09999984431245,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.37,
+   "spread": 0.05,
+   "from_hi": -33.6,
+   "track": null
   },
   "HELI": {
    "score": 0.7688,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 6.350000192248632,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.5,
+   "spread": 0.08,
+   "from_hi": -25.3,
+   "track": {
+    "n": 7,
+    "win": 6,
+    "last": [
+     "2025-09-18",
+     "2025-12-15",
+     12.0
+    ],
+    "avg": 17.65
+   }
   },
   "HRHO": {
    "score": 0.896,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 26.200000311355353,
+   "liquid": true,
+   "sma50": true,
+   "atr": 3.8,
+   "spread": 0.05,
+   "from_hi": -14.2,
+   "track": {
+    "n": 10,
+    "win": 6,
+    "last": [
+     "2024-01-23",
+     "2024-03-18",
+     10.1
+    ],
+    "avg": 2.57
+   }
   },
   "ISPH": {
    "score": 0.8728,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 9.980000074868592,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.98,
+   "spread": 0.05,
+   "from_hi": -28.5,
+   "track": {
+    "n": 3,
+    "win": 1,
+    "last": [
+     "2020-06-07",
+     "2020-07-28",
+     -14.7
+    ],
+    "avg": -3.33
+   }
   },
   "JUFO": {
    "score": 0.8613,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 22.19,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.07,
+   "spread": 0.44,
+   "from_hi": -30.2,
+   "track": {
+    "n": 11,
+    "win": 8,
+    "last": [
+     "2022-12-14",
+     "2023-01-15",
+     7.8
+    ],
+    "avg": 5.21
+   }
   },
   "MCQE": {
    "score": 0.3064,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 175.90000122021755,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.9,
+   "spread": 0.05,
+   "from_hi": -32.2,
+   "track": {
+    "n": 2,
+    "win": 2,
+    "last": [
+     "2023-10-24",
+     "2024-01-21",
+     48.4
+    ],
+    "avg": 35.1
+   }
   },
   "MFPC": {
    "score": 0.6936,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 36.79999846578295,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.73,
+   "spread": 0.05,
+   "from_hi": -26.4,
+   "track": {
+    "n": 6,
+    "win": 6,
+    "last": [
+     "2025-12-22",
+     "2026-03-10",
+     44.9
+    ],
+    "avg": 26.93
+   }
+  },
+  "ORAS": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 71.05000305175781,
+   "liquid": false,
+   "sma50": false,
+   "atr": 3.0,
+   "spread": 0.05,
+   "from_hi": 0.0,
+   "track": null
   },
   "ORHD": {
    "score": 0.8208,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 10.439999521137,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.7,
+   "spread": 0.05,
+   "from_hi": -76.0,
+   "track": {
+    "n": 1,
+    "win": 0,
+    "last": [
+     "2026-09-16",
+     "2026-10-12",
+     -10.9
+    ],
+    "avg": -10.94
+   }
   },
   "PHDC": {
    "score": 0.8497,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 11.500000189909171,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.58,
+   "spread": 0.27,
+   "from_hi": -28.2,
+   "track": {
+    "n": 6,
+    "win": 5,
+    "last": [
+     "2021-04-28",
+     "2021-08-08",
+     10.7
+    ],
+    "avg": 12.18
+   }
   },
   "RAYA": {
    "score": 0.6243,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 6.009999940809818,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.99,
+   "spread": 0.08,
+   "from_hi": -27.5,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2013-10-22",
+     "2014-01-21",
+     20.5
+    ],
+    "avg": 20.45
+   }
   },
   "RMDA": {
    "score": 0.815,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 5.120000193378713,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.71,
+   "spread": 0.1,
+   "from_hi": -23.0,
+   "track": null
   },
   "SKPC": {
    "score": 0.9075,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 14.940000321532171,
+   "liquid": true,
+   "sma50": false,
+   "atr": 2.92,
+   "spread": 0.05,
+   "from_hi": -24.5,
+   "track": {
+    "n": 15,
+    "win": 7,
+    "last": [
+     "2025-12-22",
+     "2026-01-05",
+     -19.7
+    ],
+    "avg": 5.69
+   }
   },
   "TMGH": {
    "score": 0.9769,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 78.06,
+   "liquid": true,
+   "sma50": false,
+   "atr": 2.77,
+   "spread": 0.05,
+   "from_hi": -23.4,
+   "track": {
+    "n": 10,
+    "win": 8,
+    "last": [
+     "2026-08-26",
+     "2026-09-24",
+     -6.4
+    ],
+    "avg": 18.48
+   }
   },
   "ATLC": {
    "score": 0.0636,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 5.20000005733071,
+   "liquid": true,
+   "sma50": false,
+   "atr": 6.63,
+   "spread": 0.1,
+   "from_hi": -31.8,
+   "track": {
+    "n": 2,
+    "win": 2,
+    "last": [
+     "2026-01-05",
+     "2026-03-30",
+     13.5
+    ],
+    "avg": 7.56
+   }
   },
   "AMER": {
    "score": 0.1676,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 3.63999998158422,
+   "liquid": true,
+   "sma50": false,
+   "atr": 6.69,
+   "spread": 0.14,
+   "from_hi": -49.1,
+   "track": {
+    "n": 1,
+    "win": 0,
+    "last": [
+     "2013-02-06",
+     "2013-04-29",
+     -11.7
+    ],
+    "avg": -11.7
+   }
   },
   "ARAB": {
    "score": 0.4855,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 0.252,
+   "liquid": true,
+   "sma50": true,
+   "atr": 3.34,
+   "spread": 0.2,
+   "from_hi": -11.6,
+   "track": null
   },
   "AMIA": {
    "score": 0.7572,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 15.739999628214646,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.92,
+   "spread": 0.23,
+   "from_hi": -22.6,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2023-12-27",
+     "2024-01-31",
+     62.7
+    ],
+    "avg": 62.66
+   }
   },
   "ARCC": {
    "score": 0.7168,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 67.02999628580433,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.76,
+   "spread": 0.05,
+   "from_hi": -17.1,
+   "track": {
+    "n": 2,
+    "win": 2,
+    "last": [
+     "2017-12-17",
+     "2018-03-12",
+     10.8
+    ],
+    "avg": 15.53
+   }
   },
   "ASCM": {
    "score": 0.578,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 44.28000077306542,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.49,
+   "spread": 0.05,
+   "from_hi": -33.9,
+   "track": null
   },
   "ASPI": {
    "score": 0.3353,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 0.3150000024226404,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.88,
+   "spread": 0.16,
+   "from_hi": -43.4,
+   "track": {
+    "n": 3,
+    "win": 1,
+    "last": [
+     "2026-05-21",
+     "2026-05-25",
+     -18.0
+    ],
+    "avg": -1.16
+   }
   },
   "AIFI": {
    "score": 0.3988,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 2.4600000478783426,
+   "liquid": true,
+   "sma50": true,
+   "atr": 4.82,
+   "spread": 0.9,
+   "from_hi": -23.8,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2024-09-08",
+     "2024-12-04",
+     44.9
+    ],
+    "avg": 44.89
+   }
   },
   "COSG": {
    "score": 0.4162,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 1.3300000429153442,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.83,
+   "spread": 0.38,
+   "from_hi": -31.4,
+   "track": {
+    "n": 9,
+    "win": 6,
+    "last": [
+     "2024-10-23",
+     "2025-01-20",
+     8.6
+    ],
+    "avg": 10.87
+   }
   },
   "POUL": {
    "score": 0.4682,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 6.859999907856257,
+   "liquid": true,
+   "sma50": false,
+   "atr": 6.48,
+   "spread": 0.07,
+   "from_hi": -83.0,
+   "track": {
+    "n": 1,
+    "win": 0,
+    "last": [
+     "2012-02-27",
+     "2012-04-04",
+     -16.8
+    ],
+    "avg": -16.78
+   }
   },
   "CSAG": {
    "score": 0.6994,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 38.10999831711735,
+   "liquid": true,
+   "sma50": true,
+   "atr": 3.65,
+   "spread": 0.62,
+   "from_hi": -13.4,
+   "track": null
   },
   "PRCL": {
    "score": 0.1329,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 17.59000051644164,
+   "liquid": true,
+   "sma50": false,
+   "atr": 7.01,
+   "spread": 0.3,
+   "from_hi": -53.6,
+   "track": {
+    "n": 2,
+    "win": 1,
+    "last": [
+     "2023-01-29",
+     "2023-03-14",
+     -0.0
+    ],
+    "avg": 19.12
+   }
   },
   "CNFN": {
    "score": 0.5838,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 3.829999933068041,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.74,
+   "spread": 0.13,
+   "from_hi": -29.1,
+   "track": null
   },
   "CIEB": {
    "score": 0.9653,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 23.19,
+   "liquid": true,
+   "sma50": false,
+   "atr": 2.58,
+   "spread": 0.52,
+   "from_hi": -10.8,
+   "track": {
+    "n": 11,
+    "win": 6,
+    "last": [
+     "2026-09-24",
+     "2026-10-26",
+     -14.5
+    ],
+    "avg": -0.47
+   }
   },
   "DAPH": {
    "score": 0.2197,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 82.98999724977266,
+   "liquid": true,
+   "sma50": false,
+   "atr": 6.0,
+   "spread": 0.41,
+   "from_hi": -41.4,
+   "track": null
   },
   "DSCW": {
    "score": 0.711,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 1.440000057220459,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.12,
+   "spread": 0.35,
+   "from_hi": -34.2,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2017-11-30",
+     "2018-02-25",
+     9.3
+    ],
+    "avg": 9.35
+   }
   },
   "EGCH": {
    "score": 0.8439,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 9.929999617374303,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.93,
+   "spread": 0.05,
+   "from_hi": -34.7,
+   "track": null
   },
   "EGTS": {
    "score": 0.2775,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 12.410000423025444,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.84,
+   "spread": 0.05,
+   "from_hi": -43.0,
+   "track": null
   },
   "PHAR": {
    "score": 0.7919,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 100.99,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.44,
+   "spread": 0.05,
+   "from_hi": -34.2,
+   "track": {
+    "n": 9,
+    "win": 4,
+    "last": [
+     "2025-05-29",
+     "2025-09-02",
+     5.2
+    ],
+    "avg": -0.93
+   }
   },
   "MPRC": {
    "score": 0.3468,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 37.13,
+   "liquid": true,
+   "sma50": true,
+   "atr": 5.46,
+   "spread": 0.35,
+   "from_hi": -28.0,
+   "track": null
   },
   "ETRS": {
    "score": 0.8786,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 11.050000379751394,
+   "liquid": true,
+   "sma50": true,
+   "atr": 3.14,
+   "spread": 0.6,
+   "from_hi": -3.9,
+   "track": null
   },
   "EHDR": {
    "score": 0.5145,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 2.0599999614790376,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.51,
+   "spread": 0.24,
+   "from_hi": -34.6,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2014-01-12",
+     "2014-04-01",
+     12.9
+    ],
+    "avg": 12.9
+   }
   },
   "ELKA": {
    "score": 0.4509,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 1.4200000466971563,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.13,
+   "spread": 0.35,
+   "from_hi": -45.4,
+   "track": {
+    "n": 2,
+    "win": 1,
+    "last": [
+     "2013-05-09",
+     "2013-06-04",
+     -9.0
+    ],
+    "avg": 15.43
+   }
   },
   "KABO": {
    "score": 0.2312,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 7.7500000998780525,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.0,
+   "spread": 0.06,
+   "from_hi": -22.5,
+   "track": null
   },
   "OBRI": {
    "score": 0.1503,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 21.699999240560267,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.97,
+   "spread": 0.05,
+   "from_hi": -48.8,
+   "track": null
   },
   "ELSH": {
    "score": 0.4971,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 10.469999653031929,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.88,
+   "spread": 0.05,
+   "from_hi": -30.9,
+   "track": {
+    "n": 1,
+    "win": 0,
+    "last": [
+     "2024-07-30",
+     "2024-08-06",
+     -13.2
+    ],
+    "avg": -13.15
+   }
   },
   "ELEC": {
    "score": 0.5607,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 1.539999952623921,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.87,
+   "spread": 0.32,
+   "from_hi": -51.4,
+   "track": {
+    "n": 8,
+    "win": 3,
+    "last": [
+     "2026-06-08",
+     "2026-09-07",
+     -3.7
+    ],
+    "avg": -3.08
+   }
   },
   "NIPH": {
    "score": 0.1561,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 289.0000095829195,
+   "liquid": true,
+   "sma50": false,
+   "atr": 6.55,
+   "spread": 0.05,
+   "from_hi": -32.9,
+   "track": null
   },
   "UEGC": {
    "score": 0.2659,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 1.4200000466971563,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.03,
+   "spread": 0.35,
+   "from_hi": -48.7,
+   "track": {
+    "n": 11,
+    "win": 4,
+    "last": [
+     "2023-06-19",
+     "2023-09-21",
+     6.9
+    ],
+    "avg": -4.97
+   }
   },
   "SWDY": {
    "score": 0.6705,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 118.50999783601443,
+   "liquid": true,
+   "sma50": true,
+   "atr": 3.49,
+   "spread": 0.05,
+   "from_hi": -13.5,
+   "track": {
+    "n": 8,
+    "win": 3,
+    "last": [
+     "2026-05-25",
+     "2026-08-30",
+     45.0
+    ],
+    "avg": -1.14
+   }
   },
   "ENGC": {
    "score": 0.2832,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 38.47999830077868,
+   "liquid": true,
+   "sma50": true,
+   "atr": 6.05,
+   "spread": 0.05,
+   "from_hi": -24.8,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2025-07-17",
+     "2025-09-22",
+     17.1
+    ],
+    "avg": 17.07
+   }
   },
   "EXPA": {
    "score": 0.9017,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 14.429999923173648,
+   "liquid": true,
+   "sma50": false,
+   "atr": 2.71,
+   "spread": 0.26,
+   "from_hi": -34.5,
+   "track": {
+    "n": 3,
+    "win": 2,
+    "last": [
+     "2026-09-07",
+     "2026-10-14",
+     -12.6
+    ],
+    "avg": 10.84
+   }
   },
   "ZEOT": {
    "score": 0.1387,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 12.589999650288554,
+   "liquid": true,
+   "sma50": true,
+   "atr": 7.56,
+   "spread": 0.05,
+   "from_hi": -12.6,
+   "track": null
   },
   "GDWA": {
    "score": 0.6069,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 0.5060695221065095,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.75,
+   "spread": 0.1,
+   "from_hi": -49.4,
+   "track": {
+    "n": 1,
+    "win": 0,
+    "last": [
+     "2026-06-16",
+     "2026-08-26",
+     -3.7
+    ],
+    "avg": -3.7
+   }
   },
   "HDBK": {
    "score": 0.4104,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 103.82000210201353,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.8,
+   "spread": 1.41,
+   "from_hi": -36.7,
+   "track": {
+    "n": 9,
+    "win": 8,
+    "last": [
+     "2026-02-23",
+     "2026-04-01",
+     58.5
+    ],
+    "avg": 27.61
+   }
   },
   "ICFC": {
    "score": 0.2254,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 26.54000038790063,
+   "liquid": true,
+   "sma50": true,
+   "atr": 6.29,
+   "spread": 0.05,
+   "from_hi": -5.2,
+   "track": null
   },
   "ISMQ": {
    "score": 0.5665,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 6.499999924633641,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.32,
+   "spread": 0.08,
+   "from_hi": -31.1,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2023-06-19",
+     "2023-08-31",
+     21.5
+    ],
+    "avg": 21.46
+   }
   },
   "IDRE": {
    "score": 0.1734,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 39.90999878295624,
+   "liquid": true,
+   "sma50": false,
+   "atr": 6.38,
+   "spread": 0.05,
+   "from_hi": -31.7,
+   "track": null
   },
   "ISMA": {
    "score": 0.1214,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 19.590000075983646,
+   "liquid": true,
+   "sma50": false,
+   "atr": 6.41,
+   "spread": 0.05,
+   "from_hi": -50.3,
+   "track": null
   },
   "LCSW": {
    "score": 0.6301,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 41.36999859512737,
+   "liquid": true,
+   "sma50": true,
+   "atr": 4.94,
+   "spread": 0.56,
+   "from_hi": 0.0,
+   "track": null
   },
   "MCRO": {
    "score": 0.3757,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 1.2799999621487403,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.47,
+   "spread": 0.39,
+   "from_hi": -26.4,
+   "track": null
   },
   "MASR": {
    "score": 0.5029,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 6.3599999806527325,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.26,
+   "spread": 0.08,
+   "from_hi": -27.3,
+   "track": {
+    "n": 7,
+    "win": 6,
+    "last": [
+     "2025-11-12",
+     "2026-02-10",
+     21.0
+    ],
+    "avg": 15.11
+   }
   },
   "MPCO": {
    "score": 0.185,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 1.939999956637621,
+   "liquid": true,
+   "sma50": false,
+   "atr": 7.88,
+   "spread": 0.26,
+   "from_hi": -34.0,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2023-12-14",
+     "2024-03-13",
+     27.9
+    ],
+    "avg": 27.87
+   }
   },
   "MEPA": {
    "score": 0.2428,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 1.2999999523162842,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.56,
+   "spread": 0.38,
+   "from_hi": -40.6,
+   "track": null
   },
   "MPCI": {
    "score": 0.2717,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 338.82,
+   "liquid": true,
+   "sma50": true,
+   "atr": 5.43,
+   "spread": 0.05,
+   "from_hi": -24.0,
+   "track": null
   },
   "MBSC": {
    "score": 0.1618,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 339.00001086676167,
+   "liquid": true,
+   "sma50": true,
+   "atr": 5.16,
+   "spread": 0.05,
+   "from_hi": -26.3,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2023-11-22",
+     "2024-02-20",
+     17.6
+    ],
+    "avg": 17.59
+   }
   },
   "ATQA": {
    "score": 0.5318,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 9.910000188077861,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.74,
+   "spread": 0.05,
+   "from_hi": -27.0,
+   "track": null
   },
   "MTIE": {
    "score": 0.5723,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 6.600000220499221,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.34,
+   "spread": 0.08,
+   "from_hi": -33.8,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2026-01-18",
+     "2026-03-05",
+     5.0
+    ],
+    "avg": 4.99
+   }
   },
   "NCCW": {
    "score": 0.0925,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 5.300000210603077,
+   "liquid": true,
+   "sma50": false,
+   "atr": 6.54,
+   "spread": 0.09,
+   "from_hi": -38.0,
+   "track": null
   },
   "OFH": {
    "score": 0.3237,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 0.7070000075229873,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.76,
+   "spread": 0.07,
+   "from_hi": -35.7,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2023-05-07",
+     "2023-06-19",
+     39.1
+    ],
+    "avg": 39.1
+   }
   },
   "OIH": {
    "score": 0.474,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 1.5599999863926959,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.99,
+   "spread": 1.0,
+   "from_hi": -28.1,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2023-10-30",
+     "2023-11-22",
+     82.3
+    ],
+    "avg": 82.32
+   }
   },
   "ORWE": {
    "score": 0.8844,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 24.700000762939457,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.07,
+   "spread": 0.57,
+   "from_hi": -14.9,
+   "track": {
+    "n": 12,
+    "win": 7,
+    "last": [
+     "2026-06-21",
+     "2026-09-17",
+     13.6
+    ],
+    "avg": 7.61
+   }
   },
   "PRDC": {
    "score": 0.3642,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 6.24000005768266,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.04,
+   "spread": 0.08,
+   "from_hi": -38.5,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2022-11-01",
+     "2022-12-25",
+     17.0
+    ],
+    "avg": 16.98
+   }
   },
   "SIPC": {
    "score": 0.0347,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 4.870000056409642,
+   "liquid": true,
+   "sma50": false,
+   "atr": 7.93,
+   "spread": 0.1,
+   "from_hi": -22.7,
+   "track": null
   },
   "SDTI": {
    "score": 0.9364,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 85.01,
+   "liquid": true,
+   "sma50": true,
+   "atr": 3.26,
+   "spread": 0.43,
+   "from_hi": -4.3,
+   "track": {
+    "n": 1,
+    "win": 0,
+    "last": [
+     "2025-04-09",
+     "2025-07-17",
+     -0.8
+    ],
+    "avg": -0.84
+   }
   },
   "SCEM": {
    "score": 0.5549,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 98.65999725258256,
+   "liquid": true,
+   "sma50": true,
+   "atr": 4.3,
+   "spread": 0.05,
+   "from_hi": -8.6,
+   "track": {
+    "n": 2,
+    "win": 0,
+    "last": [
+     "2012-10-01",
+     "2012-11-20",
+     -13.7
+    ],
+    "avg": -13.84
+   }
   },
   "OCDI": {
    "score": 0.4913,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 23.779999688804455,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.12,
+   "spread": 0.05,
+   "from_hi": -33.9,
+   "track": {
+    "n": 5,
+    "win": 3,
+    "last": [
+     "2021-09-13",
+     "2021-12-09",
+     11.0
+    ],
+    "avg": 6.27
+   }
   },
   "SVCE": {
    "score": 0.341,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 8.579999550101682,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.3,
+   "spread": 0.06,
+   "from_hi": -34.6,
+   "track": {
+    "n": 3,
+    "win": 2,
+    "last": [
+     "2016-03-22",
+     "2016-06-19",
+     33.4
+    ],
+    "avg": 16.47
+   }
   },
   "MOED": {
    "score": 0.3006,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 0.47999999042232655,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.96,
+   "spread": 0.1,
+   "from_hi": -51.5,
+   "track": {
+    "n": 1,
+    "win": 0,
+    "last": [
+     "2023-01-30",
+     "2023-03-14",
+     -19.8
+    ],
+    "avg": -19.79
+   }
   },
   "UNIP": {
    "score": 0.4335,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 0.30000001192092896,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.45,
+   "spread": 0.27,
+   "from_hi": -28.9,
+   "track": null
   },
   "ZMID": {
    "score": 0.6821,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 6.22999992491133,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.2,
+   "spread": 0.08,
+   "from_hi": -36.4,
+   "track": null
   },
   "RREI": {
    "score": 0.2601,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 2.5896093361079693,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.84,
+   "spread": 0.19,
+   "from_hi": -48.0,
+   "track": null
   },
   "CIRA": {
    "score": 0.7977,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 38.31790340375195,
+   "liquid": true,
+   "sma50": true,
+   "atr": 3.86,
+   "spread": 0.41,
+   "from_hi": -6.5,
+   "track": {
+    "n": 10,
+    "win": 7,
+    "last": [
+     "2025-09-25",
+     "2025-12-22",
+     20.8
+    ],
+    "avg": 6.2
+   }
   },
   "GIHD": {
    "score": 0.1445,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 47.339487976723525,
+   "liquid": true,
+   "sma50": false,
+   "atr": 7.92,
+   "spread": 0.05,
+   "from_hi": -39.3,
+   "track": null
   },
   "CCRS": {
    "score": 0.1792,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 1.9999999456455053,
+   "liquid": true,
+   "sma50": false,
+   "atr": 8.0,
+   "spread": 0.25,
+   "from_hi": -31.5,
+   "track": null
   },
   "ICID": {
    "score": 0.6012,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 17.154751358032225,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.26,
+   "spread": 1.32,
+   "from_hi": -9.3,
+   "track": null
   },
   "MENA": {
    "score": 0.5087,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 6.650000018846758,
+   "liquid": true,
+   "sma50": true,
+   "atr": 7.83,
+   "spread": 1.09,
+   "from_hi": -12.4,
+   "track": {
+    "n": 1,
+    "win": 0,
+    "last": [
+     "2020-06-16",
+     "2020-07-20",
+     -9.7
+    ],
+    "avg": -9.68
+   }
   },
   "NHPS": {
    "score": 0.3931,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 56.75000045163574,
+   "liquid": true,
+   "sma50": false,
+   "atr": 7.24,
+   "spread": 0.05,
+   "from_hi": -39.1,
+   "track": null
   },
   "COPR": {
    "score": 0.422,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 0.4300000088719222,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.76,
+   "spread": 0.12,
+   "from_hi": -23.6,
+   "track": null
   },
   "UNIT": {
    "score": 0.3526,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 15.479680213191205,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.75,
+   "spread": 0.05,
+   "from_hi": -29.0,
+   "track": null
   },
   "SUGR": {
    "score": 0.6127,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 50.039999109735945,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.22,
+   "spread": 0.48,
+   "from_hi": -15.6,
+   "track": {
+    "n": 2,
+    "win": 2,
+    "last": [
+     "2026-06-17",
+     "2026-09-16",
+     25.4
+    ],
+    "avg": 39.08
+   }
   },
   "EPCO": {
    "score": 0.4798,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 8.330145915638317,
+   "liquid": true,
+   "sma50": false,
+   "atr": 6.35,
+   "spread": 0.06,
+   "from_hi": -34.5,
+   "track": {
+    "n": 2,
+    "win": 0,
+    "last": [
+     "2024-02-20",
+     "2024-03-14",
+     -18.8
+    ],
+    "avg": -13.76
+   }
   },
   "INFI": {
    "score": 0.2081,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 149.11999706306472,
+   "liquid": true,
+   "sma50": true,
+   "atr": 7.85,
+   "spread": 0.05,
+   "from_hi": -11.2,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2024-12-16",
+     "2025-01-06",
+     29.8
+    ],
+    "avg": 29.82
+   }
   },
   "MOSC": {
    "score": 0.289,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 282.97447422572543,
+   "liquid": true,
+   "sma50": true,
+   "atr": 8.0,
+   "spread": 0.87,
+   "from_hi": -15.9,
+   "track": null
   },
   "SNFC": {
    "score": 0.9884,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 11.40000003879353,
+   "liquid": true,
+   "sma50": true,
+   "atr": 2.38,
+   "spread": 0.56,
+   "from_hi": -10.3,
+   "track": {
+    "n": 2,
+    "win": 1,
+    "last": [
+     "2023-12-19",
+     "2024-03-17",
+     134.4
+    ],
+    "avg": 61.62
+   }
   },
   "RTVC": {
    "score": 0.9306,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 3.109999895095825,
+   "liquid": true,
+   "sma50": false,
+   "atr": 1.38,
+   "spread": 0.16,
+   "from_hi": -30.9,
+   "track": null
+  },
+  "MOIL": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 0.6830000071841127,
+   "liquid": false,
+   "sma50": true,
+   "atr": 2.22,
+   "spread": 0.07,
+   "from_hi": -3.9,
+   "track": null
   },
   "EGAS": {
    "score": 0.7861,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 49.099998474121094,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.28,
+   "spread": 0.05,
+   "from_hi": -18.6,
+   "track": {
+    "n": 5,
+    "win": 2,
+    "last": [
+     "2025-12-17",
+     "2026-01-18",
+     -9.2
+    ],
+    "avg": 17.52
+   }
+  },
+  "EGSA": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 8.960265355394375,
+   "liquid": false,
+   "sma50": true,
+   "atr": 0.83,
+   "spread": 0.82,
+   "from_hi": -1.5,
+   "track": null
+  },
+  "APSW": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 7.390146566611949,
+   "liquid": false,
+   "sma50": false,
+   "atr": 4.45,
+   "spread": 0.62,
+   "from_hi": -23.6,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2012-09-06",
+     "2012-10-04",
+     24.9
+    ],
+    "avg": 24.89
+   }
   },
   "SPIN": {
    "score": 0.7283,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 14.149999735402126,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.07,
+   "spread": 0.05,
+   "from_hi": -30.3,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2026-07-06",
+     "2026-09-16",
+     20.2
+    ],
+    "avg": 20.19
+   }
   },
   "ACGC": {
    "score": 0.8324,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 13.77,
+   "liquid": true,
+   "sma50": true,
+   "atr": 3.45,
+   "spread": 0.71,
+   "from_hi": -10.9,
+   "track": {
+    "n": 9,
+    "win": 5,
+    "last": [
+     "2025-12-09",
+     "2026-03-01",
+     -11.0
+    ],
+    "avg": 12.36
+   }
   },
   "AXPH": {
    "score": 0.7746,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 1259.545406075223,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.19,
+   "spread": 0.05,
+   "from_hi": -21.7,
+   "track": null
   },
   "ADCI": {
    "score": 0.8671,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 265.2455446973999,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.92,
+   "spread": 0.05,
+   "from_hi": -16.7,
+   "track": null
   },
   "CPCI": {
    "score": 1.0,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 556.9599853159702,
+   "liquid": true,
+   "sma50": false,
+   "atr": 1.43,
+   "spread": 0.05,
+   "from_hi": -5.7,
+   "track": null
   },
   "BIOC": {
    "score": 0.0058,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 383.675,
+   "liquid": true,
+   "sma50": true,
+   "atr": 8.0,
+   "spread": 0.05,
+   "from_hi": -26.2,
+   "track": null
+  },
+  "MIPH": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 770.4843313964813,
+   "liquid": false,
+   "sma50": false,
+   "atr": 4.01,
+   "spread": 0.36,
+   "from_hi": -18.1,
+   "track": null
   },
   "NINH": {
    "score": 0.4566,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 15.009999848921884,
+   "liquid": true,
+   "sma50": false,
+   "atr": 6.98,
+   "spread": 0.05,
+   "from_hi": -41.2,
+   "track": null
   },
   "OCPH": {
    "score": 0.3584,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 193.0892788325662,
+   "liquid": true,
+   "sma50": false,
+   "atr": 7.53,
+   "spread": 0.05,
+   "from_hi": -59.6,
+   "track": null
+  },
+  "DEIN": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 10.350000381469725,
+   "liquid": false,
+   "sma50": false,
+   "atr": 0.5,
+   "spread": 0.05,
+   "from_hi": -9.1,
+   "track": null
+  },
+  "EGBE": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 0.5000000056184706,
+   "liquid": false,
+   "sma50": false,
+   "atr": 2.04,
+   "spread": 0.43,
+   "from_hi": -11.2,
+   "track": null
   },
   "SAUD": {
    "score": 0.8555,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 22.24034354607791,
+   "liquid": true,
+   "sma50": true,
+   "atr": 4.07,
+   "spread": 0.05,
+   "from_hi": -13.1,
+   "track": {
+    "n": 3,
+    "win": 3,
+    "last": [
+     "2025-09-02",
+     "2025-11-30",
+     13.5
+    ],
+    "avg": 16.5
+   }
   },
   "ODIN": {
    "score": 0.4451,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 2.039999952548888,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.18,
+   "spread": 0.25,
+   "from_hi": -44.4,
+   "track": null
   },
   "AFDI": {
    "score": 0.6879,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 44.24000032008005,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.65,
+   "spread": 0.05,
+   "from_hi": -35.1,
+   "track": null
   },
   "KWIN": {
    "score": 0.0751,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 68.55000343561954,
+   "liquid": true,
+   "sma50": false,
+   "atr": 8.0,
+   "spread": 0.05,
+   "from_hi": -43.2,
+   "track": null
   },
   "FAIT": {
    "score": 0.948,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 46.31962705470757,
+   "liquid": true,
+   "sma50": true,
+   "atr": 3.17,
+   "spread": 0.47,
+   "from_hi": -3.9,
+   "track": {
+    "n": 6,
+    "win": 4,
+    "last": [
+     "2026-02-03",
+     "2026-05-06",
+     10.6
+    ],
+    "avg": 6.03
+   }
   },
   "MOIN": {
    "score": 0.2139,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 30.210000222977115,
+   "liquid": true,
+   "sma50": false,
+   "atr": 6.98,
+   "spread": 0.05,
+   "from_hi": -28.9,
+   "track": null
   },
   "CANA": {
    "score": 0.6532,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 33.26000078198355,
+   "liquid": true,
+   "sma50": true,
+   "atr": 3.71,
+   "spread": 0.05,
+   "from_hi": -31.5,
+   "track": {
+    "n": 2,
+    "win": 1,
+    "last": [
+     "2026-09-16",
+     "2026-10-20",
+     -4.4
+    ],
+    "avg": 23.34
+   }
   },
   "CAED": {
    "score": 0.0809,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 101.06249650319417,
+   "liquid": true,
+   "sma50": false,
+   "atr": 8.0,
+   "spread": 0.05,
+   "from_hi": -39.8,
+   "track": null
   },
   "EALR": {
    "score": 0.3121,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 295.2457388641068,
+   "liquid": true,
+   "sma50": false,
+   "atr": 7.46,
+   "spread": 0.05,
+   "from_hi": -35.3,
+   "track": null
   },
   "AALR": {
    "score": 0.2486,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 219.3529833984375,
+   "liquid": true,
+   "sma50": false,
+   "atr": 7.44,
+   "spread": 0.05,
+   "from_hi": -40.1,
+   "track": null
   },
   "IFAP": {
    "score": 0.7399,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 15.790000743630493,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.98,
+   "spread": 0.05,
+   "from_hi": -28.6,
+   "track": {
+    "n": 2,
+    "win": 1,
+    "last": [
+     "2026-09-20",
+     "2026-10-26",
+     -23.0
+    ],
+    "avg": -11.03
+   }
+  },
+  "NEDA": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 2.5320502484692686,
+   "liquid": false,
+   "sma50": false,
+   "atr": 4.41,
+   "spread": 2.09,
+   "from_hi": -20.9,
+   "track": null
   },
   "WKOL": {
    "score": 0.5376,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 164.35000121061162,
+   "liquid": true,
+   "sma50": false,
+   "atr": 6.6,
+   "spread": 0.05,
+   "from_hi": -56.4,
+   "track": null
   },
   "EFIC": {
    "score": 0.1908,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 154.899995743477,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.72,
+   "spread": 0.05,
+   "from_hi": -34.1,
+   "track": {
+    "n": 8,
+    "win": 4,
+    "last": [
+     "2026-03-11",
+     "2026-06-21",
+     -7.9
+    ],
+    "avg": 6.2
+   }
   },
   "MICH": {
    "score": 0.6763,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 43.99000093033144,
+   "liquid": true,
+   "sma50": true,
+   "atr": 4.53,
+   "spread": 0.05,
+   "from_hi": -8.9,
+   "track": {
+    "n": 3,
+    "win": 2,
+    "last": [
+     "2026-02-10",
+     "2026-03-11",
+     20.1
+    ],
+    "avg": 10.75
+   }
   },
   "SMFR": {
    "score": 0.3179,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 212.1800073107811,
+   "liquid": true,
+   "sma50": false,
+   "atr": 7.87,
+   "spread": 0.05,
+   "from_hi": -22.2,
+   "track": null
   },
   "AFMC": {
    "score": 0.0694,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 134.33,
+   "liquid": true,
+   "sma50": false,
+   "atr": 7.69,
+   "spread": 0.69,
+   "from_hi": -47.1,
+   "track": null
+  },
+  "EDFM": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 364.75631464086456,
+   "liquid": false,
+   "sma50": true,
+   "atr": 4.67,
+   "spread": 0.88,
+   "from_hi": -8.1,
+   "track": null
   },
   "GSSC": {
    "score": 0.526,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 228.64000534472544,
+   "liquid": true,
+   "sma50": false,
+   "atr": 6.35,
+   "spread": 0.05,
+   "from_hi": -28.4,
+   "track": null
+  },
+  "WCDF": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 497.05557367975706,
+   "liquid": false,
+   "sma50": false,
+   "atr": 4.23,
+   "spread": 0.05,
+   "from_hi": -29.7,
+   "track": null
   },
   "CEFM": {
    "score": 0.5491,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 127.50302036181023,
+   "liquid": true,
+   "sma50": true,
+   "atr": 6.04,
+   "spread": 0.05,
+   "from_hi": -11.8,
+   "track": null
   },
   "MILS": {
    "score": 0.1965,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 134.3400061488286,
+   "liquid": true,
+   "sma50": false,
+   "atr": 8.0,
+   "spread": 0.05,
+   "from_hi": -40.4,
+   "track": null
   },
   "SCFM": {
    "score": 0.4046,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 212.9099969912028,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.28,
+   "spread": 0.05,
+   "from_hi": -29.7,
+   "track": null
   },
   "UEFM": {
    "score": 0.4277,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 506.7570112094957,
+   "liquid": true,
+   "sma50": true,
+   "atr": 5.17,
+   "spread": 1.07,
+   "from_hi": -11.9,
+   "track": null
   },
   "MFSC": {
    "score": 0.5434,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 33.68609357561384,
+   "liquid": true,
+   "sma50": false,
+   "atr": 7.66,
+   "spread": 0.05,
+   "from_hi": -38.0,
+   "track": null
   },
   "MHOT": {
    "score": 0.6474,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 15.030268264616897,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.39,
+   "spread": 0.68,
+   "from_hi": -54.4,
+   "track": {
+    "n": 2,
+    "win": 1,
+    "last": [
+     "2026-04-01",
+     "2026-05-21",
+     27.4
+    ],
+    "avg": 10.89
+   }
   },
   "PHTV": {
    "score": 0.9595,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 335.0,
+   "liquid": true,
+   "sma50": true,
+   "atr": 4.32,
+   "spread": 0.49,
+   "from_hi": -18.8,
+   "track": null
   },
   "ROTO": {
    "score": 0.3815,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 30.520000758466193,
+   "liquid": true,
+   "sma50": false,
+   "atr": 7.02,
+   "spread": 0.05,
+   "from_hi": -40.4,
+   "track": null
+  },
+  "TRTO": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 0.05999999865889549,
+   "liquid": false,
+   "sma50": false,
+   "atr": 3.93,
+   "spread": 2.44,
+   "from_hi": -25.9,
+   "track": null
+  },
+  "EPPK": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 9.779999732971191,
+   "liquid": false,
+   "sma50": false,
+   "atr": 0.5,
+   "spread": 0.05,
+   "from_hi": -38.2,
+   "track": null
+  },
+  "RAKT": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 22.469999313354492,
+   "liquid": false,
+   "sma50": true,
+   "atr": 4.88,
+   "spread": 1.38,
+   "from_hi": -13.6,
+   "track": null
   },
   "RUBX": {
    "score": 0.0405,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 12.49999962305363,
+   "liquid": true,
+   "sma50": false,
+   "atr": 7.14,
+   "spread": 0.05,
+   "from_hi": -31.3,
+   "track": null
   },
   "SCTS": {
    "score": 0.4624,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 453.9915388201036,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.48,
+   "spread": 1.17,
+   "from_hi": -32.8,
+   "track": null
   },
   "ALUM": {
    "score": 0.3873,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 18.769999081536703,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.17,
+   "spread": 0.05,
+   "from_hi": -36.6,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2024-10-23",
+     "2025-01-20",
+     7.3
+    ],
+    "avg": 7.33
+   }
   },
   "GGCC": {
    "score": 0.3699,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 0.5160000273911372,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.02,
+   "spread": 0.1,
+   "from_hi": -56.3,
+   "track": {
+    "n": 2,
+    "win": 0,
+    "last": [
+     "2022-12-25",
+     "2023-02-06",
+     -12.4
+    ],
+    "avg": -14.98
+   }
   },
   "EBSC": {
    "score": 0.2543,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 1.4500000282209746,
+   "liquid": true,
+   "sma50": false,
+   "atr": 6.11,
+   "spread": 0.34,
+   "from_hi": -35.8,
+   "track": null
   },
   "GTWL": {
    "score": 0.0116,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 138.5,
+   "liquid": true,
+   "sma50": false,
+   "atr": 8.0,
+   "spread": 0.05,
+   "from_hi": -43.2,
+   "track": null
   },
   "ECAP": {
    "score": 0.9191,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 28.059999396743045,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.43,
+   "spread": 0.26,
+   "from_hi": -32.7,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2019-11-24",
+     "2020-02-19",
+     9.0
+    ],
+    "avg": 8.96
+   }
+  },
+  "CFGH": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 0.10800943474443453,
+   "liquid": false,
+   "sma50": true,
+   "atr": 2.25,
+   "spread": 1.03,
+   "from_hi": -22.3,
+   "track": null
   },
   "AJWA": {
    "score": 0.6185,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 267.00001240684185,
+   "liquid": true,
+   "sma50": true,
+   "atr": 7.87,
+   "spread": 0.77,
+   "from_hi": -5.3,
+   "track": null
+  },
+  "NAHO": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 0.125,
+   "liquid": false,
+   "sma50": false,
+   "atr": 1.43,
+   "spread": 0.62,
+   "from_hi": -15.0,
+   "track": null
+  },
+  "SAIB": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 2.5299999713897705,
+   "liquid": false,
+   "sma50": false,
+   "atr": 1.41,
+   "spread": 3.0,
+   "from_hi": 0.0,
+   "track": null
   },
   "CERA": {
    "score": 0.1272,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 1.009999971945309,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.95,
+   "spread": 0.5,
+   "from_hi": -43.9,
+   "track": null
   },
   "EASB": {
    "score": 0.104,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 5.569999905143466,
+   "liquid": true,
+   "sma50": false,
+   "atr": 7.14,
+   "spread": 0.09,
+   "from_hi": -39.8,
+   "track": null
+  },
+  "ELNA": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 43.44819861319161,
+   "liquid": false,
+   "sma50": true,
+   "atr": 4.65,
+   "spread": 2.2,
+   "from_hi": -12.1,
+   "track": null
   },
   "ADPC": {
    "score": 0.659,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 2.929999911449325,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.0,
+   "spread": 0.17,
+   "from_hi": -35.0,
+   "track": null
+  },
+  "GMCI": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 1.6200625143945218,
+   "liquid": false,
+   "sma50": true,
+   "atr": 4.9,
+   "spread": 1.3,
+   "from_hi": -27.4,
+   "track": null
   },
   "SEIG": {
    "score": 0.0867,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 215.9099558118214,
+   "liquid": true,
+   "sma50": false,
+   "atr": 7.77,
+   "spread": 0.05,
+   "from_hi": -22.3,
+   "track": null
   },
   "PRMH": {
    "score": 0.237,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 2.0799999055408294,
+   "liquid": true,
+   "sma50": false,
+   "atr": 8.0,
+   "spread": 0.24,
+   "from_hi": -28.3,
+   "track": null
   },
   "AREH": {
    "score": 0.5202,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 1.0200000098257354,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.55,
+   "spread": 0.49,
+   "from_hi": -40.4,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2024-11-26",
+     "2025-02-23",
+     7.0
+    ],
+    "avg": 6.98
+   }
   },
   "DTPP": {
    "score": 0.0173,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 59.50000062227412,
+   "liquid": true,
+   "sma50": false,
+   "atr": 8.0,
+   "spread": 0.05,
+   "from_hi": -83.6,
+   "track": null
+  },
+  "BIDI": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 2.119999885559082,
+   "liquid": false,
+   "sma50": false,
+   "atr": 0.5,
+   "spread": 0.24,
+   "from_hi": 0.0,
+   "track": null
+  },
+  "EOSB": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 1.5805487945312409,
+   "liquid": false,
+   "sma50": false,
+   "atr": 5.1,
+   "spread": 3.0,
+   "from_hi": -3.6,
+   "track": null
   },
   "GRCA": {
    "score": 0.0289,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 34.4999995740872,
+   "liquid": false,
+   "sma50": true,
+   "atr": 8.0,
+   "spread": 0.05,
+   "from_hi": -58.4,
+   "track": null
+  },
+  "AMPI": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 2.13160005569458,
+   "liquid": false,
+   "sma50": false,
+   "atr": 5.69,
+   "spread": 0.69,
+   "from_hi": -32.1,
+   "track": null
+  },
+  "BIGP": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 0.20114151163483565,
+   "liquid": false,
+   "sma50": false,
+   "atr": 6.38,
+   "spread": 0.25,
+   "from_hi": -48.3,
+   "track": null
+  },
+  "MKIT": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 2.700000047683716,
+   "liquid": false,
+   "sma50": false,
+   "atr": 3.0,
+   "spread": 0.19,
+   "from_hi": -38.2,
+   "track": null
   },
   "FERC": {
    "score": 0.3295,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 64.65219908521767,
+   "liquid": true,
+   "sma50": false,
+   "atr": 5.94,
+   "spread": 0.28,
+   "from_hi": -23.8,
+   "track": {
+    "n": 1,
+    "win": 0,
+    "last": [
+     "2026-03-12",
+     "2026-06-22",
+     -3.7
+    ],
+    "avg": -3.73
+   }
+  },
+  "MISR": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 5.510000228881837,
+   "liquid": false,
+   "sma50": true,
+   "atr": 0.5,
+   "spread": 0.09,
+   "from_hi": 0.0,
+   "track": null
+  },
+  "FIRE": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 5.219999940970199,
+   "liquid": false,
+   "sma50": true,
+   "atr": 6.08,
+   "spread": 0.1,
+   "from_hi": -9.1,
+   "track": null
   },
   "MAAL": {
    "score": 0.0983,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 5.9399998095857,
+   "liquid": true,
+   "sma50": false,
+   "atr": 6.91,
+   "spread": 0.08,
+   "from_hi": -47.5,
+   "track": null
+  },
+  "RKAZ": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 3.8584396980051165,
+   "liquid": false,
+   "sma50": false,
+   "atr": 8.0,
+   "spread": 1.06,
+   "from_hi": -36.2,
+   "track": null
+  },
+  "ELWA": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 1.0615652219108915,
+   "liquid": false,
+   "sma50": false,
+   "atr": 6.45,
+   "spread": 2.34,
+   "from_hi": -50.6,
+   "track": {
+    "n": 4,
+    "win": 1,
+    "last": [
+     "2019-08-21",
+     "2019-09-24",
+     -20.0
+    ],
+    "avg": 5.53
+   }
+  },
+  "IBCT": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 9.749319934844973,
+   "liquid": false,
+   "sma50": false,
+   "atr": 6.17,
+   "spread": 0.05,
+   "from_hi": -33.7,
+   "track": null
   },
   "CICH": {
    "score": 0.9422,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 10.010177914458927,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.52,
+   "spread": 0.55,
+   "from_hi": -20.6,
+   "track": {
+    "n": 2,
+    "win": 1,
+    "last": [
+     "2026-09-17",
+     "2026-10-26",
+     -14.8
+    ],
+    "avg": -1.13
+   }
   },
   "BINV": {
    "score": 0.5896,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 53.062469511870255,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.46,
+   "spread": 0.05,
+   "from_hi": -14.8,
+   "track": {
+    "n": 1,
+    "win": 0,
+    "last": [
+     "2025-01-12",
+     "2025-02-06",
+     -7.6
+    ],
+    "avg": -7.59
+   }
   },
   "RACC": {
    "score": 0.6416,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 7.71,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.59,
+   "spread": 0.06,
+   "from_hi": -27.3,
+   "track": null
+  },
+  "MMAT": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 4.870000019638029,
+   "liquid": false,
+   "sma50": true,
+   "atr": 5.66,
+   "spread": 1.22,
+   "from_hi": -14.4,
+   "track": null
   },
   "FNAR": {
    "score": 0.2023,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 9.779259104787567,
+   "liquid": true,
+   "sma50": false,
+   "atr": 7.14,
+   "spread": 0.05,
+   "from_hi": -35.4,
+   "track": null
   },
   "MBEG": {
    "score": 0.0578,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 4.990059642147116,
+   "liquid": true,
+   "sma50": false,
+   "atr": 7.8,
+   "spread": 0.1,
+   "from_hi": -37.1,
+   "track": null
   },
   "DOMT": {
    "score": 0.7052,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 24.789869337875025,
+   "liquid": true,
+   "sma50": true,
+   "atr": 5.3,
+   "spread": 1.07,
+   "from_hi": -17.4,
+   "track": {
+    "n": 3,
+    "win": 2,
+    "last": [
+     "2025-09-29",
+     "2025-12-24",
+     27.4
+    ],
+    "avg": 2.89
+   }
   },
   "INEG": {
    "score": 0.1156,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 0.3700000137766302,
+   "liquid": true,
+   "sma50": false,
+   "atr": 8.0,
+   "spread": 0.14,
+   "from_hi": -54.2,
+   "track": null
   },
   "OLFI": {
    "score": 0.9827,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 20.49999915582509,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.54,
+   "spread": 0.05,
+   "from_hi": -20.5,
+   "track": {
+    "n": 2,
+    "win": 0,
+    "last": [
+     "2023-05-18",
+     "2023-08-02",
+     -20.0
+    ],
+    "avg": -12.18
+   }
   },
   "ACAMD": {
    "score": 0.8382,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 1.9000000560406556,
+   "liquid": true,
+   "sma50": false,
+   "atr": 3.91,
+   "spread": 0.66,
+   "from_hi": -19.5,
+   "track": null
   },
   "SPMD": {
    "score": 0.1098,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 0.3170093387086815,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.01,
+   "spread": 0.16,
+   "from_hi": -47.3,
+   "track": null
   },
   "TALM": {
    "score": 0.4393,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 20.53019311850899,
+   "liquid": true,
+   "sma50": true,
+   "atr": 3.54,
+   "spread": 0.05,
+   "from_hi": -10.3,
+   "track": {
+    "n": 2,
+    "win": 2,
+    "last": [
+     "2026-06-28",
+     "2026-08-30",
+     10.0
+    ],
+    "avg": 5.47
+   }
   },
   "LUTS": {
    "score": 0.052,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 0.6519999797137989,
+   "liquid": true,
+   "sma50": false,
+   "atr": 8.0,
+   "spread": 0.08,
+   "from_hi": -61.8,
+   "track": {
+    "n": 1,
+    "win": 1,
+    "last": [
+     "2026-05-06",
+     "2026-06-28",
+     30.3
+    ],
+    "avg": 30.31
+   }
+  },
+  "FTNS": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 0.9050844288491583,
+   "liquid": false,
+   "sma50": false,
+   "atr": 5.74,
+   "spread": 0.65,
+   "from_hi": -38.0,
+   "track": null
   },
   "AMES": {
    "score": 0.0231,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 37.500001362031554,
+   "liquid": true,
+   "sma50": false,
+   "atr": 8.0,
+   "spread": 0.05,
+   "from_hi": -75.7,
+   "track": null
+  },
+  "DCCC": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 1.7000000476837158,
+   "liquid": false,
+   "sma50": false,
+   "atr": 3.0,
+   "spread": 0.29,
+   "from_hi": 0.0,
+   "track": null
   },
   "EEII": {
    "score": 0.2948,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 2.0100000291911475,
+   "liquid": true,
+   "sma50": true,
+   "atr": 7.85,
+   "spread": 0.25,
+   "from_hi": -38.2,
+   "track": {
+    "n": 1,
+    "win": 0,
+    "last": [
+     "2024-07-28",
+     "2024-10-20",
+     -3.3
+    ],
+    "avg": -3.26
+   }
   },
   "EGREF": {
    "score": 0.0462,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 22.34,
+   "liquid": true,
+   "sma50": true,
+   "atr": 8.0,
+   "spread": 1.42,
+   "from_hi": -46.2,
+   "track": null
+  },
+  "FAITA": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 1.0,
+   "liquid": false,
+   "sma50": true,
+   "atr": 1.03,
+   "spread": 0.5,
+   "from_hi": -2.0,
+   "track": null
+  },
+  "GPPL": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 1.399999976158142,
+   "liquid": false,
+   "sma50": false,
+   "atr": 0.5,
+   "spread": 0.59,
+   "from_hi": -1.4,
+   "track": null
+  },
+  "ICLE": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 15.760000228881834,
+   "liquid": false,
+   "sma50": false,
+   "atr": 0.5,
+   "spread": 0.05,
+   "from_hi": -61.6,
+   "track": null
   },
   "IRON": {
    "score": 0.7457,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 24.22,
+   "liquid": true,
+   "sma50": false,
+   "atr": 4.22,
+   "spread": 0.05,
+   "from_hi": -37.3,
+   "track": {
+    "n": 3,
+    "win": 2,
+    "last": [
+     "2024-04-07",
+     "2024-07-22",
+     164.1
+    ],
+    "avg": 52.77
+   }
   },
   "KZPC": {
    "score": 0.5954,
-   "status": "مراقبة"
+   "status": "مراقبة",
+   "close": 10.399999663472514,
+   "liquid": true,
+   "sma50": false,
+   "atr": 6.98,
+   "spread": 0.05,
+   "from_hi": -29.7,
+   "track": {
+    "n": 2,
+    "win": 2,
+    "last": [
+     "2024-07-28",
+     "2024-09-08",
+     61.2
+    ],
+    "avg": 47.41
+   }
+  },
+  "MEGM": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 12.539999961853027,
+   "liquid": false,
+   "sma50": false,
+   "atr": 0.5,
+   "spread": 0.05,
+   "from_hi": 0.0,
+   "track": null
+  },
+  "NDRL": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 4.690000057220459,
+   "liquid": false,
+   "sma50": false,
+   "atr": 0.5,
+   "spread": 0.11,
+   "from_hi": 0.0,
+   "track": null
+  },
+  "SPHT": {
+   "score": null,
+   "status": "مراقبة",
+   "close": 1.4199999570846558,
+   "liquid": false,
+   "sma50": false,
+   "atr": 0.5,
+   "spread": 0.35,
+   "from_hi": -25.7,
+   "track": null
   }
  }
 }
