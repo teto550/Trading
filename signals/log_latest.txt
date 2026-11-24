@@ -1,31 +1,31 @@
-[data] 25/251 سهم، اتجاب تاريخ لـ 25
+[data] 25/263 سهم، اتجاب تاريخ لـ 25
 $VLMR.CA: possibly delisted; no timezone found
 $VLMRA.CA: possibly delisted; no timezone found
 $ACTF.CA: possibly delisted; no timezone found
 $AIDC.CA: possibly delisted; no timezone found
 $AIHC.CA: possibly delisted; no timezone found
 $BONY.CA: possibly delisted; no timezone found
-[data] 50/251 سهم، اتجاب تاريخ لـ 44
+[data] 50/263 سهم، اتجاب تاريخ لـ 44
 $GOUR.CA: possibly delisted; no timezone found
 $GPIM.CA: possibly delisted; no timezone found
-[data] 75/251 سهم، اتجاب تاريخ لـ 67
+[data] 75/263 سهم، اتجاب تاريخ لـ 67
 $TAQA.CA: possibly delisted; no timezone found
 $VALU.CA: possibly delisted; no timezone found
-[data] 100/251 سهم، اتجاب تاريخ لـ 90
+[data] 100/263 سهم، اتجاب تاريخ لـ 90
 $GTHE.CA: possibly delisted; no timezone found
 $SNFI.CA: possibly delisted; no timezone found
 $IRAX.CA: possibly delisted; no timezone found
 $CRST.CA: possibly delisted; no timezone found
-[data] 125/251 سهم، اتجاب تاريخ لـ 111
+[data] 125/263 سهم، اتجاب تاريخ لـ 111
 $NCGC.CA: possibly delisted; no timezone found
 $NBKE.CA: possibly delisted; no timezone found
 $QNBE.CA: possibly delisted; no timezone found
-[data] 150/251 سهم، اتجاب تاريخ لـ 133
+[data] 150/263 سهم، اتجاب تاريخ لـ 133
 $PACH.CA: possibly delisted; no timezone found
 $UASG.CA: possibly delisted; no timezone found
 $EITP.CA: possibly delisted; no timezone found
 $SMPP.CA: possibly delisted; no timezone found
-[data] 175/251 سهم، اتجاب تاريخ لـ 154
+[data] 175/263 سهم، اتجاب تاريخ لـ 154
 $ACRO.CA: possibly delisted; no timezone found
 $ESRS.CA: possibly delisted; no timezone found
 $WATP.CA: possibly delisted; no timezone found
@@ -37,13 +37,13 @@ $TYCN.CA: possibly delisted; no timezone found
 $ARVA.CA: possibly delisted; no timezone found
 $HCFI.CA: possibly delisted; no timezone found
 $NARE.CA: possibly delisted; no timezone found
-[data] 200/251 سهم، اتجاب تاريخ لـ 168
+[data] 200/263 سهم، اتجاب تاريخ لـ 168
 $UTOP.CA: possibly delisted; no timezone found
 $APPC.CA: possibly delisted; no timezone found
 $UBEE.CA: possibly delisted; no timezone found
 $NAPR.CA: possibly delisted; no timezone found
 $DIFC.CA: possibly delisted; no timezone found
-[data] 225/251 سهم، اتجاب تاريخ لـ 188
+[data] 225/263 سهم، اتجاب تاريخ لـ 188
 $FCMD.CA: possibly delisted; no timezone found
 $VERT.CA: possibly delisted; no timezone found
 $ADRI.CA: possibly delisted; no timezone found
@@ -58,33 +58,28 @@ $GGRN.CA: possibly delisted; no timezone found
 $HBCO.CA: possibly delisted; no timezone found
 $CPME.CA: possibly delisted; no timezone found
 $TWSA.CA: possibly delisted; no timezone found
-[data] 250/251 سهم، اتجاب تاريخ لـ 199
+[data] 250/263 سهم، اتجاب تاريخ لـ 199
 $KORA.CA: possibly delisted; no timezone found
-[data] خلص الجلب: 199 سهم اتجاب من 251
-^CASE30: Period 'max' is invalid, must be one of: 1d, 5d
-^CASE30: Period 'max' is invalid, must be one of: 1d, 5d
-[macro] egx30 (^CASE30): فشل
-$EGX30.CA: possibly delisted; no timezone found
-$EGX30.CA: possibly delisted; no timezone found
-[macro] egx30 (EGX30.CA): فشل
-$^EGX30: possibly delisted; no timezone found
-$^EGX30: possibly delisted; no timezone found
-[macro] egx30 (^EGX30): فشل
-[macro] usd (EGP=X): تمام 6390 يوم
-[signals] موديل 20 يوم اتدرّب على 264256 صف في 6s
-[signals] موديل 40 يوم اتدرّب على 258843 صف في 5s
-[signals] موديل 60 يوم اتدرّب على 253337 صف في 5s
-🧭 البوت - جلسة التلات 2026-11-24 (على قفلة 2026-11-23)
-ℹ️ اتضاف من TradingView 1 جلسة Yahoo لسه منزّلهاش (2026-11-23).
+[data] خلص الجلب: 211 سهم اتجاب من 263
+/home/runner/work/Trading/Trading/backtest/swing_core.py:60: RuntimeWarning: invalid value encountered in log
+  lh, ll, lc_ = np.log(H.values.astype(float)), np.log(L.values.astype(float)), np.log(Cv)
+🧭 البوت - جلسة الأربع 2026-11-25 (على قفلة 2026-11-24)
+ℹ️ اتضاف من TradingView 1 جلسة Yahoo لسه منزّلهاش (2026-11-24).
 
-🔮 الأسهم اللي البوت شايفها الأقرب للطلوع (الـ20-40 جلسة الجاية):
-1. EBSC | 1.48
-2. MEPA | 1.30
-3. SCEM | 98.63
-4. CCRS | 1.93
-5. AIFI | 2.45
-⏸ السوق في اتجاه هابط، فالبوت مش هيشتري حاجة جديدة لحد ما يرجع صاعد.
+🔮 أفضل الأسهم حسب قواعد البوت دلوقتي (مرشحة للشراء في الـ60 جلسة الجاية):
+1. SNFC | 11.40
+2. PHTV | 335.00
+3. FAIT | 46.32
+4. SDTI | 85.01
+5. HRHO | 26.20
+⏸ فلتر السوق (SMA100) قافل، فالبوت مش هيشتري جديد دلوقتي (نسبة الأسهم فوق متوسط 50 يوم: 18%).
 
-💼 الحساب: 100,000 جنيه (+0.00% من 100,000) | كاش 100,000
+✅ نتيجة توقعات آخر 20 جلسة: 3 من 5 سهم طلعوا | متوسطهم +0.5% والسوق +0.3%
+   ✅ CCRS +3.6% (من 2026-11-23)
+   ✅ AIFI +0.4% (من 2026-11-23)
+   ✅ SCEM +0.0% (من 2026-11-23)
+   ❌ نزلوا: MEPA +0.0%، EBSC -1.4%
+
+💼 الحساب: 100,000 جنيه (+0.00% من 100,000) | كاش 100,000 | السوق +0.3%
 
 ⚠️ حساب تجريبي بفلوس وهمية، مش ضمان مكسب.
