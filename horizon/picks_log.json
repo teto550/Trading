@@ -4527,82 +4527,83 @@
    "variant": "macro",
    "picks": [
     "EFIH",
-    "SCEM",
     "PHTV",
+    "SCEM",
     "CSAG",
     "AIFI",
-    "MFPC",
     "HRHO",
+    "MFPC",
+    "CIRA",
     "GBCO",
-    "ETRS",
-    "CIRA"
+    "FAIT"
    ],
    "labels": {
     "EFIH": "شراء",
-    "SCEM": "انتظر",
     "PHTV": "شراء",
+    "SCEM": "شراء",
     "CSAG": "انتظر",
     "AIFI": "انتظر",
+    "HRHO": "شراء",
     "MFPC": "شراء",
-    "HRHO": "انتظر",
+    "CIRA": "شراء",
     "GBCO": "شراء",
-    "ETRS": "انتظر",
-    "CIRA": "انتظر"
+    "FAIT": "شراء"
    },
    "news": {
+    "HRHO": "agree",
     "GBCO": "neutral"
    },
    "by_model": {
     "xgb": [
      "EFIH",
-     "SCEM",
      "PHTV",
+     "SCEM",
      "CSAG",
      "AIFI",
-     "MFPC",
      "HRHO",
+     "MFPC",
+     "CIRA",
      "GBCO",
-     "ETRS",
-     "CIRA"
+     "FAIT"
     ],
     "lgbm": [
      "EFIH",
-     "SCEM",
-     "CSAG",
-     "AIFI",
      "PHTV",
-     "ETRS",
-     "ELEC",
-     "EAST",
+     "CSAG",
+     "GBCO",
      "MFPC",
-     "LCSW"
+     "LCSW",
+     "AIFI",
+     "EAST",
+     "MEPA",
+     "SCEM"
     ],
     "cat": [
-     "EFIH",
      "SCEM",
+     "EFIH",
+     "MFPC",
+     "AIFI",
+     "ABUK",
+     "HRHO",
      "PHTV",
      "CSAG",
-     "HRHO",
-     "AIFI",
-     "MFPC",
-     "CPCI",
-     "ETRS",
-     "CIRA"
+     "JUFO",
+     "GBCO"
     ],
     "ens": [
      "EFIH",
-     "SCEM",
      "PHTV",
+     "SCEM",
+     "MFPC",
      "CSAG",
      "AIFI",
-     "MFPC",
-     "ETRS",
-     "HRHO",
      "GBCO",
-     "EAST"
+     "HRHO",
+     "EAST",
+     "ASCM"
     ]
    },
-   "made": "2026-11-23 15:43"
+   "made": "2026-11-24 05:28"
   },
   {
    "date": "2026-11-23",
@@ -4610,83 +4611,83 @@
    "variant": "macro",
    "picks": [
     "CSAG",
-    "PHTV",
-    "EFIH",
     "SCEM",
+    "PHTV",
     "AIFI",
-    "DOMT",
-    "LCSW",
+    "EFIH",
+    "SUGR",
     "HRHO",
+    "RTVC",
     "SAUD",
-    "ETEL"
+    "SDTI"
    ],
    "labels": {
     "CSAG": "شراء",
-    "PHTV": "شراء",
-    "EFIH": "شراء",
     "SCEM": "شراء",
+    "PHTV": "شراء",
     "AIFI": "شراء",
-    "DOMT": "شراء",
-    "LCSW": "شراء",
+    "EFIH": "شراء",
+    "SUGR": "شراء",
     "HRHO": "شراء",
+    "RTVC": "شراء",
     "SAUD": "شراء",
-    "ETEL": "شراء"
+    "SDTI": "شراء"
    },
    "news": {
-    "HRHO": "agree",
-    "ETEL": "neutral"
+    "SUGR": "disagree",
+    "HRHO": "agree"
    },
    "by_model": {
     "xgb": [
      "CSAG",
      "PHTV",
-     "EFIH",
      "SCEM",
      "AIFI",
-     "HRHO",
+     "EFIH",
+     "FAIT",
+     "SUGR",
      "SAUD",
-     "DOMT",
-     "EAST",
-     "CIEB"
+     "HRHO",
+     "EAST"
     ],
     "lgbm": [
      "CSAG",
-     "PHTV",
      "AIFI",
      "SCEM",
      "EFIH",
-     "DOMT",
-     "SDTI",
-     "LCSW",
-     "ETEL",
+     "SUGR",
+     "MEPA",
+     "HRHO",
+     "PHTV",
+     "SAUD",
      "GBCO"
     ],
     "cat": [
      "CSAG",
      "PHTV",
-     "EFIH",
      "SCEM",
+     "EFIH",
+     "SDTI",
      "AIFI",
+     "RTVC",
      "LCSW",
-     "ETEL",
-     "EAST",
-     "DOMT",
-     "ETRS"
+     "HRHO",
+     "SUGR"
     ],
     "ens": [
      "CSAG",
-     "PHTV",
-     "EFIH",
      "SCEM",
+     "PHTV",
      "AIFI",
-     "DOMT",
-     "LCSW",
+     "EFIH",
+     "SUGR",
      "HRHO",
+     "RTVC",
      "SAUD",
-     "ETEL"
+     "SDTI"
     ]
    },
-   "made": "2026-11-23 15:43"
+   "made": "2026-11-24 05:28"
   },
   {
    "date": "2026-11-23",
@@ -4695,81 +4696,79 @@
    "picks": [
     "SDTI",
     "CSAG",
-    "RTVC",
-    "PHTV",
-    "SCEM",
+    "AIFI",
     "EBSC",
-    "SNFC",
-    "ADCI",
-    "MEPA",
-    "SAUD"
+    "DAPH",
+    "SCEM",
+    "PHTV",
+    "EAST",
+    "ELKA",
+    "ETRS"
    ],
    "labels": {
     "SDTI": "شراء",
     "CSAG": "شراء",
-    "RTVC": "شراء",
-    "PHTV": "شراء",
-    "SCEM": "شراء",
+    "AIFI": "شراء",
     "EBSC": "شراء",
-    "SNFC": "شراء",
-    "ADCI": "شراء",
-    "MEPA": "شراء",
-    "SAUD": "شراء"
+    "DAPH": "شراء",
+    "SCEM": "شراء",
+    "PHTV": "شراء",
+    "EAST": "شراء",
+    "ELKA": "شراء",
+    "ETRS": "شراء"
    },
-   "news": {
-    "MEPA": "agree"
-   },
+   "news": {},
    "by_model": {
     "xgb": [
      "CSAG",
-     "SDTI",
-     "PHTV",
-     "RTVC",
      "SCEM",
-     "EAST",
+     "SDTI",
      "SAUD",
-     "ADCI",
+     "PHTV",
      "AIFI",
-     "HRHO"
+     "HRHO",
+     "ELEC",
+     "MEPA",
+     "EMFD"
     ],
     "lgbm": [
      "SDTI",
      "CSAG",
-     "RTVC",
-     "PHTV",
-     "SCEM",
+     "AIFI",
      "EBSC",
-     "SNFC",
-     "ADCI",
-     "MEPA",
-     "SAUD"
+     "DAPH",
+     "SCEM",
+     "PHTV",
+     "EAST",
+     "ELKA",
+     "ETRS"
     ],
     "cat": [
      "SDTI",
-     "SCEM",
      "CSAG",
-     "AIFI",
-     "EBSC",
+     "SCEM",
      "MEPA",
-     "ADCI",
+     "PHTV",
+     "EBSC",
      "MFSC",
-     "LCSW",
-     "ELKA"
+     "AIFI",
+     "ELKA",
+     "ELEC"
     ],
     "ens": [
-     "SDTI",
      "CSAG",
+     "SDTI",
      "SCEM",
-     "PHTV",
-     "ADCI",
      "AIFI",
-     "RTVC",
-     "MEPA",
+     "PHTV",
      "EBSC",
-     "AFDI"
+     "SAUD",
+     "ELKA",
+     "HRHO",
+     "MFSC"
     ]
    },
-   "made": "2026-11-23 15:43"
+   "made": "2026-11-24 05:28"
   },
   {
    "date": "2026-11-23",
@@ -4777,108 +4776,110 @@
    "variant": "macro",
    "picks": [
     "EBSC",
-    "SCEM",
-    "RTVC",
-    "UNIP",
-    "CSAG",
-    "SAUD",
+    "AIFI",
     "ADCI",
     "RACC",
-    "CCRS",
-    "PRDC"
+    "MEPA",
+    "TALM",
+    "UNIP",
+    "SCEM",
+    "ELKA",
+    "AFDI"
    ],
    "labels": {
     "EBSC": "شراء",
-    "SCEM": "شراء",
-    "RTVC": "شراء",
-    "UNIP": "شراء",
-    "CSAG": "شراء",
-    "SAUD": "شراء",
+    "AIFI": "شراء",
     "ADCI": "شراء",
     "RACC": "شراء",
-    "CCRS": "شراء",
-    "PRDC": "شراء"
+    "MEPA": "شراء",
+    "TALM": "شراء",
+    "UNIP": "شراء",
+    "SCEM": "شراء",
+    "ELKA": "شراء",
+    "AFDI": "شراء"
    },
-   "news": {},
+   "news": {
+    "MEPA": "agree"
+   },
    "by_model": {
     "xgb": [
      "EBSC",
-     "CSAG",
-     "MEPA",
-     "SAUD",
-     "EAST",
      "SCEM",
-     "ADCI",
+     "CSAG",
+     "EAST",
+     "MEPA",
      "AFDI",
+     "ADCI",
      "RTVC",
-     "SPIN"
+     "ETRS",
+     "MFSC"
     ],
     "lgbm": [
      "EBSC",
-     "SCEM",
-     "RTVC",
-     "UNIP",
-     "CSAG",
-     "SAUD",
+     "AIFI",
      "ADCI",
      "RACC",
-     "CCRS",
-     "PRDC"
+     "MEPA",
+     "TALM",
+     "UNIP",
+     "SCEM",
+     "ELKA",
+     "AFDI"
     ],
     "cat": [
      "EBSC",
-     "SCEM",
-     "MEPA",
-     "PRCL",
+     "CSAG",
      "AFDI",
-     "SAUD",
+     "ADCI",
+     "SCEM",
+     "ATLC",
      "AIFI",
-     "ISMA",
-     "MFSC",
-     "CSAG"
+     "PRCL",
+     "TALM",
+     "UNIP"
     ],
     "ens": [
      "EBSC",
-     "SCEM",
-     "SAUD",
-     "CSAG",
-     "RTVC",
      "ADCI",
+     "SCEM",
      "AFDI",
-     "RACC",
-     "EAST",
-     "AIFI"
+     "MEPA",
+     "AIFI",
+     "UNIP",
+     "CSAG",
+     "MFSC",
+     "RACC"
     ]
    },
-   "made": "2026-11-23 15:43"
+   "made": "2026-11-24 05:28"
   },
   {
    "date": "2026-11-23",
    "h": 60,
    "variant": "macro",
    "picks": [
-    "EBSC",
-    "SCEM",
-    "RACC",
-    "AFDI",
-    "ATLC",
-    "RTVC",
     "MEPA",
-    "SAUD",
-    "MFSC",
-    "GGCC"
+    "EBSC",
+    "AFDI",
+    "GGCC",
+    "RACC",
+    "CCRS",
+    "UNIP",
+    "OFH",
+    "CEFM",
+    "PRDC"
    ],
    "labels": {
-    "EBSC": "شراء",
-    "SCEM": "شراء",
-    "RACC": "شراء",
-    "AFDI": "شراء",
-    "ATLC": "شراء",
-    "RTVC": "شراء",
     "MEPA": "شراء",
-    "SAUD": "شراء",
-    "MFSC": "شراء",
-    "GGCC": "شراء"
+    "EBSC": "شراء",
+    "AFDI": "شراء",
+    "GGCC": "شراء",
+    "RACC": "شراء",
+    "CCRS": "شراء",
+    "UNIP": "شراء",
+    "OFH": "شراء",
+    "CEFM": "شراء",
+    "PRDC": "شراء"
    },
    "news": {
     "MEPA": "agree"
@@ -4886,54 +4887,54 @@
    "by_model": {
     "xgb": [
      "RTVC",
-     "HRHO",
-     "MEPA",
-     "AFDI",
-     "MOIN",
-     "CEFM",
-     "NCCW",
-     "SAUD",
+     "GGCC",
      "CSAG",
-     "ACGC"
+     "MEPA",
+     "HRHO",
+     "SCEM",
+     "CIEB",
+     "SNFC",
+     "CCRS",
+     "CEFM"
     ],
     "lgbm": [
-     "EBSC",
-     "SCEM",
-     "RACC",
-     "AFDI",
-     "ATLC",
-     "RTVC",
      "MEPA",
-     "SAUD",
-     "MFSC",
-     "GGCC"
+     "EBSC",
+     "AFDI",
+     "GGCC",
+     "RACC",
+     "CCRS",
+     "UNIP",
+     "OFH",
+     "CEFM",
+     "PRDC"
     ],
     "cat": [
      "SCEM",
-     "CCRS",
+     "AFDI",
+     "MFSC",
+     "MOIN",
      "RTVC",
-     "SDTI",
-     "CIEB",
-     "GGCC",
-     "ACGC",
+     "CCRS",
+     "EBSC",
      "RACC",
      "MEPA",
-     "MFSC"
+     "SAUD"
     ],
     "ens": [
-     "RTVC",
-     "SCEM",
      "MEPA",
-     "AFDI",
-     "RACC",
+     "SCEM",
      "CCRS",
-     "SAUD",
-     "HRHO",
+     "AFDI",
+     "GGCC",
+     "CEFM",
+     "MOIN",
      "EBSC",
-     "GGCC"
+     "SAUD",
+     "MFSC"
     ]
    },
-   "made": "2026-11-23 15:43"
+   "made": "2026-11-24 05:28"
   }
  ]
 }
