@@ -1,0 +1,715 @@
+{
+ "data_date": "2026-11-24",
+ "target": "2026-11-25",
+ "params": {
+  "q_in": 0.9,
+  "q_out": 0.3,
+  "max_pos": 8,
+  "trail_k": 5.0,
+  "max_hold": 60,
+  "min_hold": 5,
+  "regime": 100,
+  "trend50": true,
+  "exit_on_regime": false,
+  "cost": 0.0015,
+  "size": "eq",
+  "real_cost": true,
+  "intraday_stop": false,
+  "live_extra": 0.0
+ },
+ "regime_on": false,
+ "stocks": {
+  "ABUK": {
+   "score": 0.6358,
+   "status": "مراقبة"
+  },
+  "ADIB": {
+   "score": 0.9133,
+   "status": "مراقبة"
+  },
+  "ALCN": {
+   "score": 0.7341,
+   "status": "مراقبة"
+  },
+  "AMOC": {
+   "score": 0.7514,
+   "status": "مراقبة"
+  },
+  "BTFH": {
+   "score": 0.6647,
+   "status": "مراقبة"
+  },
+  "CCAP": {
+   "score": 0.8266,
+   "status": "مراقبة"
+  },
+  "CLHO": {
+   "score": 0.9538,
+   "status": "مراقبة"
+  },
+  "COMI": {
+   "score": 0.9942,
+   "status": "مراقبة"
+  },
+  "EAST": {
+   "score": 0.8902,
+   "status": "مراقبة"
+  },
+  "EFID": {
+   "score": 0.763,
+   "status": "مراقبة"
+  },
+  "EFIH": {
+   "score": 0.7803,
+   "status": "مراقبة"
+  },
+  "EGAL": {
+   "score": 0.9249,
+   "status": "مراقبة"
+  },
+  "EMFD": {
+   "score": 0.8092,
+   "status": "مراقبة"
+  },
+  "ETEL": {
+   "score": 0.7225,
+   "status": "مراقبة"
+  },
+  "FWRY": {
+   "score": 0.9711,
+   "status": "مراقبة"
+  },
+  "GBCO": {
+   "score": 0.8035,
+   "status": "مراقبة"
+  },
+  "HELI": {
+   "score": 0.7688,
+   "status": "مراقبة"
+  },
+  "HRHO": {
+   "score": 0.896,
+   "status": "مراقبة"
+  },
+  "ISPH": {
+   "score": 0.8728,
+   "status": "مراقبة"
+  },
+  "JUFO": {
+   "score": 0.8613,
+   "status": "مراقبة"
+  },
+  "MCQE": {
+   "score": 0.3064,
+   "status": "مراقبة"
+  },
+  "MFPC": {
+   "score": 0.6936,
+   "status": "مراقبة"
+  },
+  "ORHD": {
+   "score": 0.8208,
+   "status": "مراقبة"
+  },
+  "PHDC": {
+   "score": 0.8497,
+   "status": "مراقبة"
+  },
+  "RAYA": {
+   "score": 0.6243,
+   "status": "مراقبة"
+  },
+  "RMDA": {
+   "score": 0.815,
+   "status": "مراقبة"
+  },
+  "SKPC": {
+   "score": 0.9075,
+   "status": "مراقبة"
+  },
+  "TMGH": {
+   "score": 0.9769,
+   "status": "مراقبة"
+  },
+  "ATLC": {
+   "score": 0.0636,
+   "status": "مراقبة"
+  },
+  "AMER": {
+   "score": 0.1676,
+   "status": "مراقبة"
+  },
+  "ARAB": {
+   "score": 0.4855,
+   "status": "مراقبة"
+  },
+  "AMIA": {
+   "score": 0.7572,
+   "status": "مراقبة"
+  },
+  "ARCC": {
+   "score": 0.7168,
+   "status": "مراقبة"
+  },
+  "ASCM": {
+   "score": 0.578,
+   "status": "مراقبة"
+  },
+  "ASPI": {
+   "score": 0.3353,
+   "status": "مراقبة"
+  },
+  "AIFI": {
+   "score": 0.3988,
+   "status": "مراقبة"
+  },
+  "COSG": {
+   "score": 0.4162,
+   "status": "مراقبة"
+  },
+  "POUL": {
+   "score": 0.4682,
+   "status": "مراقبة"
+  },
+  "CSAG": {
+   "score": 0.6994,
+   "status": "مراقبة"
+  },
+  "PRCL": {
+   "score": 0.1329,
+   "status": "مراقبة"
+  },
+  "CNFN": {
+   "score": 0.5838,
+   "status": "مراقبة"
+  },
+  "CIEB": {
+   "score": 0.9653,
+   "status": "مراقبة"
+  },
+  "DAPH": {
+   "score": 0.2197,
+   "status": "مراقبة"
+  },
+  "DSCW": {
+   "score": 0.711,
+   "status": "مراقبة"
+  },
+  "EGCH": {
+   "score": 0.8439,
+   "status": "مراقبة"
+  },
+  "EGTS": {
+   "score": 0.2775,
+   "status": "مراقبة"
+  },
+  "PHAR": {
+   "score": 0.7919,
+   "status": "مراقبة"
+  },
+  "MPRC": {
+   "score": 0.3468,
+   "status": "مراقبة"
+  },
+  "ETRS": {
+   "score": 0.8786,
+   "status": "مراقبة"
+  },
+  "EHDR": {
+   "score": 0.5145,
+   "status": "مراقبة"
+  },
+  "ELKA": {
+   "score": 0.4509,
+   "status": "مراقبة"
+  },
+  "KABO": {
+   "score": 0.2312,
+   "status": "مراقبة"
+  },
+  "OBRI": {
+   "score": 0.1503,
+   "status": "مراقبة"
+  },
+  "ELSH": {
+   "score": 0.4971,
+   "status": "مراقبة"
+  },
+  "ELEC": {
+   "score": 0.5607,
+   "status": "مراقبة"
+  },
+  "NIPH": {
+   "score": 0.1561,
+   "status": "مراقبة"
+  },
+  "UEGC": {
+   "score": 0.2659,
+   "status": "مراقبة"
+  },
+  "SWDY": {
+   "score": 0.6705,
+   "status": "مراقبة"
+  },
+  "ENGC": {
+   "score": 0.2832,
+   "status": "مراقبة"
+  },
+  "EXPA": {
+   "score": 0.9017,
+   "status": "مراقبة"
+  },
+  "ZEOT": {
+   "score": 0.1387,
+   "status": "مراقبة"
+  },
+  "GDWA": {
+   "score": 0.6069,
+   "status": "مراقبة"
+  },
+  "HDBK": {
+   "score": 0.4104,
+   "status": "مراقبة"
+  },
+  "ICFC": {
+   "score": 0.2254,
+   "status": "مراقبة"
+  },
+  "ISMQ": {
+   "score": 0.5665,
+   "status": "مراقبة"
+  },
+  "IDRE": {
+   "score": 0.1734,
+   "status": "مراقبة"
+  },
+  "ISMA": {
+   "score": 0.1214,
+   "status": "مراقبة"
+  },
+  "LCSW": {
+   "score": 0.6301,
+   "status": "مراقبة"
+  },
+  "MCRO": {
+   "score": 0.3757,
+   "status": "مراقبة"
+  },
+  "MASR": {
+   "score": 0.5029,
+   "status": "مراقبة"
+  },
+  "MPCO": {
+   "score": 0.185,
+   "status": "مراقبة"
+  },
+  "MEPA": {
+   "score": 0.2428,
+   "status": "مراقبة"
+  },
+  "MPCI": {
+   "score": 0.2717,
+   "status": "مراقبة"
+  },
+  "MBSC": {
+   "score": 0.1618,
+   "status": "مراقبة"
+  },
+  "ATQA": {
+   "score": 0.5318,
+   "status": "مراقبة"
+  },
+  "MTIE": {
+   "score": 0.5723,
+   "status": "مراقبة"
+  },
+  "NCCW": {
+   "score": 0.0925,
+   "status": "مراقبة"
+  },
+  "OFH": {
+   "score": 0.3237,
+   "status": "مراقبة"
+  },
+  "OIH": {
+   "score": 0.474,
+   "status": "مراقبة"
+  },
+  "ORWE": {
+   "score": 0.8844,
+   "status": "مراقبة"
+  },
+  "PRDC": {
+   "score": 0.3642,
+   "status": "مراقبة"
+  },
+  "SIPC": {
+   "score": 0.0347,
+   "status": "مراقبة"
+  },
+  "SDTI": {
+   "score": 0.9364,
+   "status": "مراقبة"
+  },
+  "SCEM": {
+   "score": 0.5549,
+   "status": "مراقبة"
+  },
+  "OCDI": {
+   "score": 0.4913,
+   "status": "مراقبة"
+  },
+  "SVCE": {
+   "score": 0.341,
+   "status": "مراقبة"
+  },
+  "MOED": {
+   "score": 0.3006,
+   "status": "مراقبة"
+  },
+  "UNIP": {
+   "score": 0.4335,
+   "status": "مراقبة"
+  },
+  "ZMID": {
+   "score": 0.6821,
+   "status": "مراقبة"
+  },
+  "RREI": {
+   "score": 0.2601,
+   "status": "مراقبة"
+  },
+  "CIRA": {
+   "score": 0.7977,
+   "status": "مراقبة"
+  },
+  "GIHD": {
+   "score": 0.1445,
+   "status": "مراقبة"
+  },
+  "CCRS": {
+   "score": 0.1792,
+   "status": "مراقبة"
+  },
+  "ICID": {
+   "score": 0.6012,
+   "status": "مراقبة"
+  },
+  "MENA": {
+   "score": 0.5087,
+   "status": "مراقبة"
+  },
+  "NHPS": {
+   "score": 0.3931,
+   "status": "مراقبة"
+  },
+  "COPR": {
+   "score": 0.422,
+   "status": "مراقبة"
+  },
+  "UNIT": {
+   "score": 0.3526,
+   "status": "مراقبة"
+  },
+  "SUGR": {
+   "score": 0.6127,
+   "status": "مراقبة"
+  },
+  "EPCO": {
+   "score": 0.4798,
+   "status": "مراقبة"
+  },
+  "INFI": {
+   "score": 0.2081,
+   "status": "مراقبة"
+  },
+  "MOSC": {
+   "score": 0.289,
+   "status": "مراقبة"
+  },
+  "SNFC": {
+   "score": 0.9884,
+   "status": "مراقبة"
+  },
+  "RTVC": {
+   "score": 0.9306,
+   "status": "مراقبة"
+  },
+  "EGAS": {
+   "score": 0.7861,
+   "status": "مراقبة"
+  },
+  "SPIN": {
+   "score": 0.7283,
+   "status": "مراقبة"
+  },
+  "ACGC": {
+   "score": 0.8324,
+   "status": "مراقبة"
+  },
+  "AXPH": {
+   "score": 0.7746,
+   "status": "مراقبة"
+  },
+  "ADCI": {
+   "score": 0.8671,
+   "status": "مراقبة"
+  },
+  "CPCI": {
+   "score": 1.0,
+   "status": "مراقبة"
+  },
+  "BIOC": {
+   "score": 0.0058,
+   "status": "مراقبة"
+  },
+  "NINH": {
+   "score": 0.4566,
+   "status": "مراقبة"
+  },
+  "OCPH": {
+   "score": 0.3584,
+   "status": "مراقبة"
+  },
+  "SAUD": {
+   "score": 0.8555,
+   "status": "مراقبة"
+  },
+  "ODIN": {
+   "score": 0.4451,
+   "status": "مراقبة"
+  },
+  "AFDI": {
+   "score": 0.6879,
+   "status": "مراقبة"
+  },
+  "KWIN": {
+   "score": 0.0751,
+   "status": "مراقبة"
+  },
+  "FAIT": {
+   "score": 0.948,
+   "status": "مراقبة"
+  },
+  "MOIN": {
+   "score": 0.2139,
+   "status": "مراقبة"
+  },
+  "CANA": {
+   "score": 0.6532,
+   "status": "مراقبة"
+  },
+  "CAED": {
+   "score": 0.0809,
+   "status": "مراقبة"
+  },
+  "EALR": {
+   "score": 0.3121,
+   "status": "مراقبة"
+  },
+  "AALR": {
+   "score": 0.2486,
+   "status": "مراقبة"
+  },
+  "IFAP": {
+   "score": 0.7399,
+   "status": "مراقبة"
+  },
+  "WKOL": {
+   "score": 0.5376,
+   "status": "مراقبة"
+  },
+  "EFIC": {
+   "score": 0.1908,
+   "status": "مراقبة"
+  },
+  "MICH": {
+   "score": 0.6763,
+   "status": "مراقبة"
+  },
+  "SMFR": {
+   "score": 0.3179,
+   "status": "مراقبة"
+  },
+  "AFMC": {
+   "score": 0.0694,
+   "status": "مراقبة"
+  },
+  "GSSC": {
+   "score": 0.526,
+   "status": "مراقبة"
+  },
+  "CEFM": {
+   "score": 0.5491,
+   "status": "مراقبة"
+  },
+  "MILS": {
+   "score": 0.1965,
+   "status": "مراقبة"
+  },
+  "SCFM": {
+   "score": 0.4046,
+   "status": "مراقبة"
+  },
+  "UEFM": {
+   "score": 0.4277,
+   "status": "مراقبة"
+  },
+  "MFSC": {
+   "score": 0.5434,
+   "status": "مراقبة"
+  },
+  "MHOT": {
+   "score": 0.6474,
+   "status": "مراقبة"
+  },
+  "PHTV": {
+   "score": 0.9595,
+   "status": "مراقبة"
+  },
+  "ROTO": {
+   "score": 0.3815,
+   "status": "مراقبة"
+  },
+  "RUBX": {
+   "score": 0.0405,
+   "status": "مراقبة"
+  },
+  "SCTS": {
+   "score": 0.4624,
+   "status": "مراقبة"
+  },
+  "ALUM": {
+   "score": 0.3873,
+   "status": "مراقبة"
+  },
+  "GGCC": {
+   "score": 0.3699,
+   "status": "مراقبة"
+  },
+  "EBSC": {
+   "score": 0.2543,
+   "status": "مراقبة"
+  },
+  "GTWL": {
+   "score": 0.0116,
+   "status": "مراقبة"
+  },
+  "ECAP": {
+   "score": 0.9191,
+   "status": "مراقبة"
+  },
+  "AJWA": {
+   "score": 0.6185,
+   "status": "مراقبة"
+  },
+  "CERA": {
+   "score": 0.1272,
+   "status": "مراقبة"
+  },
+  "EASB": {
+   "score": 0.104,
+   "status": "مراقبة"
+  },
+  "ADPC": {
+   "score": 0.659,
+   "status": "مراقبة"
+  },
+  "SEIG": {
+   "score": 0.0867,
+   "status": "مراقبة"
+  },
+  "PRMH": {
+   "score": 0.237,
+   "status": "مراقبة"
+  },
+  "AREH": {
+   "score": 0.5202,
+   "status": "مراقبة"
+  },
+  "DTPP": {
+   "score": 0.0173,
+   "status": "مراقبة"
+  },
+  "GRCA": {
+   "score": 0.0289,
+   "status": "مراقبة"
+  },
+  "FERC": {
+   "score": 0.3295,
+   "status": "مراقبة"
+  },
+  "MAAL": {
+   "score": 0.0983,
+   "status": "مراقبة"
+  },
+  "CICH": {
+   "score": 0.9422,
+   "status": "مراقبة"
+  },
+  "BINV": {
+   "score": 0.5896,
+   "status": "مراقبة"
+  },
+  "RACC": {
+   "score": 0.6416,
+   "status": "مراقبة"
+  },
+  "FNAR": {
+   "score": 0.2023,
+   "status": "مراقبة"
+  },
+  "MBEG": {
+   "score": 0.0578,
+   "status": "مراقبة"
+  },
+  "DOMT": {
+   "score": 0.7052,
+   "status": "مراقبة"
+  },
+  "INEG": {
+   "score": 0.1156,
+   "status": "مراقبة"
+  },
+  "OLFI": {
+   "score": 0.9827,
+   "status": "مراقبة"
+  },
+  "ACAMD": {
+   "score": 0.8382,
+   "status": "مراقبة"
+  },
+  "SPMD": {
+   "score": 0.1098,
+   "status": "مراقبة"
+  },
+  "TALM": {
+   "score": 0.4393,
+   "status": "مراقبة"
+  },
+  "LUTS": {
+   "score": 0.052,
+   "status": "مراقبة"
+  },
+  "AMES": {
+   "score": 0.0231,
+   "status": "مراقبة"
+  },
+  "EEII": {
+   "score": 0.2948,
+   "status": "مراقبة"
+  },
+  "EGREF": {
+   "score": 0.0462,
+   "status": "مراقبة"
+  },
+  "IRON": {
+   "score": 0.7457,
+   "status": "مراقبة"
+  },
+  "KZPC": {
+   "score": 0.5954,
+   "status": "مراقبة"
+  }
+ }
+}

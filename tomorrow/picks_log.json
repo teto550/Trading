@@ -1245,6 +1245,86 @@
     ]
    },
    "made": "2026-11-24 05:08"
+  },
+  {
+   "target": "2026-11-25",
+   "data_date": "2026-11-24",
+   "picks": [
+    "GBCO",
+    "ELEC",
+    "ISMQ",
+    "RTVC",
+    "ISPH",
+    "MFPC",
+    "ZMID",
+    "EFIH",
+    "CICH",
+    "SNFC"
+   ],
+   "labels": {
+    "GBCO": "انتظر",
+    "ELEC": "انتظر",
+    "ISMQ": "انتظر",
+    "RTVC": "انتظر",
+    "ISPH": "انتظر",
+    "MFPC": "انتظر",
+    "ZMID": "انتظر",
+    "EFIH": "انتظر",
+    "CICH": "انتظر",
+    "SNFC": "انتظر"
+   },
+   "news": {},
+   "by_model": {
+    "xgb": [
+     "RTVC",
+     "ISMQ",
+     "GBCO",
+     "ELEC",
+     "ZMID",
+     "ISPH",
+     "EFIH",
+     "MFPC",
+     "SCTS",
+     "SNFC"
+    ],
+    "lgbm": [
+     "EFIH",
+     "RTVC",
+     "ELEC",
+     "ISMQ",
+     "ISPH",
+     "MFPC",
+     "GBCO",
+     "CCAP",
+     "HELI",
+     "ZMID"
+    ],
+    "cat": [
+     "ISPH",
+     "ELEC",
+     "ISMQ",
+     "ZMID",
+     "MFPC",
+     "CICH",
+     "SNFC",
+     "RTVC",
+     "CCAP",
+     "GBCO"
+    ],
+    "ens": [
+     "ELEC",
+     "ISMQ",
+     "RTVC",
+     "ISPH",
+     "MFPC",
+     "ZMID",
+     "GBCO",
+     "EFIH",
+     "CICH",
+     "SNFC"
+    ]
+   },
+   "made": "2026-11-24 15:10"
   }
  ]
 }
