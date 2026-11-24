@@ -264,6 +264,9 @@ def regime_need(D, reg):
         return None
     x = idx[-(n - 1):].sum() / (n - 1)                 # x > (sum(آخر n-1) + x) / n
     return (x / idx[-1] - 1) * 100
+
+
+def build_message(D, p, meta, acc, done, now, note, picks=None, pred_res=None):
     """رسالة واحدة مركّزة: توقعات البوت، هيعمل إيه بكره، اللي اتنفذ، التوقعات اللي اتحققت، والمحفظة."""
     t = len(D["dates"]) - 1
     data_date = D["dates"][t].date()
