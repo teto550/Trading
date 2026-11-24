@@ -113,7 +113,7 @@ def swing_lines(base):
         return [f"🧭 قرار الدخول/الخروج (قفلة {sw.get('data_date')}): السهم مش في الموديل (سيولة قليلة أو بيانات ناقصة)."]
     top = max(1, round((1 - st["score"]) * 100))
     out = [f"🧭 قرار الدخول/الخروج (قفلة {sw.get('data_date')}): {SWING_TXT.get(st['status'], st['status'])}",
-           f"   ترتيبه في موديل 20-60 يوم: أعلى {top}% من الأسهم"
+           f"   ترتيبه في قواعد البوت: أعلى {top}% من الأسهم"
            + ("" if sw.get("regime_on", True) else " | ⚠️ السوق في اتجاه هابط: مفيش دخول جديد")]
     return out
 

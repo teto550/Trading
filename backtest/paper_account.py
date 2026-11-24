@@ -229,6 +229,10 @@ def live_params():
             m = json.load(fh)
         k = float(m["params"].get("trail_k") or 0) or None
         extra = m.get("live_extra")
+        ov = os.path.join(HERE, "results", "swing_override.json")
+        if os.path.exists(ov):
+            with open(ov, encoding="utf-8") as fh:
+                k = float(json.load(fh).get("trail_k", k or 0)) or k
     except (OSError, ValueError, KeyError):
         k, extra = 2.5, None
     if os.environ.get("PAPER_INTRADAY_STOP", "true").lower() != "true":

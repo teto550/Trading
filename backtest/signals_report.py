@@ -64,6 +64,10 @@ def load_params():
         with open(sw.BEST_FILE, encoding="utf-8") as fh:
             meta = json.load(fh)
         p.update(meta.get("params", {}))
+    ov = os.path.join(os.path.dirname(sw.BEST_FILE), "swing_override.json")
+    if os.path.exists(ov):                                       # اختيار يدوي موثّق (مثلاً الوقف)
+        with open(ov, encoding="utf-8") as fh:
+            p.update({k: v for k, v in json.load(fh).items() if not k.startswith("_")})
     # البيع اللحظي لما السعر يكسر الوقف (طلب ديفيد): بيتقاس في swing.py كمان ("+ بيع لحظي")
     # البيع اللحظي: بس لو الباكتست (على فترة التطوير) قال إنه أحسن من استنى القفلة، وبالمستوى اللي اختاره
     live_extra = (meta or {}).get("live_extra")
@@ -205,10 +209,13 @@ TOP_PRED = 5          # عدد الأسهم في "توقعات البوت"
 PRED_WINDOW = 20      # بنقيّم توقعات آخر كام جلسة (الموديل بيتوقع لـ20-60 جلسة)
 
 
-def top_predictions(D, n=TOP_PRED):
+def top_predictions(D, n=TOP_PRED, p=None):
+    """أعلى الأسهم في ترتيب البوت اللي مستوفية شرط الاتجاه (لو الإعداد بيطلبه) - دول اللي هيشتري منهم أول ما يقدر."""
     t = len(D["dates"]) - 1
     S = D["S"][t]
-    ii = [i for i in np.argsort(-np.nan_to_num(S, nan=-1)) if np.isfinite(S[i]) and D["ok_in"][t, i]][:n]
+    need50 = bool(p and p.get("trend50"))
+    ii = [i for i in np.argsort(-np.nan_to_num(S, nan=-1)) if np.isfinite(S[i]) and D["ok_in"][t, i]
+          and (not need50 or D["sma50"][t, i])][:n]
     return [str(D["names"][i]).replace(".CA", "") for i in ii]
 
 
@@ -272,7 +279,7 @@ def build_message(D, p, meta, acc, done, now, note, picks=None, pred_res=None):
     L_.append("")
     # 1) التوقعات
     if picks:
-        L_.append("🔮 الأسهم اللي البوت شايفها الأقرب للطلوع (الـ20-40 جلسة الجاية):")
+        L_.append("🔮 أفضل الأسهم حسب قواعد البوت دلوقتي (مرشحة للشراء في الـ60 جلسة الجاية):")
         bset, hset = {o["name"] for o in buys}, set(acc["pos"])
         for k, n in enumerate(picks, 1):
             i = idx[n]
@@ -393,7 +400,7 @@ def main():
             import egxdata
             bars = egxdata.load_bars()
         acc, done, exits, entries = run_account(D, p, bars)
-        picks = top_predictions(D)
+        picks = top_predictions(D, p=p)
         pred_res = update_predictions(D, picks, not a.no_record)
         text, target = build_message(D, p, meta, acc, done, now, note, picks, pred_res)
         if not a.no_record:
