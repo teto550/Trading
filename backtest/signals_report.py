@@ -314,11 +314,17 @@ def build_message(D, p, meta, acc, done, now, note, picks=None, pred_res=None):
             L_.append(f"{k}. {n} | {pa.px(float(D['C'][t, i]))}{tag}")
         if p["regime"] and not reg_on:
             need = regime_need(D, p["regime"])
-            if need:
-                L_.append(f"📏 عشان البوت يبدأ يشتري: مؤشر السوق محتاج يطلع حوالي {need:+.1f}% من قفلة النهاردة.")
             br = float(D["breadth"][t]) * 100
-            L_.append(f"⏸ فلتر السوق ({sw.REG_AR.get(p['regime'], p['regime'])}) قافل، فالبوت مش هيشتري جديد دلوقتي "
-                      f"(نسبة الأسهم فوق متوسط 50 يوم: {br:.0f}%).")
+            if p.get("def_mode"):
+                L_.append(f"🛡 السوق هابط (الأسهم فوق متوسط 50 يوم: {br:.0f}%)، فالبوت في الوضع الدفاعي: بيشتري أهدى "
+                          f"{round((1 - p.get('def_q', 0.97)) * 100)}% من الأسهم بس، وبحد أقصى {p.get('def_pos', 4)} أسهم.")
+                if need:
+                    L_.append(f"📏 عشان يرجع للوضع العادي ({p['max_pos']} أسهم): مؤشر السوق محتاج يطلع حوالي {need:+.1f}%.")
+            else:
+                if need:
+                    L_.append(f"📏 عشان البوت يبدأ يشتري: مؤشر السوق محتاج يطلع حوالي {need:+.1f}% من قفلة النهاردة.")
+                L_.append(f"⏸ فلتر السوق ({sw.REG_AR.get(p['regime'], p['regime'])}) قافل، فالبوت مش هيشتري جديد دلوقتي "
+                          f"(نسبة الأسهم فوق متوسط 50 يوم: {br:.0f}%).")
         L_.append("")
     # 2) أوامر بكره
     if sells or buys:
@@ -430,7 +436,7 @@ def stock_track(D, p):
     return out
 
 
-def write_forecast(D, p, acc, exits, entries, target):
+def write_forecast(D, p, acc, exits, entries, target, picks=None):
     t = len(D["dates"]) - 1
     names, S, C = D["names"], D["S"], D["C"]
     try:
@@ -447,14 +453,16 @@ def write_forecast(D, p, acc, exits, entries, target):
         st = ("دخول" if i in entries else "خروج" if i in exits else "احتفاظ" if n in acc["pos"] else "مراقبة")
         c = float(Cf[t, i]) if np.isfinite(Cf[t, i]) else None
         hi = np.nanmax(Cf[max(0, t - 244):t + 1, i]) if c else None
+        P50 = Cf[max(0, t - 49):t + 1, i]
         status[n] = {"score": round(sc_, 4) if sc_ is not None else None, "status": st, "close": c,
+                     "sma50_px": round(float(np.nanmean(P50)), 4) if np.isfinite(P50).sum() >= 40 else None,
                      "liquid": bool(D["ok_in"][t, i]), "sma50": bool(D["sma50"][t, i]),
                      "atr": round(float(D["atr"][t, i]) * 100, 2), "spread": round(float(D["hs"][t, i]) * 100, 2),
                      "from_hi": round((c / hi - 1) * 100, 1) if c and hi else None,
                      "track": track.get(n)}
     out = {"data_date": str(D["dates"][t].date()), "target": str(target), "params": p,
            "regime_on": bool(D["reg"][p["regime"]][t]), "regime_need": regime_need(D, p["regime"]),
-           "breadth": round(float(D["breadth"][t]) * 100, 1), "hist": hist, "hist_h": HIST_H, "stocks": status}
+           "breadth": round(float(D["breadth"][t]) * 100, 1), "picks": picks or [], "hist": hist, "hist_h": HIST_H, "stocks": status}
     os.makedirs(os.path.dirname(FORECAST), exist_ok=True)
     with open(FORECAST, "w", encoding="utf-8") as fh:
         json.dump(out, fh, ensure_ascii=False, indent=1)
@@ -511,7 +519,7 @@ def main():
         text, target = build_message(D, p, meta, acc, done, now, note, picks, pred_res)
         if not a.no_record:
             pa.save(acc)
-            write_forecast(D, p, acc, exits, entries, target)
+            write_forecast(D, p, acc, exits, entries, target, picks)
         os.makedirs(OUT_DIR, exist_ok=True)
         with open(os.path.join(OUT_DIR, "report_latest.md"), "w", encoding="utf-8") as fh:
             fh.write(text)
