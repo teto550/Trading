@@ -103,11 +103,15 @@ def decide(D, p, t, pos, pending_exit):
         if why:
             exits[i] = why
     entries = []
+    q_in, cap = p["q_in"], p["max_pos"]
+    if not reg and p.get("def_mode"):
+        # وضع دفاعي (أسهم بس، من غير كاش): والسوق هابط بنشتري أهدى الأسهم بس وبعدد مراكز أقل
+        q_in, cap, reg = max(q_in, p.get("def_q", 0.97)), int(p.get("def_pos", 4)), True
     if reg:
-        free = p["max_pos"] - (len(pos) - len(exits) - len([i for i in pending_exit if i in pos]))
+        free = cap - (len(pos) - len(exits) - len([i for i in pending_exit if i in pos]))
         if free > 0:
             for i in D["order"][t]:
-                if S[t, i] < p["q_in"]:
+                if S[t, i] < q_in:
                     break
                 if i in pos or (p["trend50"] and not D["sma50"][t, i]):
                     continue
