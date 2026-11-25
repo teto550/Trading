@@ -144,6 +144,15 @@ def run_account(D, p, bars):
             d = str(D["dates"][tt].date())
             if d <= acc["last_date"]:
                 continue
+            # فايدة الكاش: الفلوس اللي برا الأسهم في صندوق نقدي/ودايع (زي الحقيقة)، بالأيام الفعلية
+            prev_d = acc.get("interest_date") or acc["last_date"]
+            days = (pd.Timestamp(d) - pd.Timestamp(prev_d)).days
+            rate = float(p.get("cash_rate", 0.0))
+            if rate > 0 and days > 0 and acc["cash"] > 0:
+                gain = acc["cash"] * ((1 + rate) ** (days / 365) - 1)
+                acc["cash"] += gain
+                acc["interest"] = round(acc.get("interest", 0.0) + gain, 2)
+            acc["interest_date"] = d
             raw = {n: _raw(D, bars, tt, n, idx[n]) for n in set(acc["pos"]) | {o["name"] for o in acc["orders"]} if n in idx}
             bday = bars.get(d, {})
             pday = str(D["dates"][tt - 1].date()) if tt > 0 else None
@@ -331,14 +340,17 @@ def build_message(D, p, meta, acc, done, now, note, picks=None, pred_res=None):
         L_.append("")
     # 4) التوقعات اللي اتحققت
     if pred_res:
-        up = [r for r in pred_res if r["ret"] > 0]
+        up = [r for r in pred_res if r["ret"] >= 0.05]
         avg = float(np.mean([r["ret"] for r in pred_res]))
         mavg = float(np.mean([r["mkt"] for r in pred_res]))
         L_.append(f"✅ نتيجة توقعات آخر {PRED_WINDOW} جلسة: {len(up)} من {len(pred_res)} سهم طلعوا | "
                   f"متوسطهم {avg:+.1f}% والسوق {mavg:+.1f}%")
         for r in up[:8]:
             L_.append(f"   ✅ {r['n']} {r['ret']:+.1f}% (من {r['from']})")
-        down = [r for r in pred_res if r["ret"] <= 0]
+        flat = [r for r in pred_res if abs(r["ret"]) < 0.05]
+        down = [r for r in pred_res if r["ret"] <= -0.05]
+        if flat:
+            L_.append("   ➖ ثابتين: " + "، ".join(r["n"] for r in flat[:8]))
         if down:
             L_.append("   ❌ نزلوا: " + "، ".join(f"{r['n']} {r['ret']:+.1f}%" for r in down[:8]))
         L_.append("")
@@ -354,6 +366,9 @@ def build_message(D, p, meta, acc, done, now, note, picks=None, pred_res=None):
     eq = pa.equity(acc)
     L_.append(f"💼 الحساب: {pa.money(eq)} جنيه ({(eq / acc['capital'] - 1) * 100:+.2f}% من {pa.money(acc['capital'])}) | "
               f"كاش {pa.money(acc['cash'])}" + (f" | السوق {mret:+.1f}%" if mret is not None else ""))
+    if p.get("cash_rate"):
+        L_.append(f"🏦 الكاش بياخد فايدة {p['cash_rate'] * 100:.0f}% سنويًا (زي صندوق نقدي) | اتجمع لحد دلوقتي "
+                  f"{pa.money(acc.get('interest', 0))} جنيه")
     L_ += ["", "⚠️ حساب تجريبي بفلوس وهمية، مش ضمان مكسب."]
     return "\n".join(L_), target
 
