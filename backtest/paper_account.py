@@ -264,6 +264,45 @@ def live_tick(snap, now, kp, send, today=None):
     if adj:
         changed = True
         send("\n".join(adj))
+    # 0.5) ترشيحات البوت (🔮) وأوامر الشراء: لو سهم منهم قلب جامد أثناء الجلسة → تنبيه مرة واحدة
+    try:
+        with open(os.path.join(ROOT, "forecast", "swing.json"), encoding="utf-8") as fh:
+            fc = json.load(fh)
+    except (OSError, ValueError):
+        fc = {}
+    watch = list(dict.fromkeys(fc.get("picks", []) + [o["name"] for o in acc["orders"] if o["side"] == "buy"]))
+    al = acc.setdefault("alerts", {})
+    if al.get("date") != today:
+        acc["alerts"] = al = {"date": today, "warned": []}
+    turned = al.setdefault("turned", [])
+    for n in watch:
+        r = live.get(n)
+        info = fc.get("stocks", {}).get(n, {})
+        if not r or n in acc["pos"] or n in turned or not r.get("prev"):
+            continue
+        atr = (info.get("atr") or 3.0) / 100
+        p, pv, hi = r["close"], r["prev"], r.get("high") or r["close"]
+        day_chg, from_hi = p / pv - 1, p / hi - 1
+        sma = info.get("sma50_px")
+        if day_chg <= -max(0.04, 2 * atr) or from_hi <= -max(0.05, 2.5 * atr) or (sma and pv >= sma > p):
+            turned.append(n)
+            changed = True
+            why = []
+            if day_chg <= -max(0.04, 2 * atr):
+                why.append(f"نازل {day_chg * 100:+.1f}% النهاردة (تقريبًا {abs(day_chg) / atr:.1f}× حركته العادية)")
+            if from_hi <= -max(0.05, 2.5 * atr):
+                why.append(f"نزل {abs(from_hi) * 100:.1f}% من أعلى سعر النهاردة {px(hi)}")
+            if sma and pv >= sma > p:
+                why.append(f"كسر متوسط 50 جلسة ({px(sma)}) - ده شرط من شروط الشراء")
+            ordered = any(o["name"] == n and o["side"] == "buy" for o in acc["orders"])
+            send(f"🔄 البوت غيّر رأيه في {n} ({now:%H:%M}): السهم بيتحرك عكس التوقع\n• " + "\n• ".join(why)
+                 + f"\nالسعر دلوقتي {px(p)}. "
+                 + ("فلغيت أمر الشراء بتاعه (مش هشتريه النهاردة)." if ordered else
+                    "لو قفل تحت متوسط 50 جلسة هيطلع من الترشيحات ومش هيشتريه."))
+            if ordered:
+                acc["orders"] = [o for o in acc["orders"] if not (o["name"] == n and o["side"] == "buy")]
+                acc["history"].append({"date": today, "time": when[1], "side": "cancel", "name": n, "shares": 0,
+                                       "price": p, "amount": 0, "fee": 0, "why": "اتلغى: السهم قلب قبل التنفيذ"})
     # 1) أوامر الافتتاح
     if acc["orders"] and (now.hour, now.minute) >= (10, 2):
         opens = {n: (r.get("open") or None) for n, r in live.items()}
