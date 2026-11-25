@@ -15,155 +15,165 @@
   "size": "eq",
   "real_cost": true,
   "volman": false,
+  "def_mode": true,
+  "def_q": 0.97,
+  "def_pos": 4,
   "intraday_stop": false,
   "live_extra": 0.0
  },
  "regime_on": false,
- "regime_need": 10.073018344912654,
- "breadth": 21.0,
+ "regime_need": 10.175440720708483,
+ "breadth": 20.5,
+ "picks": [
+  "PHTV",
+  "FAIT",
+  "SDTI",
+  "HRHO",
+  "EAST"
+ ],
  "hist": {
   "all": {
    "0": {
-    "n": 22157,
-    "avg": 2.05,
-    "med": -2.42,
+    "n": 22186,
+    "avg": 2.08,
+    "med": -2.39,
     "win": 44.4,
-    "exc": -3.05
+    "exc": -3.02
    },
    "1": {
-    "n": 24528,
-    "avg": 4.49,
-    "med": -0.1,
+    "n": 24550,
+    "avg": 4.52,
+    "med": -0.11,
     "win": 49.6,
-    "exc": -0.55
+    "exc": -0.54
    },
    "2": {
-    "n": 25097,
+    "n": 25127,
     "avg": 5.46,
-    "med": 0.79,
+    "med": 0.81,
     "win": 51.9,
-    "exc": 0.42
+    "exc": 0.39
    },
    "3": {
-    "n": 24944,
-    "avg": 5.05,
-    "med": 1.11,
-    "win": 52.4,
-    "exc": 0.04
+    "n": 24980,
+    "avg": 5.03,
+    "med": 1.08,
+    "win": 52.3,
+    "exc": 0.03
    },
    "4": {
-    "n": 24661,
-    "avg": 5.74,
-    "med": 1.63,
-    "win": 53.7,
-    "exc": 0.74
+    "n": 24707,
+    "avg": 5.84,
+    "med": 1.67,
+    "win": 53.8,
+    "exc": 0.81
    },
    "5": {
-    "n": 25870,
-    "avg": 4.58,
+    "n": 25867,
+    "avg": 4.6,
     "med": 1.1,
     "win": 52.7,
     "exc": -0.44
    },
    "6": {
-    "n": 25571,
+    "n": 25625,
     "avg": 5.15,
     "med": 1.71,
     "win": 54.1,
-    "exc": 0.16
+    "exc": 0.15
    },
    "7": {
-    "n": 25268,
+    "n": 25284,
     "avg": 5.22,
     "med": 2.07,
     "win": 55.6,
-    "exc": 0.19
+    "exc": 0.18
    },
    "8": {
-    "n": 25654,
-    "avg": 5.36,
-    "med": 2.4,
-    "win": 57.4,
-    "exc": 0.33
+    "n": 25695,
+    "avg": 5.37,
+    "med": 2.41,
+    "win": 57.5,
+    "exc": 0.32
    },
    "9": {
-    "n": 27526,
+    "n": 27555,
     "avg": 6.15,
     "med": 2.86,
     "win": 59.6,
-    "exc": 1.24
+    "exc": 1.22
    }
   },
   "on": {
    "0": {
-    "n": 17535,
-    "avg": 2.55,
-    "med": -2.49,
-    "win": 44.0,
-    "exc": -3.12
+    "n": 17564,
+    "avg": 2.59,
+    "med": -2.43,
+    "win": 44.1,
+    "exc": -3.09
    },
    "1": {
-    "n": 19215,
-    "avg": 5.07,
-    "med": 0.07,
+    "n": 19236,
+    "avg": 5.1,
+    "med": 0.06,
     "win": 50.2,
-    "exc": -0.57
+    "exc": -0.56
    },
    "2": {
-    "n": 19606,
-    "avg": 6.02,
-    "med": 0.92,
-    "win": 52.3,
-    "exc": 0.36
+    "n": 19636,
+    "avg": 6.01,
+    "med": 0.96,
+    "win": 52.4,
+    "exc": 0.32
    },
    "3": {
-    "n": 19521,
-    "avg": 5.46,
-    "med": 1.5,
+    "n": 19557,
+    "avg": 5.44,
+    "med": 1.49,
     "win": 53.3,
-    "exc": -0.13
+    "exc": -0.15
    },
    "4": {
-    "n": 19356,
-    "avg": 6.51,
-    "med": 2.25,
-    "win": 55.0,
-    "exc": 0.91
+    "n": 19401,
+    "avg": 6.63,
+    "med": 2.28,
+    "win": 55.2,
+    "exc": 0.99
    },
    "5": {
-    "n": 20146,
-    "avg": 4.95,
-    "med": 1.48,
-    "win": 53.7,
+    "n": 20143,
+    "avg": 4.98,
+    "med": 1.47,
+    "win": 53.6,
     "exc": -0.64
    },
    "6": {
-    "n": 19995,
+    "n": 20047,
     "avg": 5.75,
-    "med": 2.08,
+    "med": 2.09,
     "win": 55.1,
-    "exc": 0.19
+    "exc": 0.18
    },
    "7": {
-    "n": 19779,
+    "n": 19796,
     "avg": 6.12,
     "med": 2.55,
     "win": 57.0,
-    "exc": 0.51
+    "exc": 0.5
    },
    "8": {
-    "n": 20057,
-    "avg": 6.24,
-    "med": 2.69,
-    "win": 58.6,
-    "exc": 0.65
+    "n": 20096,
+    "avg": 6.26,
+    "med": 2.71,
+    "win": 58.7,
+    "exc": 0.63
    },
    "9": {
-    "n": 21212,
+    "n": 21241,
     "avg": 6.98,
-    "med": 3.4,
+    "med": 3.39,
     "win": 61.1,
-    "exc": 1.46
+    "exc": 1.44
    }
   },
   "off": {
@@ -175,7 +185,7 @@
     "exc": -2.78
    },
    "1": {
-    "n": 5313,
+    "n": 5314,
     "avg": 2.41,
     "med": -1.38,
     "win": 47.7,
@@ -183,10 +193,10 @@
    },
    "2": {
     "n": 5491,
-    "avg": 3.45,
+    "avg": 3.46,
     "med": 0.18,
     "win": 50.4,
-    "exc": 0.63
+    "exc": 0.64
    },
    "3": {
     "n": 5423,
@@ -196,11 +206,11 @@
     "exc": 0.67
    },
    "4": {
-    "n": 5305,
-    "avg": 2.95,
+    "n": 5306,
+    "avg": 2.94,
     "med": -0.32,
     "win": 48.8,
-    "exc": 0.15
+    "exc": 0.14
    },
    "5": {
     "n": 5724,
@@ -210,25 +220,25 @@
     "exc": 0.25
    },
    "6": {
-    "n": 5576,
-    "avg": 2.99,
-    "med": 0.17,
-    "win": 50.4,
+    "n": 5578,
+    "avg": 3.0,
+    "med": 0.19,
+    "win": 50.5,
     "exc": 0.07
    },
    "7": {
-    "n": 5489,
+    "n": 5488,
     "avg": 1.98,
     "med": 0.17,
     "win": 50.6,
-    "exc": -1.0
+    "exc": -0.99
    },
    "8": {
-    "n": 5597,
+    "n": 5599,
     "avg": 2.2,
     "med": 1.19,
-    "win": 53.1,
-    "exc": -0.8
+    "win": 53.2,
+    "exc": -0.81
    },
    "9": {
     "n": 6314,
@@ -242,29 +252,31 @@
  "hist_h": 40,
  "stocks": {
   "ABUK": {
-   "score": 0.6433,
+   "score": 0.6453,
    "status": "مراقبة",
    "close": 74.25857915323247,
+   "sma50_px": 84.8784,
    "liquid": true,
    "sma50": false,
    "atr": 2.89,
    "spread": 0.05,
    "from_hi": -22.4,
    "track": {
-    "n": 5,
-    "win": 4,
+    "n": 6,
+    "win": 5,
     "last": [
      "2025-12-15",
      "2026-02-23",
      39.4
     ],
-    "avg": 23.8
+    "avg": 22.87
    }
   },
   "ADIB": {
-   "score": 0.9123,
+   "score": 0.9128,
    "status": "مراقبة",
    "close": 45.93000151860494,
+   "sma50_px": 48.2136,
    "liquid": true,
    "sma50": false,
    "atr": 2.96,
@@ -282,9 +294,10 @@
    }
   },
   "ALCN": {
-   "score": 0.7427,
+   "score": 0.7442,
    "status": "مراقبة",
    "close": 31.260000680765575,
+   "sma50_px": 32.6534,
    "liquid": true,
    "sma50": false,
    "atr": 3.16,
@@ -302,29 +315,31 @@
    }
   },
   "AMOC": {
-   "score": 0.8012,
+   "score": 0.8023,
    "status": "مراقبة",
    "close": 11.9,
+   "sma50_px": 13.3738,
    "liquid": true,
    "sma50": false,
    "atr": 3.71,
    "spread": 0.05,
    "from_hi": -17.8,
    "track": {
-    "n": 7,
+    "n": 8,
     "win": 5,
     "last": [
      "2025-12-24",
      "2026-03-12",
      27.2
     ],
-    "avg": 9.3
+    "avg": 5.28
    }
   },
   "BTFH": {
-   "score": 0.6725,
+   "score": 0.6744,
    "status": "مراقبة",
    "close": 2.170000086228052,
+   "sma50_px": 2.5564,
    "liquid": true,
    "sma50": false,
    "atr": 4.31,
@@ -333,9 +348,10 @@
    "track": null
   },
   "CCAP": {
-   "score": 0.8538,
+   "score": 0.8547,
    "status": "مراقبة",
    "close": 5.619999830151948,
+   "sma50_px": 6.3226,
    "liquid": true,
    "sma50": false,
    "atr": 3.47,
@@ -353,9 +369,10 @@
    }
   },
   "CLHO": {
-   "score": 0.9649,
+   "score": 0.9651,
    "status": "مراقبة",
    "close": 14.031188924829442,
+   "sma50_px": 14.504,
    "liquid": true,
    "sma50": false,
    "atr": 3.9,
@@ -376,66 +393,70 @@
    "score": 0.9942,
    "status": "مراقبة",
    "close": 126.00000121616664,
+   "sma50_px": 126.4262,
    "liquid": true,
    "sma50": false,
    "atr": 1.58,
    "spread": 0.14,
    "from_hi": -12.2,
    "track": {
-    "n": 32,
-    "win": 16,
+    "n": 37,
+    "win": 19,
     "last": [
      "2026-08-30",
      "2026-09-16",
      -5.6
     ],
-    "avg": 4.31
+    "avg": 4.13
    }
   },
   "EAST": {
-   "score": 0.8947,
+   "score": 0.8953,
    "status": "مراقبة",
    "close": 32.453439933731715,
+   "sma50_px": 31.2141,
    "liquid": true,
    "sma50": true,
    "atr": 3.3,
    "spread": 0.59,
    "from_hi": -26.6,
    "track": {
-    "n": 11,
-    "win": 7,
+    "n": 14,
+    "win": 9,
     "last": [
-     "2021-09-22",
-     "2021-12-20",
-     -2.6
+     "2021-12-26",
+     "2022-03-23",
+     4.7
     ],
-    "avg": 9.52
+    "avg": 8.07
    }
   },
   "EFID": {
-   "score": 0.7719,
+   "score": 0.7733,
    "status": "مراقبة",
    "close": 20.12774032905513,
+   "sma50_px": 19.8481,
    "liquid": true,
    "sma50": true,
    "atr": 4.07,
    "spread": 0.86,
    "from_hi": -39.4,
    "track": {
-    "n": 8,
+    "n": 7,
     "win": 5,
     "last": [
      "2025-07-15",
      "2025-10-13",
      70.5
     ],
-    "avg": 13.21
+    "avg": 16.55
    }
   },
   "EFIH": {
-   "score": 0.7778,
+   "score": 0.7791,
    "status": "مراقبة",
    "close": 25.000000905029008,
+   "sma50_px": 23.6172,
    "liquid": true,
    "sma50": true,
    "atr": 3.53,
@@ -453,9 +474,10 @@
    }
   },
   "EGAL": {
-   "score": 0.924,
+   "score": 0.9244,
    "status": "مراقبة",
    "close": 297.2875838926175,
+   "sma50_px": 309.743,
    "liquid": true,
    "sma50": false,
    "atr": 2.22,
@@ -473,9 +495,10 @@
    }
   },
   "EMFD": {
-   "score": 0.8187,
+   "score": 0.8198,
    "status": "مراقبة",
    "close": 12.029999811922918,
+   "sma50_px": 12.517,
    "liquid": true,
    "sma50": false,
    "atr": 3.33,
@@ -493,29 +516,31 @@
    }
   },
   "ETEL": {
-   "score": 0.731,
+   "score": 0.7326,
    "status": "مراقبة",
    "close": 139.2,
+   "sma50_px": 135.7464,
    "liquid": true,
    "sma50": true,
    "atr": 3.83,
    "spread": 0.05,
    "from_hi": -7.8,
    "track": {
-    "n": 23,
-    "win": 12,
+    "n": 24,
+    "win": 14,
     "last": [
      "2025-05-14",
      "2025-08-18",
      28.8
     ],
-    "avg": 2.18
+    "avg": 3.32
    }
   },
   "FWRY": {
-   "score": 0.9708,
+   "score": 0.9709,
    "status": "مراقبة",
    "close": 17.06206995412844,
+   "sma50_px": 17.9618,
    "liquid": true,
    "sma50": false,
    "atr": 2.97,
@@ -525,17 +550,18 @@
     "n": 1,
     "win": 1,
     "last": [
-     "2020-06-07",
+     "2020-05-17",
      "2020-08-25",
-     113.7
+     138.3
     ],
-    "avg": 113.69
+    "avg": 138.27
    }
   },
   "GBCO": {
-   "score": 0.8304,
+   "score": 0.8314,
    "status": "مراقبة",
    "close": 21.36597270016217,
+   "sma50_px": 26.5915,
    "liquid": true,
    "sma50": false,
    "atr": 3.05,
@@ -544,9 +570,10 @@
    "track": null
   },
   "HELI": {
-   "score": 0.7661,
+   "score": 0.7674,
    "status": "مراقبة",
    "close": 6.229999906434788,
+   "sma50_px": 7.053,
    "liquid": true,
    "sma50": false,
    "atr": 4.37,
@@ -564,49 +591,52 @@
    }
   },
   "HRHO": {
-   "score": 0.9006,
+   "score": 0.9012,
    "status": "مراقبة",
    "close": 26.330000766725032,
+   "sma50_px": 24.702,
    "liquid": true,
    "sma50": true,
    "atr": 3.74,
    "spread": 0.05,
    "from_hi": -13.8,
    "track": {
-    "n": 10,
-    "win": 6,
+    "n": 11,
+    "win": 7,
     "last": [
      "2024-01-23",
      "2024-03-18",
      10.1
     ],
-    "avg": 2.57
+    "avg": 3.68
    }
   },
   "ISPH": {
-   "score": 0.8713,
+   "score": 0.8721,
    "status": "مراقبة",
    "close": 10.220951980483795,
+   "sma50_px": 10.812,
    "liquid": true,
    "sma50": false,
    "atr": 3.16,
    "spread": 0.05,
    "from_hi": -26.7,
    "track": {
-    "n": 3,
+    "n": 4,
     "win": 1,
     "last": [
-     "2020-06-07",
-     "2020-07-28",
-     -14.7
+     "2020-11-10",
+     "2020-12-06",
+     -14.5
     ],
-    "avg": -3.33
+    "avg": -5.48
    }
   },
   "JUFO": {
-   "score": 0.8772,
+   "score": 0.8779,
    "status": "مراقبة",
    "close": 21.662911221270843,
+   "sma50_px": 24.2881,
    "liquid": true,
    "sma50": false,
    "atr": 3.67,
@@ -620,13 +650,14 @@
      "2023-01-15",
      7.8
     ],
-    "avg": 5.21
+    "avg": 5.16
    }
   },
   "MCQE": {
-   "score": 0.3041,
+   "score": 0.3081,
    "status": "مراقبة",
    "close": 174.37936846379057,
+   "sma50_px": 182.551,
    "liquid": true,
    "sma50": false,
    "atr": 4.54,
@@ -636,37 +667,39 @@
     "n": 2,
     "win": 2,
     "last": [
-     "2023-10-24",
-     "2024-01-21",
-     48.4
+     "2023-10-19",
+     "2024-01-16",
+     49.7
     ],
-    "avg": 35.1
+    "avg": 35.74
    }
   },
   "MFPC": {
-   "score": 0.6959,
+   "score": 0.6977,
    "status": "مراقبة",
    "close": 36.80885716106581,
+   "sma50_px": 43.5402,
    "liquid": true,
    "sma50": false,
    "atr": 3.36,
    "spread": 0.05,
    "from_hi": -26.4,
    "track": {
-    "n": 6,
-    "win": 6,
+    "n": 7,
+    "win": 7,
     "last": [
      "2025-12-22",
-     "2026-03-09",
-     45.7
+     "2026-03-10",
+     44.9
     ],
-    "avg": 27.08
+    "avg": 26.58
    }
   },
   "ORAS": {
    "score": null,
    "status": "مراقبة",
    "close": 71.05000305175781,
+   "sma50_px": 71.05,
    "liquid": false,
    "sma50": false,
    "atr": 3.0,
@@ -675,9 +708,10 @@
    "track": null
   },
   "ORHD": {
-   "score": 0.848,
+   "score": 0.8488,
    "status": "مراقبة",
    "close": 9.922643223028075,
+   "sma50_px": 16.1434,
    "liquid": true,
    "sma50": false,
    "atr": 3.43,
@@ -695,9 +729,10 @@
    }
   },
   "PHDC": {
-   "score": 0.8596,
+   "score": 0.8605,
    "status": "مراقبة",
    "close": 11.35,
+   "sma50_px": 12.3764,
    "liquid": true,
    "sma50": false,
    "atr": 4.78,
@@ -715,29 +750,31 @@
    }
   },
   "RAYA": {
-   "score": 0.6199,
+   "score": 0.6221,
    "status": "مراقبة",
    "close": 5.76000021936096,
+   "sma50_px": 6.0884,
    "liquid": true,
    "sma50": false,
    "atr": 5.46,
    "spread": 0.09,
    "from_hi": -30.5,
    "track": {
-    "n": 1,
+    "n": 2,
     "win": 1,
     "last": [
-     "2013-10-22",
-     "2014-01-21",
-     20.5
+     "2018-07-11",
+     "2018-09-10",
+     -13.6
     ],
-    "avg": 20.45
+    "avg": 3.44
    }
   },
   "RMDA": {
-   "score": 0.8129,
+   "score": 0.814,
    "status": "مراقبة",
    "close": 4.98095721937716,
+   "sma50_px": 5.3614,
    "liquid": true,
    "sma50": false,
    "atr": 3.79,
@@ -746,49 +783,52 @@
    "track": null
   },
   "SKPC": {
-   "score": 0.9474,
+   "score": 0.9477,
    "status": "مراقبة",
    "close": 14.00915692800499,
+   "sma50_px": 15.5954,
    "liquid": true,
    "sma50": false,
    "atr": 2.6,
    "spread": 0.05,
    "from_hi": -29.2,
    "track": {
-    "n": 15,
-    "win": 7,
+    "n": 18,
+    "win": 8,
     "last": [
      "2025-12-22",
      "2026-01-05",
      -19.7
     ],
-    "avg": 5.69
+    "avg": 5.9
    }
   },
   "TMGH": {
-   "score": 0.9766,
+   "score": 0.9767,
    "status": "مراقبة",
    "close": 78.9499975307581,
+   "sma50_px": 85.5016,
    "liquid": true,
    "sma50": false,
    "atr": 2.85,
    "spread": 0.05,
    "from_hi": -22.5,
    "track": {
-    "n": 10,
+    "n": 11,
     "win": 8,
     "last": [
      "2026-08-26",
      "2026-09-24",
      -6.4
     ],
-    "avg": 18.48
+    "avg": 16.06
    }
   },
   "ATLC": {
-   "score": 0.0585,
+   "score": 0.064,
    "status": "مراقبة",
    "close": 5.07999981366671,
+   "sma50_px": 5.5798,
    "liquid": true,
    "sma50": false,
    "atr": 6.58,
@@ -806,9 +846,10 @@
    }
   },
   "AMER": {
-   "score": 0.1813,
+   "score": 0.186,
    "status": "مراقبة",
    "close": 3.520000101445796,
+   "sma50_px": 4.4786,
    "liquid": true,
    "sma50": false,
    "atr": 6.53,
@@ -826,9 +867,10 @@
    }
   },
   "ARAB": {
-   "score": 0.4912,
+   "score": 0.4942,
    "status": "مراقبة",
    "close": 0.25200000405311584,
+   "sma50_px": 0.2482,
    "liquid": true,
    "sma50": true,
    "atr": 3.34,
@@ -837,9 +879,10 @@
    "track": null
   },
   "AMIA": {
-   "score": 0.7544,
+   "score": 0.7558,
    "status": "مراقبة",
    "close": 15.379999776353072,
+   "sma50_px": 17.7934,
    "liquid": true,
    "sma50": false,
    "atr": 5.03,
@@ -857,9 +900,10 @@
    }
   },
   "ARCC": {
-   "score": 0.7193,
+   "score": 0.7209,
    "status": "مراقبة",
    "close": 65.94999879896507,
+   "sma50_px": 67.2596,
    "liquid": true,
    "sma50": false,
    "atr": 3.48,
@@ -877,25 +921,27 @@
    }
   },
   "ASCM": {
-   "score": 0.5789,
+   "score": 0.5756,
    "status": "مراقبة",
-   "close": 43.887512057992716,
+   "close": 43.828297964818,
+   "sma50_px": 50.3472,
    "liquid": true,
    "sma50": false,
-   "atr": 3.87,
+   "atr": 3.88,
    "spread": 0.05,
-   "from_hi": -34.5,
+   "from_hi": -34.6,
    "track": null
   },
   "ASPI": {
-   "score": 0.3333,
+   "score": 0.3372,
    "status": "مراقبة",
-   "close": 0.30699999767636493,
+   "close": 0.30999999765365843,
+   "sma50_px": 0.3427,
    "liquid": true,
    "sma50": false,
-   "atr": 4.84,
+   "atr": 4.79,
    "spread": 0.16,
-   "from_hi": -44.9,
+   "from_hi": -44.3,
    "track": {
     "n": 3,
     "win": 1,
@@ -908,9 +954,10 @@
    }
   },
   "AIFI": {
-   "score": 0.3918,
+   "score": 0.3953,
    "status": "مراقبة",
    "close": 2.440000037836835,
+   "sma50_px": 2.1914,
    "liquid": true,
    "sma50": true,
    "atr": 4.71,
@@ -928,9 +975,10 @@
    }
   },
   "COSG": {
-   "score": 0.4035,
+   "score": 0.407,
    "status": "مراقبة",
    "close": 1.3700000442060314,
+   "sma50_px": 1.4566,
    "liquid": true,
    "sma50": false,
    "atr": 4.9,
@@ -938,19 +986,20 @@
    "from_hi": -29.4,
    "track": {
     "n": 9,
-    "win": 6,
+    "win": 7,
     "last": [
      "2024-10-23",
      "2025-01-20",
      8.6
     ],
-    "avg": 10.87
+    "avg": 12.62
    }
   },
   "POUL": {
-   "score": 0.4737,
+   "score": 0.4767,
    "status": "مراقبة",
    "close": 6.965451801483555,
+   "sma50_px": 14.5781,
    "liquid": true,
    "sma50": false,
    "atr": 5.86,
@@ -968,9 +1017,10 @@
    }
   },
   "CSAG": {
-   "score": 0.7135,
+   "score": 0.7151,
    "status": "مراقبة",
    "close": 38.03000060907032,
+   "sma50_px": 35.6406,
    "liquid": true,
    "sma50": true,
    "atr": 3.67,
@@ -979,9 +1029,10 @@
    "track": null
   },
   "PRCL": {
-   "score": 0.1287,
+   "score": 0.1337,
    "status": "مراقبة",
    "close": 18.510574733350275,
+   "sma50_px": 23.3536,
    "liquid": true,
    "sma50": false,
    "atr": 6.15,
@@ -991,48 +1042,51 @@
     "n": 2,
     "win": 1,
     "last": [
-     "2023-01-29",
+     "2023-01-10",
      "2023-03-14",
-     -0.0
+     -0.6
     ],
-    "avg": 19.12
+    "avg": 18.87
    }
   },
   "CNFN": {
-   "score": 0.5848,
+   "score": 0.5814,
    "status": "مراقبة",
-   "close": 3.7899999245028586,
+   "close": 3.7699999249012603,
+   "sma50_px": 4.0566,
    "liquid": true,
    "sma50": false,
-   "atr": 4.49,
+   "atr": 4.51,
    "spread": 0.13,
-   "from_hi": -29.8,
+   "from_hi": -30.2,
    "track": null
   },
   "CIEB": {
-   "score": 0.9591,
+   "score": 0.9593,
    "status": "مراقبة",
-   "close": 22.690000746167943,
+   "close": 22.830000750771884,
+   "sma50_px": 23.3022,
    "liquid": true,
    "sma50": false,
-   "atr": 2.65,
+   "atr": 2.64,
    "spread": 0.48,
-   "from_hi": -12.7,
+   "from_hi": -12.2,
    "track": {
-    "n": 11,
+    "n": 13,
     "win": 6,
     "last": [
      "2026-09-24",
      "2026-10-26",
      -14.5
     ],
-    "avg": -0.47
+    "avg": -2.4
    }
   },
   "DAPH": {
-   "score": 0.2222,
+   "score": 0.2267,
    "status": "مراقبة",
    "close": 81.99999788925295,
+   "sma50_px": 92.2602,
    "liquid": true,
    "sma50": false,
    "atr": 6.0,
@@ -1041,9 +1095,10 @@
    "track": null
   },
   "DSCW": {
-   "score": 0.7076,
+   "score": 0.7093,
    "status": "مراقبة",
    "close": 1.410000056028366,
+   "sma50_px": 1.5886,
    "liquid": true,
    "sma50": false,
    "atr": 3.95,
@@ -1061,9 +1116,10 @@
    }
   },
   "EGCH": {
-   "score": 0.8363,
+   "score": 0.8372,
    "status": "مراقبة",
    "close": 9.660724703278786,
+   "sma50_px": 11.8254,
    "liquid": true,
    "sma50": false,
    "atr": 3.7,
@@ -1072,9 +1128,10 @@
    "track": null
   },
   "EGTS": {
-   "score": 0.2573,
+   "score": 0.2616,
    "status": "مراقبة",
    "close": 11.969999852822157,
+   "sma50_px": 14.365,
    "liquid": true,
    "sma50": false,
    "atr": 5.48,
@@ -1083,9 +1140,10 @@
    "track": null
   },
   "PHAR": {
-   "score": 0.7836,
+   "score": 0.7849,
    "status": "مراقبة",
    "close": 99.99242499257353,
+   "sma50_px": 106.8744,
    "liquid": true,
    "sma50": false,
    "atr": 4.2,
@@ -1093,19 +1151,20 @@
    "from_hi": -34.9,
    "track": {
     "n": 10,
-    "win": 5,
+    "win": 4,
     "last": [
-     "2026-06-16",
-     "2026-08-03",
-     47.6
+     "2025-05-29",
+     "2025-09-02",
+     5.2
     ],
-    "avg": 3.92
+    "avg": -0.85
    }
   },
   "MPRC": {
-   "score": 0.345,
+   "score": 0.3488,
    "status": "مراقبة",
    "close": 36.3000010442387,
+   "sma50_px": 36.6968,
    "liquid": true,
    "sma50": false,
    "atr": 5.72,
@@ -1114,9 +1173,10 @@
    "track": null
   },
   "ETRS": {
-   "score": 0.8889,
+   "score": 0.8895,
    "status": "مراقبة",
    "close": 11.160099830316462,
+   "sma50_px": 10.6606,
    "liquid": true,
    "sma50": true,
    "atr": 3.32,
@@ -1125,9 +1185,10 @@
    "track": null
   },
   "EHDR": {
-   "score": 0.5088,
+   "score": 0.5116,
    "status": "مراقبة",
    "close": 2.0099999441683867,
+   "sma50_px": 2.2768,
    "liquid": true,
    "sma50": false,
    "atr": 4.48,
@@ -1145,9 +1206,10 @@
    }
   },
   "ELKA": {
-   "score": 0.4444,
+   "score": 0.4477,
    "status": "مراقبة",
    "close": 1.3899999579913178,
+   "sma50_px": 1.5178,
    "liquid": true,
    "sma50": false,
    "atr": 5.14,
@@ -1165,9 +1227,10 @@
    }
   },
   "KABO": {
-   "score": 0.2339,
+   "score": 0.2384,
    "status": "مراقبة",
    "close": 7.400000095367432,
+   "sma50_px": 7.8166,
    "liquid": true,
    "sma50": false,
    "atr": 4.57,
@@ -1176,9 +1239,10 @@
    "track": null
   },
   "OBRI": {
-   "score": 0.1404,
+   "score": 0.1453,
    "status": "مراقبة",
    "close": 21.450000754149826,
+   "sma50_px": 25.3482,
    "liquid": true,
    "sma50": false,
    "atr": 6.07,
@@ -1187,9 +1251,10 @@
    "track": null
   },
   "ELSH": {
-   "score": 0.4971,
+   "score": 0.5,
    "status": "مراقبة",
    "close": 10.44000026626368,
+   "sma50_px": 11.1014,
    "liquid": true,
    "sma50": false,
    "atr": 4.9,
@@ -1207,9 +1272,10 @@
    }
   },
   "ELEC": {
-   "score": 0.5497,
+   "score": 0.5523,
    "status": "مراقبة",
    "close": 1.5399350175609838,
+   "sma50_px": 1.7254,
    "liquid": true,
    "sma50": false,
    "atr": 4.55,
@@ -1227,9 +1293,10 @@
    }
   },
   "NIPH": {
-   "score": 0.1579,
+   "score": 0.1628,
    "status": "مراقبة",
    "close": 281.8325017486889,
+   "sma50_px": 295.2853,
    "liquid": true,
    "sma50": false,
    "atr": 6.4,
@@ -1238,29 +1305,31 @@
    "track": null
   },
   "UEGC": {
-   "score": 0.2749,
+   "score": 0.2791,
    "status": "مراقبة",
    "close": 1.3999999576890971,
+   "sma50_px": 1.5142,
    "liquid": true,
    "sma50": false,
    "atr": 4.85,
    "spread": 0.36,
    "from_hi": -49.5,
    "track": {
-    "n": 11,
+    "n": 10,
     "win": 4,
     "last": [
      "2023-06-19",
      "2023-09-21",
      6.9
     ],
-    "avg": -4.97
+    "avg": -4.9
    }
   },
   "SWDY": {
-   "score": 0.6667,
+   "score": 0.6686,
    "status": "مراقبة",
    "close": 114.53193445409282,
+   "sma50_px": 115.4616,
    "liquid": true,
    "sma50": false,
    "atr": 3.3,
@@ -1274,13 +1343,14 @@
      "2026-08-30",
      45.0
     ],
-    "avg": -1.14
+    "avg": -0.98
    }
   },
   "ENGC": {
-   "score": 0.269,
+   "score": 0.2733,
    "status": "مراقبة",
    "close": 36.99999955984262,
+   "sma50_px": 36.6456,
    "liquid": true,
    "sma50": true,
    "atr": 6.46,
@@ -1298,9 +1368,10 @@
    }
   },
   "EXPA": {
-   "score": 0.9064,
+   "score": 0.907,
    "status": "مراقبة",
    "close": 14.420000304964294,
+   "sma50_px": 15.8738,
    "liquid": true,
    "sma50": false,
    "atr": 2.67,
@@ -1314,13 +1385,14 @@
      "2026-10-14",
      -12.6
     ],
-    "avg": 10.84
+    "avg": 12.01
    }
   },
   "ZEOT": {
-   "score": 0.1228,
+   "score": 0.1279,
    "status": "مراقبة",
    "close": 13.066846340776344,
+   "sma50_px": 11.5484,
    "liquid": true,
    "sma50": true,
    "atr": 6.97,
@@ -1329,9 +1401,10 @@
    "track": null
   },
   "GDWA": {
-   "score": 0.6082,
+   "score": 0.6105,
    "status": "مراقبة",
    "close": 0.5080000241287053,
+   "sma50_px": 0.5953,
    "liquid": true,
    "sma50": false,
    "atr": 4.2,
@@ -1349,29 +1422,31 @@
    }
   },
   "HDBK": {
-   "score": 0.4269,
+   "score": 0.436,
    "status": "مراقبة",
    "close": 102.69999969811643,
+   "sma50_px": 104.7178,
    "liquid": true,
    "sma50": false,
    "atr": 3.88,
    "spread": 1.43,
    "from_hi": -37.4,
    "track": {
-    "n": 9,
+    "n": 8,
     "win": 8,
     "last": [
      "2026-02-23",
      "2026-04-01",
      58.5
     ],
-    "avg": 27.61
+    "avg": 27.63
    }
   },
   "ICFC": {
-   "score": 0.2164,
+   "score": 0.2209,
    "status": "مراقبة",
    "close": 26.800000924496338,
+   "sma50_px": 23.3814,
    "liquid": true,
    "sma50": true,
    "atr": 6.32,
@@ -1380,9 +1455,10 @@
    "track": null
   },
   "ISMQ": {
-   "score": 0.5673,
+   "score": 0.5698,
    "status": "مراقبة",
    "close": 6.529384539677547,
+   "sma50_px": 7.2636,
    "liquid": true,
    "sma50": false,
    "atr": 2.96,
@@ -1400,9 +1476,10 @@
    }
   },
   "IDRE": {
-   "score": 0.1637,
+   "score": 0.1686,
    "status": "مراقبة",
    "close": 38.27999985364409,
+   "sma50_px": 43.8664,
    "liquid": true,
    "sma50": false,
    "atr": 6.78,
@@ -1411,9 +1488,10 @@
    "track": null
   },
   "ISMA": {
-   "score": 0.1345,
+   "score": 0.1395,
    "status": "مراقبة",
    "close": 18.926978123437515,
+   "sma50_px": 22.7885,
    "liquid": true,
    "sma50": false,
    "atr": 6.45,
@@ -1422,9 +1500,10 @@
    "track": null
   },
   "LCSW": {
-   "score": 0.6316,
+   "score": 0.6337,
    "status": "مراقبة",
    "close": 40.45954902488482,
+   "sma50_px": 35.1036,
    "liquid": true,
    "sma50": true,
    "atr": 4.7,
@@ -1433,9 +1512,10 @@
    "track": null
   },
   "MCRO": {
-   "score": 0.3626,
+   "score": 0.3663,
    "status": "مراقبة",
    "close": 1.310156211256981,
+   "sma50_px": 1.4156,
    "liquid": true,
    "sma50": false,
    "atr": 5.18,
@@ -1444,9 +1524,10 @@
    "track": null
   },
   "MASR": {
-   "score": 0.5029,
+   "score": 0.5058,
    "status": "مراقبة",
    "close": 6.230000130785337,
+   "sma50_px": 7.0476,
    "liquid": true,
    "sma50": false,
    "atr": 3.32,
@@ -1464,9 +1545,10 @@
    }
   },
   "MPCO": {
-   "score": 0.1696,
+   "score": 0.1744,
    "status": "مراقبة",
    "close": 1.8606185151129653,
+   "sma50_px": 2.1702,
    "liquid": true,
    "sma50": false,
    "atr": 7.87,
@@ -1484,9 +1566,10 @@
    }
   },
   "MEPA": {
-   "score": 0.2515,
+   "score": 0.2558,
    "status": "مراقبة",
    "close": 1.2899999526830819,
+   "sma50_px": 1.5296,
    "liquid": true,
    "sma50": false,
    "atr": 4.32,
@@ -1495,9 +1578,10 @@
    "track": null
   },
   "MPCI": {
-   "score": 0.3099,
+   "score": 0.314,
    "status": "مراقبة",
    "close": 332.21179387285287,
+   "sma50_px": 336.932,
    "liquid": true,
    "sma50": false,
    "atr": 5.24,
@@ -1506,9 +1590,10 @@
    "track": null
   },
   "MBSC": {
-   "score": 0.1462,
+   "score": 0.1512,
    "status": "مراقبة",
    "close": 337.118944434782,
+   "sma50_px": 334.8102,
    "liquid": true,
    "sma50": true,
    "atr": 4.85,
@@ -1526,9 +1611,10 @@
    }
   },
   "ATQA": {
-   "score": 0.5322,
+   "score": 0.5349,
    "status": "مراقبة",
    "close": 9.877598572932145,
+   "sma50_px": 10.8754,
    "liquid": true,
    "sma50": false,
    "atr": 4.65,
@@ -1537,9 +1623,10 @@
    "track": null
   },
   "MTIE": {
-   "score": 0.5614,
+   "score": 0.564,
    "status": "مراقبة",
    "close": 6.7499999024651265,
+   "sma50_px": 7.418,
    "liquid": true,
    "sma50": false,
    "atr": 5.11,
@@ -1557,20 +1644,22 @@
    }
   },
   "NCCW": {
-   "score": 0.0819,
+   "score": 0.0872,
    "status": "مراقبة",
-   "close": 5.170000186056462,
+   "close": 5.200000187136093,
+   "sma50_px": 6.1554,
    "liquid": true,
    "sma50": false,
-   "atr": 6.71,
+   "atr": 6.68,
    "spread": 0.1,
-   "from_hi": -39.5,
+   "from_hi": -39.2,
    "track": null
   },
   "OFH": {
-   "score": 0.3216,
+   "score": 0.3256,
    "status": "مراقبة",
    "close": 0.7000000169961759,
+   "sma50_px": 0.8173,
    "liquid": true,
    "sma50": false,
    "atr": 4.87,
@@ -1588,9 +1677,10 @@
    }
   },
   "OIH": {
-   "score": 0.4854,
+   "score": 0.4884,
    "status": "مراقبة",
    "close": 1.559999942779541,
+   "sma50_px": 1.8062,
    "liquid": true,
    "sma50": false,
    "atr": 4.72,
@@ -1608,9 +1698,10 @@
    }
   },
   "ORWE": {
-   "score": 0.883,
+   "score": 0.8837,
    "status": "مراقبة",
    "close": 24.00000074131769,
+   "sma50_px": 25.9542,
    "liquid": true,
    "sma50": false,
    "atr": 3.44,
@@ -1624,13 +1715,14 @@
      "2026-09-17",
      13.6
     ],
-    "avg": 7.58
+    "avg": 6.75
    }
   },
   "PRDC": {
-   "score": 0.3801,
+   "score": 0.3837,
    "status": "مراقبة",
    "close": 6.169999773685748,
+   "sma50_px": 6.7146,
    "liquid": true,
    "sma50": false,
    "atr": 5.0,
@@ -1640,17 +1732,18 @@
     "n": 1,
     "win": 1,
     "last": [
-     "2022-11-01",
+     "2022-10-31",
      "2022-12-25",
-     17.0
+     16.7
     ],
-    "avg": 16.98
+    "avg": 16.66
    }
   },
   "SIPC": {
-   "score": 0.0292,
+   "score": 0.0349,
    "status": "مراقبة",
    "close": 4.726981574260234,
+   "sma50_px": 5.1901,
    "liquid": true,
    "sma50": false,
    "atr": 7.77,
@@ -1659,9 +1752,10 @@
    "track": null
   },
   "SDTI": {
-   "score": 0.9298,
+   "score": 0.9302,
    "status": "مراقبة",
    "close": 83.58000210029576,
+   "sma50_px": 83.182,
    "liquid": true,
    "sma50": true,
    "atr": 3.29,
@@ -1679,9 +1773,10 @@
    }
   },
   "SCEM": {
-   "score": 0.5556,
+   "score": 0.5581,
    "status": "مراقبة",
    "close": 97.48034697122225,
+   "sma50_px": 89.0274,
    "liquid": true,
    "sma50": true,
    "atr": 3.91,
@@ -1691,37 +1786,39 @@
     "n": 2,
     "win": 0,
     "last": [
-     "2012-10-01",
+     "2012-09-25",
      "2012-11-20",
-     -13.7
+     -14.0
     ],
-    "avg": -13.84
+    "avg": -13.99
    }
   },
   "OCDI": {
-   "score": 0.4795,
+   "score": 0.4826,
    "status": "مراقبة",
-   "close": 23.600000681448023,
+   "close": 23.400000675673038,
+   "sma50_px": 25.7852,
    "liquid": true,
    "sma50": false,
-   "atr": 4.03,
+   "atr": 4.06,
    "spread": 0.05,
-   "from_hi": -34.4,
+   "from_hi": -34.9,
    "track": {
-    "n": 5,
+    "n": 6,
     "win": 3,
     "last": [
-     "2021-09-13",
      "2021-12-09",
-     11.0
+     "2021-12-14",
+     -21.2
     ],
-    "avg": 6.27
+    "avg": 2.12
    }
   },
   "SVCE": {
-   "score": 0.3392,
+   "score": 0.343,
    "status": "مراقبة",
    "close": 8.607901646540716,
+   "sma50_px": 9.573,
    "liquid": true,
    "sma50": false,
    "atr": 4.78,
@@ -1739,9 +1836,10 @@
    }
   },
   "MOED": {
-   "score": 0.2865,
+   "score": 0.2907,
    "status": "مراقبة",
    "close": 0.47099998947232957,
+   "sma50_px": 0.5773,
    "liquid": true,
    "sma50": false,
    "atr": 4.85,
@@ -1759,9 +1857,10 @@
    }
   },
   "UNIP": {
-   "score": 0.4211,
+   "score": 0.4244,
    "status": "مراقبة",
    "close": 0.2920000116030375,
+   "sma50_px": 0.3222,
    "liquid": true,
    "sma50": false,
    "atr": 4.53,
@@ -1770,9 +1869,10 @@
    "track": null
   },
   "ZMID": {
-   "score": 0.6842,
+   "score": 0.686,
    "status": "مراقبة",
    "close": 6.090000018644869,
+   "sma50_px": 7.207,
    "liquid": true,
    "sma50": false,
    "atr": 4.25,
@@ -1781,9 +1881,10 @@
    "track": null
   },
   "RREI": {
-   "score": 0.2456,
+   "score": 0.25,
    "status": "مراقبة",
    "close": 2.5499998975074156,
+   "sma50_px": 3.2916,
    "liquid": true,
    "sma50": false,
    "atr": 5.94,
@@ -1792,9 +1893,10 @@
    "track": null
   },
   "CIRA": {
-   "score": 0.7895,
+   "score": 0.7907,
    "status": "مراقبة",
    "close": 37.000000734168,
+   "sma50_px": 37.7576,
    "liquid": true,
    "sma50": false,
    "atr": 3.78,
@@ -1808,13 +1910,14 @@
      "2025-12-22",
      20.8
     ],
-    "avg": 6.2
+    "avg": 7.25
    }
   },
   "GIHD": {
-   "score": 0.152,
+   "score": 0.157,
    "status": "مراقبة",
    "close": 46.07000148306416,
+   "sma50_px": 54.9288,
    "liquid": true,
    "sma50": false,
    "atr": 8.0,
@@ -1823,9 +1926,10 @@
    "track": null
   },
   "CCRS": {
-   "score": 0.1754,
+   "score": 0.1802,
    "status": "مراقبة",
    "close": 2.0,
+   "sma50_px": 2.11,
    "liquid": true,
    "sma50": false,
    "atr": 7.96,
@@ -1834,20 +1938,22 @@
    "track": null
   },
   "ICID": {
-   "score": 0.6023,
+   "score": 0.6047,
    "status": "مراقبة",
-   "close": 16.405049879176257,
+   "close": 16.65019407940304,
+   "sma50_px": 17.4096,
    "liquid": true,
    "sma50": false,
-   "atr": 4.23,
+   "atr": 4.17,
    "spread": 1.34,
-   "from_hi": -13.3,
+   "from_hi": -12.0,
    "track": null
   },
   "MENA": {
-   "score": 0.5146,
+   "score": 0.5174,
    "status": "مراقبة",
    "close": 6.560000094076743,
+   "sma50_px": 6.2412,
    "liquid": true,
    "sma50": true,
    "atr": 8.0,
@@ -1865,9 +1971,10 @@
    }
   },
   "NHPS": {
-   "score": 0.386,
+   "score": 0.3895,
    "status": "مراقبة",
    "close": 56.61792467965953,
+   "sma50_px": 65.0616,
    "liquid": true,
    "sma50": false,
    "atr": 6.44,
@@ -1876,9 +1983,10 @@
    "track": null
   },
   "COPR": {
-   "score": 0.4152,
+   "score": 0.4186,
    "status": "مراقبة",
    "close": 0.41900000696958495,
+   "sma50_px": 0.4391,
    "liquid": true,
    "sma50": false,
    "atr": 6.15,
@@ -1887,9 +1995,10 @@
    "track": null
   },
   "UNIT": {
-   "score": 0.3567,
+   "score": 0.3605,
    "status": "مراقبة",
    "close": 15.029051000645577,
+   "sma50_px": 17.2284,
    "liquid": true,
    "sma50": false,
    "atr": 5.48,
@@ -1898,29 +2007,31 @@
    "track": null
   },
   "SUGR": {
-   "score": 0.6257,
+   "score": 0.6279,
    "status": "مراقبة",
    "close": 51.08978326372105,
+   "sma50_px": 50.8912,
    "liquid": true,
    "sma50": true,
    "atr": 4.69,
    "spread": 0.43,
    "from_hi": -13.8,
    "track": {
-    "n": 1,
-    "win": 1,
+    "n": 2,
+    "win": 2,
     "last": [
-     "2023-04-12",
-     "2023-06-19",
-     52.8
+     "2026-06-17",
+     "2026-09-16",
+     25.4
     ],
-    "avg": 52.77
+    "avg": 39.08
    }
   },
   "EPCO": {
-   "score": 0.4678,
+   "score": 0.4709,
    "status": "مراقبة",
    "close": 8.250096726216706,
+   "sma50_px": 9.1226,
    "liquid": true,
    "sma50": false,
    "atr": 6.18,
@@ -1938,9 +2049,10 @@
    }
   },
   "INFI": {
-   "score": 0.1988,
+   "score": 0.2035,
    "status": "مراقبة",
    "close": 154.07715630019683,
+   "sma50_px": 127.8949,
    "liquid": true,
    "sma50": true,
    "atr": 7.06,
@@ -1958,9 +2070,10 @@
    }
   },
   "MOSC": {
-   "score": 0.2632,
+   "score": 0.2674,
    "status": "مراقبة",
    "close": 285.22851528234645,
+   "sma50_px": 270.0186,
    "liquid": true,
    "sma50": true,
    "atr": 7.6,
@@ -1969,29 +2082,31 @@
    "track": null
   },
   "SNFC": {
-   "score": 0.9883,
+   "score": 0.9884,
    "status": "مراقبة",
    "close": 11.121500037845813,
+   "sma50_px": 11.1786,
    "liquid": true,
    "sma50": false,
    "atr": 2.28,
    "spread": 0.54,
    "from_hi": -12.5,
    "track": {
-    "n": 2,
+    "n": 3,
     "win": 1,
     "last": [
      "2023-12-19",
      "2024-03-17",
      134.4
     ],
-    "avg": 61.62
+    "avg": 35.61
    }
   },
   "RTVC": {
    "score": null,
    "status": "مراقبة",
    "close": 3.109999895095825,
+   "sma50_px": 3.2996,
    "liquid": false,
    "sma50": false,
    "atr": 1.19,
@@ -2003,6 +2118,7 @@
    "score": null,
    "status": "مراقبة",
    "close": 0.6630000273095741,
+   "sma50_px": 0.6731,
    "liquid": false,
    "sma50": false,
    "atr": 2.4,
@@ -2011,14 +2127,15 @@
    "track": null
   },
   "EGAS": {
-   "score": 0.7953,
+   "score": 0.7965,
    "status": "مراقبة",
-   "close": 48.57999849028111,
+   "close": 48.989998477539565,
+   "sma50_px": 51.6406,
    "liquid": true,
    "sma50": false,
-   "atr": 5.27,
+   "atr": 5.23,
    "spread": 0.05,
-   "from_hi": -19.4,
+   "from_hi": -18.8,
    "track": {
     "n": 5,
     "win": 2,
@@ -2034,6 +2151,7 @@
    "score": null,
    "status": "مراقبة",
    "close": 9.0,
+   "sma50_px": 8.9156,
    "liquid": false,
    "sma50": true,
    "atr": 0.82,
@@ -2044,12 +2162,13 @@
   "APSW": {
    "score": null,
    "status": "مراقبة",
-   "close": 7.380319244049965,
+   "close": 7.262234136145166,
+   "sma50_px": 7.8572,
    "liquid": false,
    "sma50": false,
-   "atr": 4.23,
+   "atr": 4.29,
    "spread": 0.62,
-   "from_hi": -23.7,
+   "from_hi": -24.9,
    "track": {
     "n": 1,
     "win": 1,
@@ -2062,9 +2181,10 @@
    }
   },
   "SPIN": {
-   "score": 0.6491,
+   "score": 0.6512,
    "status": "مراقبة",
    "close": 15.43177701336073,
+   "sma50_px": 15.3724,
    "liquid": true,
    "sma50": true,
    "atr": 4.66,
@@ -2082,9 +2202,10 @@
    }
   },
   "ACGC": {
-   "score": 0.8246,
+   "score": 0.8256,
    "status": "مراقبة",
    "close": 13.715686274509805,
+   "sma50_px": 13.5813,
    "liquid": true,
    "sma50": true,
    "atr": 3.44,
@@ -2102,9 +2223,10 @@
    }
   },
   "AXPH": {
-   "score": 0.7485,
+   "score": 0.75,
    "status": "مراقبة",
    "close": 1393.3458526981656,
+   "sma50_px": 1366.0455,
    "liquid": true,
    "sma50": true,
    "atr": 3.76,
@@ -2113,9 +2235,10 @@
    "track": null
   },
   "ADCI": {
-   "score": 0.807,
+   "score": 0.8081,
    "status": "مراقبة",
    "close": 230.42203671170265,
+   "sma50_px": 254.3236,
    "liquid": true,
    "sma50": false,
    "atr": 4.23,
@@ -2126,7 +2249,8 @@
   "CPCI": {
    "score": 1.0,
    "status": "مراقبة",
-   "close": 547.5272272652184,
+   "close": 547.7561723834276,
+   "sma50_px": 563.678,
    "liquid": true,
    "sma50": false,
    "atr": 1.39,
@@ -2135,9 +2259,10 @@
    "track": null
   },
   "BIOC": {
-   "score": 0.0058,
+   "score": 0.0116,
    "status": "مراقبة",
    "close": 372.493288590604,
+   "sma50_px": 312.4808,
    "liquid": true,
    "sma50": true,
    "atr": 8.0,
@@ -2148,18 +2273,20 @@
   "MIPH": {
    "score": null,
    "status": "مراقبة",
-   "close": 783.8509306880686,
+   "close": 793.2370571365944,
+   "sma50_px": 788.1851,
    "liquid": false,
-   "sma50": false,
-   "atr": 3.73,
+   "sma50": true,
+   "atr": 3.69,
    "spread": 0.37,
-   "from_hi": -16.7,
+   "from_hi": -15.7,
    "track": null
   },
   "NINH": {
-   "score": 0.4503,
+   "score": 0.4535,
    "status": "مراقبة",
    "close": 14.978201048442479,
+   "sma50_px": 17.0238,
    "liquid": true,
    "sma50": false,
    "atr": 6.66,
@@ -2168,20 +2295,22 @@
    "track": null
   },
   "OCPH": {
-   "score": 0.3509,
+   "score": 0.3547,
    "status": "مراقبة",
-   "close": 188.36982797941295,
+   "close": 189.1663177383111,
+   "sma50_px": 203.9261,
    "liquid": true,
    "sma50": false,
-   "atr": 7.43,
+   "atr": 7.4,
    "spread": 0.05,
-   "from_hi": -60.6,
+   "from_hi": -60.4,
    "track": null
   },
   "DEIN": {
    "score": null,
    "status": "مراقبة",
    "close": 6.579177776972452,
+   "sma50_px": 7.8687,
    "liquid": false,
    "sma50": false,
    "atr": 1.43,
@@ -2193,6 +2322,7 @@
    "score": null,
    "status": "مراقبة",
    "close": 0.496,
+   "sma50_px": 0.5051,
    "liquid": false,
    "sma50": false,
    "atr": 1.94,
@@ -2201,9 +2331,10 @@
    "track": null
   },
   "SAUD": {
-   "score": 0.8655,
+   "score": 0.8663,
    "status": "مراقبة",
    "close": 21.950000225694353,
+   "sma50_px": 22.181,
    "liquid": true,
    "sma50": false,
    "atr": 4.15,
@@ -2221,20 +2352,22 @@
    }
   },
   "ODIN": {
-   "score": 0.462,
+   "score": 0.4651,
    "status": "مراقبة",
-   "close": 2.029999962040022,
+   "close": 2.0199999622270175,
+   "sma50_px": 2.279,
    "liquid": true,
    "sma50": false,
-   "atr": 5.03,
+   "atr": 5.06,
    "spread": 0.25,
-   "from_hi": -44.7,
+   "from_hi": -45.0,
    "track": null
   },
   "AFDI": {
-   "score": 0.7251,
+   "score": 0.7267,
    "status": "مراقبة",
    "close": 44.71000169629861,
+   "sma50_px": 47.6386,
    "liquid": true,
    "sma50": false,
    "atr": 4.9,
@@ -2243,9 +2376,10 @@
    "track": null
   },
   "KWIN": {
-   "score": 0.0702,
+   "score": 0.0756,
    "status": "مراقبة",
    "close": 66.21000294758402,
+   "sma50_px": 71.3588,
    "liquid": true,
    "sma50": false,
    "atr": 8.0,
@@ -2254,9 +2388,10 @@
    "track": null
   },
   "FAIT": {
-   "score": 0.9415,
+   "score": 0.9419,
    "status": "مراقبة",
    "close": 46.14999846413715,
+   "sma50_px": 44.5362,
    "liquid": true,
    "sma50": true,
    "atr": 3.26,
@@ -2274,20 +2409,22 @@
    }
   },
   "MOIN": {
-   "score": 0.2047,
+   "score": 0.2093,
    "status": "مراقبة",
-   "close": 30.03999908962458,
+   "close": 29.98999909113985,
+   "sma50_px": 32.1184,
    "liquid": true,
    "sma50": false,
-   "atr": 6.85,
+   "atr": 6.86,
    "spread": 0.05,
-   "from_hi": -29.3,
+   "from_hi": -29.4,
    "track": null
   },
   "CANA": {
-   "score": 0.6608,
+   "score": 0.6628,
    "status": "مراقبة",
    "close": 32.88999834020527,
+   "sma50_px": 40.5697,
    "liquid": true,
    "sma50": true,
    "atr": 3.81,
@@ -2305,9 +2442,10 @@
    }
   },
   "CAED": {
-   "score": 0.0643,
+   "score": 0.0698,
    "status": "مراقبة",
    "close": 101.85,
+   "sma50_px": 104.5714,
    "liquid": true,
    "sma50": false,
    "atr": 8.0,
@@ -2316,9 +2454,10 @@
    "track": null
   },
   "EALR": {
-   "score": 0.2924,
+   "score": 0.2965,
    "status": "مراقبة",
    "close": 287.81000118007034,
+   "sma50_px": 311.6396,
    "liquid": true,
    "sma50": false,
    "atr": 6.84,
@@ -2327,25 +2466,27 @@
    "track": null
   },
   "AALR": {
-   "score": 0.2398,
+   "score": 0.2442,
    "status": "مراقبة",
-   "close": 219.6200073009483,
+   "close": 219.25000728864816,
+   "sma50_px": 244.7542,
    "liquid": true,
    "sma50": false,
-   "atr": 6.42,
+   "atr": 6.43,
    "spread": 0.05,
-   "from_hi": -40.0,
+   "from_hi": -40.1,
    "track": null
   },
   "IFAP": {
-   "score": 0.7368,
+   "score": 0.7384,
    "status": "مراقبة",
-   "close": 15.819999961780551,
+   "close": 15.79999996182887,
+   "sma50_px": 18.0568,
    "liquid": true,
    "sma50": false,
-   "atr": 5.91,
+   "atr": 5.92,
    "spread": 0.05,
-   "from_hi": -28.4,
+   "from_hi": -28.5,
    "track": {
     "n": 2,
     "win": 1,
@@ -2360,49 +2501,53 @@
   "NEDA": {
    "score": null,
    "status": "مراقبة",
-   "close": 2.5215000391006472,
+   "close": 2.4395000378290814,
+   "sma50_px": 2.558,
    "liquid": false,
    "sma50": false,
-   "atr": 3.92,
+   "atr": 4.05,
    "spread": 2.1,
-   "from_hi": -21.2,
+   "from_hi": -23.8,
    "track": null
   },
   "WKOL": {
-   "score": 0.5439,
+   "score": 0.5465,
    "status": "مراقبة",
-   "close": 164.62000611354273,
+   "close": 164.01000609088894,
+   "sma50_px": 241.3967,
    "liquid": true,
    "sma50": false,
-   "atr": 5.58,
+   "atr": 5.6,
    "spread": 0.05,
-   "from_hi": -56.3,
+   "from_hi": -56.5,
    "track": null
   },
   "EFIC": {
-   "score": 0.1871,
+   "score": 0.1919,
    "status": "مراقبة",
-   "close": 154.29557742567658,
+   "close": 154.07475367448188,
+   "sma50_px": 160.5017,
    "liquid": true,
    "sma50": false,
-   "atr": 5.66,
+   "atr": 5.67,
    "spread": 0.05,
-   "from_hi": -34.3,
+   "from_hi": -34.4,
    "track": {
-    "n": 8,
-    "win": 4,
+    "n": 10,
+    "win": 6,
     "last": [
      "2026-03-11",
      "2026-06-21",
      -7.9
     ],
-    "avg": 6.2
+    "avg": 9.35
    }
   },
   "MICH": {
-   "score": 0.6784,
+   "score": 0.6802,
    "status": "مراقبة",
    "close": 44.297434201720314,
+   "sma50_px": 42.5958,
    "liquid": true,
    "sma50": true,
    "atr": 4.9,
@@ -2420,9 +2565,10 @@
    }
   },
   "SMFR": {
-   "score": 0.3158,
+   "score": 0.3198,
    "status": "مراقبة",
    "close": 216.16243252888006,
+   "sma50_px": 212.4004,
    "liquid": true,
    "sma50": true,
    "atr": 8.0,
@@ -2431,9 +2577,10 @@
    "track": null
   },
   "AFMC": {
-   "score": 0.1053,
+   "score": 0.1105,
    "status": "مراقبة",
    "close": 128.93316831683165,
+   "sma50_px": 138.7824,
    "liquid": true,
    "sma50": false,
    "atr": 7.46,
@@ -2444,60 +2591,56 @@
   "EDFM": {
    "score": null,
    "status": "مراقبة",
-   "close": 364.10507497037395,
+   "close": 362.76000976562506,
+   "sma50_px": 363.7055,
    "liquid": false,
-   "sma50": true,
-   "atr": 4.2,
+   "sma50": false,
+   "atr": 4.22,
    "spread": 0.96,
-   "from_hi": -8.3,
+   "from_hi": -8.6,
    "track": null
   },
   "GSSC": {
-   "score": 0.538,
+   "score": 0.5407,
    "status": "مراقبة",
-   "close": 232.1430744434087,
+   "close": 232.07113033745821,
+   "sma50_px": 266.3514,
    "liquid": true,
    "sma50": false,
    "atr": 5.53,
    "spread": 0.05,
    "from_hi": -27.3,
-   "track": {
-    "n": 1,
-    "win": 0,
-    "last": [
-     "2026-09-01",
-     "2026-09-29",
-     -4.7
-    ],
-    "avg": -4.66
-   }
+   "track": null
   },
   "WCDF": {
    "score": null,
    "status": "مراقبة",
-   "close": 505.8618733543732,
+   "close": 501.56276394909526,
+   "sma50_px": 558.5869,
    "liquid": false,
    "sma50": false,
-   "atr": 3.92,
+   "atr": 3.95,
    "spread": 0.05,
-   "from_hi": -28.4,
+   "from_hi": -29.0,
    "track": null
   },
   "CEFM": {
-   "score": 0.5731,
+   "score": 0.5872,
    "status": "مراقبة",
-   "close": 124.64528395451894,
+   "close": 120.2327128591713,
+   "sma50_px": 124.2516,
    "liquid": true,
-   "sma50": true,
-   "atr": 5.58,
+   "sma50": false,
+   "atr": 5.78,
    "spread": 0.05,
-   "from_hi": -13.8,
+   "from_hi": -16.8,
    "track": null
   },
   "MILS": {
-   "score": 0.193,
+   "score": 0.1977,
    "status": "مراقبة",
    "close": 131.2357027463585,
+   "sma50_px": 153.0874,
    "liquid": true,
    "sma50": false,
    "atr": 7.99,
@@ -2506,42 +2649,46 @@
    "track": null
   },
   "SCFM": {
-   "score": 0.4094,
+   "score": 0.4128,
    "status": "مراقبة",
-   "close": 213.7287274291184,
+   "close": 210.56417907310637,
+   "sma50_px": 230.7969,
    "liquid": true,
    "sma50": false,
-   "atr": 4.92,
+   "atr": 5.0,
    "spread": 0.05,
-   "from_hi": -29.4,
+   "from_hi": -30.5,
    "track": null
   },
   "UEFM": {
-   "score": 0.4386,
+   "score": 0.4302,
    "status": "مراقبة",
-   "close": 505.1977588673127,
+   "close": 481.50913805839343,
+   "sma50_px": 484.0872,
    "liquid": true,
-   "sma50": true,
-   "atr": 5.0,
+   "sma50": false,
+   "atr": 5.25,
    "spread": 1.07,
-   "from_hi": -12.1,
+   "from_hi": -16.3,
    "track": null
   },
   "MFSC": {
-   "score": 0.5263,
+   "score": 0.5291,
    "status": "مراقبة",
-   "close": 34.733129462143005,
+   "close": 34.59206076110732,
+   "sma50_px": 39.1982,
    "liquid": true,
    "sma50": false,
-   "atr": 6.71,
+   "atr": 6.74,
    "spread": 0.05,
-   "from_hi": -36.1,
+   "from_hi": -36.3,
    "track": null
   },
   "MHOT": {
-   "score": 0.655,
+   "score": 0.657,
    "status": "مراقبة",
    "close": 14.90985907615228,
+   "sma50_px": 15.8119,
    "liquid": true,
    "sma50": false,
    "atr": 4.84,
@@ -2559,20 +2706,22 @@
    }
   },
   "PHTV": {
-   "score": 0.9532,
+   "score": 0.9535,
    "status": "مراقبة",
-   "close": 335.0,
+   "close": 337.99,
+   "sma50_px": 334.2084,
    "liquid": true,
    "sma50": true,
-   "atr": 4.04,
+   "atr": 4.0,
    "spread": 0.57,
-   "from_hi": -18.8,
+   "from_hi": -18.1,
    "track": null
   },
   "ROTO": {
-   "score": 0.3684,
+   "score": 0.3721,
    "status": "مراقبة",
    "close": 30.101098490696327,
+   "sma50_px": 35.3078,
    "liquid": true,
    "sma50": false,
    "atr": 6.49,
@@ -2583,18 +2732,20 @@
   "TRTO": {
    "score": null,
    "status": "مراقبة",
-   "close": 0.05999999865889549,
+   "close": 0.05799999870359898,
+   "sma50_px": 0.0606,
    "liquid": false,
    "sma50": false,
-   "atr": 3.69,
+   "atr": 3.82,
    "spread": 2.45,
-   "from_hi": -25.9,
+   "from_hi": -28.4,
    "track": null
   },
   "EPPK": {
    "score": null,
    "status": "مراقبة",
    "close": 9.779999732971191,
+   "sma50_px": 9.78,
    "liquid": false,
    "sma50": false,
    "atr": 0.5,
@@ -2606,6 +2757,7 @@
    "score": null,
    "status": "مراقبة",
    "close": 22.469999313354492,
+   "sma50_px": 22.3702,
    "liquid": false,
    "sma50": true,
    "atr": 4.9,
@@ -2614,9 +2766,10 @@
    "track": null
   },
   "RUBX": {
-   "score": 0.0351,
+   "score": 0.0407,
    "status": "مراقبة",
    "close": 12.27,
+   "sma50_px": 14.6212,
    "liquid": true,
    "sma50": false,
    "atr": 7.15,
@@ -2625,9 +2778,10 @@
    "track": null
   },
   "SCTS": {
-   "score": 0.4561,
+   "score": 0.4593,
    "status": "مراقبة",
    "close": 457.0399963362874,
+   "sma50_px": 515.8734,
    "liquid": true,
    "sma50": false,
    "atr": 4.35,
@@ -2636,9 +2790,10 @@
    "track": null
   },
   "ALUM": {
-   "score": 0.3743,
+   "score": 0.3779,
    "status": "مراقبة",
    "close": 18.197021496421414,
+   "sma50_px": 21.2837,
    "liquid": true,
    "sma50": false,
    "atr": 5.1,
@@ -2656,40 +2811,55 @@
    }
   },
   "GGCC": {
-   "score": 0.3977,
+   "score": 0.4012,
    "status": "مراقبة",
    "close": 0.5149999728729558,
+   "sma50_px": 0.6387,
    "liquid": true,
    "sma50": false,
    "atr": 4.55,
    "spread": 0.1,
    "from_hi": -56.4,
    "track": {
-    "n": 2,
+    "n": 1,
     "win": 0,
     "last": [
-     "2022-12-25",
-     "2023-02-06",
-     -12.4
+     "2016-11-17",
+     "2017-02-15",
+     -17.5
     ],
-    "avg": -14.98
+    "avg": -17.51
    }
   },
   "EBSC": {
-   "score": 0.2982,
+   "score": 0.3023,
    "status": "مراقبة",
-   "close": 1.4500000092807233,
+   "close": 1.4400000092167182,
+   "sma50_px": 1.647,
    "liquid": true,
    "sma50": false,
-   "atr": 5.76,
-   "spread": 0.34,
-   "from_hi": -35.8,
+   "atr": 5.8,
+   "spread": 0.35,
+   "from_hi": -36.3,
+   "track": null
+  },
+  "GTWL": {
+   "score": 0.0058,
+   "status": "مراقبة",
+   "close": 119.72189530685921,
+   "sma50_px": 150.193,
+   "liquid": true,
+   "sma50": false,
+   "atr": 8.0,
+   "spread": 0.05,
+   "from_hi": -50.9,
    "track": null
   },
   "ECAP": {
-   "score": 0.9181,
+   "score": 0.9186,
    "status": "مراقبة",
    "close": 27.63096121152242,
+   "sma50_px": 28.9064,
    "liquid": true,
    "sma50": false,
    "atr": 4.11,
@@ -2709,18 +2879,20 @@
   "CFGH": {
    "score": null,
    "status": "مراقبة",
-   "close": 0.10800943474443453,
+   "close": 0.10498113283571207,
+   "sma50_px": 0.1075,
    "liquid": false,
-   "sma50": true,
-   "atr": 2.25,
+   "sma50": false,
+   "atr": 2.32,
    "spread": 1.04,
-   "from_hi": -22.3,
+   "from_hi": -24.5,
    "track": null
   },
   "AJWA": {
-   "score": 0.614,
+   "score": 0.6163,
    "status": "مراقبة",
    "close": 261.72595598199393,
+   "sma50_px": 216.2505,
    "liquid": true,
    "sma50": true,
    "atr": 7.73,
@@ -2732,6 +2904,7 @@
    "score": null,
    "status": "مراقبة",
    "close": 0.125,
+   "sma50_px": 0.129,
    "liquid": false,
    "sma50": false,
    "atr": 1.37,
@@ -2743,6 +2916,7 @@
    "score": null,
    "status": "مراقبة",
    "close": 2.5299999713897705,
+   "sma50_px": 2.53,
    "liquid": false,
    "sma50": false,
    "atr": 1.41,
@@ -2751,9 +2925,10 @@
    "track": null
   },
   "CERA": {
-   "score": 0.117,
+   "score": 0.1221,
    "status": "مراقبة",
    "close": 1.01980195187106,
+   "sma50_px": 1.1992,
    "liquid": true,
    "sma50": false,
    "atr": 4.56,
@@ -2762,9 +2937,10 @@
    "track": null
   },
   "EASB": {
-   "score": 0.0936,
+   "score": 0.0988,
    "status": "مراقبة",
    "close": 5.500000169504052,
+   "sma50_px": 6.7538,
    "liquid": true,
    "sma50": false,
    "atr": 6.7,
@@ -2775,18 +2951,20 @@
   "ELNA": {
    "score": null,
    "status": "مراقبة",
-   "close": 43.44819861319161,
+   "close": 41.27999877929687,
+   "sma50_px": 37.7576,
    "liquid": false,
    "sma50": true,
-   "atr": 4.4,
+   "atr": 4.63,
    "spread": 2.25,
-   "from_hi": -12.1,
+   "from_hi": -16.5,
    "track": null
   },
   "ADPC": {
-   "score": 0.6901,
+   "score": 0.6919,
    "status": "مراقبة",
    "close": 2.7818429193399057,
+   "sma50_px": 3.2408,
    "liquid": true,
    "sma50": false,
    "atr": 3.92,
@@ -2798,6 +2976,7 @@
    "score": null,
    "status": "مراقبة",
    "close": 1.6723225955040224,
+   "sma50_px": 1.5966,
    "liquid": false,
    "sma50": true,
    "atr": 4.75,
@@ -2806,9 +2985,10 @@
    "track": null
   },
   "SEIG": {
-   "score": 0.076,
+   "score": 0.0814,
    "status": "مراقبة",
    "close": 217.27744972836024,
+   "sma50_px": 218.2483,
    "liquid": true,
    "sma50": false,
    "atr": 7.15,
@@ -2817,9 +2997,10 @@
    "track": null
   },
   "PRMH": {
-   "score": 0.2281,
+   "score": 0.2326,
    "status": "مراقبة",
    "close": 2.049999924806448,
+   "sma50_px": 2.1698,
    "liquid": true,
    "sma50": false,
    "atr": 8.0,
@@ -2828,9 +3009,10 @@
    "track": null
   },
   "AREH": {
-   "score": 0.5205,
+   "score": 0.5233,
    "status": "مراقبة",
    "close": 0.9999999813005036,
+   "sma50_px": 1.1698,
    "liquid": true,
    "sma50": false,
    "atr": 4.64,
@@ -2848,9 +3030,10 @@
    }
   },
   "DTPP": {
-   "score": 0.0117,
+   "score": 0.0174,
    "status": "مراقبة",
    "close": 56.59448798684513,
+   "sma50_px": 152.0832,
    "liquid": true,
    "sma50": false,
    "atr": 8.0,
@@ -2862,6 +3045,7 @@
    "score": null,
    "status": "مراقبة",
    "close": 2.119999885559082,
+   "sma50_px": 2.12,
    "liquid": false,
    "sma50": false,
    "atr": 0.5,
@@ -2872,18 +3056,20 @@
   "EOSB": {
    "score": null,
    "status": "مراقبة",
-   "close": 1.6000617426118733,
+   "close": 1.639814829384839,
+   "sma50_px": 1.5896,
    "liquid": false,
    "sma50": true,
-   "atr": 4.86,
+   "atr": 4.75,
    "spread": 3.0,
-   "from_hi": -2.4,
+   "from_hi": -0.0,
    "track": null
   },
   "GRCA": {
-   "score": 0.0234,
+   "score": 0.0291,
    "status": "مراقبة",
    "close": 33.55,
+   "sma50_px": 33.2322,
    "liquid": true,
    "sma50": true,
    "atr": 7.69,
@@ -2894,29 +3080,32 @@
   "AMPI": {
    "score": null,
    "status": "مراقبة",
-   "close": 2.2192000579833984,
+   "close": 2.228933391571045,
+   "sma50_px": 2.5108,
    "liquid": false,
    "sma50": false,
-   "atr": 5.08,
+   "atr": 5.05,
    "spread": 0.65,
-   "from_hi": -29.3,
+   "from_hi": -29.0,
    "track": null
   },
   "BIGP": {
    "score": null,
    "status": "مراقبة",
-   "close": 0.19818957368909468,
+   "close": 0.20014218032642564,
+   "sma50_px": 0.2293,
    "liquid": false,
    "sma50": false,
-   "atr": 6.48,
+   "atr": 6.41,
    "spread": 0.25,
-   "from_hi": -49.1,
+   "from_hi": -48.5,
    "track": null
   },
   "MKIT": {
    "score": null,
    "status": "مراقبة",
    "close": 2.700000047683716,
+   "sma50_px": 2.7,
    "liquid": false,
    "sma50": false,
    "atr": 3.0,
@@ -2925,14 +3114,15 @@
    "track": null
   },
   "FERC": {
-   "score": 0.3275,
+   "score": 0.3314,
    "status": "مراقبة",
-   "close": 62.98979808806779,
+   "close": 62.75976230591068,
+   "sma50_px": 68.0957,
    "liquid": true,
    "sma50": false,
-   "atr": 5.85,
+   "atr": 5.87,
    "spread": 0.31,
-   "from_hi": -25.8,
+   "from_hi": -26.0,
    "track": {
     "n": 1,
     "win": 0,
@@ -2948,6 +3138,7 @@
    "score": null,
    "status": "مراقبة",
    "close": 5.510000228881837,
+   "sma50_px": 5.51,
    "liquid": false,
    "sma50": true,
    "atr": 0.5,
@@ -2959,6 +3150,7 @@
    "score": null,
    "status": "مراقبة",
    "close": 5.079386915740383,
+   "sma50_px": 4.3994,
    "liquid": false,
    "sma50": true,
    "atr": 5.68,
@@ -2967,9 +3159,10 @@
    "track": null
   },
   "MAAL": {
-   "score": 0.0877,
+   "score": 0.093,
    "status": "مراقبة",
    "close": 5.8500000563534815,
+   "sma50_px": 8.0644,
    "liquid": true,
    "sma50": false,
    "atr": 7.0,
@@ -2980,69 +3173,74 @@
   "RKAZ": {
    "score": null,
    "status": "مراقبة",
-   "close": 3.820896208286286,
+   "close": 3.849339604377746,
+   "sma50_px": 4.6208,
    "liquid": false,
    "sma50": false,
    "atr": 8.0,
    "spread": 1.14,
-   "from_hi": -36.8,
+   "from_hi": -36.4,
    "track": null
   },
   "ELWA": {
    "score": null,
    "status": "مراقبة",
    "close": 1.090000033378601,
+   "sma50_px": 1.4988,
    "liquid": false,
    "sma50": false,
    "atr": 5.96,
    "spread": 2.36,
    "from_hi": -49.3,
    "track": {
-    "n": 4,
+    "n": 6,
     "win": 1,
     "last": [
-     "2019-08-21",
-     "2019-09-24",
-     -20.0
+     "2024-02-01",
+     "2024-05-07",
+     -14.7
     ],
-    "avg": 5.53
+    "avg": 2.19
    }
   },
   "IBCT": {
    "score": null,
    "status": "مراقبة",
-   "close": 10.166350210400033,
+   "close": 10.078625232553819,
+   "sma50_px": 10.9336,
    "liquid": false,
    "sma50": false,
-   "atr": 5.39,
+   "atr": 5.44,
    "spread": 0.05,
-   "from_hi": -30.8,
+   "from_hi": -31.4,
    "track": null
   },
   "CICH": {
-   "score": 0.9357,
+   "score": 0.936,
    "status": "مراقبة",
-   "close": 10.099999961625057,
+   "close": 10.029999961891022,
+   "sma50_px": 11.093,
    "liquid": true,
    "sma50": false,
-   "atr": 3.4,
+   "atr": 3.43,
    "spread": 0.57,
-   "from_hi": -19.9,
+   "from_hi": -20.5,
    "track": {
-    "n": 2,
+    "n": 3,
     "win": 1,
     "last": [
      "2026-09-17",
      "2026-10-26",
      -14.8
     ],
-    "avg": -1.13
+    "avg": -2.97
    }
   },
   "BINV": {
-   "score": 0.5906,
+   "score": 0.593,
    "status": "مراقبة",
    "close": 52.42000045472752,
+   "sma50_px": 55.7608,
    "liquid": true,
    "sma50": false,
    "atr": 4.53,
@@ -3060,9 +3258,10 @@
    }
   },
   "RACC": {
-   "score": 0.6374,
+   "score": 0.6395,
    "status": "مراقبة",
    "close": 7.5489623865110245,
+   "sma50_px": 8.4704,
    "liquid": true,
    "sma50": false,
    "atr": 4.43,
@@ -3074,6 +3273,7 @@
    "score": null,
    "status": "مراقبة",
    "close": 4.839111937024881,
+   "sma50_px": 4.796,
    "liquid": false,
    "sma50": true,
    "atr": 5.48,
@@ -3082,20 +3282,22 @@
    "track": null
   },
   "FNAR": {
-   "score": 0.2105,
+   "score": 0.2151,
    "status": "مراقبة",
-   "close": 9.860288812696322,
+   "close": 9.880577472804749,
+   "sma50_px": 11.7378,
    "liquid": true,
    "sma50": false,
-   "atr": 6.54,
+   "atr": 6.53,
    "spread": 0.05,
-   "from_hi": -34.9,
+   "from_hi": -34.7,
    "track": null
   },
   "MBEG": {
-   "score": 0.0526,
+   "score": 0.0581,
    "status": "مراقبة",
    "close": 4.880478087649403,
+   "sma50_px": 5.909,
    "liquid": true,
    "sma50": false,
    "atr": 7.24,
@@ -3104,29 +3306,31 @@
    "track": null
   },
   "DOMT": {
-   "score": 0.7018,
+   "score": 0.7035,
    "status": "مراقبة",
    "close": 24.59028936768193,
+   "sma50_px": 24.2422,
    "liquid": true,
    "sma50": true,
    "atr": 5.09,
    "spread": 1.07,
    "from_hi": -18.0,
    "track": {
-    "n": 3,
+    "n": 5,
     "win": 2,
     "last": [
      "2025-09-29",
      "2025-12-24",
      27.4
     ],
-    "avg": 2.89
+    "avg": -1.73
    }
   },
   "INEG": {
-   "score": 0.1111,
+   "score": 0.1163,
    "status": "مراقبة",
    "close": 0.3600000046394967,
+   "sma50_px": 0.5752,
    "liquid": true,
    "sma50": true,
    "atr": 8.0,
@@ -3135,9 +3339,10 @@
    "track": null
   },
   "OLFI": {
-   "score": 0.9825,
+   "score": 0.9826,
    "status": "مراقبة",
    "close": 20.260701604703577,
+   "sma50_px": 20.6906,
    "liquid": true,
    "sma50": false,
    "atr": 3.29,
@@ -3147,17 +3352,18 @@
     "n": 3,
     "win": 0,
     "last": [
-     "2026-08-03",
-     "2026-09-01",
-     -3.0
+     "2023-05-18",
+     "2023-08-02",
+     -20.0
     ],
-    "avg": -9.11
+    "avg": -9.52
    }
   },
   "ACAMD": {
-   "score": 0.8421,
+   "score": 0.843,
    "status": "مراقبة",
    "close": 1.8699999765345927,
+   "sma50_px": 1.998,
    "liquid": true,
    "sma50": false,
    "atr": 3.44,
@@ -3166,9 +3372,10 @@
    "track": null
   },
   "SPMD": {
-   "score": 0.0994,
+   "score": 0.1047,
    "status": "مراقبة",
    "close": 0.31999999284744257,
+   "sma50_px": 0.3681,
    "liquid": true,
    "sma50": false,
    "atr": 3.73,
@@ -3177,9 +3384,10 @@
    "track": null
   },
   "TALM": {
-   "score": 0.4327,
+   "score": 0.4419,
    "status": "مراقبة",
    "close": 20.120000448840404,
+   "sma50_px": 20.3474,
    "liquid": true,
    "sma50": false,
    "atr": 3.68,
@@ -3197,9 +3405,10 @@
    }
   },
   "LUTS": {
-   "score": 0.0468,
+   "score": 0.0523,
    "status": "مراقبة",
    "close": 0.6327208392093518,
+   "sma50_px": 0.768,
    "liquid": true,
    "sma50": false,
    "atr": 8.0,
@@ -3219,18 +3428,20 @@
   "FTNS": {
    "score": null,
    "status": "مراقبة",
-   "close": 0.9260703123532809,
+   "close": 0.9159824004540077,
+   "sma50_px": 1.1049,
    "liquid": false,
    "sma50": false,
-   "atr": 5.34,
+   "atr": 5.4,
    "spread": 0.62,
-   "from_hi": -36.6,
+   "from_hi": -37.3,
    "track": null
   },
   "AMES": {
-   "score": 0.0175,
+   "score": 0.0233,
    "status": "مراقبة",
    "close": 37.61843069966634,
+   "sma50_px": 41.9486,
    "liquid": true,
    "sma50": false,
    "atr": 8.0,
@@ -3242,6 +3453,7 @@
    "score": null,
    "status": "مراقبة",
    "close": 1.7000000476837158,
+   "sma50_px": 1.7,
    "liquid": false,
    "sma50": false,
    "atr": 3.0,
@@ -3250,9 +3462,10 @@
    "track": null
   },
   "EEII": {
-   "score": 0.2807,
+   "score": 0.2849,
    "status": "مراقبة",
    "close": 1.9307960479413693,
+   "sma50_px": 1.975,
    "liquid": true,
    "sma50": false,
    "atr": 7.58,
@@ -3270,9 +3483,10 @@
    }
   },
   "EGREF": {
-   "score": 0.0409,
+   "score": 0.0465,
    "status": "مراقبة",
    "close": 21.760000148626347,
+   "sma50_px": 21.9948,
    "liquid": true,
    "sma50": false,
    "atr": 8.0,
@@ -3284,6 +3498,7 @@
    "score": null,
    "status": "مراقبة",
    "close": 1.0,
+   "sma50_px": 0.9918,
    "liquid": false,
    "sma50": true,
    "atr": 0.96,
@@ -3295,6 +3510,7 @@
    "score": null,
    "status": "مراقبة",
    "close": 1.399999976158142,
+   "sma50_px": 1.4,
    "liquid": false,
    "sma50": false,
    "atr": 0.5,
@@ -3306,6 +3522,7 @@
    "score": null,
    "status": "مراقبة",
    "close": 15.760000228881834,
+   "sma50_px": 15.76,
    "liquid": false,
    "sma50": false,
    "atr": 0.5,
@@ -3314,9 +3531,10 @@
    "track": null
   },
   "IRON": {
-   "score": 0.7602,
+   "score": 0.7616,
    "status": "مراقبة",
    "close": 24.095375722543356,
+   "sma50_px": 26.0551,
    "liquid": true,
    "sma50": false,
    "atr": 3.95,
@@ -3334,29 +3552,31 @@
    }
   },
   "KZPC": {
-   "score": 0.5965,
+   "score": 0.5988,
    "status": "مراقبة",
    "close": 10.528384274702805,
+   "sma50_px": 12.9618,
    "liquid": true,
    "sma50": false,
    "atr": 6.57,
    "spread": 0.05,
    "from_hi": -28.8,
    "track": {
-    "n": 2,
-    "win": 2,
+    "n": 1,
+    "win": 1,
     "last": [
      "2024-07-28",
      "2024-09-08",
      61.2
     ],
-    "avg": 47.41
+    "avg": 61.21
    }
   },
   "MEGM": {
    "score": null,
    "status": "مراقبة",
    "close": 12.539999961853027,
+   "sma50_px": 12.54,
    "liquid": false,
    "sma50": false,
    "atr": 0.5,
@@ -3368,6 +3588,7 @@
    "score": null,
    "status": "مراقبة",
    "close": 4.690000057220459,
+   "sma50_px": 4.69,
    "liquid": false,
    "sma50": false,
    "atr": 0.5,
@@ -3379,6 +3600,7 @@
    "score": null,
    "status": "مراقبة",
    "close": 1.4199999570846558,
+   "sma50_px": 1.42,
    "liquid": false,
    "sma50": false,
    "atr": 0.5,
