@@ -1,20 +1,20 @@
-# EGX Paper Trade - آخر تحديث 2026-11-25 01:30
+# EGX Paper Trade - آخر تحديث 2026-11-25 13:55
 
 - احتفاظ 20 يوم تداول، شراء عند افتتاح اليوم التالي للإشارة، تكلفة 20.0 bps في الاتجاه
-- دفعات متسجلة: 32 | ناضجة (عدّى عليها 20 يوم): 12
+- دفعات متسجلة: 33 | ناضجة (عدّى عليها 20 يوم): 13
 - توقع الباكتست: حوالي +0.28% للصفقة بعد التكلفة (ميزة صغيرة وغير ثابتة)
 
 | | الفرق عن السوق | بعد التكلفة | نسبة الدفعات الكسبانة | تذبذب الدفعة |
 |---|---|---|---|---|
-| XGBoost | -0.94% | -1.34% | 17% (12) | 2.14% |
-| Low-vol (مرجع) | -0.28% | -0.68% | 25% (12) | 2.51% |
+| XGBoost | -1.46% | -1.86% | 15% (13) | 2.79% |
+| Low-vol (مرجع) | -0.89% | -1.29% | 23% (13) | 3.26% |
 
-متوسط عائد السوق (الأسهم الصالحة) لنفس الفترات: -1.03% للصفقة
-الدفعات من 2026-10-07 إلى 2026-10-25
+متوسط عائد السوق (الأسهم الصالحة) لنفس الفترات: +0.02% للصفقة
+الدفعات من 2026-10-07 إلى 2026-10-26
 
-## اختيارات آخر دفعة (2026-11-23)
-XGBoost (29): SNFC, CIEB, CSAG, FAIT, CIRA, ARAB, COMI, SAUD, CPCI, EGAL, EFIH, SKPC, GBCO, ETRS, ALCN, SDTI, ORWE, ICID, SCEM, CICH, FWRY, MICH, SWDY, ISPH, ABUK, EAST, CCAP, RMDA, TALM
+## اختيارات آخر دفعة (2026-11-24)
+XGBoost (30): SNFC, FAIT, CPCI, ICID, SKPC, ARAB, CIEB, EGAL, SWDY, CIRA, ORWE, AIFI, COMI, GBCO, SAUD, FWRY, CSAG, RTVC, EAST, ISPH, BINV, MICH, RMDA, EFIH, AXPH, SCEM, ACGC, TALM, ALCN, LCSW
 
-LightGBM+Alpha158 (29): CSAG, SAUD, AIFI, EFIH, HRHO, SCEM, SDTI, EAST, FAIT, EBSC, MEPA, ELEC, EMFD, CIEB, ALCN, CIRA, SNFC, RACC, LCSW, PHTV, ETEL, AREH, RTVC, ADCI, GDWA, GBCO, ELKA, AMIA, AMOC
+LightGBM+Alpha158 (30): AIFI, CSAG, EAST, EFIH, SNFC, SCEM, CIRA, MEPA, SDTI, UEFM, FAIT, SAUD, RTVC, LCSW, RACC, MOSC, DOMT, EMFD, AFDI, DAPH, ORWE, MFSC, HRHO, TALM, ZEOT, ALCN, CIEB, FWRY, ADCI, DSCW
 
-Low-vol (29): CPCI, PHTV, COMI, SKPC, SNFC, FAIT, CIEB, TMGH, OLFI, CICH, CSAG, EGAL, EMFD, CIRA, SDTI, SWDY, AFDI, ETRS, ORWE, AMOC, ECAP, CLHO, TALM, GBCO, ALCN, EFIH, EGCH, ADIB, ACGC
+Low-vol (30): CPCI, PHTV, COMI, ETRS, SKPC, FAIT, SNFC, CIEB, OLFI, TMGH, CICH, CSAG, EGAL, EMFD, CIRA, SWDY, SDTI, BINV, ORWE, TALM, RTVC, ECAP, CLHO, ALCN, AMOC, ARAB, GBCO, AFDI, CCAP, EFIH
