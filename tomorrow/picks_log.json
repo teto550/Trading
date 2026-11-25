@@ -1252,79 +1252,79 @@
    "picks": [
     "GBCO",
     "ELEC",
-    "EFIH",
-    "ISMQ",
     "ISPH",
+    "EFIH",
     "CICH",
+    "ISMQ",
     "ZMID",
-    "SNFC",
     "MFPC",
-    "SPIN"
+    "SCTS",
+    "HELI"
    ],
    "labels": {
     "GBCO": "انتظر",
     "ELEC": "انتظر",
-    "EFIH": "انتظر",
-    "ISMQ": "انتظر",
     "ISPH": "انتظر",
+    "EFIH": "انتظر",
     "CICH": "انتظر",
+    "ISMQ": "انتظر",
     "ZMID": "انتظر",
-    "SNFC": "انتظر",
     "MFPC": "انتظر",
-    "SPIN": "انتظر"
+    "SCTS": "انتظر",
+    "HELI": "انتظر"
    },
    "news": {},
    "by_model": {
     "xgb": [
-     "EFIH",
-     "ISMQ",
      "ELEC",
+     "ISMQ",
      "ISPH",
-     "ZMID",
      "CICH",
-     "SPIN",
-     "SNFC",
-     "KABO",
-     "MFPC"
+     "EFIH",
+     "ZMID",
+     "HELI",
+     "GBCO",
+     "SCTS",
+     "RTVC"
     ],
     "lgbm": [
+     "KABO",
      "ELEC",
      "EFIH",
-     "KABO",
-     "CICH",
-     "ISPH",
      "GBCO",
+     "ISPH",
+     "LCSW",
      "MFPC",
-     "SPIN",
-     "ISMQ",
-     "SNFC"
+     "HELI",
+     "SCTS",
+     "CICH"
     ],
     "cat": [
      "ELEC",
      "ISMQ",
-     "EFIH",
-     "ISPH",
      "CICH",
-     "ZMID",
-     "SNFC",
-     "ADIB",
+     "ISPH",
      "MFPC",
-     "GBCO"
+     "ZMID",
+     "SCTS",
+     "EFIH",
+     "SPIN",
+     "SNFC"
     ],
     "ens": [
      "ELEC",
-     "EFIH",
-     "ISMQ",
      "ISPH",
+     "EFIH",
      "CICH",
-     "ZMID",
-     "SNFC",
-     "MFPC",
+     "ISMQ",
      "GBCO",
-     "SPIN"
+     "ZMID",
+     "MFPC",
+     "SCTS",
+     "HELI"
     ]
    },
-   "made": "2026-11-24 19:55"
+   "made": "2026-11-25 03:10"
   }
  ]
 }

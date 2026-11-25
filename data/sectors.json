@@ -1,1487 +1,1487 @@
 {
-"EITP": {
-"sector": "Consumer Services",
-"industry": "Other Consumer Services",
-"desc": "Egyptian International Tourism Projects"
-},
-"AREH": {
-"sector": "Industrial Services",
-"industry": "Engineering & Construction",
-"desc": "Egyptian Real Estate Group"
-},
-"UTOP": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Utopia Real Estate Investment & Tourism SAE"
-},
-"SIPC": {
-"sector": "Health Technology",
-"industry": "Pharmaceuticals: Major",
-"desc": "Sabaa International Company for Pharmaceutial and Chemical Industry"
-},
-"ELSH": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "El-Shams Housing & Development SA"
-},
-"SWDY": {
-"sector": "Producer Manufacturing",
-"industry": "Electrical Products",
-"desc": "El Sewedy Electric Company"
-},
-"CANA": {
-"sector": "Finance",
-"industry": "Regional Banks",
-"desc": "Suez Canal Bank SAE"
-},
-"ELWA": {
-"sector": "Consumer Services",
-"industry": "Hotels/Resorts/Cruise lines",
-"desc": "Elwadi for International Investment & Development"
-},
-"EDFM": {
-"sector": "Consumer Non-Durables",
-"industry": "Food: Specialty/Candy",
-"desc": "East Delta Flour Mills Co."
-},
-"EEP": {
-"sector": "?",
-"industry": "?",
-"desc": "Egypt Education Platform - EEP"
-},
-"KRDI": {
-"sector": "Finance",
-"industry": "Financial Conglomerates",
-"desc": "Al Khair River for Development Agriculture Investment and Environmental Services"
-},
-"RMTV": {
-"sector": "Consumer Services",
-"industry": "Hotels/Resorts/Cruise lines",
-"desc": "Rowad Misr Tourism Investment"
-},
-"ORHD": {
-"sector": "Consumer Durables",
-"industry": "Homebuilding",
-"desc": "Orascom Development Egypt (S.A.E)"
-},
-"SPIN": {
-"sector": "Process Industries",
-"industry": "Textiles",
-"desc": "Alexandria Spinning & Weaving"
-},
-"MBSC": {
-"sector": "Non-Energy Minerals",
-"industry": "Construction Materials",
-"desc": "Misr Beni Suef Cement Co. SAE"
-},
-"SINA": {
-"sector": "Non-Energy Minerals",
-"industry": "Steel",
-"desc": "Sinai Manganese Company"
-},
-"NEDA": {
-"sector": "Process Industries",
-"industry": "Chemicals: Agricultural",
-"desc": "Northern Upper Egypt Development & Agricultural Production"
-},
-"AMER": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Amer Group Holding"
-},
-"ICFC": {
-"sector": "Process Industries",
-"industry": "Chemicals: Agricultural",
-"desc": "International Co. for Fertilizers & Chemicals"
-},
-"ISMQ": {
-"sector": "Non-Energy Minerals",
-"industry": "Steel",
-"desc": "Iron & Steel for Mines & Quarries"
-},
-"EGWA": {
-"sector": "Transportation",
-"industry": "Other Transportation",
-"desc": "General Warehouses of Egypt"
-},
-"GTHE": {
-"sector": "Communications",
-"industry": "Specialty Telecommunications",
-"desc": "Global Telecom Holding S.A.E."
-},
-"SNFC": {
-"sector": "Process Industries",
-"industry": "Agricultural Commodities/Milling",
-"desc": "Sharkia National Food"
-},
-"CICH": {
-"sector": "Finance",
-"industry": "Finance/Rental/Leasing",
-"desc": "CI Capital Holding for Financial Investments"
-},
-"ROTO": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Rowad Tourism (Al Rowad) Co"
-},
-"BINV": {
-"sector": "Finance",
-"industry": "Investment Managers",
-"desc": "B Investments Holding SAE"
-},
-"GOUR": {
-"sector": "Retail Trade",
-"industry": "Food Retail",
-"desc": "Gourmet Egypt.Com Foods"
-},
-"PHDC": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Palm Hills Development Co."
-},
-"EGSA": {
-"sector": "Consumer Services",
-"industry": "Broadcasting",
-"desc": "Egyptian Satellite Co."
-},
-"OFH": {
-"sector": "Finance",
-"industry": "Financial Conglomerates",
-"desc": "O B Financial Holding"
-},
-"TMGH": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Talaat Moustafa Group Holding"
-},
-"DSCW": {
-"sector": "Consumer Non-Durables",
-"industry": "Apparel/Footwear",
-"desc": "Dice Sports & Casual Wear Manufacturers SAE"
-},
-"ASCM": {
-"sector": "Non-Energy Minerals",
-"industry": "Construction Materials",
-"desc": "ASEC Co. for Mining"
-},
-"SIEG": {
-"sector": "Non-Energy Minerals",
-"industry": "Construction Materials",
-"desc": "Egyptian Company for Pipes and Cement Products -Siegwart"
-},
-"PRCL": {
-"sector": "Retail Trade",
-"industry": "Specialty Stores",
-"desc": "General Co. for Ceramic & Porcelain Products"
-},
-"RREI": {
-"sector": "Consumer Durables",
-"industry": "Homebuilding",
-"desc": "Arab Real Estate Investment Co."
-},
-"ARCC": {
-"sector": "Non-Energy Minerals",
-"industry": "Construction Materials",
-"desc": "Arabian Cement Company"
-},
-"FIRE": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "First Investment & Real Estate Development"
-},
-"CCRS": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Gulf Canadian Real Estate Investment Co."
-},
-"RTVC": {
-"sector": "Industrial Services",
-"industry": "Engineering & Construction",
-"desc": "Remco for Touristic Villages Construction"
-},
-"AXPH": {
-"sector": "Health Technology",
-"industry": "Pharmaceuticals: Major",
-"desc": "Alexandria Company for Pharmaceuticals and Chemical Industries"
-},
-"EGCH": {
-"sector": "Process Industries",
-"industry": "Chemicals: Agricultural",
-"desc": "Egyptian Chemical Industries"
-},
-"OBRI": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "El Obour Real Estate Investment"
-},
-"ACTF": {
-"sector": "Finance",
-"industry": "Investment Banks/Brokers",
-"desc": "Act Financial"
-},
-"MOED": {
-"sector": "Commercial Services",
-"industry": "Miscellaneous Commercial Services",
-"desc": "Egyptian Modern Education Systems"
-},
-"ADIB": {
-"sector": "Finance",
-"industry": "Regional Banks",
-"desc": "Abu Dhabi Islamic Bank-Egypt"
-},
-"RAYA": {
-"sector": "Technology Services",
-"industry": "Information Technology Services",
-"desc": "Raya Holding for Financial Investments SAE"
-},
-"EGS65101C015": {
-"sector": "Industrial Services",
-"industry": "Engineering & Construction",
-"desc": "National Investment & Reconstruction"
-},
-"CIRA": {
-"sector": "Consumer Services",
-"industry": "Other Consumer Services",
-"desc": "Cairo For Investment And Real Estate Developments -CIRA Education"
-},
-"ACGC": {
-"sector": "Process Industries",
-"industry": "Agricultural Commodities/Milling",
-"desc": "Arab Cotton Ginning Co."
-},
-"PHGC": {
-"sector": "Health Services",
-"industry": "Medical/Nursing Services",
-"desc": "Premium Healthcare Group"
-},
-"WCDF": {
-"sector": "Process Industries",
-"industry": "Agricultural Commodities/Milling",
-"desc": "Middle & West Delta Flour Mills Co."
-},
-"ATLC": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Al Tawfeek Leasing Company-A.T.LEASE"
-},
-"SUGR": {
-"sector": "Process Industries",
-"industry": "Agricultural Commodities/Milling",
-"desc": "Delta Sugar"
-},
-"EGS30AJ1C016-EGP": {
-"sector": "Process Industries",
-"industry": "Chemicals: Specialty",
-"desc": "International Dry Ice Co."
-},
-"SDTI": {
-"sector": "Consumer Services",
-"industry": "Hotels/Resorts/Cruise lines",
-"desc": "Sharm Dreams Co. for Tourism Investment"
-},
-"NHPS": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "National Housing for Professional Syndicates"
-},
-"ADCI": {
-"sector": "Health Technology",
-"industry": "Pharmaceuticals: Major",
-"desc": "Arab Pharmaceuticals"
-},
-"POCO": {
-"sector": "Transportation",
-"industry": "Other Transportation",
-"desc": "Port Said Container And Cargo Handling"
-},
-"VERT": {
-"sector": "Technology Services",
-"industry": "Packaged Software",
-"desc": "Vertika for Industry & Trade"
-},
-"COSG": {
-"sector": "Consumer Non-Durables",
-"industry": "Household/Personal Care",
-"desc": "Cairo Oils & Soap"
-},
-"KZPC": {
-"sector": "Process Industries",
-"industry": "Chemicals: Agricultural",
-"desc": "Kafr El Zayat Pesticides & Chemical Co."
-},
-"ANCC": {
-"sector": "Non-Energy Minerals",
-"industry": "Construction Materials",
-"desc": "ALNAHDA Industrial Co."
-},
-"FNAR": {
-"sector": "Industrial Services",
-"industry": "Engineering & Construction",
-"desc": "Al Fanar Contracting Construction Trade Import & Export Co."
-},
-"MPCO": {
-"sector": "Process Industries",
-"industry": "Agricultural Commodities/Milling",
-"desc": "Mansourah Poultry Co."
-},
-"EGAL": {
-"sector": "Non-Energy Minerals",
-"industry": "Aluminum",
-"desc": "Egypt Aluminum"
-},
-"SCEM": {
-"sector": "Non-Energy Minerals",
-"industry": "Construction Materials",
-"desc": "Sinai Cement Co."
-},
-"CFGH": {
-"sector": "Retail Trade",
-"industry": "Apparel/Footwear Retail",
-"desc": "Concrete Fashion Group for Commercial and Industrial Investments S.A.E"
-},
-"TRTO": {
-"sector": "Commercial Services",
-"industry": "Miscellaneous Commercial Services",
-"desc": "TransOceans Tours"
-},
-"AMPI": {
-"sector": "Technology Services",
-"industry": "Packaged Software",
-"desc": "AL Moasher Pay for Electronic Payment and Collection (S.A.E)"
-},
-"GROV": {
-"sector": "Finance",
-"industry": "Investment Managers",
-"desc": "Grova Special Purpose Acquisition Company"
-},
-"FWRY": {
-"sector": "Technology Services",
-"industry": "Packaged Software",
-"desc": "Fawry For Banking Technology And Electronic Payment"
-},
-"GRCA": {
-"sector": "Finance",
-"industry": "Investment Banks/Brokers",
-"desc": "Grand Investment Capital"
-},
-"ATQA": {
-"sector": "Producer Manufacturing",
-"industry": "Metal Fabrication",
-"desc": "Misr National Steel"
-},
-"EGS3I0S1C019": {
-"sector": "Distribution Services",
-"industry": "Medical Distributors",
-"desc": "Future Care For Medical Industries"
-},
-"NCGC": {
-"sector": "Process Industries",
-"industry": "Agricultural Commodities/Milling",
-"desc": "Nile Cotton Ginning"
-},
-"TAQA": {
-"sector": "Utilities",
-"industry": "Electric Utilities",
-"desc": "TAQA Arabia"
-},
-"LKGP": {
-"sector": "Health Services",
-"industry": "Services to the Health Industry",
-"desc": "The Holding Company for Financial Investment - The Lakah Group"
-},
-"ORAS": {
-"sector": "Industrial Services",
-"industry": "Engineering & Construction",
-"desc": "Orascom Construction Plc"
-},
-"ALCN": {
-"sector": "Transportation",
-"industry": "Other Transportation",
-"desc": "Alexandria Containers & Goods"
-},
-"SUCE": {
-"sector": "Non-Energy Minerals",
-"industry": "Construction Materials",
-"desc": "Suez Cement Co."
-},
-"FERC": {
-"sector": "Process Industries",
-"industry": "Chemicals: Agricultural",
-"desc": "Ferchem Misr Co. for Fertilizers & Chemicals"
-},
-"EFID": {
-"sector": "Consumer Non-Durables",
-"industry": "Food: Specialty/Candy",
-"desc": "Edita Food Industries SAE"
-},
-"AJWA": {
-"sector": "Consumer Non-Durables",
-"industry": "Food: Specialty/Candy",
-"desc": "Ajwa for Food Industries Co. Egypt"
-},
-"EALR": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "El Arabia for Land Reclamation"
-},
-"NDRL": {
-"sector": "Industrial Services",
-"industry": "Contract Drilling",
-"desc": "National Drilling Co."
-},
-"VLMRA": {
-"sector": "Finance",
-"industry": "Financial Conglomerates",
-"desc": "Valmore Holding"
-},
-"CLHO": {
-"sector": "Health Services",
-"industry": "Hospital/Nursing Management",
-"desc": "Cleopatra Hospital Company"
-},
-"IBCT": {
-"sector": "Distribution Services",
-"industry": "Wholesale Distributors",
-"desc": "International Business Corp. for Trading & Agencies"
-},
-"NCCW": {
-"sector": "Industrial Services",
-"industry": "Engineering & Construction",
-"desc": "Nasr Co. for Civil Works"
-},
-"GPIM": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "GPI For Urban Growth"
-},
-"CID": {
-"sector": "?",
-"industry": "?",
-"desc": "Chemical Development Industries (CID)"
-},
-"MCQE": {
-"sector": "Non-Energy Minerals",
-"industry": "Construction Materials",
-"desc": "Misr Cement Co. (Qena)"
-},
-"ZMID": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Zahraa Maadi Investment & Development"
-},
-"UPMS": {
-"sector": "Health Services",
-"industry": "Medical/Nursing Services",
-"desc": "Union Pharmacist Company For Medical Services And Investment"
-},
-"RAKT": {
-"sector": "Process Industries",
-"industry": "Pulp & Paper",
-"desc": "Rakta Paper Manufacturing"
-},
-"ELAB": {
-"sector": "?",
-"industry": "?",
-"desc": "Egyptian Linear Alkyl Benzene Company"
-},
-"VLMR": {
-"sector": "Finance",
-"industry": "Financial Conglomerates",
-"desc": "Valmore Holding"
-},
-"IDRE": {
-"sector": "Consumer Durables",
-"industry": "Homebuilding",
-"desc": "Ismailia Development & Real Estate Co."
-},
-"BIDI": {
-"sector": "Process Industries",
-"industry": "Containers/Packaging",
-"desc": "El Badr Investment and Development - BID"
-},
-"BIGP": {
-"sector": "Distribution Services",
-"industry": "Wholesale Distributors",
-"desc": "ElBarbary Investment Group"
-},
-"EGS65621C012": {
-"sector": "?",
-"industry": "?",
-"desc": "El Nasr Housing & Egp5"
-},
-"AFDI": {
-"sector": "Finance",
-"industry": "Investment Banks/Brokers",
-"desc": "Alahly For Development & Investment"
-},
-"RMDA": {
-"sector": "Health Technology",
-"industry": "Pharmaceuticals: Major",
-"desc": "Tenth of Ramadan Pharmaceutical Industries & Diagnostic-Rameda"
-},
-"LUTS": {
-"sector": "Finance",
-"industry": "Financial Conglomerates",
-"desc": "Lotus For Agricultural Investments And Development"
-},
-"MBEG": {
-"sector": "Distribution Services",
-"industry": "Wholesale Distributors",
-"desc": "MB for Engineering & Contracting"
-},
-"MPCI": {
-"sector": "Health Technology",
-"industry": "Pharmaceuticals: Major",
-"desc": "Memphis Pharmaceutical & Chemical Industries"
-},
-"KWIN": {
-"sector": "Finance",
-"industry": "Investment Banks/Brokers",
-"desc": "El Kahera El Watania Investment"
-},
-"MTIE": {
-"sector": "Distribution Services",
-"industry": "Electronics Distributors",
-"desc": "MM Group for Industry & International Trade"
-},
-"NIPH": {
-"sector": "Health Technology",
-"industry": "Pharmaceuticals: Major",
-"desc": "El-Nile Co. for Pharmaceuticals & Chemical Industries"
-},
-"SCTS": {
-"sector": "Commercial Services",
-"industry": "Miscellaneous Commercial Services",
-"desc": "Sues Canal Co. for Technology Settling"
-},
-"PRMH": {
-"sector": "Finance",
-"industry": "Investment Banks/Brokers",
-"desc": "Prime Holding"
-},
-"ECAP": {
-"sector": "Producer Manufacturing",
-"industry": "Building Products",
-"desc": "El Ezz Ceramics & Porcelain Co. (Gemma)"
-},
-"CEFM": {
-"sector": "Process Industries",
-"industry": "Agricultural Commodities/Milling",
-"desc": "Middle Egypt Flour Mills"
-},
-"SMFR": {
-"sector": "Distribution Services",
-"industry": "Wholesale Distributors",
-"desc": "Samad Misr-EGYFERT"
-},
-"ALEX": {
-"sector": "Non-Energy Minerals",
-"industry": "Construction Materials",
-"desc": "Alexandria Cement Co."
-},
-"WKOL": {
-"sector": "Industrial Services",
-"industry": "Engineering & Construction",
-"desc": "Wadi Kom Ombo Land Reclamation"
-},
-"KNGC": {
-"sector": "Consumer Durables",
-"industry": "Home Furnishings",
-"desc": "EL- Nasr Glass And Crystal"
-},
-"ADRI": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Arab Development & Real Estate Investment"
-},
-"AMOC": {
-"sector": "Energy Minerals",
-"industry": "Oil Refining/Marketing",
-"desc": "Alexandria Mineral Oils Co."
-},
-"SAUD": {
-"sector": "Finance",
-"industry": "Regional Banks",
-"desc": "Al Baraka Bank Egypt"
-},
-"PHAR": {
-"sector": "Health Technology",
-"industry": "Pharmaceuticals: Other",
-"desc": "Egyptian International Pharmaceutical Industries Co."
-},
-"ELNA": {
-"sector": "Process Industries",
-"industry": "Agricultural Commodities/Milling",
-"desc": "El Nasr for Manufacturing Agricultural Crops"
-},
-"EGS3E071C013-EGP": {
-"sector": "Producer Manufacturing",
-"industry": "Metal Fabrication",
-"desc": "Acrow Misr"
-},
-"UEFM": {
-"sector": "Process Industries",
-"industry": "Agricultural Commodities/Milling",
-"desc": "Upper Egypt Flour Mills Co."
-},
-"CAED": {
-"sector": "Consumer Services",
-"industry": "Other Consumer Services",
-"desc": "Cairo Educational Services"
-},
-"NFCI": {
-"sector": "?",
-"industry": "?",
-"desc": "ELNASR Co For Fertilizers And Chemical Industries"
-},
-"UNIT": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "United Housing Construction SA"
-},
-"WATP": {
-"sector": "Process Industries",
-"industry": "Chemicals: Major Diversified",
-"desc": "Modern Co. for Water Proofing"
-},
-"RKAZ": {
-"sector": "Process Industries",
-"industry": "Chemicals: Agricultural",
-"desc": "REKAZ Financial Holding"
-},
-"ABUK": {
-"sector": "Process Industries",
-"industry": "Chemicals: Agricultural",
-"desc": "Abou Kir Fertilizers & Chemical Industries Co."
-},
-"ELEC": {
-"sector": "Producer Manufacturing",
-"industry": "Electrical Products",
-"desc": "Electro Cable Egypt"
-},
-"GEOS": {
-"sector": "Industrial Services",
-"industry": "Engineering & Construction",
-"desc": "Geos for trading and contracting"
-},
-"MOIN": {
-"sector": "Finance",
-"industry": "Multi-Line Insurance",
-"desc": "Mohandes Insurance Co."
-},
-"EXPA": {
-"sector": "Finance",
-"industry": "Regional Banks",
-"desc": "Export Development Bank of Egypt"
-},
-"TORA": {
-"sector": "Non-Energy Minerals",
-"industry": "Construction Materials",
-"desc": "Tourah Cement Co"
-},
-"ENPI": {
-"sector": "?",
-"industry": "?",
-"desc": "Engineering for the Petroleum and Process Industries"
-},
-"ICID": {
-"sector": "Finance",
-"industry": "Financial Conglomerates",
-"desc": "International Company for Investment & Development"
-},
-"NMIN": {
-"sector": "?",
-"industry": "?",
-"desc": "El Nasr Mining Co Egp10"
-},
-"VALU": {
-"sector": "Finance",
-"industry": "Finance/Rental/Leasing",
-"desc": "U Consumer Finance S.A.E"
-},
-"YAYT": {
-"sector": "Producer Manufacturing",
-"industry": "Metal Fabrication",
-"desc": "Spring & Transportation Needs Manufacturing Co."
-},
-"IEEC": {
-"sector": "Industrial Services",
-"industry": "Engineering & Construction",
-"desc": "Industrial & Engineering Enterprises Co."
-},
-"EGS370O1C013": {
-"sector": "Commercial Services",
-"industry": "Commercial Printing/Forms",
-"desc": "National Printing"
-},
-"ALXD": {
-"sector": "?",
-"industry": "?",
-"desc": "Alexandria For Investment and Urban Development"
-},
-"AMES": {
-"sector": "Health Services",
-"industry": "Hospital/Nursing Management",
-"desc": "Alexandria New Medical Center Co."
-},
-"RUBX": {
-"sector": "Consumer Durables",
-"industry": "Home Furnishings",
-"desc": "Rubex International for Plastic & Acrylic Manufacturing"
-},
-"ETEL": {
-"sector": "Communications",
-"industry": "Major Telecommunications",
-"desc": "Telecom Egypt"
-},
-"EHDR": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Egyptians Housing Development & Reconstruction"
-},
-"MCRO": {
-"sector": "Health Technology",
-"industry": "Pharmaceuticals: Major",
-"desc": "Macro Group Pharmaceutical S.A.E."
-},
-"JUFO": {
-"sector": "Consumer Non-Durables",
-"industry": "Food: Meat/Fish/Dairy",
-"desc": "Juhayna Food Industries"
-},
-"CPCI": {
-"sector": "Health Technology",
-"industry": "Pharmaceuticals: Major",
-"desc": "Kahira Pharmaceuticals & Chemical Industries Co."
-},
-"ORWE": {
-"sector": "Consumer Durables",
-"industry": "Home Furnishings",
-"desc": "Oriental Weavers Carpet"
-},
-"OCPH": {
-"sector": "Health Technology",
-"industry": "Pharmaceuticals: Major",
-"desc": "October Pharma Co."
-},
-"AFMC": {
-"sector": "Retail Trade",
-"industry": "Food Retail",
-"desc": "Alexandria Flour Mills Co."
-},
-"MEPA": {
-"sector": "Process Industries",
-"industry": "Containers/Packaging",
-"desc": "Medical Packaging Company"
-},
-"ACAMD": {
-"sector": "Finance",
-"industry": "Investment Managers",
-"desc": "Arab Co. for Asset Management & Development"
-},
-"APPC": {
-"sector": "Process Industries",
-"industry": "Containers/Packaging",
-"desc": "Advanced Pharmaceutical Packaging Co."
-},
-"EFAC": {
-"sector": "?",
-"industry": "?",
-"desc": "Egyptian Ferro All Egp10"
-},
-"ADPC": {
-"sector": "Consumer Non-Durables",
-"industry": "Food: Meat/Fish/Dairy",
-"desc": "Arab Dairy Products Co. Arab Dairy - Panda"
-},
-"EPPK": {
-"sector": "Process Industries",
-"industry": "Containers/Packaging",
-"desc": "El Ahram Co. for Printing & Packing"
-},
-"ODIN": {
-"sector": "Finance",
-"industry": "Investment Managers",
-"desc": "ODIN Investments"
-},
-"EOSB": {
-"sector": "Finance",
-"industry": "Investment Banks/Brokers",
-"desc": "El Orouba Securities Brokerage"
-},
-"DCRC": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Delta Construction & Rebuilding Co."
-},
-"EGOTH": {
-"sector": "?",
-"industry": "?",
-"desc": "El Masreyah Touris Egp100"
-},
-"CRST": {
-"sector": "Industrial Services",
-"industry": "Engineering & Construction",
-"desc": "Creast Mark For Contracting And Real Estate Development"
-},
-"COPR": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Cooper for Commercial Investment & Real Estate Development"
-},
-"MICH": {
-"sector": "Process Industries",
-"industry": "Chemicals: Specialty",
-"desc": "Misr Chemical Industries Ltd."
-},
-"PACH": {
-"sector": "Process Industries",
-"industry": "Industrial Specialties",
-"desc": "Paints & Chemical Industries Co."
-},
-"KABO": {
-"sector": "Consumer Non-Durables",
-"industry": "Apparel/Footwear",
-"desc": "El Nasr Clothing & Textiles Co."
-},
-"APSW": {
-"sector": "Process Industries",
-"industry": "Textiles",
-"desc": "Arab Polvara Spinning & Weaving Co."
-},
-"CIEB": {
-"sector": "Finance",
-"industry": "Major Banks",
-"desc": "Credit Agricole Egypt"
-},
-"CNFN": {
-"sector": "Finance",
-"industry": "Finance/Rental/Leasing",
-"desc": "Contact Financial Holding SAE"
-},
-"SKPC": {
-"sector": "Process Industries",
-"industry": "Chemicals: Specialty",
-"desc": "Sidi Kerir Petrochemicals"
-},
-"NINH": {
-"sector": "Health Services",
-"industry": "Hospital/Nursing Management",
-"desc": "Nozha International Hospital"
-},
-"INFI": {
-"sector": "Consumer Non-Durables",
-"industry": "Food: Specialty/Candy",
-"desc": "Ismailia National Food Industries"
-},
-"FAIT": {
-"sector": "Finance",
-"industry": "Regional Banks",
-"desc": "Faisal Islamic Bank of Egypt"
-},
-"EGS72L31C011": {
-"sector": "Utilities",
-"industry": "Alternative Power Generation",
-"desc": "SOLARSOL For Energy"
-},
-"NBKE": {
-"sector": "Finance",
-"industry": "Regional Banks",
-"desc": "National Bank of Kuwait - Egypt"
-},
-"SVCE": {
-"sector": "Non-Energy Minerals",
-"industry": "Construction Materials",
-"desc": "South Valley Cement Co."
-},
-"EMFD": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Emaar Misr for Development SAE"
-},
-"UEGC": {
-"sector": "Industrial Services",
-"industry": "Engineering & Construction",
-"desc": "El-Saeed Contracting & Real Estate Investment Co. SCCD"
-},
-"DCCC": {
-"sector": "Transportation",
-"industry": "Marine Shipping",
-"desc": "Damietta Container and Cargo Handling"
-},
-"CCAP": {
-"sector": "Finance",
-"industry": "Investment Managers",
-"desc": "QALA For Financial Investments"
-},
-"MFPC": {
-"sector": "Process Industries",
-"industry": "Chemicals: Agricultural",
-"desc": "Misr Fertilizers Production Company MOPCO"
-},
-"NARE": {
-"sector": "Finance",
-"industry": "Investment Managers",
-"desc": "Naeem Real Estate Holding Group"
-},
-"ETRS": {
-"sector": "Transportation",
-"industry": "Other Transportation",
-"desc": "Egyptian Transport And Commercial Services Co. (Egytrans Nosco)"
-},
-"MHOT": {
-"sector": "Consumer Services",
-"industry": "Hotels/Resorts/Cruise lines",
-"desc": "Misr Hotels Co."
-},
-"APPF": {
-"sector": "?",
-"industry": "?",
-"desc": "Alamal Alsharif for Plastics"
-},
-"BONY": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Bonyan for Development and Trade"
+"EEII": {
+"sector": "Electronic Technology",
+"industry": "Electronic Components",
+"desc": "El Arabia Engineering Industries"
 },
 "BTFH": {
 "sector": "Finance",
 "industry": "Investment Banks/Brokers",
 "desc": "Beltone Holding"
 },
-"TANM": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Tanmiya for Real Estate Investment"
-},
-"QNBE": {
-"sector": "Finance",
-"industry": "Regional Banks",
-"desc": "Qatar National Bank"
-},
-"DTPP": {
-"sector": "Process Industries",
-"industry": "Containers/Packaging",
-"desc": "Delta for Printing & Packaging"
-},
-"MOSC": {
-"sector": "Process Industries",
-"industry": "Agricultural Commodities/Milling",
-"desc": "Misr Oils & Soap Co."
-},
 "GGRN": {
 "sector": "Commercial Services",
 "industry": "Miscellaneous Commercial Services",
 "desc": "Gogreen for Agricultural Investment and Development Company"
-},
-"EAST": {
-"sector": "Consumer Non-Durables",
-"industry": "Tobacco",
-"desc": "Eastern Company"
-},
-"SEIG": {
-"sector": "Finance",
-"industry": "Investment Managers",
-"desc": "Saudi Egyptian Investment & Finance Co. SAE"
-},
-"BQDC": {
-"sector": "Finance",
-"industry": "Major Banks",
-"desc": "Banque du Caire"
-},
-"MISR": {
-"sector": "Non-Energy Minerals",
-"industry": "Construction Materials",
-"desc": "MISR Intercontinental for Granite & Marble"
-},
-"EGS65861C014": {
-"sector": "Industrial Services",
-"industry": "Engineering & Construction",
-"desc": "Egyptian Contracting Co.-AL- ABD"
-},
-"EGREF": {
-"sector": "Miscellaneous",
-"industry": "Investment Trusts/Mutual Funds",
-"desc": "Egyptians Real Estate Fund"
-},
-"NAMI": {
-"sector": "Finance",
-"industry": "Investment Managers",
-"desc": "National Asset Management And Investment"
-},
-"GMCI": {
-"sector": "Distribution Services",
-"industry": "Wholesale Distributors",
-"desc": "GMC Group for Industrial Commercial & Financial Investments"
-},
-"EGAS": {
-"sector": "Utilities",
-"industry": "Gas Distributors",
-"desc": "Egypt Gas Co."
-},
-"IRAX": {
-"sector": "Non-Energy Minerals",
-"industry": "Steel",
-"desc": "El Ezz Aldekhela Steel-Alexandria"
-},
-"EASB": {
-"sector": "Finance",
-"industry": "Investment Banks/Brokers",
-"desc": "Egyptian Arabian Company for Securities Brokerage EAC"
-},
-"MFSC": {
-"sector": "Retail Trade",
-"industry": "Specialty Stores",
-"desc": "Misr Duty Free Shops Co."
-},
-"AMII": {
-"sector": "Producer Manufacturing",
-"industry": "Building Products",
-"desc": "Arabian Metal Industries and Industrial Investments"
-},
-"HBCO": {
-"sector": "Industrial Services",
-"industry": "Engineering & Construction",
-"desc": "Heibco for Commercial Investments & Real Estate Development"
-},
-"ALUM": {
-"sector": "Non-Energy Minerals",
-"industry": "Aluminum",
-"desc": "Arab Aluminum Co. SAE"
-},
-"MLIC": {
-"sector": "Finance",
-"industry": "Life/Health Insurance",
-"desc": "Misr Life Insurance"
-},
-"TOUR": {
-"sector": "Consumer Services",
-"industry": "Other Consumer Services",
-"desc": "Tourism Urbanization"
-},
-"EEII": {
-"sector": "Electronic Technology",
-"industry": "Electronic Components",
-"desc": "El Arabia Engineering Industries"
-},
-"GPPL": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Golden Pyramids Plaza"
-},
-"DOMT": {
-"sector": "Consumer Non-Durables",
-"industry": "Food: Meat/Fish/Dairy",
-"desc": "Arabian Food Industries Co."
-},
-"MENA": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Mena Touristic & Real Estate Investment"
-},
-"EGS48271C018-EGP": {
-"sector": "Communications",
-"industry": "Specialty Telecommunications",
-"desc": "Egypt - South Africa for Communication"
-},
-"CERA": {
-"sector": "Producer Manufacturing",
-"industry": "Building Products",
-"desc": "Arab Ceramic Co. - Ceramica Remas"
-},
-"PRDC": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Pioneers Properties for Urban Development"
-},
-"SNFI": {
-"sector": "Consumer Non-Durables",
-"industry": "Food: Specialty/Candy",
-"desc": "Souhag National Food Industries"
-},
-"TWSA": {
-"sector": "Finance",
-"industry": "Finance/Rental/Leasing",
-"desc": "Tawasoa Factoring"
-},
-"ISPH": {
-"sector": "Distribution Services",
-"industry": "Medical Distributors",
-"desc": "Ibnsina Pharma"
-},
-"PHTV": {
-"sector": "Consumer Services",
-"industry": "Hotels/Resorts/Cruise lines",
-"desc": "Pyramisa Hotels"
-},
-"MAAL": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Marseilla Al Masreia Al Khalegeya for Holding Investment"
-},
-"CSAG": {
-"sector": "Transportation",
-"industry": "Other Transportation",
-"desc": "Canal Shipping Agencies Co."
-},
-"SMPP": {
-"sector": "Consumer Services",
-"industry": "Publishing: Books/Magazines",
-"desc": "Modern Shorouk Printing & Packaging"
-},
-"EGS659O1C015": {
-"sector": "Distribution Services",
-"industry": "Food Distributors",
-"desc": "Misr Kuwait Investment & Trading Co."
-},
-"FTNS": {
-"sector": "Technology Services",
-"industry": "Internet Software/Services",
-"desc": "Fitness Prime"
-},
-"AIFI": {
-"sector": "Process Industries",
-"industry": "Agricultural Commodities/Milling",
-"desc": "Atlas for Investment & Food Industries SAE"
-},
-"NAHO": {
-"sector": "Finance",
-"industry": "Investment Banks/Brokers",
-"desc": "Naeem Holding Co."
-},
-"MILS": {
-"sector": "Process Industries",
-"industry": "Agricultural Commodities/Milling",
-"desc": "North Cairo Mills Co."
-},
-"DEIN": {
-"sector": "Finance",
-"industry": "Property/Casualty Insurance",
-"desc": "Delta Insurance"
-},
-"MASR": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Madinet Masr for Housing & Development"
-},
-"IFAP": {
-"sector": "Process Industries",
-"industry": "Agricultural Commodities/Milling",
-"desc": "International Agricultural Products"
-},
-"EBSC": {
-"sector": "Finance",
-"industry": "Investment Banks/Brokers",
-"desc": "Osool ESB Securities Brokerage"
-},
-"AALR": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "General Co. for Land Reclamation Development & Reconstruction"
-},
-"ARAB": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Arab Developers Holding"
-},
-"MMAT": {
-"sector": "Consumer Services",
-"industry": "Hotels/Resorts/Cruise lines",
-"desc": "Marsa Marsa Alam for Tourism Development"
-},
-"ACFR": {
-"sector": "Non-Energy Minerals",
-"industry": "Construction Materials",
-"desc": "Alexandria Company For Refractories"
-},
-"TALM": {
-"sector": "Consumer Services",
-"industry": "Other Consumer Services",
-"desc": "Taaleem Management Services S.A.E"
-},
-"MOIL": {
-"sector": "Industrial Services",
-"industry": "Oilfield Services/Equipment",
-"desc": "Maridive & Oil Services SAE"
-},
-"GGCC": {
-"sector": "Industrial Services",
-"industry": "Engineering & Construction",
-"desc": "Giza General Contracting & Real Estate Investment"
-},
-"AIDC": {
-"sector": "Finance",
-"industry": "Regional Banks",
-"desc": "Arabia for Investment and Development"
-},
-"HRHO": {
-"sector": "Finance",
-"industry": "Investment Banks/Brokers",
-"desc": "EFG Holding S.A.E."
-},
-"CPME": {
-"sector": "Finance",
-"industry": "Financial Conglomerates",
-"desc": "Catalyst Partners Middle East"
-},
-"GTEX": {
-"sector": "Finance",
-"industry": "Financial Conglomerates",
-"desc": "G-TEX for Commercial and Industrial Investments S.A.E"
-},
-"MITR": {
-"sector": "?",
-"industry": "?",
-"desc": "Misr Travel&Touris Egp6"
-},
-"SPMD": {
-"sector": "Health Services",
-"industry": "Medical/Nursing Services",
-"desc": "Speed Medical SAE"
-},
-"ELKA": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "El Kahera Housing"
-},
-"EGBE": {
-"sector": "Finance",
-"industry": "Regional Banks",
-"desc": "Egyptian Gulf Bank"
-},
-"GTWL": {
-"sector": "Process Industries",
-"industry": "Textiles",
-"desc": "Golden Textiles & Clothes Wool"
-},
-"EPCO": {
-"sector": "Process Industries",
-"industry": "Agricultural Commodities/Milling",
-"desc": "Egypt for Poultry Co."
-},
-"SAIB": {
-"sector": "Finance",
-"industry": "Regional Banks",
-"desc": "Societe Arabe Internationale de Banque"
-},
-"POUL": {
-"sector": "Process Industries",
-"industry": "Agricultural Commodities/Milling",
-"desc": "Cairo Poultry Co."
-},
-"GSSC": {
-"sector": "Retail Trade",
-"industry": "Food Retail",
-"desc": "General Silos & Storage Co."
-},
-"ZEOT": {
-"sector": "Process Industries",
-"industry": "Agricultural Commodities/Milling",
-"desc": "Extracted Oils & Derivatives Co."
-},
-"MPRC": {
-"sector": "Consumer Services",
-"industry": "Movies/Entertainment",
-"desc": "Egyptian Media Production City"
-},
-"ACAP": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "A Capital Holding"
-},
-"OCDI": {
-"sector": "Finance",
-"industry": "Real Estate Development",
-"desc": "Six of October Development & Investment (SODIC)"
-},
-"AMIA": {
-"sector": "Finance",
-"industry": "Finance/Rental/Leasing",
-"desc": "Arab Moltaqa Investments Company"
-},
-"GIHD": {
-"sector": "Consumer Durables",
-"industry": "Homebuilding",
-"desc": "Gharbia Islamic Housing Development"
-},
-"UBEE": {
-"sector": "Finance",
-"industry": "Major Banks",
-"desc": "United Bank SAE"
-},
-"COMI": {
-"sector": "Finance",
-"industry": "Regional Banks",
-"desc": "Commercial International Bank - Egypt (CIB) S.A.E."
-},
-"ICLE": {
-"sector": "Finance",
-"industry": "Finance/Rental/Leasing",
-"desc": "International Co. for Leasing SAE"
-},
-"EGTS": {
-"sector": "Utilities",
-"industry": "Electric Utilities",
-"desc": "Egyptian for Tourism Resorts"
-},
-"INEG": {
-"sector": "Producer Manufacturing",
-"industry": "Metal Fabrication",
-"desc": "Integrated Engineering Group S.A.E"
-},
-"MMHC": {
-"sector": "?",
-"industry": "?",
-"desc": "El Mamoura Company For Construction & Tourism Development"
-},
-"RACC": {
-"sector": "Commercial Services",
-"industry": "Miscellaneous Commercial Services",
-"desc": "Raya Contact Center"
-},
-"ENGC": {
-"sector": "Producer Manufacturing",
-"industry": "Building Products",
-"desc": "Industrial Engineering Co. for Construction & Development"
-},
-"OIH": {
-"sector": "Communications",
-"industry": "Wireless Telecommunications",
-"desc": "Orascom Investment Holding SAE"
-},
-"GBCO": {
-"sector": "Distribution Services",
-"industry": "Wholesale Distributors",
-"desc": "GB Corp"
-},
-"IRON": {
-"sector": "Non-Energy Minerals",
-"industry": "Steel",
-"desc": "Egyptian Iron & Steel"
-},
-"BIOC": {
-"sector": "Distribution Services",
-"industry": "Medical Distributors",
-"desc": "GlaxoSmithKline S.A.E."
-},
-"SPHT": {
-"sector": "Consumer Services",
-"industry": "Hotels/Resorts/Cruise lines",
-"desc": "El Shams Pyramids Co. for Hotels & Touristic Projects SAE"
-},
-"GDWA": {
-"sector": "Producer Manufacturing",
-"industry": "Industrial Machinery",
-"desc": "Gadwa For Industrial Development"
-},
-"HELI": {
-"sector": "Consumer Durables",
-"industry": "Homebuilding",
-"desc": "Heliopolis Housing"
-},
-"MIPH": {
-"sector": "Health Technology",
-"industry": "Pharmaceuticals: Major",
-"desc": "Minapharm Pharmaceuticals"
-},
-"UNIP": {
-"sector": "Process Industries",
-"industry": "Pulp & Paper",
-"desc": "Universal Co. for Paper & Packaging Materials-Unipack"
-},
-"TYCN": {
-"sector": "Finance",
-"industry": "Investment Banks/Brokers",
-"desc": "Tycoon Holding Company For Financial Investments"
-},
-"MEGM": {
-"sector": "Process Industries",
-"industry": "Containers/Packaging",
-"desc": "Middle East Glass Manufacturing SAE"
-},
-"OLFI": {
-"sector": "Consumer Non-Durables",
-"industry": "Food: Meat/Fish/Dairy",
-"desc": "Obour Land for Food Industries"
-},
-"ASPI": {
-"sector": "Finance",
-"industry": "Investment Banks/Brokers",
-"desc": "Aspire Capital Holding for Financial Investments"
-},
-"HDBK": {
-"sector": "Finance",
-"industry": "Regional Banks",
-"desc": "Housing & Development Bank"
-},
-"EFIH": {
-"sector": "Technology Services",
-"industry": "Packaged Software",
-"desc": "e-finance for Digital and Financial Investments S.A.E."
-},
-"LCSW": {
-"sector": "Producer Manufacturing",
-"industry": "Building Products",
-"desc": "Lecico Egypt SAE"
-},
-"HDST": {
-"sector": "?",
-"industry": "?",
-"desc": "HEDGESTONE INVESTMENT"
-},
-"EFIC": {
-"sector": "Process Industries",
-"industry": "Chemicals: Agricultural",
-"desc": "Egyptian Financial & Industrial Co."
-},
-"DGTZ": {
-"sector": "Technology Services",
-"industry": "Information Technology Services",
-"desc": "Digitize for Investment And Technology"
-},
-"OCAP": {
-"sector": "?",
-"industry": "?",
-"desc": "OG Capital For Investments SPAC"
 },
 "DAPH": {
 "sector": "Finance",
 "industry": "Real Estate Development",
 "desc": "Development & Engineering Consultants"
 },
-"FAITA": {
-"sector": "Finance",
-"industry": "Regional Banks",
-"desc": "Faisal Islamic Bank of Egypt"
+"CID": {
+"sector": "?",
+"industry": "?",
+"desc": "Chemical Development Industries (CID)"
 },
-"AIH": {
+"GPIM": {
 "sector": "Finance",
-"industry": "Financial Conglomerates",
-"desc": "Arabia Investments Holding SAE"
+"industry": "Real Estate Development",
+"desc": "GPI For Urban Growth"
 },
-"ISMA": {
-"sector": "Process Industries",
-"industry": "Agricultural Commodities/Milling",
-"desc": "Ismailia Misr Poultry"
+"HRHO": {
+"sector": "Finance",
+"industry": "Investment Banks/Brokers",
+"desc": "EFG Holding S.A.E."
+},
+"RTVC": {
+"sector": "Industrial Services",
+"industry": "Engineering & Construction",
+"desc": "Remco for Touristic Villages Construction"
+},
+"ARAB": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Arab Developers Holding"
+},
+"AMII": {
+"sector": "Producer Manufacturing",
+"industry": "Building Products",
+"desc": "Arabian Metal Industries and Industrial Investments"
+},
+"BIGP": {
+"sector": "Distribution Services",
+"industry": "Wholesale Distributors",
+"desc": "ElBarbary Investment Group"
+},
+"POCO": {
+"sector": "Transportation",
+"industry": "Other Transportation",
+"desc": "Port Said Container And Cargo Handling"
+},
+"ISMQ": {
+"sector": "Non-Energy Minerals",
+"industry": "Steel",
+"desc": "Iron & Steel for Mines & Quarries"
+},
+"ARCC": {
+"sector": "Non-Energy Minerals",
+"industry": "Construction Materials",
+"desc": "Arabian Cement Company"
+},
+"COSG": {
+"sector": "Consumer Non-Durables",
+"industry": "Household/Personal Care",
+"desc": "Cairo Oils & Soap"
+},
+"RREI": {
+"sector": "Consumer Durables",
+"industry": "Homebuilding",
+"desc": "Arab Real Estate Investment Co."
 },
 "PMSC": {
 "sector": "?",
 "industry": "?",
 "desc": "Petroleum Marine Services Company"
 },
+"VALU": {
+"sector": "Finance",
+"industry": "Finance/Rental/Leasing",
+"desc": "U Consumer Finance S.A.E"
+},
+"KZPC": {
+"sector": "Process Industries",
+"industry": "Chemicals: Agricultural",
+"desc": "Kafr El Zayat Pesticides & Chemical Co."
+},
+"ECAP": {
+"sector": "Producer Manufacturing",
+"industry": "Building Products",
+"desc": "El Ezz Ceramics & Porcelain Co. (Gemma)"
+},
+"NCGC": {
+"sector": "Process Industries",
+"industry": "Agricultural Commodities/Milling",
+"desc": "Nile Cotton Ginning"
+},
+"AMIA": {
+"sector": "Finance",
+"industry": "Finance/Rental/Leasing",
+"desc": "Arab Moltaqa Investments Company"
+},
 "KORA": {
 "sector": "Utilities",
 "industry": "Electric Utilities",
 "desc": "KORRA"
+},
+"BQDC": {
+"sector": "Finance",
+"industry": "Major Banks",
+"desc": "Banque du Caire"
+},
+"EGOTH": {
+"sector": "?",
+"industry": "?",
+"desc": "El Masreyah Touris Egp100"
+},
+"EPPK": {
+"sector": "Process Industries",
+"industry": "Containers/Packaging",
+"desc": "El Ahram Co. for Printing & Packing"
+},
+"NFCI": {
+"sector": "?",
+"industry": "?",
+"desc": "ELNASR Co For Fertilizers And Chemical Industries"
+},
+"VLMR": {
+"sector": "Finance",
+"industry": "Financial Conglomerates",
+"desc": "Valmore Holding"
+},
+"NMIN": {
+"sector": "?",
+"industry": "?",
+"desc": "El Nasr Mining Co Egp10"
+},
+"EFIC": {
+"sector": "Process Industries",
+"industry": "Chemicals: Agricultural",
+"desc": "Egyptian Financial & Industrial Co."
+},
+"IBCT": {
+"sector": "Distribution Services",
+"industry": "Wholesale Distributors",
+"desc": "International Business Corp. for Trading & Agencies"
+},
+"GTEX": {
+"sector": "Finance",
+"industry": "Financial Conglomerates",
+"desc": "G-TEX for Commercial and Industrial Investments S.A.E"
+},
+"MLIC": {
+"sector": "Finance",
+"industry": "Life/Health Insurance",
+"desc": "Misr Life Insurance"
+},
+"ENGC": {
+"sector": "Producer Manufacturing",
+"industry": "Building Products",
+"desc": "Industrial Engineering Co. for Construction & Development"
+},
+"MFPC": {
+"sector": "Process Industries",
+"industry": "Chemicals: Agricultural",
+"desc": "Misr Fertilizers Production Company MOPCO"
+},
+"VERT": {
+"sector": "Technology Services",
+"industry": "Packaged Software",
+"desc": "Vertika for Industry & Trade"
+},
+"FAIT": {
+"sector": "Finance",
+"industry": "Regional Banks",
+"desc": "Faisal Islamic Bank of Egypt"
+},
+"DOMT": {
+"sector": "Consumer Non-Durables",
+"industry": "Food: Meat/Fish/Dairy",
+"desc": "Arabian Food Industries Co."
+},
+"SINA": {
+"sector": "Non-Energy Minerals",
+"industry": "Steel",
+"desc": "Sinai Manganese Company"
+},
+"FERC": {
+"sector": "Process Industries",
+"industry": "Chemicals: Agricultural",
+"desc": "Ferchem Misr Co. for Fertilizers & Chemicals"
+},
+"AIH": {
+"sector": "Finance",
+"industry": "Financial Conglomerates",
+"desc": "Arabia Investments Holding SAE"
+},
+"BINV": {
+"sector": "Finance",
+"industry": "Investment Managers",
+"desc": "B Investments Holding SAE"
+},
+"TWSA": {
+"sector": "Finance",
+"industry": "Finance/Rental/Leasing",
+"desc": "Tawasoa Factoring"
+},
+"EAST": {
+"sector": "Consumer Non-Durables",
+"industry": "Tobacco",
+"desc": "Eastern Company"
+},
+"AALR": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "General Co. for Land Reclamation Development & Reconstruction"
+},
+"GTHE": {
+"sector": "Communications",
+"industry": "Specialty Telecommunications",
+"desc": "Global Telecom Holding S.A.E."
+},
+"HBCO": {
+"sector": "Industrial Services",
+"industry": "Engineering & Construction",
+"desc": "Heibco for Commercial Investments & Real Estate Development"
+},
+"SCTS": {
+"sector": "Commercial Services",
+"industry": "Miscellaneous Commercial Services",
+"desc": "Sues Canal Co. for Technology Settling"
+},
+"AXPH": {
+"sector": "Health Technology",
+"industry": "Pharmaceuticals: Major",
+"desc": "Alexandria Company for Pharmaceuticals and Chemical Industries"
+},
+"ACAP": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "A Capital Holding"
+},
+"GOUR": {
+"sector": "Retail Trade",
+"industry": "Food Retail",
+"desc": "Gourmet Egypt.Com Foods"
+},
+"ADIB": {
+"sector": "Finance",
+"industry": "Regional Banks",
+"desc": "Abu Dhabi Islamic Bank-Egypt"
+},
+"NAHO": {
+"sector": "Finance",
+"industry": "Investment Banks/Brokers",
+"desc": "Naeem Holding Co."
+},
+"RAKT": {
+"sector": "Process Industries",
+"industry": "Pulp & Paper",
+"desc": "Rakta Paper Manufacturing"
+},
+"TALM": {
+"sector": "Consumer Services",
+"industry": "Other Consumer Services",
+"desc": "Taaleem Management Services S.A.E"
+},
+"CFGH": {
+"sector": "Retail Trade",
+"industry": "Apparel/Footwear Retail",
+"desc": "Concrete Fashion Group for Commercial and Industrial Investments S.A.E"
+},
+"AREH": {
+"sector": "Industrial Services",
+"industry": "Engineering & Construction",
+"desc": "Egyptian Real Estate Group"
+},
+"TANM": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Tanmiya for Real Estate Investment"
+},
+"PHDC": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Palm Hills Development Co."
+},
+"OIH": {
+"sector": "Communications",
+"industry": "Wireless Telecommunications",
+"desc": "Orascom Investment Holding SAE"
+},
+"OCAP": {
+"sector": "?",
+"industry": "?",
+"desc": "OG Capital For Investments SPAC"
+},
+"EXPA": {
+"sector": "Finance",
+"industry": "Regional Banks",
+"desc": "Export Development Bank of Egypt"
+},
+"SKPC": {
+"sector": "Process Industries",
+"industry": "Chemicals: Specialty",
+"desc": "Sidi Kerir Petrochemicals"
+},
+"SNFI": {
+"sector": "Consumer Non-Durables",
+"industry": "Food: Specialty/Candy",
+"desc": "Souhag National Food Industries"
+},
+"AIDC": {
+"sector": "Finance",
+"industry": "Regional Banks",
+"desc": "Arabia for Investment and Development"
+},
+"SUCE": {
+"sector": "Non-Energy Minerals",
+"industry": "Construction Materials",
+"desc": "Suez Cement Co."
+},
+"EGCH": {
+"sector": "Process Industries",
+"industry": "Chemicals: Agricultural",
+"desc": "Egyptian Chemical Industries"
+},
+"CCRS": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Gulf Canadian Real Estate Investment Co."
+},
+"EGS30AJ1C016-EGP": {
+"sector": "Process Industries",
+"industry": "Chemicals: Specialty",
+"desc": "International Dry Ice Co."
+},
+"EGS3I0S1C019": {
+"sector": "Distribution Services",
+"industry": "Medical Distributors",
+"desc": "Future Care For Medical Industries"
+},
+"MMHC": {
+"sector": "?",
+"industry": "?",
+"desc": "El Mamoura Company For Construction & Tourism Development"
+},
+"WATP": {
+"sector": "Process Industries",
+"industry": "Chemicals: Major Diversified",
+"desc": "Modern Co. for Water Proofing"
+},
+"UNIT": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "United Housing Construction SA"
+},
+"EBSC": {
+"sector": "Finance",
+"industry": "Investment Banks/Brokers",
+"desc": "Osool ESB Securities Brokerage"
+},
+"UEFM": {
+"sector": "Process Industries",
+"industry": "Agricultural Commodities/Milling",
+"desc": "Upper Egypt Flour Mills Co."
+},
+"ALEX": {
+"sector": "Non-Energy Minerals",
+"industry": "Construction Materials",
+"desc": "Alexandria Cement Co."
+},
+"EMFD": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Emaar Misr for Development SAE"
+},
+"CIEB": {
+"sector": "Finance",
+"industry": "Major Banks",
+"desc": "Credit Agricole Egypt"
+},
+"EGREF": {
+"sector": "Miscellaneous",
+"industry": "Investment Trusts/Mutual Funds",
+"desc": "Egyptians Real Estate Fund"
+},
+"BONY": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Bonyan for Development and Trade"
+},
+"MOIL": {
+"sector": "Industrial Services",
+"industry": "Oilfield Services/Equipment",
+"desc": "Maridive & Oil Services SAE"
+},
+"IFAP": {
+"sector": "Process Industries",
+"industry": "Agricultural Commodities/Milling",
+"desc": "International Agricultural Products"
+},
+"IRON": {
+"sector": "Non-Energy Minerals",
+"industry": "Steel",
+"desc": "Egyptian Iron & Steel"
+},
+"ALXD": {
+"sector": "?",
+"industry": "?",
+"desc": "Alexandria For Investment and Urban Development"
+},
+"ELEC": {
+"sector": "Producer Manufacturing",
+"industry": "Electrical Products",
+"desc": "Electro Cable Egypt"
+},
+"MITR": {
+"sector": "?",
+"industry": "?",
+"desc": "Misr Travel&Touris Egp6"
+},
+"ELWA": {
+"sector": "Consumer Services",
+"industry": "Hotels/Resorts/Cruise lines",
+"desc": "Elwadi for International Investment & Development"
+},
+"ASCM": {
+"sector": "Non-Energy Minerals",
+"industry": "Construction Materials",
+"desc": "ASEC Co. for Mining"
+},
+"GTWL": {
+"sector": "Process Industries",
+"industry": "Textiles",
+"desc": "Golden Textiles & Clothes Wool"
+},
+"SPMD": {
+"sector": "Health Services",
+"industry": "Medical/Nursing Services",
+"desc": "Speed Medical SAE"
+},
+"CPME": {
+"sector": "Finance",
+"industry": "Financial Conglomerates",
+"desc": "Catalyst Partners Middle East"
+},
+"CRST": {
+"sector": "Industrial Services",
+"industry": "Engineering & Construction",
+"desc": "Creast Mark For Contracting And Real Estate Development"
+},
+"ELNA": {
+"sector": "Process Industries",
+"industry": "Agricultural Commodities/Milling",
+"desc": "El Nasr for Manufacturing Agricultural Crops"
+},
+"ICID": {
+"sector": "Finance",
+"industry": "Financial Conglomerates",
+"desc": "International Company for Investment & Development"
+},
+"LUTS": {
+"sector": "Finance",
+"industry": "Financial Conglomerates",
+"desc": "Lotus For Agricultural Investments And Development"
+},
+"BIDI": {
+"sector": "Process Industries",
+"industry": "Containers/Packaging",
+"desc": "El Badr Investment and Development - BID"
+},
+"COMI": {
+"sector": "Finance",
+"industry": "Regional Banks",
+"desc": "Commercial International Bank - Egypt (CIB) S.A.E."
+},
+"MAAL": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Marseilla Al Masreia Al Khalegeya for Holding Investment"
+},
+"ELSH": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "El-Shams Housing & Development SA"
+},
+"AMER": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Amer Group Holding"
+},
+"ALUM": {
+"sector": "Non-Energy Minerals",
+"industry": "Aluminum",
+"desc": "Arab Aluminum Co. SAE"
+},
+"UPMS": {
+"sector": "Health Services",
+"industry": "Medical/Nursing Services",
+"desc": "Union Pharmacist Company For Medical Services And Investment"
+},
+"MCRO": {
+"sector": "Health Technology",
+"industry": "Pharmaceuticals: Major",
+"desc": "Macro Group Pharmaceutical S.A.E."
+},
+"GDWA": {
+"sector": "Producer Manufacturing",
+"industry": "Industrial Machinery",
+"desc": "Gadwa For Industrial Development"
+},
+"ENPI": {
+"sector": "?",
+"industry": "?",
+"desc": "Engineering for the Petroleum and Process Industries"
+},
+"PHAR": {
+"sector": "Health Technology",
+"industry": "Pharmaceuticals: Other",
+"desc": "Egyptian International Pharmaceutical Industries Co."
+},
+"ZEOT": {
+"sector": "Process Industries",
+"industry": "Agricultural Commodities/Milling",
+"desc": "Extracted Oils & Derivatives Co."
+},
+"EGS3E071C013-EGP": {
+"sector": "Producer Manufacturing",
+"industry": "Metal Fabrication",
+"desc": "Acrow Misr"
+},
+"ELAB": {
+"sector": "?",
+"industry": "?",
+"desc": "Egyptian Linear Alkyl Benzene Company"
+},
+"KNGC": {
+"sector": "Consumer Durables",
+"industry": "Home Furnishings",
+"desc": "EL- Nasr Glass And Crystal"
+},
+"EGS72L31C011": {
+"sector": "Utilities",
+"industry": "Alternative Power Generation",
+"desc": "SOLARSOL For Energy"
+},
+"MOSC": {
+"sector": "Process Industries",
+"industry": "Agricultural Commodities/Milling",
+"desc": "Misr Oils & Soap Co."
+},
+"ADRI": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Arab Development & Real Estate Investment"
+},
+"CLHO": {
+"sector": "Health Services",
+"industry": "Hospital/Nursing Management",
+"desc": "Cleopatra Hospital Company"
+},
+"EGAS": {
+"sector": "Utilities",
+"industry": "Gas Distributors",
+"desc": "Egypt Gas Co."
+},
+"MBEG": {
+"sector": "Distribution Services",
+"industry": "Wholesale Distributors",
+"desc": "MB for Engineering & Contracting"
+},
+"CCAP": {
+"sector": "Finance",
+"industry": "Investment Managers",
+"desc": "QALA For Financial Investments"
+},
+"ETRS": {
+"sector": "Transportation",
+"industry": "Other Transportation",
+"desc": "Egyptian Transport And Commercial Services Co. (Egytrans Nosco)"
+},
+"VLMRA": {
+"sector": "Finance",
+"industry": "Financial Conglomerates",
+"desc": "Valmore Holding"
+},
+"TYCN": {
+"sector": "Finance",
+"industry": "Investment Banks/Brokers",
+"desc": "Tycoon Holding Company For Financial Investments"
+},
+"EEP": {
+"sector": "?",
+"industry": "?",
+"desc": "Egypt Education Platform - EEP"
+},
+"GSSC": {
+"sector": "Retail Trade",
+"industry": "Food Retail",
+"desc": "General Silos & Storage Co."
+},
+"EFIH": {
+"sector": "Technology Services",
+"industry": "Packaged Software",
+"desc": "e-finance for Digital and Financial Investments S.A.E."
+},
+"SDTI": {
+"sector": "Consumer Services",
+"industry": "Hotels/Resorts/Cruise lines",
+"desc": "Sharm Dreams Co. for Tourism Investment"
+},
+"CNFN": {
+"sector": "Finance",
+"industry": "Finance/Rental/Leasing",
+"desc": "Contact Financial Holding SAE"
+},
+"EGSA": {
+"sector": "Consumer Services",
+"industry": "Broadcasting",
+"desc": "Egyptian Satellite Co."
+},
+"EALR": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "El Arabia for Land Reclamation"
+},
+"SNFC": {
+"sector": "Process Industries",
+"industry": "Agricultural Commodities/Milling",
+"desc": "Sharkia National Food"
+},
+"ACGC": {
+"sector": "Process Industries",
+"industry": "Agricultural Commodities/Milling",
+"desc": "Arab Cotton Ginning Co."
+},
+"ACFR": {
+"sector": "Non-Energy Minerals",
+"industry": "Construction Materials",
+"desc": "Alexandria Company For Refractories"
+},
+"NEDA": {
+"sector": "Process Industries",
+"industry": "Chemicals: Agricultural",
+"desc": "Northern Upper Egypt Development & Agricultural Production"
+},
+"PRDC": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Pioneers Properties for Urban Development"
+},
+"YAYT": {
+"sector": "Producer Manufacturing",
+"industry": "Metal Fabrication",
+"desc": "Spring & Transportation Needs Manufacturing Co."
+},
+"EGBE": {
+"sector": "Finance",
+"industry": "Regional Banks",
+"desc": "Egyptian Gulf Bank"
+},
+"DTPP": {
+"sector": "Process Industries",
+"industry": "Containers/Packaging",
+"desc": "Delta for Printing & Packaging"
+},
+"EGS65621C012": {
+"sector": "?",
+"industry": "?",
+"desc": "El Nasr Housing & Egp5"
+},
+"ATLC": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Al Tawfeek Leasing Company-A.T.LEASE"
+},
+"HDBK": {
+"sector": "Finance",
+"industry": "Regional Banks",
+"desc": "Housing & Development Bank"
+},
+"APPF": {
+"sector": "?",
+"industry": "?",
+"desc": "Alamal Alsharif for Plastics"
+},
+"KABO": {
+"sector": "Consumer Non-Durables",
+"industry": "Apparel/Footwear",
+"desc": "El Nasr Clothing & Textiles Co."
+},
+"MICH": {
+"sector": "Process Industries",
+"industry": "Chemicals: Specialty",
+"desc": "Misr Chemical Industries Ltd."
+},
+"GROV": {
+"sector": "Finance",
+"industry": "Investment Managers",
+"desc": "Grova Special Purpose Acquisition Company"
+},
+"UTOP": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Utopia Real Estate Investment & Tourism SAE"
+},
+"NAMI": {
+"sector": "Finance",
+"industry": "Investment Managers",
+"desc": "National Asset Management And Investment"
+},
+"KRDI": {
+"sector": "Finance",
+"industry": "Financial Conglomerates",
+"desc": "Al Khair River for Development Agriculture Investment and Environmental Services"
+},
+"EOSB": {
+"sector": "Finance",
+"industry": "Investment Banks/Brokers",
+"desc": "El Orouba Securities Brokerage"
+},
+"RAYA": {
+"sector": "Technology Services",
+"industry": "Information Technology Services",
+"desc": "Raya Holding for Financial Investments SAE"
+},
+"MOIN": {
+"sector": "Finance",
+"industry": "Multi-Line Insurance",
+"desc": "Mohandes Insurance Co."
+},
+"INEG": {
+"sector": "Producer Manufacturing",
+"industry": "Metal Fabrication",
+"desc": "Integrated Engineering Group S.A.E"
+},
+"MISR": {
+"sector": "Non-Energy Minerals",
+"industry": "Construction Materials",
+"desc": "MISR Intercontinental for Granite & Marble"
+},
+"WKOL": {
+"sector": "Industrial Services",
+"industry": "Engineering & Construction",
+"desc": "Wadi Kom Ombo Land Reclamation"
 },
 "NBCC": {
 "sector": "?",
 "industry": "?",
 "desc": "ALNASR For Building And Construction Company"
 },
+"EGS370O1C013": {
+"sector": "Commercial Services",
+"industry": "Commercial Printing/Forms",
+"desc": "National Printing"
+},
+"ZMID": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Zahraa Maadi Investment & Development"
+},
+"ADPC": {
+"sector": "Consumer Non-Durables",
+"industry": "Food: Meat/Fish/Dairy",
+"desc": "Arab Dairy Products Co. Arab Dairy - Panda"
+},
+"EGAL": {
+"sector": "Non-Energy Minerals",
+"industry": "Aluminum",
+"desc": "Egypt Aluminum"
+},
+"CAED": {
+"sector": "Consumer Services",
+"industry": "Other Consumer Services",
+"desc": "Cairo Educational Services"
+},
+"TOUR": {
+"sector": "Consumer Services",
+"industry": "Other Consumer Services",
+"desc": "Tourism Urbanization"
+},
+"FAITA": {
+"sector": "Finance",
+"industry": "Regional Banks",
+"desc": "Faisal Islamic Bank of Egypt"
+},
+"OCDI": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Six of October Development & Investment (SODIC)"
+},
+"AMES": {
+"sector": "Health Services",
+"industry": "Hospital/Nursing Management",
+"desc": "Alexandria New Medical Center Co."
+},
+"CIRA": {
+"sector": "Consumer Services",
+"industry": "Other Consumer Services",
+"desc": "Cairo For Investment And Real Estate Developments -CIRA Education"
+},
+"MENA": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Mena Touristic & Real Estate Investment"
+},
+"RMTV": {
+"sector": "Consumer Services",
+"industry": "Hotels/Resorts/Cruise lines",
+"desc": "Rowad Misr Tourism Investment"
+},
+"MMAT": {
+"sector": "Consumer Services",
+"industry": "Hotels/Resorts/Cruise lines",
+"desc": "Marsa Marsa Alam for Tourism Development"
+},
+"RUBX": {
+"sector": "Consumer Durables",
+"industry": "Home Furnishings",
+"desc": "Rubex International for Plastic & Acrylic Manufacturing"
+},
+"AFMC": {
+"sector": "Retail Trade",
+"industry": "Food Retail",
+"desc": "Alexandria Flour Mills Co."
+},
+"FTNS": {
+"sector": "Technology Services",
+"industry": "Internet Software/Services",
+"desc": "Fitness Prime"
+},
+"RACC": {
+"sector": "Commercial Services",
+"industry": "Miscellaneous Commercial Services",
+"desc": "Raya Contact Center"
+},
+"AMOC": {
+"sector": "Energy Minerals",
+"industry": "Oil Refining/Marketing",
+"desc": "Alexandria Mineral Oils Co."
+},
+"LKGP": {
+"sector": "Health Services",
+"industry": "Services to the Health Industry",
+"desc": "The Holding Company for Financial Investment - The Lakah Group"
+},
+"APPC": {
+"sector": "Process Industries",
+"industry": "Containers/Packaging",
+"desc": "Advanced Pharmaceutical Packaging Co."
+},
+"AMPI": {
+"sector": "Technology Services",
+"industry": "Packaged Software",
+"desc": "AL Moasher Pay for Electronic Payment and Collection (S.A.E)"
+},
+"EGS48271C018-EGP": {
+"sector": "Communications",
+"industry": "Specialty Telecommunications",
+"desc": "Egypt - South Africa for Communication"
+},
+"COPR": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Cooper for Commercial Investment & Real Estate Development"
+},
+"ALCN": {
+"sector": "Transportation",
+"industry": "Other Transportation",
+"desc": "Alexandria Containers & Goods"
+},
+"NDRL": {
+"sector": "Industrial Services",
+"industry": "Contract Drilling",
+"desc": "National Drilling Co."
+},
+"GMCI": {
+"sector": "Distribution Services",
+"industry": "Wholesale Distributors",
+"desc": "GMC Group for Industrial Commercial & Financial Investments"
+},
+"EGWA": {
+"sector": "Transportation",
+"industry": "Other Transportation",
+"desc": "General Warehouses of Egypt"
+},
+"SPIN": {
+"sector": "Process Industries",
+"industry": "Textiles",
+"desc": "Alexandria Spinning & Weaving"
+},
+"UBEE": {
+"sector": "Finance",
+"industry": "Major Banks",
+"desc": "United Bank SAE"
+},
+"ORWE": {
+"sector": "Consumer Durables",
+"industry": "Home Furnishings",
+"desc": "Oriental Weavers Carpet"
+},
+"OFH": {
+"sector": "Finance",
+"industry": "Financial Conglomerates",
+"desc": "O B Financial Holding"
+},
+"UNIP": {
+"sector": "Process Industries",
+"industry": "Pulp & Paper",
+"desc": "Universal Co. for Paper & Packaging Materials-Unipack"
+},
+"SUGR": {
+"sector": "Process Industries",
+"industry": "Agricultural Commodities/Milling",
+"desc": "Delta Sugar"
+},
+"CERA": {
+"sector": "Producer Manufacturing",
+"industry": "Building Products",
+"desc": "Arab Ceramic Co. - Ceramica Remas"
+},
+"SVCE": {
+"sector": "Non-Energy Minerals",
+"industry": "Construction Materials",
+"desc": "South Valley Cement Co."
+},
+"IDRE": {
+"sector": "Consumer Durables",
+"industry": "Homebuilding",
+"desc": "Ismailia Development & Real Estate Co."
+},
+"NCCW": {
+"sector": "Industrial Services",
+"industry": "Engineering & Construction",
+"desc": "Nasr Co. for Civil Works"
+},
+"LCSW": {
+"sector": "Producer Manufacturing",
+"industry": "Building Products",
+"desc": "Lecico Egypt SAE"
+},
+"EHDR": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Egyptians Housing Development & Reconstruction"
+},
+"CSAG": {
+"sector": "Transportation",
+"industry": "Other Transportation",
+"desc": "Canal Shipping Agencies Co."
+},
+"FIRE": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "First Investment & Real Estate Development"
+},
+"CPCI": {
+"sector": "Health Technology",
+"industry": "Pharmaceuticals: Major",
+"desc": "Kahira Pharmaceuticals & Chemical Industries Co."
+},
+"MEPA": {
+"sector": "Process Industries",
+"industry": "Containers/Packaging",
+"desc": "Medical Packaging Company"
+},
+"GGCC": {
+"sector": "Industrial Services",
+"industry": "Engineering & Construction",
+"desc": "Giza General Contracting & Real Estate Investment"
+},
+"GBCO": {
+"sector": "Distribution Services",
+"industry": "Wholesale Distributors",
+"desc": "GB Corp"
+},
+"MPCO": {
+"sector": "Process Industries",
+"industry": "Agricultural Commodities/Milling",
+"desc": "Mansourah Poultry Co."
+},
+"KWIN": {
+"sector": "Finance",
+"industry": "Investment Banks/Brokers",
+"desc": "El Kahera El Watania Investment"
+},
+"SIEG": {
+"sector": "Non-Energy Minerals",
+"industry": "Construction Materials",
+"desc": "Egyptian Company for Pipes and Cement Products -Siegwart"
+},
+"RKAZ": {
+"sector": "Process Industries",
+"industry": "Chemicals: Agricultural",
+"desc": "REKAZ Financial Holding"
+},
+"ICFC": {
+"sector": "Process Industries",
+"industry": "Chemicals: Agricultural",
+"desc": "International Co. for Fertilizers & Chemicals"
+},
+"SIPC": {
+"sector": "Health Technology",
+"industry": "Pharmaceuticals: Major",
+"desc": "Sabaa International Company for Pharmaceutial and Chemical Industry"
+},
+"MEGM": {
+"sector": "Process Industries",
+"industry": "Containers/Packaging",
+"desc": "Middle East Glass Manufacturing SAE"
+},
+"MCQE": {
+"sector": "Non-Energy Minerals",
+"industry": "Construction Materials",
+"desc": "Misr Cement Co. (Qena)"
+},
+"OCPH": {
+"sector": "Health Technology",
+"industry": "Pharmaceuticals: Major",
+"desc": "October Pharma Co."
+},
+"CANA": {
+"sector": "Finance",
+"industry": "Regional Banks",
+"desc": "Suez Canal Bank SAE"
+},
+"TMGH": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Talaat Moustafa Group Holding"
+},
+"INFI": {
+"sector": "Consumer Non-Durables",
+"industry": "Food: Specialty/Candy",
+"desc": "Ismailia National Food Industries"
+},
+"SCEM": {
+"sector": "Non-Energy Minerals",
+"industry": "Construction Materials",
+"desc": "Sinai Cement Co."
+},
+"CEFM": {
+"sector": "Process Industries",
+"industry": "Agricultural Commodities/Milling",
+"desc": "Middle Egypt Flour Mills"
+},
+"EGS65101C015": {
+"sector": "Industrial Services",
+"industry": "Engineering & Construction",
+"desc": "National Investment & Reconstruction"
+},
+"GEOS": {
+"sector": "Industrial Services",
+"industry": "Engineering & Construction",
+"desc": "Geos for trading and contracting"
+},
+"FNAR": {
+"sector": "Industrial Services",
+"industry": "Engineering & Construction",
+"desc": "Al Fanar Contracting Construction Trade Import & Export Co."
+},
+"ABUK": {
+"sector": "Process Industries",
+"industry": "Chemicals: Agricultural",
+"desc": "Abou Kir Fertilizers & Chemical Industries Co."
+},
+"ORHD": {
+"sector": "Consumer Durables",
+"industry": "Homebuilding",
+"desc": "Orascom Development Egypt (S.A.E)"
+},
+"DCCC": {
+"sector": "Transportation",
+"industry": "Marine Shipping",
+"desc": "Damietta Container and Cargo Handling"
+},
+"PHTV": {
+"sector": "Consumer Services",
+"industry": "Hotels/Resorts/Cruise lines",
+"desc": "Pyramisa Hotels"
+},
+"ORAS": {
+"sector": "Industrial Services",
+"industry": "Engineering & Construction",
+"desc": "Orascom Construction Plc"
+},
+"TRTO": {
+"sector": "Commercial Services",
+"industry": "Miscellaneous Commercial Services",
+"desc": "TransOceans Tours"
+},
+"OBRI": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "El Obour Real Estate Investment"
+},
+"MILS": {
+"sector": "Process Industries",
+"industry": "Agricultural Commodities/Milling",
+"desc": "North Cairo Mills Co."
+},
+"SEIG": {
+"sector": "Finance",
+"industry": "Investment Managers",
+"desc": "Saudi Egyptian Investment & Finance Co. SAE"
+},
+"DCRC": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Delta Construction & Rebuilding Co."
+},
+"MOED": {
+"sector": "Commercial Services",
+"industry": "Miscellaneous Commercial Services",
+"desc": "Egyptian Modern Education Systems"
+},
+"WCDF": {
+"sector": "Process Industries",
+"industry": "Agricultural Commodities/Milling",
+"desc": "Middle & West Delta Flour Mills Co."
+},
+"EPCO": {
+"sector": "Process Industries",
+"industry": "Agricultural Commodities/Milling",
+"desc": "Egypt for Poultry Co."
+},
+"POUL": {
+"sector": "Process Industries",
+"industry": "Agricultural Commodities/Milling",
+"desc": "Cairo Poultry Co."
+},
+"MHOT": {
+"sector": "Consumer Services",
+"industry": "Hotels/Resorts/Cruise lines",
+"desc": "Misr Hotels Co."
+},
+"EGS65861C014": {
+"sector": "Industrial Services",
+"industry": "Engineering & Construction",
+"desc": "Egyptian Contracting Co.-AL- ABD"
+},
+"HDST": {
+"sector": "?",
+"industry": "?",
+"desc": "HEDGESTONE INVESTMENT"
+},
+"DEIN": {
+"sector": "Finance",
+"industry": "Property/Casualty Insurance",
+"desc": "Delta Insurance"
+},
+"EGTS": {
+"sector": "Utilities",
+"industry": "Electric Utilities",
+"desc": "Egyptian for Tourism Resorts"
+},
+"ICLE": {
+"sector": "Finance",
+"industry": "Finance/Rental/Leasing",
+"desc": "International Co. for Leasing SAE"
+},
+"MBSC": {
+"sector": "Non-Energy Minerals",
+"industry": "Construction Materials",
+"desc": "Misr Beni Suef Cement Co. SAE"
+},
+"NARE": {
+"sector": "Finance",
+"industry": "Investment Managers",
+"desc": "Naeem Real Estate Holding Group"
+},
+"EFAC": {
+"sector": "?",
+"industry": "?",
+"desc": "Egyptian Ferro All Egp10"
+},
+"SMFR": {
+"sector": "Distribution Services",
+"industry": "Wholesale Distributors",
+"desc": "Samad Misr-EGYFERT"
+},
+"GPPL": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Golden Pyramids Plaza"
+},
+"ISMA": {
+"sector": "Process Industries",
+"industry": "Agricultural Commodities/Milling",
+"desc": "Ismailia Misr Poultry"
+},
+"EDFM": {
+"sector": "Consumer Non-Durables",
+"industry": "Food: Specialty/Candy",
+"desc": "East Delta Flour Mills Co."
+},
+"ATQA": {
+"sector": "Producer Manufacturing",
+"industry": "Metal Fabrication",
+"desc": "Misr National Steel"
+},
+"CICH": {
+"sector": "Finance",
+"industry": "Finance/Rental/Leasing",
+"desc": "CI Capital Holding for Financial Investments"
+},
+"EITP": {
+"sector": "Consumer Services",
+"industry": "Other Consumer Services",
+"desc": "Egyptian International Tourism Projects"
+},
+"IRAX": {
+"sector": "Non-Energy Minerals",
+"industry": "Steel",
+"desc": "El Ezz Aldekhela Steel-Alexandria"
+},
+"AIFI": {
+"sector": "Process Industries",
+"industry": "Agricultural Commodities/Milling",
+"desc": "Atlas for Investment & Food Industries SAE"
+},
+"ELKA": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "El Kahera Housing"
+},
+"MFSC": {
+"sector": "Retail Trade",
+"industry": "Specialty Stores",
+"desc": "Misr Duty Free Shops Co."
+},
+"ASPI": {
+"sector": "Finance",
+"industry": "Investment Banks/Brokers",
+"desc": "Aspire Capital Holding for Financial Investments"
+},
+"DGTZ": {
+"sector": "Technology Services",
+"industry": "Information Technology Services",
+"desc": "Digitize for Investment And Technology"
+},
+"HELI": {
+"sector": "Consumer Durables",
+"industry": "Homebuilding",
+"desc": "Heliopolis Housing"
+},
+"NINH": {
+"sector": "Health Services",
+"industry": "Hospital/Nursing Management",
+"desc": "Nozha International Hospital"
+},
+"GRCA": {
+"sector": "Finance",
+"industry": "Investment Banks/Brokers",
+"desc": "Grand Investment Capital"
+},
+"ANCC": {
+"sector": "Non-Energy Minerals",
+"industry": "Construction Materials",
+"desc": "ALNAHDA Industrial Co."
+},
+"MASR": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Madinet Masr for Housing & Development"
+},
+"NBKE": {
+"sector": "Finance",
+"industry": "Regional Banks",
+"desc": "National Bank of Kuwait - Egypt"
+},
+"EASB": {
+"sector": "Finance",
+"industry": "Investment Banks/Brokers",
+"desc": "Egyptian Arabian Company for Securities Brokerage EAC"
+},
+"TAQA": {
+"sector": "Utilities",
+"industry": "Electric Utilities",
+"desc": "TAQA Arabia"
+},
+"DSCW": {
+"sector": "Consumer Non-Durables",
+"industry": "Apparel/Footwear",
+"desc": "Dice Sports & Casual Wear Manufacturers SAE"
+},
+"MPCI": {
+"sector": "Health Technology",
+"industry": "Pharmaceuticals: Major",
+"desc": "Memphis Pharmaceutical & Chemical Industries"
+},
+"EGS659O1C015": {
+"sector": "Distribution Services",
+"industry": "Food Distributors",
+"desc": "Misr Kuwait Investment & Trading Co."
+},
+"SMPP": {
+"sector": "Consumer Services",
+"industry": "Publishing: Books/Magazines",
+"desc": "Modern Shorouk Printing & Packaging"
+},
+"PHGC": {
+"sector": "Health Services",
+"industry": "Medical/Nursing Services",
+"desc": "Premium Healthcare Group"
+},
+"AJWA": {
+"sector": "Consumer Non-Durables",
+"industry": "Food: Specialty/Candy",
+"desc": "Ajwa for Food Industries Co. Egypt"
+},
+"ACTF": {
+"sector": "Finance",
+"industry": "Investment Banks/Brokers",
+"desc": "Act Financial"
+},
+"UEGC": {
+"sector": "Industrial Services",
+"industry": "Engineering & Construction",
+"desc": "El-Saeed Contracting & Real Estate Investment Co. SCCD"
+},
+"SPHT": {
+"sector": "Consumer Services",
+"industry": "Hotels/Resorts/Cruise lines",
+"desc": "El Shams Pyramids Co. for Hotels & Touristic Projects SAE"
+},
+"APSW": {
+"sector": "Process Industries",
+"industry": "Textiles",
+"desc": "Arab Polvara Spinning & Weaving Co."
+},
+"MPRC": {
+"sector": "Consumer Services",
+"industry": "Movies/Entertainment",
+"desc": "Egyptian Media Production City"
+},
+"SAUD": {
+"sector": "Finance",
+"industry": "Regional Banks",
+"desc": "Al Baraka Bank Egypt"
+},
+"JUFO": {
+"sector": "Consumer Non-Durables",
+"industry": "Food: Meat/Fish/Dairy",
+"desc": "Juhayna Food Industries"
+},
+"PACH": {
+"sector": "Process Industries",
+"industry": "Industrial Specialties",
+"desc": "Paints & Chemical Industries Co."
+},
+"GIHD": {
+"sector": "Consumer Durables",
+"industry": "Homebuilding",
+"desc": "Gharbia Islamic Housing Development"
+},
+"RMDA": {
+"sector": "Health Technology",
+"industry": "Pharmaceuticals: Major",
+"desc": "Tenth of Ramadan Pharmaceutical Industries & Diagnostic-Rameda"
+},
+"SWDY": {
+"sector": "Producer Manufacturing",
+"industry": "Electrical Products",
+"desc": "El Sewedy Electric Company"
+},
+"NIPH": {
+"sector": "Health Technology",
+"industry": "Pharmaceuticals: Major",
+"desc": "El-Nile Co. for Pharmaceuticals & Chemical Industries"
+},
+"SAIB": {
+"sector": "Finance",
+"industry": "Regional Banks",
+"desc": "Societe Arabe Internationale de Banque"
+},
+"FWRY": {
+"sector": "Technology Services",
+"industry": "Packaged Software",
+"desc": "Fawry For Banking Technology And Electronic Payment"
+},
+"MIPH": {
+"sector": "Health Technology",
+"industry": "Pharmaceuticals: Major",
+"desc": "Minapharm Pharmaceuticals"
+},
+"BIOC": {
+"sector": "Distribution Services",
+"industry": "Medical Distributors",
+"desc": "GlaxoSmithKline S.A.E."
+},
+"AFDI": {
+"sector": "Finance",
+"industry": "Investment Banks/Brokers",
+"desc": "Alahly For Development & Investment"
+},
+"ROTO": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "Rowad Tourism (Al Rowad) Co"
+},
+"PRCL": {
+"sector": "Retail Trade",
+"industry": "Specialty Stores",
+"desc": "General Co. for Ceramic & Porcelain Products"
+},
+"IEEC": {
+"sector": "Industrial Services",
+"industry": "Engineering & Construction",
+"desc": "Industrial & Engineering Enterprises Co."
+},
+"ACAMD": {
+"sector": "Finance",
+"industry": "Investment Managers",
+"desc": "Arab Co. for Asset Management & Development"
+},
+"TORA": {
+"sector": "Non-Energy Minerals",
+"industry": "Construction Materials",
+"desc": "Tourah Cement Co"
+},
+"ISPH": {
+"sector": "Distribution Services",
+"industry": "Medical Distributors",
+"desc": "Ibnsina Pharma"
+},
+"ADCI": {
+"sector": "Health Technology",
+"industry": "Pharmaceuticals: Major",
+"desc": "Arab Pharmaceuticals"
+},
+"ODIN": {
+"sector": "Finance",
+"industry": "Investment Managers",
+"desc": "ODIN Investments"
+},
+"OLFI": {
+"sector": "Consumer Non-Durables",
+"industry": "Food: Meat/Fish/Dairy",
+"desc": "Obour Land for Food Industries"
+},
+"PRMH": {
+"sector": "Finance",
+"industry": "Investment Banks/Brokers",
+"desc": "Prime Holding"
+},
+"NHPS": {
+"sector": "Finance",
+"industry": "Real Estate Development",
+"desc": "National Housing for Professional Syndicates"
+},
+"MTIE": {
+"sector": "Distribution Services",
+"industry": "Electronics Distributors",
+"desc": "MM Group for Industry & International Trade"
+},
+"ETEL": {
+"sector": "Communications",
+"industry": "Major Telecommunications",
+"desc": "Telecom Egypt"
+},
+"QNBE": {
+"sector": "Finance",
+"industry": "Regional Banks",
+"desc": "Qatar National Bank"
+},
 "SCFM": {
 "sector": "Process Industries",
 "industry": "Agricultural Commodities/Milling",
 "desc": "South Cairo & Giza Mills & Bakeries"
+},
+"EFID": {
+"sector": "Consumer Non-Durables",
+"industry": "Food: Specialty/Candy",
+"desc": "Edita Food Industries SAE"
 }
 }
