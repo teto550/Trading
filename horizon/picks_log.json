@@ -5348,6 +5348,427 @@
     ]
    },
    "made": "2026-11-25 03:36"
+  },
+  {
+   "date": "2026-11-25",
+   "h": 5,
+   "variant": "macro",
+   "picks": [
+    "EFIH",
+    "CSAG",
+    "AIFI",
+    "SCEM",
+    "LCSW",
+    "FAIT",
+    "AXPH",
+    "SNFC",
+    "SDTI",
+    "SUGR"
+   ],
+   "labels": {
+    "EFIH": "شراء",
+    "CSAG": "شراء",
+    "AIFI": "شراء",
+    "SCEM": "شراء",
+    "LCSW": "شراء",
+    "FAIT": "شراء",
+    "AXPH": "شراء",
+    "SNFC": "شراء",
+    "SDTI": "شراء",
+    "SUGR": "شراء"
+   },
+   "news": {
+    "FAIT": "neutral",
+    "SUGR": "disagree"
+   },
+   "by_model": {
+    "xgb": [
+     "EFIH",
+     "CSAG",
+     "AIFI",
+     "SCEM",
+     "LCSW",
+     "FAIT",
+     "AXPH",
+     "SNFC",
+     "SDTI",
+     "SUGR"
+    ],
+    "lgbm": [
+     "EFIH",
+     "AIFI",
+     "CSAG",
+     "LCSW",
+     "SCEM",
+     "INFI",
+     "PHTV",
+     "CPCI",
+     "FAIT",
+     "SDTI"
+    ],
+    "cat": [
+     "EFIH",
+     "CSAG",
+     "AIFI",
+     "LCSW",
+     "SCEM",
+     "CPCI",
+     "SNFC",
+     "UEFM",
+     "FAIT",
+     "PHTV"
+    ],
+    "ens": [
+     "EFIH",
+     "CSAG",
+     "AIFI",
+     "LCSW",
+     "SCEM",
+     "FAIT",
+     "SNFC",
+     "CPCI",
+     "PHTV",
+     "SDTI"
+    ]
+   },
+   "made": "2026-11-25 15:43"
+  },
+  {
+   "date": "2026-11-25",
+   "h": 10,
+   "variant": "macro",
+   "picks": [
+    "CSAG",
+    "AIFI",
+    "LCSW",
+    "SCEM",
+    "EFIH",
+    "SDTI",
+    "FAIT",
+    "HRHO",
+    "PHTV",
+    "SNFC"
+   ],
+   "labels": {
+    "CSAG": "شراء",
+    "AIFI": "شراء",
+    "LCSW": "شراء",
+    "SCEM": "شراء",
+    "EFIH": "شراء",
+    "SDTI": "شراء",
+    "FAIT": "شراء",
+    "HRHO": "شراء",
+    "PHTV": "شراء",
+    "SNFC": "شراء"
+   },
+   "news": {
+    "FAIT": "neutral",
+    "HRHO": "agree"
+   },
+   "by_model": {
+    "xgb": [
+     "CSAG",
+     "LCSW",
+     "EFIH",
+     "SCEM",
+     "PHTV",
+     "AIFI",
+     "SDTI",
+     "AXPH",
+     "FAIT",
+     "HRHO"
+    ],
+    "lgbm": [
+     "AIFI",
+     "CSAG",
+     "SDTI",
+     "LCSW",
+     "SCEM",
+     "EFIH",
+     "PHTV",
+     "MEPA",
+     "FAIT",
+     "HRHO"
+    ],
+    "cat": [
+     "CSAG",
+     "AIFI",
+     "SCEM",
+     "EFIH",
+     "LCSW",
+     "SDTI",
+     "FAIT",
+     "SUGR",
+     "HRHO",
+     "EAST"
+    ],
+    "ens": [
+     "CSAG",
+     "AIFI",
+     "LCSW",
+     "SCEM",
+     "EFIH",
+     "SDTI",
+     "FAIT",
+     "HRHO",
+     "PHTV",
+     "SNFC"
+    ]
+   },
+   "made": "2026-11-25 15:43"
+  },
+  {
+   "date": "2026-11-25",
+   "h": 20,
+   "variant": "macro",
+   "picks": [
+    "AIFI",
+    "SDTI",
+    "EBSC",
+    "MEPA",
+    "MFSC",
+    "CSAG",
+    "MOED",
+    "ATLC",
+    "PRDC",
+    "ISMA"
+   ],
+   "labels": {
+    "AIFI": "شراء",
+    "SDTI": "شراء",
+    "EBSC": "شراء",
+    "MEPA": "شراء",
+    "MFSC": "شراء",
+    "CSAG": "شراء",
+    "MOED": "شراء",
+    "ATLC": "شراء",
+    "PRDC": "شراء",
+    "ISMA": "شراء"
+   },
+   "news": {
+    "MEPA": "agree"
+   },
+   "by_model": {
+    "xgb": [
+     "CSAG",
+     "SDTI",
+     "AIFI",
+     "MFSC",
+     "SCEM",
+     "MOED",
+     "MEPA",
+     "SAUD",
+     "ATLC",
+     "LCSW"
+    ],
+    "lgbm": [
+     "AIFI",
+     "SDTI",
+     "EBSC",
+     "MEPA",
+     "MFSC",
+     "CSAG",
+     "MOED",
+     "ATLC",
+     "PRDC",
+     "ISMA"
+    ],
+    "cat": [
+     "SDTI",
+     "AIFI",
+     "ATLC",
+     "CSAG",
+     "MEPA",
+     "MOED",
+     "MFSC",
+     "SCEM",
+     "ELKA",
+     "ISMA"
+    ],
+    "ens": [
+     "SDTI",
+     "AIFI",
+     "CSAG",
+     "MEPA",
+     "MFSC",
+     "MOED",
+     "ATLC",
+     "SCEM",
+     "EBSC",
+     "LCSW"
+    ]
+   },
+   "made": "2026-11-25 15:43"
+  },
+  {
+   "date": "2026-11-25",
+   "h": 40,
+   "variant": "macro",
+   "picks": [
+    "AIFI",
+    "EBSC",
+    "MFSC",
+    "CSAG",
+    "MEPA",
+    "ORWE",
+    "SAUD",
+    "BINV",
+    "HRHO",
+    "SCEM"
+   ],
+   "labels": {
+    "AIFI": "شراء",
+    "EBSC": "شراء",
+    "MFSC": "شراء",
+    "CSAG": "شراء",
+    "MEPA": "شراء",
+    "ORWE": "شراء",
+    "SAUD": "شراء",
+    "BINV": "شراء",
+    "HRHO": "شراء",
+    "SCEM": "شراء"
+   },
+   "news": {
+    "MEPA": "agree",
+    "ORWE": "neutral",
+    "BINV": "agree",
+    "HRHO": "agree"
+   },
+   "by_model": {
+    "xgb": [
+     "SCEM",
+     "AIFI",
+     "CSAG",
+     "MFSC",
+     "PHTV",
+     "LCSW",
+     "MEPA",
+     "EBSC",
+     "FAIT",
+     "INFI"
+    ],
+    "lgbm": [
+     "AIFI",
+     "EBSC",
+     "MFSC",
+     "CSAG",
+     "MEPA",
+     "ORWE",
+     "SAUD",
+     "BINV",
+     "HRHO",
+     "SCEM"
+    ],
+    "cat": [
+     "EBSC",
+     "AIFI",
+     "SPMD",
+     "MFSC",
+     "INFI",
+     "MEPA",
+     "SAUD",
+     "BINV",
+     "TALM",
+     "CSAG"
+    ],
+    "ens": [
+     "AIFI",
+     "MFSC",
+     "EBSC",
+     "CSAG",
+     "MEPA",
+     "SAUD",
+     "INFI",
+     "BINV",
+     "SCEM",
+     "UNIP"
+    ]
+   },
+   "made": "2026-11-25 15:43"
+  },
+  {
+   "date": "2026-11-25",
+   "h": 60,
+   "variant": "macro",
+   "picks": [
+    "AIFI",
+    "EBSC",
+    "MFSC",
+    "CSAG",
+    "BINV",
+    "OFH",
+    "MEPA",
+    "TALM",
+    "INFI",
+    "ZEOT"
+   ],
+   "labels": {
+    "AIFI": "شراء",
+    "EBSC": "شراء",
+    "MFSC": "شراء",
+    "CSAG": "شراء",
+    "BINV": "شراء",
+    "OFH": "شراء",
+    "MEPA": "شراء",
+    "TALM": "شراء",
+    "INFI": "شراء",
+    "ZEOT": "شراء"
+   },
+   "news": {
+    "BINV": "agree",
+    "MEPA": "agree"
+   },
+   "by_model": {
+    "xgb": [
+     "BINV",
+     "PHTV",
+     "SAUD",
+     "AMES",
+     "SKPC",
+     "ORWE",
+     "CSAG",
+     "AIFI",
+     "EGAS",
+     "NCCW"
+    ],
+    "lgbm": [
+     "AIFI",
+     "EBSC",
+     "MFSC",
+     "CSAG",
+     "BINV",
+     "OFH",
+     "MEPA",
+     "TALM",
+     "INFI",
+     "ZEOT"
+    ],
+    "cat": [
+     "SDTI",
+     "BINV",
+     "AIFI",
+     "SKPC",
+     "MFSC",
+     "OFH",
+     "PRDC",
+     "SAUD",
+     "EBSC",
+     "NCCW"
+    ],
+    "ens": [
+     "BINV",
+     "AIFI",
+     "MFSC",
+     "SAUD",
+     "NCCW",
+     "OFH",
+     "EBSC",
+     "SKPC",
+     "CSAG",
+     "SDTI"
+    ]
+   },
+   "made": "2026-11-25 15:43"
   }
  ]
 }
