@@ -533,12 +533,13 @@ def main():
             with open(sent_file, encoding="utf-8") as fh:
                 sent = json.load(fh)
         dd = str(D["dates"][-1].date())
-        if not a.no_telegram and (sent.get("data_date") != dd or a.force_send):
+        sig = "|".join(sorted(f"{o['side']}:{o['name']}" for o in acc["orders"]))
+        if not a.no_telegram and (sent.get("data_date") != dd or a.force_send or sent.get("orders") != sig):
             import tomorrow_report as tr
             tr.send_long(text)
             if not a.no_record:
                 with open(sent_file, "w", encoding="utf-8") as fh:
-                    json.dump({"data_date": dd, "at": f"{now:%Y-%m-%d %H:%M}"}, fh)
+                    json.dump({"data_date": dd, "at": f"{now:%Y-%m-%d %H:%M}", "orders": sig}, fh)
         elif not a.no_telegram:
             print(f"[signals] رسالة قفلة {dd} اتبعتت قبل كده، مش هبعتها تاني")
     except Exception as e:  # noqa: BLE001
