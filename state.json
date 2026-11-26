@@ -123,7 +123,7 @@
         126.5,
         126.47,
         126.0,
-        125.03
+        125.0
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -251,7 +251,7 @@
         24.8,
         25.29,
         25.0,
-        24.8
+        24.79
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -379,7 +379,7 @@
         20.4,
         20.98,
         20.7,
-        20.9
+        20.83
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -507,7 +507,7 @@
         74.41,
         73.71,
         73.56,
-        73.41
+        73.44
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -635,7 +635,7 @@
         46.43,
         46.15,
         45.93,
-        45.5
+        45.61
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -763,7 +763,7 @@
         31.5,
         31.53,
         31.26,
-        30.94
+        30.9
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -891,7 +891,7 @@
         12.51,
         12.25,
         11.9,
-        11.65
+        11.74
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -1019,7 +1019,7 @@
         2.13,
         2.16,
         2.17,
-        2.15
+        2.17
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -1147,7 +1147,7 @@
         5.8,
         5.68,
         5.62,
-        5.6
+        5.66
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -1275,7 +1275,7 @@
         14.13,
         14.3,
         14.2,
-        14.13
+        14.07
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -1403,7 +1403,7 @@
         33.21,
         33.8,
         33.03,
-        33.0
+        32.86
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -1531,7 +1531,7 @@
         302.0,
         298.0,
         293.35,
-        286.89
+        288.0
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -1659,7 +1659,7 @@
         11.9,
         12.2,
         12.03,
-        11.96
+        11.93
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -1787,7 +1787,7 @@
         139.98,
         141.0,
         139.2,
-        138.11
+        137.75
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -1915,7 +1915,7 @@
         17.25,
         17.44,
         17.25,
-        17.08
+        17.09
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -2043,7 +2043,7 @@
         21.66,
         22.1,
         21.8,
-        21.5
+        21.6
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -2171,7 +2171,7 @@
         6.3,
         6.35,
         6.23,
-        6.17
+        6.21
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -2299,7 +2299,7 @@
         25.68,
         26.2,
         26.33,
-        26.26
+        26.4
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -2427,7 +2427,7 @@
         10.17,
         9.98,
         10.03,
-        9.9
+        9.93
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -2555,7 +2555,7 @@
         22.0,
         22.19,
         21.85,
-        21.9
+        21.78
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -2683,7 +2683,7 @@
         175.97,
         175.9,
         174.31,
-        171.49
+        171.51
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -2811,7 +2811,7 @@
         36.6,
         36.8,
         37.01,
-        36.48
+        36.5
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -2939,7 +2939,7 @@
         792.12,
         785.01,
         763.0,
-        758.0
+        762.3
       ],
       "last_signal": "SELL",
       "initialized": true,
@@ -3068,7 +3068,7 @@
         9.98,
         10.44,
         10.38,
-        10.35
+        10.4
       ],
       "last_signal": "NONE",
       "initialized": true,
@@ -3197,7 +3197,7 @@
         11.55,
         11.5,
         11.35,
-        11.42
+        11.4
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -3325,7 +3325,7 @@
         5.81,
         6.01,
         5.76,
-        5.67
+        5.7
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -3453,7 +3453,7 @@
         5.05,
         5.12,
         5.05,
-        4.99
+        5.01
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -3581,7 +3581,7 @@
         14.18,
         14.94,
         14.76,
-        14.8
+        14.86
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -3709,7 +3709,7 @@
         79.5,
         78.06,
         78.95,
-        78.8
+        78.97
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -3848,7 +3848,7 @@
         24.6,
         25.37,
         25.55,
-        25.6
+        25.52
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -3919,7 +3919,7 @@
         2.06,
         2.18,
         2.18,
-        2.14
+        2.17
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -4048,7 +4048,7 @@
         5.19,
         5.2,
         5.08,
-        5.22
+        5.25
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -4176,7 +4176,7 @@
         3.77,
         3.64,
         3.52,
-        3.43
+        3.44
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -4432,7 +4432,7 @@
         16.15,
         15.74,
         15.38,
-        15.28
+        15.1
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -4502,7 +4502,7 @@
         0.485,
         0.482,
         0.47,
-        0.47
+        0.475
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -4694,7 +4694,7 @@
         66.09,
         67.03,
         65.95,
-        65.0
+        65.5
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -4822,7 +4822,7 @@
         43.7,
         44.28,
         44.47,
-        44.05
+        44.1
       ],
       "last_signal": "NONE",
       "initialized": true,
@@ -4951,7 +4951,7 @@
         0.31,
         0.315,
         0.307,
-        0.304
+        0.306
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -5079,7 +5079,7 @@
         2.45,
         2.46,
         2.44,
-        2.44
+        2.45
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -5149,7 +5149,7 @@
         4.13,
         4.11,
         4.08,
-        4.05
+        4.09
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -5406,7 +5406,7 @@
         7.1,
         6.86,
         6.73,
-        6.66
+        6.68
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -5534,7 +5534,7 @@
         38.01,
         38.11,
         38.03,
-        38.08
+        37.95
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -5662,7 +5662,7 @@
         18.19,
         17.59,
         17.9,
-        17.77
+        17.9
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -5918,7 +5918,7 @@
         23.25,
         23.19,
         22.69,
-        22.72
+        22.55
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -6046,7 +6046,7 @@
         82.88,
         82.99,
         82.0,
-        81.0
+        81.9
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -6302,7 +6302,7 @@
         9.9,
         9.93,
         9.69,
-        9.69
+        9.74
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -6430,7 +6430,7 @@
         12.31,
         12.41,
         11.97,
-        11.9
+        12.0
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -6558,7 +6558,7 @@
         101.5,
         100.99,
         99.49,
-        99.6
+        100.0
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -6686,7 +6686,7 @@
         37.0,
         37.13,
         36.3,
-        36.8
+        36.9
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -6814,7 +6814,7 @@
         11.1,
         11.05,
         11.15,
-        11.05
+        11.1
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -6942,7 +6942,7 @@
         2.04,
         2.06,
         2.01,
-        2.01
+        2.03
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -7198,7 +7198,7 @@
         7.4,
         7.75,
         7.75,
-        7.71
+        7.75
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -7326,7 +7326,7 @@
         21.8,
         21.7,
         21.45,
-        21.2
+        21.3
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -7582,7 +7582,7 @@
         1.55,
         1.54,
         1.53,
-        1.52
+        1.53
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -7710,7 +7710,7 @@
         294.51,
         289.0,
         277.03,
-        269.05
+        272.97
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -7966,7 +7966,7 @@
         116.99,
         118.51,
         116.02,
-        114.9
+        115.0
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -8222,7 +8222,7 @@
         14.33,
         14.43,
         14.42,
-        14.38
+        14.25
       ],
       "last_signal": "SELL",
       "initialized": true,
@@ -8351,7 +8351,7 @@
         12.36,
         12.59,
         13.31,
-        13.29
+        13.31
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -8495,7 +8495,7 @@
         14.1,
         13.78,
         13.37,
-        13.21
+        13.23
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -8695,7 +8695,7 @@
         105.51,
         103.82,
         102.7,
-        98.99
+        100.0
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -8823,7 +8823,7 @@
         0.639,
         0.626,
         0.616,
-        0.615
+        0.62
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -8951,7 +8951,7 @@
         26.1,
         26.54,
         26.8,
-        26.94
+        26.71
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -9079,7 +9079,7 @@
         6.58,
         6.5,
         6.45,
-        6.46
+        6.43
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -9207,7 +9207,7 @@
         40.03,
         39.91,
         38.28,
-        38.11
+        38.9
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -9335,7 +9335,7 @@
         19.67,
         19.59,
         18.85,
-        18.46
+        18.75
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -9463,7 +9463,7 @@
         40.44,
         41.37,
         41.39,
-        42.3
+        42.38
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -9591,7 +9591,7 @@
         1.29,
         1.28,
         1.3,
-        1.28
+        1.3
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -9847,7 +9847,7 @@
         1.92,
         1.94,
         1.88,
-        1.86
+        1.87
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -10103,7 +10103,7 @@
         336.0,
         338.82,
         335.0,
-        311.6
+        312.11
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -10231,7 +10231,7 @@
         342.73,
         339.0,
         333.45,
-        327.5
+        331.89
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -10359,7 +10359,7 @@
         10.05,
         9.91,
         9.74,
-        9.57
+        9.58
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -10487,7 +10487,7 @@
         6.28,
         6.6,
         6.75,
-        6.63
+        6.79
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -10615,7 +10615,7 @@
         5.28,
         5.3,
         5.17,
-        5.13
+        5.2
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -10743,7 +10743,7 @@
         0.717,
         0.707,
         0.7,
-        0.694
+        0.691
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -10871,7 +10871,7 @@
         1.64,
         1.56,
         1.56,
-        1.54
+        1.55
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -10999,7 +10999,7 @@
         24.7,
         24.7,
         24.0,
-        23.85
+        23.86
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -11127,7 +11127,7 @@
         6.19,
         6.24,
         6.17,
-        6.1
+        6.14
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -11255,7 +11255,7 @@
         4.94,
         4.87,
         4.66,
-        4.69
+        4.74
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -11383,7 +11383,7 @@
         84.0,
         85.01,
         83.58,
-        84.33
+        83.37
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -11511,7 +11511,7 @@
         98.63,
         98.66,
         97.51,
-        96.5
+        97.0
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -11639,7 +11639,7 @@
         23.32,
         23.78,
         23.6,
-        23.15
+        23.35
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -11767,7 +11767,7 @@
         8.73,
         8.58,
         8.46,
-        8.45
+        8.53
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -11837,7 +11837,7 @@
         13.6,
         13.73,
         13.43,
-        13.55
+        13.56
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -11966,7 +11966,7 @@
         0.466,
         0.48,
         0.471,
-        0.464
+        0.467
       ],
       "last_signal": "SELL",
       "initialized": true,
@@ -12037,7 +12037,7 @@
         9.2,
         9.25,
         9.25,
-        9.13
+        9.04
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -12166,7 +12166,7 @@
         0.3,
         0.3,
         0.292,
-        0.291
+        0.294
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -12294,7 +12294,7 @@
         6.33,
         6.23,
         6.09,
-        6.04
+        6.12
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -12422,7 +12422,7 @@
         2.54,
         2.61,
         2.55,
-        2.53
+        2.56
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -12550,7 +12550,7 @@
         37.71,
         38.45,
         37.0,
-        37.34
+        37.5
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -12678,7 +12678,7 @@
         46.94,
         47.4,
         46.07,
-        46.0
+        46.3
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -12806,7 +12806,7 @@
         1.93,
         2.0,
         2.0,
-        1.98
+        1.99
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -12934,7 +12934,7 @@
         16.66,
         16.99,
         16.73,
-        16.27
+        16.8
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -13062,7 +13062,7 @@
         6.73,
         6.65,
         6.56,
-        6.6
+        6.66
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -13190,7 +13190,7 @@
         57.52,
         56.75,
         55.86,
-        55.0
+        55.5
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -13318,7 +13318,7 @@
         0.416,
         0.43,
         0.419,
-        0.41
+        0.417
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -13638,7 +13638,7 @@
         51.46,
         50.04,
         49.68,
-        50.0
+        50.05
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -13766,7 +13766,7 @@
         8.27,
         8.31,
         8.29,
-        8.07
+        8.24
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -13894,7 +13894,7 @@
         154.95,
         149.12,
         148.28,
-        149.4
+        150.47
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -14022,7 +14022,7 @@
         278.01,
         285.0,
         292.4,
-        284.13
+        285.6
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -14150,7 +14150,7 @@
         11.21,
         11.4,
         11.31,
-        11.28
+        11.3
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -14349,7 +14349,7 @@
         1.44,
         1.58,
         1.48,
-        1.38
+        1.45
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -14735,14 +14735,13 @@
         49.1,
         49.1,
         48.58,
-        48.5
+        48.22
       ],
       "last_signal": "NONE",
       "initialized": true
     },
     "EGSA.CA": {
       "dates": [
-        "2026-08-31",
         "2026-09-01",
         "2026-09-02",
         "2026-09-03",
@@ -14801,10 +14800,10 @@
         "2026-11-19",
         "2026-11-23",
         "2026-11-24",
-        "2026-11-25"
+        "2026-11-25",
+        "2026-11-26"
       ],
       "daily": [
-        8.6899995803833,
         8.6899995803833,
         8.960000038146973,
         9.050000190734863,
@@ -14862,6 +14861,7 @@
         9.0,
         9.0,
         9.02,
+        9.0,
         9.0,
         9.0
       ],
@@ -15120,7 +15120,7 @@
         14.28,
         14.15,
         15.14,
-        15.11
+        14.93
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -15248,7 +15248,7 @@
         13.5,
         13.77,
         13.99,
-        13.85
+        13.86
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -15441,7 +15441,7 @@
         1415.42,
         1335.0,
         1314.18,
-        1314.0
+        1317.2
       ],
       "last_signal": "NONE",
       "initialized": true,
@@ -15570,7 +15570,7 @@
         258.62,
         261.02,
         242.73,
-        242.99
+        241.0
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -15698,7 +15698,7 @@
         555.61,
         556.96,
         550.05,
-        541.99
+        544.5
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -15826,7 +15826,7 @@
         387.0,
         384.42,
         370.01,
-        371.95
+        376.0
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -15954,7 +15954,7 @@
         773.56,
         771.57,
         788.35,
-        755.31
+        775.0
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -16082,7 +16082,7 @@
         15.16,
         15.01,
         14.83,
-        14.8
+        14.7
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -16210,7 +16210,7 @@
         192.87,
         193.72,
         189.2,
-        188.1
+        190.0
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -16595,7 +16595,7 @@
         22.63,
         22.26,
         21.95,
-        22.34
+        22.4
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -16723,7 +16723,7 @@
         2.05,
         2.04,
         2.03,
-        2.03
+        2.04
       ],
       "last_signal": "NONE",
       "initialized": true,
@@ -16852,7 +16852,7 @@
         42.18,
         44.24,
         44.71,
-        44.5
+        44.99
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -16980,7 +16980,7 @@
         66.98,
         68.55,
         66.21,
-        65.5
+        66.59
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -17173,7 +17173,7 @@
         45.37,
         45.85,
         46.15,
-        47.24
+        47.16
       ],
       "last_signal": "BUY",
       "initialized": true,
@@ -17302,7 +17302,7 @@
         31.01,
         30.21,
         30.04,
-        29.45
+        29.46
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -17370,7 +17370,7 @@
         55.98,
         56.61,
         56.0,
-        55.11
+        55.41
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -17499,7 +17499,7 @@
         32.45,
         33.26,
         32.89,
-        32.53
+        32.5
       ],
       "last_signal": "BUY",
       "initialized": true,
@@ -17628,7 +17628,7 @@
         97.02,
         101.25,
         101.85,
-        101.06
+        101.19
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -17756,7 +17756,7 @@
         292.35,
         297.72,
         287.81,
-        283.1
+        286.8
       ],
       "last_signal": "NONE",
       "initialized": true,
@@ -17885,7 +17885,7 @@
         220.03,
         220.32,
         219.62,
-        220.0
+        219.0
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -18013,7 +18013,7 @@
         16.2,
         15.79,
         15.82,
-        15.82
+        15.9
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -18141,7 +18141,7 @@
         2.46,
         2.46,
         2.46,
-        2.36
+        2.37
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -18269,7 +18269,7 @@
         165.72,
         164.35,
         164.62,
-        164.0
+        162.06
       ],
       "last_signal": "NONE",
       "initialized": true,
@@ -18398,7 +18398,7 @@
         155.48,
         154.9,
         153.72,
-        152.22
+        151.71
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -18526,7 +18526,7 @@
         43.29,
         43.99,
         44.85,
-        44.8
+        45.01
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -18654,7 +18654,7 @@
         212.57,
         212.18,
         216.03,
-        215.0
+        216.0
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -18907,7 +18907,7 @@
         134.25,
         134.33,
         129.01,
-        133.89
+        133.0
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -19035,7 +19035,7 @@
         362.76,
         359.95,
         357.32,
-        356.0
+        355.0
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -19163,7 +19163,7 @@
         234.99,
         228.64,
         225.87,
-        227.99
+        227.89
       ],
       "last_signal": "NONE",
       "initialized": true,
@@ -19292,7 +19292,7 @@
         501.26,
         501.26,
         501.26,
-        501.5
+        500.8
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -19420,7 +19420,7 @@
         120.41,
         126.55,
         126.55,
-        120.35
+        121.14
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -19548,7 +19548,7 @@
         133.35,
         134.34,
         132.21,
-        132.0
+        133.99
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -19676,7 +19676,7 @@
         215.95,
         212.91,
         210.72,
-        210.9
+        211.0
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -19804,7 +19804,7 @@
         496.27,
         496.27,
         496.27,
-        473.05
+        477.9
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -19932,7 +19932,7 @@
         34.01,
         34.32,
         34.47,
-        34.33
+        34.2
       ],
       "last_signal": "NONE",
       "initialized": true,
@@ -20126,7 +20126,7 @@
         14.95,
         14.98,
         14.88,
-        14.71
+        14.89
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -20254,7 +20254,7 @@
         335.0,
         335.0,
         335.0,
-        329.0
+        329.3
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -20382,7 +20382,7 @@
         30.7,
         30.52,
         30.18,
-        30.02
+        30.0
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -20960,7 +20960,7 @@
         12.65,
         12.5,
         12.27,
-        12.16
+        12.3
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -21088,7 +21088,7 @@
         459.02,
         456.84,
         457.04,
-        463.65
+        459.9
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -21277,7 +21277,7 @@
         18.71,
         18.77,
         18.42,
-        18.42
+        18.5
       ],
       "last_signal": "NONE",
       "initialized": true,
@@ -21467,7 +21467,7 @@
         0.521,
         0.516,
         0.515,
-        0.512
+        0.516
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -21844,7 +21844,7 @@
         1.47,
         1.45,
         1.45,
-        1.43
+        1.46
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -21972,7 +21972,7 @@
         129.25,
         138.5,
         128.29,
-        124.34
+        125.8
       ],
       "last_signal": "NONE",
       "initialized": true,
@@ -22102,7 +22102,7 @@
         28.39,
         28.06,
         28.03,
-        27.9
+        27.55
       ],
       "last_signal": "SELL",
       "initialized": true,
@@ -22424,7 +22424,7 @@
         262.7,
         267.0,
         266.01,
-        260.0
+        261.0
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -22748,7 +22748,7 @@
         12.58,
         12.83,
         12.47,
-        12.05
+        12.49
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -22877,7 +22877,7 @@
         1.03,
         1.01,
         1.0,
-        1.0
+        1.01
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -23005,7 +23005,7 @@
         5.6,
         5.57,
         5.5,
-        5.5
+        5.55
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -23383,7 +23383,7 @@
         2.84,
         2.93,
         2.87,
-        2.85
+        2.89
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -23511,7 +23511,7 @@
         1.61,
         1.61,
         1.61,
-        1.54
+        1.59
       ],
       "last_signal": "SELL",
       "initialized": true,
@@ -23709,9 +23709,9 @@
         215.48,
         215.93,
         219.3,
-        219.3
+        216.0
       ],
-      "last_signal": "BUY",
+      "last_signal": "SELL",
       "initialized": true
     },
     "PRMH.CA": {
@@ -23837,7 +23837,7 @@
         2.1,
         2.08,
         2.05,
-        2.0
+        2.03
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -24093,7 +24093,7 @@
         58.36,
         59.5,
         57.7,
-        56.65
+        56.9
       ],
       "last_signal": "SELL",
       "initialized": true,
@@ -24350,7 +24350,7 @@
         1.61,
         1.61,
         1.61,
-        1.68
+        1.67
       ],
       "last_signal": "BUY",
       "initialized": true,
@@ -24479,7 +24479,7 @@
         30.9,
         34.5,
         33.55,
-        33.5
+        34.02
       ],
       "last_signal": "BUY",
       "initialized": true
@@ -24607,7 +24607,7 @@
         2.19,
         2.19,
         2.28,
-        2.23
+        2.36
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -24735,7 +24735,7 @@
         0.207,
         0.206,
         0.203,
-        0.203
+        0.206
       ],
       "last_signal": "SELL",
       "initialized": true,
@@ -25099,7 +25099,7 @@
         64.28,
         64.27,
         62.98,
-        62.33
+        62.8
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -25484,7 +25484,7 @@
         5.95,
         5.94,
         5.85,
-        5.84
+        5.94
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -25741,7 +25741,7 @@
         1.12,
         1.09,
         1.09,
-        1.06
+        1.09
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -25799,7 +25799,7 @@
         14.95,
         16.46,
         16.6,
-        16.55
+        16.9
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -26117,7 +26117,7 @@
         10.07,
         10.04,
         10.1,
-        10.03
+        10.17
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -26245,7 +26245,7 @@
         50.8,
         52.77,
         52.42,
-        52.5
+        52.84
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -26433,7 +26433,7 @@
         7.75,
         7.71,
         7.51,
-        7.6
+        7.61
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -26561,9 +26561,9 @@
         4.73,
         4.87,
         4.7,
-        4.66
+        4.8
       ],
-      "last_signal": "SELL",
+      "last_signal": "BUY",
       "initialized": true
     },
     "FCMD.CA": {
@@ -26750,7 +26750,7 @@
         9.66,
         9.84,
         9.72,
-        9.39
+        9.4
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -26818,7 +26818,7 @@
         3.95,
         4.0,
         3.6,
-        3.94
+        3.93
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -26947,7 +26947,7 @@
         5.0,
         5.02,
         4.9,
-        4.81
+        4.86
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -27075,9 +27075,9 @@
         24.63,
         24.81,
         24.77,
-        24.5
+        24.12
       ],
-      "last_signal": "BUY",
+      "last_signal": "SELL",
       "initialized": true
     },
     "INEG.CA": {
@@ -27203,7 +27203,7 @@
         0.397,
         0.37,
         0.36,
-        0.364
+        0.368
       ],
       "last_signal": "SELL",
       "initialized": true,
@@ -27272,7 +27272,7 @@
         12.86,
         12.9,
         12.93,
-        12.85
+        12.95
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -27401,7 +27401,7 @@
         20.38,
         20.5,
         20.38,
-        20.35
+        20.3
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -27469,7 +27469,7 @@
         0.331,
         0.331,
         0.325,
-        0.322
+        0.323
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -27510,7 +27510,7 @@
         9.59,
         9.59,
         9.15,
-        9.49
+        9.21
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -27895,7 +27895,7 @@
         20.14,
         20.52,
         20.12,
-        19.85
+        19.98
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -27963,7 +27963,7 @@
         5.41,
         5.26,
         5.19,
-        5.09
+        5.15
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -28032,7 +28032,7 @@
         6.47,
         6.36,
         6.06,
-        6.05
+        6.14
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -28161,7 +28161,7 @@
         0.659,
         0.652,
         0.626,
-        0.606
+        0.619
       ],
       "last_signal": "SELL",
       "initialized": true
@@ -28445,7 +28445,8 @@
         "2026-11-12",
         "2026-11-23",
         "2026-11-24",
-        "2026-11-25"
+        "2026-11-25",
+        "2026-11-26"
       ],
       "daily": [
         0.04,
@@ -28459,6 +28460,7 @@
         0.04,
         0.04,
         0.04,
+        0.041,
         0.041,
         0.041,
         0.041
@@ -28530,7 +28532,7 @@
         0.962,
         0.966,
         0.951,
-        0.949
+        0.954
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -28599,7 +28601,7 @@
         9.5,
         10.19,
         10.75,
-        10.33
+        10.44
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -28735,7 +28737,7 @@
         6.32,
         6.24,
         6.23,
-        6.15
+        6.13
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -28798,7 +28800,7 @@
         1.91,
         1.94,
         1.89,
-        1.87
+        1.86
       ],
       "last_signal": "NONE",
       "initialized": false,
@@ -28928,7 +28930,7 @@
         35.150001525878906,
         37.5,
         37.31,
-        36.56
+        37.0
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -29185,9 +29187,9 @@
         1.8899999856948853,
         2.01,
         1.97,
-        1.97
+        2.01
       ],
-      "last_signal": "SELL",
+      "last_signal": "BUY",
       "initialized": true
     },
     "EGREF.CA": {
@@ -29313,14 +29315,13 @@
         21.93000030517578,
         22.34,
         21.76,
-        21.4
+        21.21
       ],
       "last_signal": "SELL",
       "initialized": true
     },
     "FAITA.CA": {
       "dates": [
-        "2026-08-31",
         "2026-09-01",
         "2026-09-02",
         "2026-09-03",
@@ -29379,10 +29380,10 @@
         "2026-11-19",
         "2026-11-22",
         "2026-11-24",
-        "2026-11-25"
+        "2026-11-25",
+        "2026-11-26"
       ],
       "daily": [
-        0.9900000095367432,
         0.9900000095367432,
         0.9900000095367432,
         0.9900000095367432,
@@ -29439,6 +29440,7 @@
         1.0019999742507935,
         1.0010000467300415,
         1.0089999437332153,
+        1.0,
         1.0,
         1.0,
         1.0
@@ -29825,7 +29827,7 @@
         23.93000030517578,
         24.22,
         23.82,
-        23.77
+        23.78
       ],
       "last_signal": "NONE",
       "initialized": true
@@ -29953,7 +29955,7 @@
         10.34000015258789,
         10.4,
         10.32,
-        10.2
+        10.38
       ],
       "last_signal": "NONE",
       "initialized": true
