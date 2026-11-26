@@ -1330,81 +1330,81 @@
    "target": "2026-11-26",
    "data_date": "2026-11-25",
    "picks": [
+    "HRHO",
     "FAIT",
     "LCSW",
     "ICFC",
-    "EFIH",
     "EAST",
-    "SCEM",
-    "CSAG",
+    "EFIH",
     "AXPH",
+    "CSAG",
     "AIFI",
-    "SCFM"
+    "ETEL"
    ],
    "labels": {
+    "HRHO": "انتظر",
     "FAIT": "انتظر",
     "LCSW": "انتظر",
     "ICFC": "انتظر",
-    "EFIH": "انتظر",
     "EAST": "انتظر",
-    "SCEM": "انتظر",
-    "CSAG": "انتظر",
+    "EFIH": "انتظر",
     "AXPH": "انتظر",
+    "CSAG": "انتظر",
     "AIFI": "انتظر",
-    "SCFM": "انتظر"
+    "ETEL": "انتظر"
    },
    "news": {},
    "by_model": {
     "xgb": [
      "LCSW",
-     "EFIH",
-     "CSAG",
      "EAST",
+     "HRHO",
      "AXPH",
      "ICFC",
-     "FAIT",
+     "ETEL",
      "SCFM",
-     "HRHO",
+     "SNFC",
+     "GDWA",
      "ELKA"
     ],
     "lgbm": [
      "ICFC",
-     "EFIH",
      "LCSW",
+     "EFIH",
+     "MENA",
+     "HRHO",
      "SCEM",
      "EAST",
      "AIFI",
-     "FAIT",
-     "SNFC",
-     "SCFM",
-     "MENA"
+     "AJWA",
+     "SCFM"
     ],
     "cat": [
-     "ICFC",
-     "LCSW",
+     "CSAG",
+     "FAIT",
      "HRHO",
+     "LCSW",
+     "ICFC",
+     "UEFM",
+     "EFIH",
      "EAST",
      "SCEM",
-     "EFIH",
-     "FAIT",
-     "CSAG",
-     "UEFM",
-     "AXPH"
+     "SNFC"
     ],
     "ens": [
      "LCSW",
+     "HRHO",
      "ICFC",
-     "EFIH",
      "EAST",
-     "FAIT",
-     "SCEM",
-     "CSAG",
+     "EFIH",
      "AXPH",
+     "CSAG",
+     "FAIT",
      "AIFI",
-     "SCFM"
+     "ETEL"
     ]
    },
-   "made": "2026-11-25 19:21"
+   "made": "2026-11-26 02:45"
   }
  ]
 }
