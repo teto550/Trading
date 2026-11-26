@@ -32,19 +32,18 @@ $WATP.CA: possibly delisted; no timezone found
 $SUCE.CA: possibly delisted; no timezone found
 $TORA.CA: possibly delisted; no timezone found
 $DCRC.CA: possibly delisted; no timezone found
-$GTWL.CA: possibly delisted; no timezone found
 $ALEX.CA: possibly delisted; no timezone found
 $TYCN.CA: possibly delisted; no timezone found
 $ARVA.CA: possibly delisted; no timezone found
 $HCFI.CA: possibly delisted; no timezone found
 $NARE.CA: possibly delisted; no timezone found
-[data] 200/263 سهم، اتجاب تاريخ لـ 167
+[data] 200/263 سهم، اتجاب تاريخ لـ 168
 $UTOP.CA: possibly delisted; no timezone found
 $APPC.CA: possibly delisted; no timezone found
 $UBEE.CA: possibly delisted; no timezone found
 $NAPR.CA: possibly delisted; no timezone found
 $DIFC.CA: possibly delisted; no timezone found
-[data] 225/263 سهم، اتجاب تاريخ لـ 187
+[data] 225/263 سهم، اتجاب تاريخ لـ 188
 $FCMD.CA: possibly delisted; no timezone found
 $VERT.CA: possibly delisted; no timezone found
 $ADRI.CA: possibly delisted; no timezone found
@@ -59,7 +58,8 @@ $GGRN.CA: possibly delisted; no timezone found
 $HBCO.CA: possibly delisted; no timezone found
 $CPME.CA: possibly delisted; no timezone found
 $TWSA.CA: possibly delisted; no timezone found
-[data] 250/263 سهم، اتجاب تاريخ لـ 198
+[data] 250/263 سهم، اتجاب تاريخ لـ 199
 $KORA.CA: possibly delisted; no timezone found
-[data] خلص الجلب: 210 سهم اتجاب من 263
-[done] دفعة 2026-11-24 (جديدة) | ناضجة: 13 | تأخر Yahoo: 1 يوم | رسالة تليجرام: لأ
+[data] خلص الجلب: 211 سهم اتجاب من 263
+[done] دفعة 2026-11-24 (موجودة) | ناضجة: 13 | تأخر Yahoo: 2 يوم | رسالة تليجرام: أيوه
+[تليجرام] اتقفل في الوضع المركّز (paper_trade.py) - الرسالة اتسجلت في اللوج بس
