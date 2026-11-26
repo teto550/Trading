@@ -1405,6 +1405,86 @@
     ]
    },
    "made": "2026-11-26 02:45"
+  },
+  {
+   "target": "2026-11-29",
+   "data_date": "2026-11-26",
+   "picks": [
+    "FAIT",
+    "EFID",
+    "GBCO",
+    "LCSW",
+    "ICFC",
+    "SVCE",
+    "PHAR",
+    "EFIH",
+    "CSAG",
+    "EHDR"
+   ],
+   "labels": {
+    "FAIT": "انتظر",
+    "EFID": "انتظر",
+    "GBCO": "انتظر",
+    "LCSW": "انتظر",
+    "ICFC": "انتظر",
+    "SVCE": "انتظر",
+    "PHAR": "انتظر",
+    "EFIH": "انتظر",
+    "CSAG": "انتظر",
+    "EHDR": "انتظر"
+   },
+   "news": {},
+   "by_model": {
+    "xgb": [
+     "LCSW",
+     "EFID",
+     "ICFC",
+     "EFIH",
+     "FAIT",
+     "PHAR",
+     "CSAG",
+     "SCEM",
+     "SVCE",
+     "IRON"
+    ],
+    "lgbm": [
+     "LCSW",
+     "ICFC",
+     "EFID",
+     "EFIH",
+     "SVCE",
+     "PHAR",
+     "FAIT",
+     "EHDR",
+     "SNFC",
+     "SCEM"
+    ],
+    "cat": [
+     "LCSW",
+     "ICFC",
+     "SVCE",
+     "CSAG",
+     "PHAR",
+     "FAIT",
+     "IRON",
+     "ABUK",
+     "EHDR",
+     "GBCO"
+    ],
+    "ens": [
+     "LCSW",
+     "ICFC",
+     "SVCE",
+     "PHAR",
+     "FAIT",
+     "EFID",
+     "EFIH",
+     "CSAG",
+     "EHDR",
+     "GBCO"
+    ]
+   },
+   "made": "2026-11-26 15:09"
   }
  ]
 }
