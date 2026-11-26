@@ -24,5 +24,12 @@
    0.992373
   ]
  ],
- "alerts": {}
+ "alerts": {
+  "date": "2026-11-26",
+  "warned": [],
+  "turned": [
+   "PHTV",
+   "SDTI"
+  ]
+ }
 }
