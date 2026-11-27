@@ -62,5 +62,4 @@ $TWSA.CA: possibly delisted; no timezone found
 [data] 250/263 سهم، اتجاب تاريخ لـ 198
 $KORA.CA: possibly delisted; no timezone found
 [data] خلص الجلب: 210 سهم اتجاب من 263
-[done] دفعة 2026-11-25 (جديدة) | ناضجة: 14 | تأخر Yahoo: 1 يوم | رسالة تليجرام: أيوه
-[تليجرام] اتقفل في الوضع المركّز (paper_trade.py) - الرسالة اتسجلت في اللوج بس
+[done] دفعة 2026-11-25 (موجودة) | ناضجة: 14 | تأخر Yahoo: 2 يوم | رسالة تليجرام: لأ
